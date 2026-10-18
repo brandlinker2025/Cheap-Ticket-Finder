@@ -112,3 +112,82 @@ nav a.deal-chip:hover{border-color:rgba(217,119,6,.85) !important;color:#7c2d12 
 ::selection{background:#f6de9c;color:#451a03}
 @media (max-width:640px){.glass-card{border-radius:22px !important}header h1{line-height:1.08}.luxury-trust-row span{font-size:10px;padding:.36rem .58rem}}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+
+/* === Clear Readability pass 2026-10-19 (RS Lina: "lekha bojha jacche na") ===
+   Audit found, on the colourful sky/aqua/peach gradients:
+   1) Tailwind sky-400 (#38BDF8), emerald/amber/rose-200, fuchsia-300 text was
+      pale-on-pale in headings, badges, pills and JS-generated result cards.
+   2) Body copy was set at 9-11px (calendar hint 9px, footers/badges 10px,
+      card/Bangla copy 11px) — too small to read, especially Bangla script.
+   3) Calendar out-of-month / past days used opacity .30, so dates vanished.
+   4) Pale pill backgrounds (sky/emerald .10-.20 alpha) had no border/backing.
+   5) From/To airport names used .truncate, clipping on 360-400px screens.
+   Fix below keeps the colourful palette: readability comes from deep ink,
+   solid tinted backing and larger type — never flat white, never dark. */
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Hind Siliguri","Noto Sans Bengali",Inter,ui-sans-system,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
+  font-size:16px;line-height:1.62;overflow-x:hidden;
+}
+p,li{line-height:1.72}
+main p,main li,.glass-card p,.glass-card li{color:#2e4059}
+h2{font-size:clamp(1.18rem,2.6vw,1.45rem) !important;line-height:1.35 !important;letter-spacing:-.01em}
+h3{font-size:clamp(1.02rem,2.2vw,1.18rem);line-height:1.4;color:#22344d}
+header h1,main h1{
+  background:linear-gradient(92deg,#0c4a6e 2%,#0369a1 28%,#0f766e 54%,#b45309 80%,#c2410c 98%);
+  -webkit-background-clip:text;background-clip:text;
+}
+header p{color:#26364d !important;font-size:15px !important;line-height:1.7 !important;font-weight:550}
+/* Deep, contrast-safe text colours on light colourful backgrounds */
+.text-sky-400,.text-sky-500{color:#075985 !important}
+.text-fuchsia-300,.text-fuchsia-400{color:#86198f !important}
+.text-rose-200,.text-rose-300,.text-rose-400{color:#9f1239 !important}
+.text-emerald-200,.text-emerald-500{color:#065f46 !important}
+.text-amber-400{color:#92400e !important}
+.text-amber-200\/80,.text-amber-200\/90,.text-emerald-200\/90{color:#7c2d12 !important}
+.text-slate-300{color:#2e4059 !important}
+.text-slate-400{color:#3a4d68 !important}
+.text-slate-500{color:#3a4d68 !important}
+.text-slate-600{color:#46586e !important}
+input::placeholder{color:#4b6076 !important;opacity:1}
+/* Small print made legible: 9-11px -> 12-13px (Bangla needs the extra size) */
+.text-\[9px\]{font-size:12px !important;line-height:1.55 !important}
+.text-\[10px\]{font-size:12px !important;line-height:1.55 !important}
+.text-\[11px\]{font-size:13px !important;line-height:1.6 !important}
+.text-xs{font-size:13px !important;line-height:1.6 !important}
+footer{font-size:12.5px !important;line-height:1.65 !important}
+footer a,footer nav a{font-weight:700}
+/* Pale pills/badges get solid tinted backing + border so text sits on colour */
+.bg-sky-500\/10,.bg-sky-500\/20{background-color:rgba(224,242,254,.96) !important;border:1px solid rgba(3,105,161,.55) !important}
+.bg-emerald-500\/10,.bg-emerald-500\/20{background-color:rgba(209,250,229,.96) !important;border:1px solid rgba(6,95,70,.5) !important}
+.bg-amber-500\/10,.bg-amber-500\/20{background-color:rgba(254,243,199,.97) !important;border:1px solid rgba(146,64,14,.55) !important}
+.bg-fuchsia-500\/10{background-color:rgba(250,232,255,.96) !important;border:1px solid rgba(134,25,143,.45) !important}
+.bg-rose-500\/10{background-color:rgba(255,228,230,.96) !important;border:1px solid rgba(159,18,57,.45) !important}
+#selectedTripLabel,#calendarPickBadge{font-size:12px !important;padding:.35rem .6rem !important}
+#routeWarning{color:#881337 !important;font-size:13px !important;line-height:1.6}
+/* Calendar: dates must stay visible, including out-of-month and past days */
+.sk-day{font-size:.95rem !important;font-weight:650;color:#21344d !important;min-height:42px}
+.sk-day.empty{opacity:.62 !important;color:#5c6d84 !important}
+.sk-day-selected-dept,.sk-day-selected-ret{color:#ffffff !important}
+/* From/To names: wrap instead of clipping with an ellipsis on small screens */
+#originDisplay,#destDisplay,#stopoverDisplay{white-space:normal !important;overflow:visible !important;text-overflow:clip !important;line-height:1.45;font-size:14px;font-weight:700}
+.glass-card [onclick^="openLocationModal"]{min-height:48px}
+/* Warnings, steps and affiliate notes on guide pages */
+.warn-box{color:#422006 !important;line-height:1.72}
+.warn-box a,.glass-card a.underline,main a.underline{color:#075985;font-weight:650}
+.step-btn{background:linear-gradient(92deg,#0369a1,#0284c7) !important;color:#ffffff !important}
+.cta-affiliate,.step-btn-gold{font-size:14px;line-height:1.45}
+a,button{-webkit-tap-highlight-color:transparent}
+button,.deal-chip a,a.deal-chip{min-height:40px}
+:focus-visible{outline:3px solid #0369a1 !important;outline-offset:2px;border-radius:6px}
+code{overflow-wrap:anywhere}
+@media (max-width:640px){
+  body{font-size:15.5px}
+  header p{font-size:14.5px !important}
+  .sk-day{min-height:40px;font-size:.92rem !important}
+  .luxury-trust-row span{font-size:11.5px !important;padding:.42rem .62rem}
+  .glass-card{padding-left:1rem;padding-right:1rem}
+  nav a.deal-chip,.deal-chip{white-space:normal;text-align:center;line-height:1.45}
+  h1{overflow-wrap:break-word}
+  #searchBtn{min-height:52px;font-size:15px !important}
+}
