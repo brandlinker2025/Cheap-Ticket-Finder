@@ -1,122 +1,109 @@
-/* Cheap Ticket Finder — Luxury redesign (2026-10-19)
-   Palette: Midnight navy #050A18/#071022/#0B1B33, champagne gold #E9C979/#F6DE9C/#C9A24B,
-   vibrant sky #38BDF8, teal #2DD4BF, soft violet glow #8B7CF6. No invented fares. */
+/* Cheap Ticket Finder — Bright Luxury redesign (2026-10-19)
+   Palette: ivory #FFFEF8, pearl #FFF9EC, white #FFFFFF, soft sky #E0F2FE/#F0F9FF,
+   sky #0EA5E9 / deep sky text #0369A1/#075985, aqua-teal #14B8A6/#0F766E,
+   champagne gold accent #C9A24B/#E9C979, deep gold text #92400E/#B45309,
+   main ink #1E293B, secondary #475569. No dark/black aura. */
 :root{
-  --lux-midnight:#050a18; --lux-navy:#071022; --lux-card:#0b1b33;
-  --lux-gold:#e9c979; --lux-gold-2:#f6de9c; --lux-gold-deep:#c9a24b;
-  --lux-sky:#38bdf8; --lux-teal:#2dd4bf; --lux-ivory:#fffaf0;
-  --lux-border:rgba(233,201,121,.28); --lux-border-soft:rgba(148,184,255,.16);
+  --bright-ivory:#fffef8; --bright-pearl:#fff9ec; --bright-white:#ffffff;
+  --bright-sky-soft:#e0f2fe; --bright-sky-mist:#f0f9ff; --bright-sky:#0ea5e9; --bright-sky-deep:#0369a1;
+  --bright-teal:#14b8a6; --bright-teal-deep:#0f766e;
+  --bright-gold:#c9a24b; --bright-gold-light:#f6de9c; --bright-gold-deep:#92400e; --bright-gold-amber:#b45309;
+  --bright-ink:#1e293b; --bright-slate:#475569; --bright-muted:#64748b;
+  --bright-border:rgba(201,162,75,.38); --bright-border-sky:rgba(14,165,233,.28);
 }
 html{scroll-behavior:smooth}
 body{
   background:
-    radial-gradient(900px 480px at 12% -6%, rgba(56,189,248,.24), transparent 60%),
-    radial-gradient(820px 460px at 88% -4%, rgba(233,201,121,.20), transparent 58%),
-    radial-gradient(700px 520px at 50% 108%, rgba(45,212,191,.14), transparent 60%),
-    radial-gradient(560px 380px at 78% 42%, rgba(139,124,246,.10), transparent 62%),
-    linear-gradient(180deg,#071022 0%,#050a18 46%,#040713 100%) !important;
-  color:#eef4ff !important;
+    radial-gradient(900px 480px at 10% -6%, rgba(56,189,248,.30), transparent 60%),
+    radial-gradient(860px 460px at 90% -4%, rgba(246,222,156,.55), transparent 58%),
+    radial-gradient(720px 520px at 52% 108%, rgba(45,212,191,.22), transparent 60%),
+    radial-gradient(560px 380px at 80% 42%, rgba(233,201,121,.22), transparent 62%),
+    linear-gradient(180deg,#fffef8 0%,#fff9ec 34%,#f0f9ff 72%,#ecfeff 100%) !important;
+  color:#1e293b !important;
   font-family:Inter,ui-sans-system,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 .hero-glow{
   background:
-    radial-gradient(circle at 16% 12%, rgba(56,189,248,.20), transparent 34%),
-    radial-gradient(circle at 84% 8%, rgba(233,201,121,.18), transparent 30%),
-    radial-gradient(circle at 50% 92%, rgba(45,212,191,.12), transparent 36%),
-    linear-gradient(180deg,#071022 0%,#050a18 46%,#040713 100%) !important;
-  background-color:#050a18 !important;
+    radial-gradient(circle at 16% 10%, rgba(56,189,248,.26), transparent 34%),
+    radial-gradient(circle at 84% 6%, rgba(246,222,156,.52), transparent 32%),
+    radial-gradient(circle at 50% 94%, rgba(45,212,191,.20), transparent 38%),
+    linear-gradient(180deg,#fffef8,#fff9ec 42%,#f0f9ff) !important;
+  background-color:#fffef8 !important;
 }
+/* Tailwind dark-utility overrides (covers static + JS-generated markup) */
+.bg-slate-950,.bg-slate-950\/80,.bg-slate-950\/70,.bg-slate-950\/60,.bg-slate-950\/50{background-color:#ffffff !important}
+.bg-slate-900,.bg-slate-900\/80,.bg-slate-900\/60{background-color:#f0f9ff !important}
+.bg-slate-800{background-color:#e0f2fe !important}
+.bg-slate-700{background-color:#bae6fd !important}
+.bg-sky-950\/40,.bg-sky-950\/90{background-color:#e0f2fe !important}
+.border-slate-800,.border-slate-800\/80,.border-slate-700,.border-slate-600{border-color:#cbd5e1 !important}
+.text-slate-100,.text-slate-200{color:#1e293b !important}
+.text-slate-300{color:#334155 !important}
+.text-slate-400{color:#475569 !important}
+.text-slate-500{color:#64748b !important}
+.text-sky-300{color:#0369a1 !important}
+.text-sky-200{color:#075985 !important}
+.text-emerald-300,.text-emerald-400{color:#0f766e !important}
+.text-amber-200,.text-amber-300{color:#92400e !important}
+.text-white{color:#0f172a !important}
+/* Keep white text where it sits on a coloured button/badge */
+#searchBtn,#searchBtn *,button.bg-sky-500,button.bg-sky-500 *,button.bg-emerald-500,button.bg-emerald-500 *,
+button.bg-amber-500,button.bg-amber-500 *,.bg-sky-500.text-white,.sk-day-selected-dept,.sk-day-selected-ret,
+#googleBookBar a,#googleBookBar a *{color:#ffffff !important}
+button.bg-amber-500,button.bg-amber-500 *{color:#451a03 !important}
 /* Header / hero */
 header{position:relative}
-header::before{
-  content:"";position:absolute;inset:-22px 8% auto;height:190px;pointer-events:none;
-  background:radial-gradient(closest-side, rgba(246,222,156,.20), rgba(56,189,248,.08), transparent 72%);
-  filter:blur(6px);z-index:-1;
-}
+header::before{content:"";position:absolute;inset:-22px 8% auto;height:190px;pointer-events:none;background:radial-gradient(closest-side, rgba(246,222,156,.55), rgba(56,189,248,.18), transparent 72%);filter:blur(6px);z-index:-1}
 header h1, main h1{
-  background:linear-gradient(92deg,#fffaf0 5%,var(--lux-gold-2) 38%,#ffffff 58%,#7dd3fc 92%);
-  -webkit-background-clip:text;background-clip:text;color:transparent !important;
-  letter-spacing:-.03em;text-shadow:none;
-  filter:drop-shadow(0 8px 28px rgba(233,201,121,.16));
+  background:linear-gradient(92deg,#075985 4%,#0369a1 34%,#b45309 62%,#0f766e 94%);
+  -webkit-background-clip:text;background-clip:text;color:transparent !important;letter-spacing:-.03em;text-shadow:none;
+  filter:drop-shadow(0 6px 20px rgba(233,201,121,.28));
 }
-header h1 i, header .fa-plane-departure{color:var(--lux-gold) !important;-webkit-text-fill-color:var(--lux-gold);filter:drop-shadow(0 0 14px rgba(233,201,121,.55))}
-header p{color:#c6d3ea !important}
+header h1 i, header .fa-plane-departure{color:#b45309 !important;-webkit-text-fill-color:#b45309;filter:drop-shadow(0 0 12px rgba(246,222,156,.70))}
+header p{color:#475569 !important}
 .luxury-trust-row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:1rem}
-.luxury-trust-row span{
-  display:inline-flex;align-items:center;gap:.4rem;padding:.42rem .7rem;border-radius:999px;
-  font-size:11px;font-weight:700;color:#f6de9c;
-  border:1px solid rgba(233,201,121,.30);background:linear-gradient(180deg,rgba(233,201,121,.12),rgba(56,189,248,.07));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 8px 22px rgba(2,6,23,.28);
-}
-.luxury-trust-row i{color:var(--lux-teal)}
+.luxury-trust-row span{display:inline-flex;align-items:center;gap:.4rem;padding:.42rem .7rem;border-radius:999px;font-size:11px;font-weight:700;color:#92400e;border:1px solid rgba(201,162,75,.45);background:linear-gradient(180deg,#ffffff,rgba(246,222,156,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 8px 22px rgba(180,83,9,.10)}
+.luxury-trust-row i{color:#0f766e}
 /* Cards */
 .glass-card{
-  background:linear-gradient(165deg,rgba(17,34,64,.92),rgba(7,16,34,.94) 55%,rgba(11,27,51,.92)) !important;
-  border:1px solid var(--lux-border) !important;
-  border-radius:26px !important;
-  box-shadow:0 24px 60px rgba(0,0,0,.48),0 0 0 1px rgba(255,255,255,.03) inset,0 1px 0 rgba(246,222,156,.18) inset,0 0 44px rgba(56,189,248,.07) !important;
-  backdrop-filter:blur(14px);
+  background:linear-gradient(165deg,rgba(255,255,255,.96),rgba(255,249,236,.94) 55%,rgba(240,249,255,.95)) !important;
+  border:1px solid var(--bright-border) !important;border-radius:26px !important;
+  box-shadow:0 24px 55px rgba(3,105,161,.12),0 8px 28px rgba(180,83,9,.08),0 1px 0 rgba(255,255,255,.95) inset,0 0 44px rgba(56,189,248,.10) !important;
+  backdrop-filter:blur(14px);color:#1e293b !important;
 }
 .luxury-search-card{position:relative;overflow:hidden}
-.luxury-search-card::before{
-  content:"";position:absolute;inset:0 0 auto;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(246,222,156,.85),rgba(56,189,248,.65),transparent);
-}
-.deal-chip{
-  border:1px solid rgba(233,201,121,.38) !important;
-  background:linear-gradient(90deg,rgba(233,201,121,.14),rgba(56,189,248,.10)) !important;
-  color:#f6de9c !important;box-shadow:0 6px 20px rgba(201,162,75,.14);
-}
-/* Inputs & calendar panels */
-.glass-card input, .glass-card [onclick="openLocationModal('origin')"], .glass-card [onclick="openLocationModal('dest')"]{border-radius:16px !important}
-#originDisplay,#destDisplay,#stopoverDisplay{color:#fffaf0 !important}
-.sk-day{border-radius:12px !important;color:#dbeafe}
-.sk-day:hover:not(.empty){background:rgba(56,189,248,.16) !important;border:1px solid rgba(125,211,252,.70) !important}
+.luxury-search-card::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,rgba(201,162,75,.95),rgba(56,189,248,.75),transparent)}
+.deal-chip{border:1px solid rgba(201,162,75,.48) !important;background:linear-gradient(90deg,rgba(246,222,156,.50),rgba(224,242,254,.75)) !important;color:#92400e !important;box-shadow:0 6px 20px rgba(201,162,75,.18)}
+/* Inputs & calendar */
+.glass-card input, .glass-card [onclick="openLocationModal('origin')"], .glass-card [onclick="openLocationModal('dest')"]{border-radius:16px !important;background:#ffffff !important;color:#1e293b !important;border-color:#cbd5e1 !important;box-shadow:0 4px 16px rgba(3,105,161,.07) !important}
+#originDisplay,#destDisplay,#stopoverDisplay{color:#0f172a !important}
+input{color:#1e293b !important;background:#ffffff !important}
+input::placeholder{color:#94a3b8 !important}
+.sk-day{border-radius:12px !important;color:#334155 !important}
+.sk-day:hover:not(.empty){background:#e0f2fe !important;border:1px solid #38bdf8 !important}
 .sk-day-selected-dept{background:linear-gradient(135deg,#0284c7,#38bdf8) !important;color:#fff !important;box-shadow:0 8px 20px rgba(56,189,248,.35)}
-.sk-day-selected-ret{background:linear-gradient(135deg,#0f766e,#2dd4bf) !important;color:#04201b !important;font-weight:800}
-.sk-day-in-range{background:rgba(56,189,248,.16) !important}
-.custom-scroll::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--lux-gold),#38bdf8);border-radius:99px}
-.custom-scroll::-webkit-scrollbar-track{background:#071022}
-/* Primary search CTA — clear, gold luxury */
-#searchBtn{
-  background:linear-gradient(92deg,#b98a2f,#e9c979 28%,#f6de9c 50%,#e9c979 72%,#38bdf8 135%) !important;
-  color:#081426 !important;border:1px solid rgba(255,250,240,.65);
-  box-shadow:0 16px 38px rgba(201,162,75,.34),0 8px 24px rgba(56,189,248,.16),inset 0 1px 0 rgba(255,255,255,.75) !important;
-  border-radius:18px !important;letter-spacing:.01em;
-}
-#searchBtn:hover{filter:brightness(1.06);transform:translateY(-1px)}
-#btnRoundTrip.bg-sky-500,#btnOneWay.bg-emerald-500,#btnMultiCity.bg-amber-500{
-  background:linear-gradient(92deg,rgba(56,189,248,.92),rgba(45,212,191,.82)) !important;color:#04121f !important;
-  box-shadow:0 10px 24px rgba(56,189,248,.28) !important;
-}
-/* Section headings + links */
-h2{color:#f6de9c !important}
-h2 i{color:var(--lux-sky) !important;filter:drop-shadow(0 0 10px rgba(56,189,248,.45))}
+.sk-day-selected-ret{background:linear-gradient(135deg,#0f766e,#2dd4bf) !important;color:#fff !important;font-weight:800}
+.sk-day-in-range{background:#e0f2fe !important}
+.custom-scroll::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--bright-gold),#38bdf8);border-radius:99px}
+.custom-scroll::-webkit-scrollbar-track{background:#e0f2fe}
+/* Primary CTA */
+#searchBtn{background:linear-gradient(92deg,#d97706,#e9c979 30%,#f6de9c 50%,#e9c979 72%,#38bdf8 135%) !important;color:#451a03 !important;border:1px solid rgba(146,64,14,.28);box-shadow:0 16px 38px rgba(217,119,6,.28),0 8px 24px rgba(56,189,248,.18),inset 0 1px 0 rgba(255,255,255,.85) !important;border-radius:18px !important;letter-spacing:.01em}
+#searchBtn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+#btnRoundTrip.bg-sky-500,#btnOneWay.bg-emerald-500,#btnMultiCity.bg-amber-500{background:linear-gradient(92deg,#0ea5e9,#2dd4bf) !important;color:#ffffff !important;box-shadow:0 10px 24px rgba(56,189,248,.28) !important}
+h2{color:#92400e !important}
+h2 i{color:#0284c7 !important;filter:drop-shadow(0 0 10px rgba(56,189,248,.35))}
+h3{color:#1e293b}
 a{transition:color .16s ease,border-color .16s ease,transform .16s ease}
-a:hover{color:#f6de9c}
-footer{color:#93a7c4 !important}
-footer a, nav a.deal-chip{color:#bae6fd !important}
-nav a.deal-chip:hover{border-color:rgba(246,222,156,.65) !important;color:#f6de9c !important;transform:translate-y(-1px)}
+a:hover{color:#b45309}
+footer{color:#64748b !important;background:transparent !important}
+footer a, nav a.deal-chip{color:#0369a1 !important}
+nav a.deal-chip:hover{border-color:rgba(201,162,75,.75) !important;color:#92400e !important;transform:translateY(-1px)}
 /* Results generated by JS */
-#googleBookBar > div{
-  border:1.5px solid rgba(233,201,121,.62) !important;
-  background:linear-gradient(160deg,rgba(233,201,121,.14),rgba(14,32,64,.96) 42%,rgba(7,16,34,.98)) !important;
-  box-shadow:0 22px 48px rgba(0,0,0,.42),0 0 34px rgba(233,201,121,.14) !important;border-radius:24px !important;
-}
-#googleBookBar a{
-  background:linear-gradient(92deg,#c9a24b,#f6de9c 48%,#e9c979) !important;color:#081426 !important;
-  box-shadow:0 14px 30px rgba(201,162,75,.34) !important;border-radius:16px !important;
-}
-#cheapPathResults > div, #nearbyAirportSection, #tripSummary, #locationModal > div{
-  border-color:rgba(148,184,255,.18) !important;
-  background:linear-gradient(165deg,rgba(17,34,64,.86),rgba(7,16,34,.92)) !important;
-  box-shadow:0 14px 34px rgba(0,0,0,.30);
-}
-#locationModal > div{border:1px solid var(--lux-border) !important;border-radius:24px !important}
-::selection{background:#e9c979;color:#081426}
-@media (max-width:640px){
-  .glass-card{border-radius:22px !important}
-  header h1{line-height:1.08}
-  .luxury-trust-row span{font-size:10px;padding:.36rem .58rem}
-}
+#googleBookBar > div{border:1.5px solid rgba(201,162,75,.65) !important;background:linear-gradient(160deg,#fffbeb,rgba(255,255,255,.97) 42%,#f0f9ff) !important;box-shadow:0 22px 48px rgba(3,105,161,.13),0 0 34px rgba(233,201,121,.22) !important;border-radius:24px !important;color:#1e293b !important}
+#googleBookBar a{background:linear-gradient(92deg,#d97706,#f6de9c 48%,#e9c979) !important;color:#451a03 !important;box-shadow:0 14px 30px rgba(217,119,6,.28) !important;border-radius:16px !important}
+#cheapPathResults > div, #nearbyAirportSection, #tripSummary, #locationModal > div{border-color:rgba(14,165,233,.28) !important;background:linear-gradient(165deg,#ffffff,#f0f9ff) !important;box-shadow:0 14px 34px rgba(3,105,161,.11);color:#1e293b !important}
+#locationModal{background:rgba(255,249,236,.72) !important}
+#locationModal > div{border:1px solid var(--bright-border) !important;border-radius:24px !important}
+::selection{background:#f6de9c;color:#451a03}
+@media (max-width:640px){.glass-card{border-radius:22px !important}header h1{line-height:1.08}.luxury-trust-row span{font-size:10px;padding:.36rem .58rem}}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
