@@ -33,6 +33,7 @@
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/luxury.css?v=luxury-20261019">
     <style>
         .custom-scroll::-webkit-scrollbar { width: 5px; }
         .custom-scroll::-webkit-scrollbar-thumb { background-color: #38bdf8; border-radius: 4px; }
@@ -103,9 +104,14 @@
             <p class="text-slate-400 text-xs sm:text-sm mt-2 max-w-2xl mx-auto leading-5">
                 Pick From / To, then one day on the calendar. The cheap authentic path is Google Flights (tfs search). Book with the airline there — that is the real ticket. A US-Bangla ৳ on Google Flights is an authentic airline-issued fare, not a number we invent. Official airline engines are secondary because they often show a higher fare family (Flex). One official book button per airline stays below, with a published card or promo only beside that checkout.
             </p>
+                    <div class="luxury-trust-row" aria-label="How this finder stays honest">
+                <span><i class="fa-solid fa-shield-halved"></i> No invented fares</span>
+                <span><i class="fa-solid fa-plane-circle-check"></i> Real price on Google Flights</span>
+                <span><i class="fa-solid fa-suitcase-rolling"></i> Check baggage-included total</span>
+            </div>
         </header>
 
-        <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl mb-6">
+        <div class="glass-card luxury-search-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl mb-6">
             <div class="flex items-center justify-center gap-2 mb-5 p-1 bg-slate-950/80 rounded-xl border border-slate-800 max-w-md mx-auto">
                 <button type="button" onclick="setTripType('round')" id="btnRoundTrip" class="flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-sky-500 text-white shadow">
                     <i class="fa-solid fa-arrows-rotate mr-1"></i> Round Trip
