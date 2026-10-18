@@ -260,6 +260,7 @@
     </div>
 
     <script src="js/booking-links.js?v=gf-nearby-20260902"></script>
+    <script src="js/travelpayouts.js?v=aviasales-791994"></script>
     <script>
         const COUNTRY_AIRPORTS = [
 
@@ -1276,8 +1277,9 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             ${savingsChips(item.savings)}
+                            ${item.affiliate ? `<div class="text-[10px] text-amber-200/80 mt-1">অ্যাফিলিয়েট লিংক — বুক করলে আমরা কমিশন পেতে পারি; আপনার দাম বাড়বে না। Affiliate link — we may earn a commission; your price does not increase. <a href="/disclosure" class="underline">Disclosure</a></div>` : ""}
                         </div>
-                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-center ${tone.btn} font-bold px-3 py-2 rounded-xl text-[11px] transition whitespace-nowrap">
+                        <a href="${item.url}" target="_blank" rel="${item.affiliate ? "sponsored noopener noreferrer" : "noopener noreferrer"}" class="shrink-0 text-center ${tone.btn} font-bold px-3 py-2 rounded-xl text-[11px] transition whitespace-nowrap">
                             <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> ${escapeHtml(item.cta || "Open " + item.name)}
                         </a>
                     </div>

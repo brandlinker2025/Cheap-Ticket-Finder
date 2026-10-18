@@ -1061,6 +1061,23 @@
                 savings: savingsForProvider("gozayaan", opts)
             }
         ];
+        // Travelpayouts/Aviasales secondary row — only when Lina's own marker +
+        // dashboard-generated link are configured in js/travelpayouts.js.
+        // Google Flights remains primary above; do not break airline rows below.
+        const tp = (typeof root !== "undefined" && root.TravelpayoutsAffiliate) || (typeof TravelpayoutsAffiliate !== "undefined" ? TravelpayoutsAffiliate : null);
+        const tpUrl = tp && typeof tp.aviasalesAffiliateUrl === "function" ? tp.aviasalesAffiliateUrl(opts) : null;
+        if (tpUrl) {
+            rows.push({
+                id: "aviasales-affiliate",
+                name: "Aviasales",
+                url: tpUrl,
+                cta: "Also compare on Aviasales",
+                tier: "secondary",
+                affiliate: true,
+                blurb: "Affiliate link — we may earn a commission if you book; your price does not increase. Live fare is on Aviasales — we do not invent \u09f3.",
+                savings: []
+            });
+        }
         airlinesForRoute(opts).forEach((airline) => {
             rows.push({
                 id: airline.id,
