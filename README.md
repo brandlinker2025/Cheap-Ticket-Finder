@@ -35,3 +35,18 @@ ShareTrip dated `/flight/search` is not linked (404). EBL Stellar codes use Shar
 ## Tech
 
 Static `index.html` on Vercel. Dated URLs are built in `js/booking-links.js`.
+
+## Google Search Console — one owner sign-in step left (prepared 19 Oct 2026, Asia/Dhaka)
+
+SEO files are live-ready in this repo: `/robots.txt`, `/sitemap.xml`, canonical/OG tags and route-guide pages. Search Console itself is **not verified yet** — only RS Lina can do the final sign-in.
+
+1. Go to https://search.google.com/search-console and sign in with her own Google account.
+2. Add property → **URL prefix** → `https://cheapticketfinder.site/` (or Domain property for `cheapticketfinder.site` if she prefers; URL-prefix is simplest).
+3. Verification options Google will offer:
+   - **HTML meta tag (recommended, easiest with this repo):** copy only the `content="..."` value Google gives her and send it to the agent — one `<meta name="google-site-verification" ...>` line will be added to `index.html` head, deployed, then she clicks **Verify**.
+   - **HTML file:** Google gives a file like `googleXXXXXXXXXXXX.html` — send that exact filename/content to the agent; it will be placed in the repo root, deployed, then she clicks **Verify**. Do not invent this file — its name/content come only from her Search Console account.
+   - DNS TXT record is an alternative if she manages DNS.
+4. After verification: Search Console → Sitemaps → submit `sitemap.xml`.
+5. Use **URL Inspection → Request indexing** for `/` and the six route-guide pages. This asks Google to crawl; it does not guarantee ranking or timing.
+
+No ranking is promised: indexing can take days–weeks and positions depend on Google, competition and fresh, honest content.
