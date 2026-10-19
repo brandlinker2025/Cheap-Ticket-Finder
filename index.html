@@ -10,6 +10,9 @@
           document.head.appendChild(script);
       })();
     </script>
+    <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1">
+(function(){var script=document.createElement("script");script.async=1;script.type="module";script.src="https://tpwdg.com/wl_web/main.js?wl_id=23606";document.head.appendChild(script);})();
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cheap Ticket Finder BD — Cheap Flight Ticket Price in Bangladesh | কম দামে টিকিট</title>
@@ -195,7 +198,8 @@
             background:#d4eefc !important;color:#111111 !important;border-color:#9fd4f2 !important;box-shadow:none !important
         }
         body.hero-glow h2,body.hero-glow h2 i{color:#0c4a6e !important;-webkit-text-fill-color:#0c4a6e !important}
-        #hotel-booking,#tour-package,#travel-sim,#airport-transport,#air-ticket{scroll-margin-top:12px}
+        #hotel-booking,#tour-package,#travel-sim,#airport-transport,#air-ticket,#wl-flight-results{scroll-margin-top:12px}
+        #tpwl-search,#tpwl-tickets{width:100%;min-width:0}
         @media (max-width:860px){
             .site-header-inner{grid-template-columns:1fr auto;grid-template-areas:"brand contact" "tabs tabs";min-height:0;padding:.45rem .7rem .3rem}
             .site-header h1{grid-area:brand;font-size:.98rem !important}
@@ -230,6 +234,29 @@
     </header>
 
     <div class="max-w-6xl mx-auto px-3 sm:px-6 pt-4 pb-8">
+
+        <section class="search-panel" id="wl-flight-results" aria-label="Flight results">
+            <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">Flight results</h2>
+            <p class="text-[11px] text-slate-500 mb-3 leading-5">Live prices and airline names show in these results. The final total is confirmed on the booking site before payment. লাইভ দাম ও এয়ারলাইনের নাম এখানে দেখা যায়। পেমেন্টের আগে বুকিং সাইটে চূড়ান্ত মোট দাম নিশ্চিত করুন।</p>
+            <div id="tpwl-search"></div>
+            <div id="tpwl-tickets"></div>
+            <script>
+            (function () {
+                var tries = 0;
+                var timer = setInterval(function () {
+                    var host = document.getElementById("tpwl-search");
+                    var box = host && host.shadowRoot && host.shadowRoot.querySelector('input[type="checkbox"]');
+                    tries += 1;
+                    if (box) {
+                        if (box.checked) box.click();
+                        clearInterval(timer);
+                    } else if (tries > 40) {
+                        clearInterval(timer);
+                    }
+                }, 250);
+            })();
+            </script>
+        </section>
 
         <section class="search-panel" id="air-ticket">
             <div class="home-panel" data-tab="air" role="tabpanel">
