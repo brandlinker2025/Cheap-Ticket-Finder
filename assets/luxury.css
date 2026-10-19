@@ -172,7 +172,7 @@ footer a,footer nav a{font-weight:700}
 /* From/To names: wrap instead of clipping with an ellipsis on small screens */
 #originDisplay,#destDisplay,#stopoverDisplay{white-space:normal !important;overflow:visible !important;text-overflow:clip !important;line-height:1.45;font-size:14px;font-weight:700}
 .glass-card [onclick^="openLocationModal"]{min-height:48px}
-/* Warnings, steps and affiliate notes on guide pages */
+/* Warnings, steps and notes on guide pages */
 .warn-box{color:#422006 !important;line-height:1.72}
 .warn-box a,.glass-card a.underline,main a.underline{color:#075985;font-weight:650}
 .step-btn{background:linear-gradient(92deg,#0369a1,#0284c7) !important;color:#ffffff !important}
