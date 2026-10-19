@@ -54,5 +54,15 @@ for (const [name, url] of [["EKTA", "https://ektatraveling.tpo.lv/ArgAETEF"], ["
   const all = home + packages + esim + insurance;
   assert.ok(all.includes(`href="${url}" target="_blank" rel="sponsored noopener noreferrer"`), `${name} CTA must use exact sponsored rel`);
 }
-assert.ok(!home.includes("trip.com") && !hotels.includes("trip.com") && !packages.includes("booking.com/"), "locked partners must not be linked");
+for (const [label, url] of [
+  ["flights", "https://www.trip.com/flights?Allianceid=11059812&SID=333836392&trip_sub1=flights&trip_sub3=D20343143"],
+  ["hotels", "https://www.trip.com/hotels?Allianceid=11059812&SID=333836392&trip_sub1=hotels&trip_sub3=D20343143"],
+  ["tours", "https://www.trip.com/things-to-do/?Allianceid=11059812&SID=333836392&trip_sub1=tours&trip_sub3=D20343143"],
+  ["transfers", "https://www.trip.com/airport-transfers/index/?Allianceid=11059812&SID=333836392&trip_sub1=transfer&trip_sub3=D20343143"],
+  ["homepage", "https://www.trip.com/?Allianceid=11059812&SID=333836392&trip_sub1=homepage&trip_sub3=D20343143"],
+]) {
+  assert.ok(home.includes(`href="${url}"`), `homepage must keep the approved Trip.com ${label} link`);
+  assert.ok(home.includes(`href="${url}" target="_blank" rel="sponsored noopener noreferrer"`), `Trip.com ${label} link must use sponsored rel`);
+}
+assert.ok(!hotels.includes("trip.com") && !packages.includes("trip.com") && !packages.includes("booking.com/"), "Trip.com stays on the homepage; other pages stay unchanged");
 console.log("services.test.js OK (hotels 137 + packages 633 KKday + Viator P00326733 + esim 541 + transfer 1, marker 791994)");
