@@ -260,14 +260,14 @@
 
         <section class="mb-8" id="servicesSection" aria-label="Flights hotels and tour packages in one place">
             <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">এক জায়গায় সব — Flights, Hotels, Packages, eSIM &amp; Airport Transfer in one place</h2>
-            <p class="text-[11px] text-slate-500 mb-3 leading-5">টিকিট, হোটেল আর ট্যুর — তিনটাই এখান থেকে শুরু করুন। Flights, hotels and packages each open the real provider or partner page; we do not take payment on this site and we do not invent prices. অ্যাফিলিয়েট লিংক দিয়ে বুক করলে আমরা কমিশন পেতে পারি; আপনার দাম বাড়বে না। <a class="text-sky-400 underline" href="/disclosure">Affiliate Disclosure</a></p>
+            <p class="text-[11px] text-slate-500 mb-3 leading-5">টিকিট, হোটেল আর ট্যুর — তিনটাই এখান থেকে শুরু করুন। Flights, hotels and packages each open the real provider or partner page; we do not take payment on this site and we do not invent prices.</p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl">
                     <div class="text-3xl mb-2" aria-hidden="true">✈️</div>
                     <h3 class="font-bold text-base mb-1">Air Ticket</h3>
                     <p class="text-[11px] text-slate-500 leading-5 mb-3">Pick route and flexible dates in our search tool, then check the real total on Google Flights. কম দামে টিকিট খুঁজুন, ব্যাগেজসহ মোট দাম যাচাই করুন।</p>
                     <a class="cta-affiliate" href="#search" style="display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(92deg,#d97706,#e9c979 45%,#f6de9c);color:#451a03;font-weight:800;padding:.65rem 1rem;border-radius:14px">Search flights above</a>
-                    <p class="mt-2 text-[11px]"><a href="https://tp.media/r?campaign_id=100&marker=791994&p=4114&sub_id=cheapticketfinder-site&trs=587447&u=https%3A%2F%2Faviasales.com" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Or compare on Aviasales (affiliate)</a></p>
+                    <p class="mt-2 text-[11px]"><a href="https://tp.media/r?campaign_id=100&marker=791994&p=4114&sub_id=cheapticketfinder-site&trs=587447&u=https%3A%2F%2Faviasales.com" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Or compare on Aviasales</a></p>
                 </div>
                 <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl">
                     <div class="text-3xl mb-2" aria-hidden="true">🏨</div>
@@ -281,7 +281,7 @@
                     <h3 class="font-bold text-base mb-1"><a href="/packages/" class="hover:underline">Tour Packages</a></h3>
                     <p class="text-[11px] text-slate-500 leading-5 mb-3">ট্যুর প্যাকেজ — explore Asia tours via KKday or worldwide tours on Viator, check inclusions and cancellation before you pay on the partner site.</p>
                     <a class="cta-affiliate" href="https://tp.media/r?campaign_id=633&marker=791994&p=9074&sub_id=cheapticketfinder-packages&trs=587447&u=https%3A%2F%2Fkkday.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(92deg,#d97706,#e9c979 45%,#f6de9c);color:#451a03;font-weight:800;padding:.65rem 1rem;border-radius:14px">Explore Asia packages on KKday</a>
-                    <p class="mt-2 text-[11px]"><a href="https://www.viator.com/?pid=P00326733&uid=U00880752&mcid=58086&currency=USD" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Or worldwide tours on Viator (affiliate)</a></p>
+                    <p class="mt-2 text-[11px]"><a href="https://www.viator.com/?pid=P00326733&uid=U00880752&mcid=58086&currency=USD" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Or worldwide tours on Viator</a></p>
                     <p class="mt-2 text-[11px]"><a href="/packages/" class="text-sky-400 underline">Tour package guide &amp; checks →</a></p>
                 </div>
                 <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl">
@@ -335,7 +335,7 @@
                 <a class="text-sky-400 hover:text-sky-300" href="/terms">Terms</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/privacy">Privacy</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/contact">Contact</a>
-                <a class="text-sky-400 hover:text-sky-300" href="/disclosure">Affiliate Disclosure</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/disclosure">Disclosure</a>
             </nav>
         </footer>
     </div>
@@ -1373,7 +1373,6 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             ${savingsChips(item.savings)}
-                            ${item.affiliate ? `<div class="text-[10px] text-amber-200/80 mt-1">অ্যাফিলিয়েট লিংক — বুক করলে আমরা কমিশন পেতে পারি; আপনার দাম বাড়বে না। Affiliate link — we may earn a commission; your price does not increase. <a href="/disclosure" class="underline">Disclosure</a></div>` : ""}
                         </div>
                         <a href="${item.url}" target="_blank" rel="${item.affiliate ? "sponsored noopener noreferrer" : "noopener noreferrer"}" class="shrink-0 text-center ${tone.btn} font-bold px-3 py-2 rounded-xl text-[11px] transition whitespace-nowrap">
                             <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> ${escapeHtml(item.cta || "Open " + item.name)}

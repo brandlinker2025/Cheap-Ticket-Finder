@@ -1074,7 +1074,7 @@
                 cta: "Also compare on Aviasales",
                 tier: "secondary",
                 affiliate: true,
-                blurb: "Affiliate link — we may earn a commission if you book; your price does not increase. Live fare is on Aviasales — we do not invent \u09f3.",
+                blurb: "Live fare is on Aviasales — we do not invent \u09f3.",
                 savings: []
             });
         }

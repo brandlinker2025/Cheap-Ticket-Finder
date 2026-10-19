@@ -31,8 +31,5 @@
         return GENERATED_AFFILIATE_LINK;
     }
 
-    const DISCLOSURE_EN = "Affiliate link — we may earn a commission if you book; your price does not increase. See /disclosure.";
-    const DISCLOSURE_BN = "অ্যাফিলিয়েট লিংক — বুক করলে আমরা কমিশন পেতে পারি; আপনার দাম বাড়বে না।";
-
-    return { TRAVELPAYOUTS_MARKER, GENERATED_AFFILIATE_LINK, isConfigured, aviasalesAffiliateUrl, DISCLOSURE_EN, DISCLOSURE_BN };
+    return { TRAVELPAYOUTS_MARKER, GENERATED_AFFILIATE_LINK, isConfigured, aviasalesAffiliateUrl };
 });
