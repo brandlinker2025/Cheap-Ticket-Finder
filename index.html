@@ -39,13 +39,13 @@
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/assets/luxury.css?v=clear-20261019">
+    <link rel="stylesheet" href="/assets/luxury.css?v=compact-20261019">
     <style>
         .custom-scroll::-webkit-scrollbar { width: 5px; }
         .custom-scroll::-webkit-scrollbar-thumb { background-color: #38bdf8; border-radius: 4px; }
         .custom-scroll::-webkit-scrollbar-track { background-color: #E0F2FE; }
         .sk-day {
-            height: 42px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -54,7 +54,7 @@
             transition: all 0.15s ease;
             -webkit-tap-highlight-color: transparent;
         }
-        @media (max-width: 640px) { .sk-day { height: 38px; font-size: 0.78rem; } }
+        @media (max-width: 640px) { .sk-day { height: 36px; font-size: 0.875rem; } }
         .sk-day:hover:not(.empty) {
             background-color: #E0F2FE;
             border: 1px solid #38bdf8;
@@ -118,7 +118,7 @@
         </header>
 
         <div class="glass-card luxury-search-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl mb-6">
-            <div class="flex items-center justify-center gap-2 mb-5 p-1 bg-slate-950/80 rounded-xl border border-slate-800 max-w-md mx-auto">
+            <div class="flex items-center justify-center gap-2 mb-3 p-1 bg-slate-950/80 rounded-xl border border-slate-800 max-w-md mx-auto">
                 <button type="button" onclick="setTripType('round')" id="btnRoundTrip" class="flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-sky-500 text-white shadow">
                     <i class="fa-solid fa-arrows-rotate mr-1"></i> Round Trip
                 </button>
@@ -130,7 +130,7 @@
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 mb-3">
                 <div>
                     <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">From</label>
                     <div onclick="openLocationModal('origin')" class="w-full bg-slate-950 border border-slate-700 hover:border-sky-500 active:scale-[0.99] rounded-xl p-3 text-white cursor-pointer flex justify-between items-center text-xs sm:text-sm transition shadow-inner">
@@ -157,8 +157,8 @@
                 </div>
             </div>
 
-            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 sm:p-5 mb-4">
-                <div class="flex flex-wrap justify-between items-center mb-3 pb-3 border-b border-slate-800 gap-2">
+            <div id="calendarCard" class="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 mb-3">
+                <div class="flex flex-wrap justify-between items-center mb-2 pb-2 border-b border-slate-800 gap-x-2 gap-y-1.5">
                     <div>
                         <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
                             <i class="fa-solid fa-calendar-days text-sky-400"></i> One calendar — dates start empty
@@ -170,20 +170,20 @@
                     <span id="selectedTripLabel" class="text-[11px] sm:text-xs text-sky-400 bg-sky-500/10 border border-sky-500/30 px-2.5 py-1 rounded-lg font-bold">No dates yet</span>
                 </div>
 
-                <div id="calendarGridWrapper" class="max-w-xl mx-auto">
-                    <div class="bg-slate-900/60 p-3 sm:p-4 rounded-xl border border-slate-800/80">
-                        <div class="flex justify-between items-center mb-2.5">
+                <div id="calendarGridWrapper" class="w-full max-w-[480px] mx-auto">
+                    <div class="bg-slate-900/60 p-2 sm:p-2.5 rounded-xl border border-slate-800/80">
+                        <div class="flex justify-between items-center mb-1.5 gap-2">
                             <span id="calendarPickBadge" class="text-[10px] font-extrabold uppercase text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded">Pick depart</span>
                             <span id="departMonthLabel" class="text-xs sm:text-sm font-bold text-white"></span>
                             <div class="flex gap-1">
-                                <button type="button" onclick="navigateMonth(-1)" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 rounded text-xs text-white flex items-center justify-center" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button>
-                                <button type="button" onclick="navigateMonth(1)" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 rounded text-xs text-white flex items-center justify-center" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button>
+                                <button type="button" onclick="navigateMonth(-1)" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 rounded text-xs text-white flex items-center justify-center" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button>
+                                <button type="button" onclick="navigateMonth(1)" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 rounded text-xs text-white flex items-center justify-center" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button>
                             </div>
                         </div>
-                        <div class="grid grid-cols-7 text-center text-[11px] font-bold text-slate-500 mb-1">
+                        <div class="sk-weekdays grid grid-cols-7 gap-[3px] text-center text-[11px] font-bold text-slate-500 mb-1">
                             <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
                         </div>
-                        <div id="tripCalendarGrid" class="grid grid-cols-7 gap-1 text-slate-200"></div>
+                        <div id="tripCalendarGrid" class="grid grid-cols-7 gap-[3px] text-slate-200"></div>
                     </div>
                 </div>
             </div>

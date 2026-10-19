@@ -191,3 +191,34 @@ code{overflow-wrap:anywhere}
   h1{overflow-wrap:break-word}
   #searchBtn{min-height:52px;font-size:15px !important}
 }
+
+/* === Compact calendar 2026-10-19 (RS Lina: calendar too big / wastes space, mobile) ===
+   Keeps Clear pass: day numbers >=13px (14px here), out-of-month/past days
+   opacity .62 visible, selected/range states strong. No colour/theme change.
+   Cells 36px (was 42 desktop / 40 mobile), grid gap 3px (was 4px),
+   wrapper max 480px (was 576px), tighter card/header/nav padding. */
+#calendarCard{scroll-margin-top:12px}
+#calendarGridWrapper{width:100%;max-width:480px;min-width:0}
+#tripCalendarGrid{gap:3px !important}
+.sk-weekdays{line-height:1.25}
+.sk-weekdays>div{min-width:0}
+.sk-day{
+  height:36px !important;min-height:36px !important;max-height:36px;
+  font-size:14px !important;line-height:1.15 !important;border-radius:9px !important;
+  min-width:0;padding:0;
+}
+.sk-day>span,.sk-day span{font-size:14px !important;line-height:1 !important}
+.sk-day-in-range{border-radius:4px !important}
+#calendarGridWrapper button{min-height:32px !important;height:32px;width:32px;flex:0 0 auto}
+#calendarPickBadge{padding:.28rem .55rem !important;line-height:1.3 !important}
+#departMonthLabel{line-height:1.3;white-space:nowrap}
+#calendarHint{margin-top:.2rem !important;line-height:1.45 !important}
+@media (max-width:640px){
+  #calendarGridWrapper{max-width:100%}
+  .sk-day{height:36px !important;min-height:36px !important}
+  /* Search button stays reachable: calendar + From/To stack without excess gaps */
+  .luxury-search-card .grid.grid-cols-1{gap:.55rem}
+}
+@media (min-width:641px){
+  .sk-day{height:36px !important;min-height:36px !important}
+}
