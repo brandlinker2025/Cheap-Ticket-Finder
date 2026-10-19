@@ -7,6 +7,7 @@ const hotels = read("hotels/index.html");
 const packages = read("packages/index.html");
 const esim = read("esim/index.html");
 const transfer = read("airport-transfer/index.html");
+const insurance = read("travel-insurance/index.html");
 const sitemap = read("sitemap.xml");
 
 for (const [name, html, campaign, partner] of [
@@ -43,5 +44,15 @@ assert.ok(sitemap.includes("https://cheapticketfinder.site/hotels/"), "sitemap m
 assert.ok(sitemap.includes("https://cheapticketfinder.site/packages/"), "sitemap must include packages");
 assert.ok(sitemap.includes("https://cheapticketfinder.site/esim/"), "sitemap must include esim");
 assert.ok(sitemap.includes("https://cheapticketfinder.site/airport-transfer/"), "sitemap must include airport-transfer");
+assert.ok(sitemap.includes("https://cheapticketfinder.site/travel-insurance/"), "sitemap must include travel-insurance");
+assert.ok(insurance.includes("https://ektatraveling.tpo.lv/ArgAETEF"), "travel-insurance must contain EKTA link");
+assert.ok(insurance.includes("EKTA") && insurance.includes("policy terms"), "travel-insurance must name EKTA and tell users to check policy terms");
+assert.ok(packages.includes("https://tiqets.tpo.lv/zc9OgjmX") && packages.includes("Tiqets"), "packages must contain Tiqets link");
+assert.ok(esim.includes("https://yesim.tpo.lv/ZAsUxhwZ") && esim.includes("Yesim"), "esim must contain Yesim link as second option");
+assert.ok(home.includes("https://ektatraveling.tpo.lv/ArgAETEF") && home.includes('href="/travel-insurance/"'), "homepage services card must contain EKTA link and travel-insurance guide");
+for (const [name, url] of [["EKTA", "https://ektatraveling.tpo.lv/ArgAETEF"], ["Tiqets", "https://tiqets.tpo.lv/zc9OgjmX"], ["Yesim", "https://yesim.tpo.lv/ZAsUxhwZ"]]) {
+  const all = home + packages + esim + insurance;
+  assert.ok(all.includes(`href="${url}" target="_blank" rel="sponsored noopener noreferrer"`), `${name} CTA must use exact sponsored rel`);
+}
 assert.ok(!home.includes("trip.com") && !hotels.includes("trip.com") && !packages.includes("booking.com/"), "locked partners must not be linked");
 console.log("services.test.js OK (hotels 137 + packages 633 KKday + Viator P00326733 + esim 541 + transfer 1, marker 791994)");
