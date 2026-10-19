@@ -13,8 +13,8 @@ assert.strictEqual(TP.isConfigured("[TRAVELPAYOUTS MARKER]", "https://example.co
 assert.strictEqual(TP.isConfigured("791994", ""), false);
 assert.strictEqual(TP.isConfigured("791994", "https://example.com/?marker=999"), false);
 assert.strictEqual(TP.isConfigured("791994", url), true);
-assert.ok(TP.DISCLOSURE_EN.includes("/disclosure"));
-assert.ok(TP.DISCLOSURE_BN.length > 0);
+assert.ok(!TP.DISCLOSURE_BN, "Bangla commission disclosure text must not be shipped");
+assert.ok(!(TP.DISCLOSURE_EN || "").toLowerCase().includes("commission"), "no commission wording outside /disclosure");
 console.log("travelpayouts.test.js OK (live marker 791994)");
 
 // Integration: cheapBookPath keeps Google Flights primary and adds Aviasales secondary.
