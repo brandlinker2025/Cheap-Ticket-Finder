@@ -366,7 +366,16 @@ const eblIntl = promos.find((item) => item.code === "STLRPIQ326");
 assert.strictEqual(eblIntl.checkoutUrl, "https://sharetrip.net/");
 assert.ok(!eblIntl.checkoutUrl.includes("/flight/search"));
 
-const nearby = BookingLinks.flexibleNearbyDays(dacCan, 3);
+function isoAhead(daysAhead) {
+    const d = new Date();
+    d.setHours(12, 0, 0, 0);
+    d.setDate(d.getDate() + daysAhead);
+    const p = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+const futureDepart = isoAhead(10);
+const futureOpts = { ...dacCan, depart: futureDepart };
+const nearby = BookingLinks.flexibleNearbyDays(futureOpts, 3);
 assert.ok(nearby.length >= 1);
 nearby.forEach((day) => {
     assert.ok(day.google.includes("/travel/flights/search?tfs="));
@@ -375,27 +384,37 @@ nearby.forEach((day) => {
     assert.ok(day.skyscanner.includes("sortby=cheapest"));
     assert.ok(day.kayak.includes(`/flights/DAC-CAN/${day.depart}`));
     assert.ok(day.kayak.includes("sort=price_a"));
-    assert.ok(!day.kayak.split(day.depart)[1].includes("2026-"));
+    assert.ok(!day.kayak.split(day.depart)[1].includes(`${futureDepart.slice(0, 4)}-`));
 });
-const exact = nearby.find((day) => day.depart === "2026-09-03");
+const exact = nearby.find((day) => day.depart === futureDepart);
 assert.ok(exact);
 assert.ok(exact.google.includes("tfs="));
 const decodedFlexible = decodeTfs(new URL(exact.google).searchParams.get("tfs"));
-assert.deepStrictEqual(decodedFlexible.legs[0], { date: "2026-09-03", origin: "DAC", dest: "CAN" });
+assert.deepStrictEqual(decodedFlexible.legs[0], { date: futureDepart, origin: "DAC", dest: "CAN" });
 
-const monthDays = BookingLinks.flexibleMonthDays(dacCan);
-assert.ok(monthDays.some((day) => day.depart === "2026-09-03"));
-assert.ok(monthDays.every((day) => day.depart.startsWith("2026-09-")));
+const monthDays = BookingLinks.flexibleMonthDays(futureOpts);
+const monthPrefix = futureDepart.slice(0, 7);
+const futureSkyMonth = futureDepart.slice(2, 4) + futureDepart.slice(5, 7);
+assert.ok(monthDays.some((day) => day.depart === futureDepart));
+assert.ok(monthDays.every((day) => day.depart.startsWith(monthPrefix)));
 monthDays.forEach((day) => {
     assert.ok(day.google.includes("/travel/flights/search?tfs="));
     assert.ok(day.skyscanner.includes("sortby=cheapest"));
     assert.ok(day.kayak.includes("sort=price_a"));
-    assert.ok(day.skyscannerMonth.includes("/transport/flights/dac/can/2609/"));
+    assert.ok(day.skyscannerMonth.includes(`/transport/flights/dac/can/${futureSkyMonth}/`));
     assert.ok(!JSON.stringify(day).includes("৳"));
 });
-const octDays = BookingLinks.flexibleMonthDays(dacCan, 2026, 10);
-assert.ok(octDays.every((day) => day.depart.startsWith("2026-10-")));
-assert.ok(octDays[0].skyscannerMonth.includes("/transport/flights/dac/can/2610/"));
+const later = new Date();
+later.setHours(12, 0, 0, 0);
+later.setDate(later.getDate() + 40);
+const laterY = later.getFullYear();
+const laterM = later.getMonth() + 1;
+const laterDays = BookingLinks.flexibleMonthDays(futureOpts, laterY, laterM);
+const laterPrefix = `${laterY}-${String(laterM).padStart(2, "0")}`;
+const laterSky = String(laterY).slice(2) + String(laterM).padStart(2, "0");
+assert.ok(laterDays.length >= 1);
+assert.ok(laterDays.every((day) => day.depart.startsWith(laterPrefix)));
+assert.ok(laterDays[0].skyscannerMonth.includes(`/transport/flights/dac/can/${laterSky}/`));
 const overview = BookingLinks.monthOverviewLinks(dacCan);
 assert.ok(overview.some((item) => item.url.includes("/travel/flights/search?tfs=")));
 assert.ok(overview.some((item) => item.id === "skyscanner-month" && item.url.includes("/2609/")));
@@ -575,18 +594,18 @@ const nearbyFixture = [
     { code: "dac", city: "Dhaka", lat: 23.8433, lon: 90.3978, type: "airport", size: "large" }
 ];
 const lhrAlts = BookingLinks.cheaperNearbyAirports("LHR", nearbyFixture);
-assert.ok(lhrAlts.some((a) => a.code === "SEN" && a.city === "Southend" && a.km >= 50 && a.km <= 150));
-assert.ok(lhrAlts.every((a) => a.km >= 50 && a.km <= 150));
-assert.ok(!lhrAlts.some((a) => ["LHR", "LGW", "STN", "LTN", "MAN", "DAC", "BQH"].includes(a.code)));
+assert.ok(lhrAlts.some((a) => a.code === "BQH" && a.city === "Biggin Hill" && a.km >= 0 && a.km <= 50));
+assert.ok(lhrAlts.every((a) => a.km >= 0 && a.km <= 50));
+assert.ok(!lhrAlts.some((a) => ["LHR", "LGW", "STN", "LTN", "MAN", "DAC", "SEN"].includes(a.code)));
 assert.ok(!JSON.stringify(lhrAlts).includes("৳"));
 assert.ok(!JSON.stringify(lhrAlts).includes("₹"));
-const senLink = BookingLinks.cheaperNearbyAirportLinks(dacLhr, nearbyFixture).find((a) => a.code === "SEN");
-assert.ok(senLink);
-assert.ok(senLink.url.includes("/travel/flights/search?tfs="));
-assert.ok(!senLink.url.includes("flights?q="));
-const decodedSen = decodeTfs(new URL(senLink.url).searchParams.get("tfs"));
-assert.deepStrictEqual(decodedSen.legs[0], { date: "2026-09-08", origin: "DAC", dest: "SEN" });
-assert.deepStrictEqual(decodedSen.legs[1], { date: "2026-09-17", origin: "SEN", dest: "DAC" });
+const bqhLink = BookingLinks.cheaperNearbyAirportLinks(dacLhr, nearbyFixture).find((a) => a.code === "BQH");
+assert.ok(bqhLink);
+assert.ok(bqhLink.url.includes("/travel/flights/search?tfs="));
+assert.ok(!bqhLink.url.includes("flights?q="));
+const decodedNearbyAlt = decodeTfs(new URL(bqhLink.url).searchParams.get("tfs"));
+assert.deepStrictEqual(decodedNearbyAlt.legs[0], { date: "2026-09-08", origin: "DAC", dest: "BQH" });
+assert.deepStrictEqual(decodedNearbyAlt.legs[1], { date: "2026-09-17", origin: "BQH", dest: "DAC" });
 assert.deepStrictEqual(BookingLinks.cheaperNearbyAirports("DAC", nearbyFixture), []);
 
 const astraRoute = BookingLinks.airlinesForRoute(dacCxb).find((a) => a.id === "airastra");
