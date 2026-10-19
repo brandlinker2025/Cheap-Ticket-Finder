@@ -149,26 +149,32 @@
             background:none !important;
             filter:none !important;
         }
-        .trip-hero{background:#ffffff;border:1px solid #d7eef8;border-radius:18px;padding:1rem 1.1rem 1.15rem;margin-bottom:1.5rem;box-shadow:0 10px 28px rgba(14,116,168,.08)}
-        .top-nav{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin:0 0 .15rem}
-        .top-nav h1{margin:0;font-size:1.28rem;line-height:1.2;font-weight:800;letter-spacing:-.02em;color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:none !important;filter:none !important}
-        .top-bar{display:flex;align-items:center;gap:.15rem;margin:0}
-        .top-bar a{display:inline-flex;align-items:center;color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:transparent !important;border:0 !important;border-radius:0;font-weight:800;font-size:14px;line-height:1.2;padding:.4rem .45rem;text-decoration:none;min-height:36px}
-        .top-bar a[href="/contact"]{box-shadow:inset 0 -2px 0 #7ec8ea}
-        .home-intro{margin:.15rem 0 .7rem;color:#111111 !important;font-size:13px;line-height:1.45}
-        .trip-tabs{display:flex;gap:.15rem;overflow-x:auto;border-bottom:1px solid #e6f4fb;margin:0 0 .7rem;scrollbar-width:none}
-        .trip-tabs button{flex:0 0 auto;background:transparent !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;font-weight:700;font-size:14px;line-height:1.2;padding:.65rem .6rem;border:0 !important;border-bottom:2px solid transparent !important;border-radius:0 !important;box-shadow:none !important;white-space:nowrap;cursor:pointer;min-height:40px}
-        .trip-tabs button.is-active{border-bottom-color:#38bdf8 !important;color:#0c4a6e !important;-webkit-text-fill-color:#0c4a6e !important}
+        body.hero-glow header::before{display:none !important}
+        .site-header{background:#ffffff;border-bottom:1px solid #d7eef8}
+        .site-header-inner{max-width:72rem;margin:0 auto;padding:.35rem 1rem;display:grid;grid-template-columns:minmax(150px,1fr) auto minmax(150px,1fr);align-items:center;gap:.5rem;min-height:68px}
+        .site-header h1{margin:0;justify-self:start;font-size:1.05rem !important;line-height:1.15;font-weight:800;letter-spacing:-.02em;white-space:nowrap;color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:none !important;filter:none !important}
+        .top-bar{justify-self:end;display:flex;align-items:center;gap:.7rem;margin:0}
+        .top-bar a{display:inline-flex;align-items:center;color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:transparent !important;border:0 !important;border-radius:0;font-weight:800;font-size:13px;line-height:1.2;padding:.35rem 0;text-decoration:none;min-height:32px}
+        .home-intro{margin:.65rem 0 0;color:#111111 !important;font-size:13px;line-height:1.45}
+        .trip-tabs{display:flex;justify-content:center;gap:.05rem;margin:0;overflow:visible;border:0;scrollbar-width:none}
+        .trip-tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:0 0 auto;min-width:78px;background:transparent !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;font-weight:700;font-size:11px;line-height:1.15;padding:.28rem .4rem .32rem;border:0 !important;border-bottom:2px solid transparent !important;border-radius:0 !important;box-shadow:none !important;white-space:nowrap;cursor:pointer;min-height:54px}
+        .trip-tabs button i{font-size:16px;color:#38bdf8 !important;-webkit-text-fill-color:#38bdf8 !important;background:none !important}
+        .trip-tabs button.is-active{border-bottom-color:#38bdf8 !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important}
+        .trip-tabs button.is-active i{color:#0284c7 !important;-webkit-text-fill-color:#0284c7 !important}
+        .search-panel{background:#ffffff;border:1px solid #d7eef8;border-radius:12px;box-shadow:0 10px 28px rgba(14,116,168,.1);padding:14px 16px 16px;margin:1rem 0 1.5rem}
         .home-panel[hidden]{display:none !important}
         .home-links{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
-        .trip-types{display:flex;flex-wrap:wrap;gap:.85rem;margin:0 0 .55rem}
-        .trip-types button{flex:0 1 auto !important;background:transparent !important;color:#111111 !important;border:0 !important;box-shadow:none !important;border-radius:0 !important;min-height:32px;padding:0 !important;font-weight:700}
+        .trip-types{display:flex;flex-wrap:wrap;align-items:center;gap:1.15rem;margin:0 0 12px}
+        .trip-types button{position:relative;flex:0 1 auto !important;background:transparent !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;border:0 !important;box-shadow:none !important;border-radius:0 !important;min-height:28px;padding:0 0 0 20px !important;font-weight:700;font-size:13px}
+        .trip-types button::before{content:"";position:absolute;left:0;top:50%;width:14px;height:14px;transform:translateY(-50%);border:2px solid #9fd4f2;border-radius:50%;background:#ffffff;box-shadow:none !important}
         #btnRoundTrip.bg-sky-500,#btnOneWay.bg-emerald-500,#btnMultiCity.bg-amber-500,
-        #btnRoundTrip.bg-sky-500 *,#btnOneWay.bg-emerald-500 *,#btnMultiCity.bg-amber-500 *{background:transparent !important;color:#111111 !important;box-shadow:inset 0 -2px 0 #38bdf8 !important}
-        .trip-fields{display:flex;flex-wrap:nowrap;align-items:stretch;gap:0;background:#ffffff;border:1px solid #c5e4f4;border-radius:14px;overflow:hidden}
-        .trip-seg{flex:1 1 0;min-width:0;padding:.55rem .75rem .6rem;border-right:1px solid #e3f3fb;background:#ffffff}
-        .trip-seg label{display:block;margin:0 0 .12rem;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#111111 !important}
-        .trip-fields > #searchBtn{flex:0 0 124px;width:124px;min-height:100%;margin:0;border-radius:0 !important;align-self:stretch}
+        #btnRoundTrip.bg-sky-500 *,#btnOneWay.bg-emerald-500 *,#btnMultiCity.bg-amber-500 *{background:transparent !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;box-shadow:none !important}
+        #btnRoundTrip.bg-sky-500::before,#btnOneWay.bg-emerald-500::before,#btnMultiCity.bg-amber-500::before{border-color:#38bdf8;background:radial-gradient(circle,#38bdf8 0 4px,#ffffff 5px)}
+        .trip-fields{display:flex;flex-wrap:nowrap;align-items:stretch;gap:8px;background:transparent;border:0;border-radius:0;overflow:visible}
+        .trip-seg{flex:1 1 0;min-width:0;min-height:72px;padding:8px 12px;border:1px solid #c5e4f4;border-radius:8px;background:#ffffff;display:flex;flex-direction:column;justify-content:center}
+        .trip-seg label{display:block;margin:0 0 2px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#111111 !important}
+        .seg-value{font-size:14px;font-weight:800;color:#111111;line-height:1.3}
+        .trip-fields > #searchBtn{flex:0 0 156px;width:156px;min-height:72px;margin:0;border-radius:8px !important;align-self:stretch;font-size:16px}
         .luxury-search-card.glass-card{background:transparent !important;border:0 !important;box-shadow:none !important;color:#111111 !important;padding:0 !important}
         .luxury-search-card::before{display:none !important}
         .luxury-search-card label{color:#111111 !important;font-weight:800}
@@ -190,65 +196,59 @@
         }
         body.hero-glow h2,body.hero-glow h2 i{color:#0c4a6e !important;-webkit-text-fill-color:#0c4a6e !important}
         #hotel-booking,#tour-package,#travel-sim,#airport-transport,#air-ticket{scroll-margin-top:12px}
-        @media (max-width:720px){
-            .trip-hero{padding:.85rem .6rem .9rem;border-radius:16px}
-            .top-nav h1{font-size:1.12rem}
+        @media (max-width:860px){
+            .site-header-inner{grid-template-columns:1fr auto;grid-template-areas:"brand contact" "tabs tabs";min-height:0;padding:.45rem .7rem .3rem}
+            .site-header h1{grid-area:brand;font-size:.98rem !important}
+            .top-bar{grid-area:contact}
+            .trip-tabs{grid-area:tabs;justify-content:flex-start;overflow-x:auto;margin-top:.1rem}
+            .trip-tabs button{min-width:70px;font-size:10px;padding:.2rem .3rem .25rem}
+            .search-panel{padding:12px;margin:.75rem 0 1.15rem}
             .trip-fields{flex-direction:column}
-            .trip-seg{border-right:0;border-bottom:1px solid #e3f3fb}
-            .trip-fields > #searchBtn{flex:1 1 auto;width:100%;min-height:48px}
-            .trip-tabs button{padding:.55rem .45rem;font-size:13px}
+            .trip-fields > #searchBtn{flex:1 1 auto;width:100%;min-height:52px}
         }
     </style>
 </head>
 <body class="bg-amber-50 text-slate-800 min-h-screen pb-16 antialiased selection:bg-sky-500 selection:text-white hero-glow">
 
-    <div class="max-w-6xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
-
-        <section class="trip-hero">
-        <div class="top-nav">
+    <header class="site-header">
+        <div class="site-header-inner">
             <h1>Cheap Ticket Finder</h1>
+            <nav class="trip-tabs" role="tablist" aria-label="Travel categories">
+                <button type="button" class="is-active" role="tab" aria-selected="true" data-tab="air" onclick="showHomeTab('air')"><i class="fa-solid fa-plane" aria-hidden="true"></i>Air Ticket</button>
+                <button type="button" role="tab" aria-selected="false" data-tab="airlines" onclick="showHomeTab('airlines')"><i class="fa-solid fa-plane-departure" aria-hidden="true"></i>Airlines</button>
+                <button type="button" role="tab" aria-selected="false" data-tab="hotel" onclick="showHomeTab('hotel')"><i class="fa-solid fa-hotel" aria-hidden="true"></i>Hotel Booking</button>
+                <button type="button" role="tab" aria-selected="false" data-tab="tour" onclick="showHomeTab('tour')"><i class="fa-solid fa-suitcase-rolling" aria-hidden="true"></i>Tour Package</button>
+                <button type="button" role="tab" aria-selected="false" data-tab="sim" onclick="showHomeTab('sim')"><i class="fa-solid fa-sim-card" aria-hidden="true"></i>Travel SIM</button>
+                <button type="button" role="tab" aria-selected="false" data-tab="transfer" onclick="showHomeTab('transfer')"><i class="fa-solid fa-taxi" aria-hidden="true"></i>Airport Transfer</button>
+            </nav>
             <nav class="top-bar" aria-label="Contact">
                 <a href="/contact">Contact</a>
                 <a href="https://www.facebook.com/CheapTFBD" target="_blank" rel="noopener noreferrer">Facebook</a>
             </nav>
         </div>
+    </header>
 
-        <div id="air-ticket" class="glass-card luxury-search-card">
-            <nav class="trip-tabs" role="tablist" aria-label="Travel categories">
-                <button type="button" class="is-active" role="tab" aria-selected="true" data-tab="air" onclick="showHomeTab('air')">Air Ticket</button>
-                <button type="button" role="tab" aria-selected="false" data-tab="airlines" onclick="showHomeTab('airlines')">Airlines</button>
-                <button type="button" role="tab" aria-selected="false" data-tab="hotel" onclick="showHomeTab('hotel')">Hotel Booking</button>
-                <button type="button" role="tab" aria-selected="false" data-tab="tour" onclick="showHomeTab('tour')">Tour Package</button>
-                <button type="button" role="tab" aria-selected="false" data-tab="sim" onclick="showHomeTab('sim')">Travel SIM</button>
-                <button type="button" role="tab" aria-selected="false" data-tab="transfer" onclick="showHomeTab('transfer')">Airport Transfer</button>
-            </nav>
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 pt-4 pb-8">
+
+        <section class="search-panel" id="air-ticket">
             <div class="home-panel" data-tab="air" role="tabpanel">
-            <p class="home-intro">Pick your route and dates. The live fare opens on Google Flights. We do not sell tickets.</p>
             <div class="trip-types">
-                <button type="button" onclick="setTripType('round')" id="btnRoundTrip" class="py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-sky-500 text-white shadow">
-                    <i class="fa-solid fa-arrows-rotate mr-1"></i> Round Trip
-                </button>
-                <button type="button" onclick="setTripType('oneway')" id="btnOneWay" class="py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition text-slate-400 hover:text-white">
-                    <i class="fa-solid fa-arrow-right mr-1"></i> One Way
-                </button>
-                <button type="button" onclick="setTripType('multicity')" id="btnMultiCity" class="py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition text-slate-400 hover:text-white">
-                    <i class="fa-solid fa-route mr-1"></i> Multi-City
-                </button>
+                <button type="button" onclick="setTripType('round')" id="btnRoundTrip" class="bg-sky-500">Round Trip</button>
+                <button type="button" onclick="setTripType('oneway')" id="btnOneWay">One Way</button>
+                <button type="button" onclick="setTripType('multicity')" id="btnMultiCity">Multi-City</button>
             </div>
 
             <div class="trip-fields">
                 <div class="trip-seg">
                     <label>From</label>
-                    <div onclick="openLocationModal('origin')" class="cursor-pointer flex justify-between items-center gap-2">
-                        <span id="originDisplay" class="font-semibold truncate">Hazrat Shahjalal Int. (DAC)</span>
-                        <i class="fa-solid fa-plane-departure text-sky-400"></i>
+                    <div onclick="openLocationModal('origin')" class="cursor-pointer">
+                        <span id="originDisplay" class="font-semibold">Hazrat Shahjalal Int. (DAC)</span>
                     </div>
                 </div>
                 <div class="trip-seg">
                     <label>To</label>
-                    <div onclick="openLocationModal('dest')" class="cursor-pointer flex justify-between items-center gap-2">
-                        <span id="destDisplay" class="font-semibold truncate">Suvarnabhumi Int. (BKK)</span>
-                        <i class="fa-solid fa-plane-arrival text-sky-400"></i>
+                    <div onclick="openLocationModal('dest')" class="cursor-pointer">
+                        <span id="destDisplay" class="font-semibold">Suvarnabhumi Int. (BKK)</span>
                     </div>
                 </div>
                 <div class="trip-seg">
@@ -259,10 +259,15 @@
                     <label>Return date</label>
                     <button type="button" id="returnDateField" onclick="focusReturnPick()">Pick return date</button>
                 </div>
-                <button type="button" onclick="triggerFullScan()" id="searchBtn" class="font-extrabold flex items-center justify-center gap-2 text-sm">
+                <div class="trip-seg">
+                    <label>Traveller / class</label>
+                    <span class="seg-value">1 adult · Economy</span>
+                </div>
+                <button type="button" onclick="triggerFullScan()" id="searchBtn" class="font-extrabold flex items-center justify-center gap-2">
                     <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i> <span id="btnText">Search</span>
                 </button>
             </div>
+            <p class="home-intro">Pick your route and dates. The live fare opens on Google Flights. We do not sell tickets.</p>
 
             <div id="multiCityRow" class="hidden bg-slate-950/70 p-3.5 rounded-xl border border-sky-500/30 mb-4">
                 <div class="flex items-center gap-2 mb-2 text-xs font-bold text-sky-400">
@@ -345,7 +350,6 @@
                     <a href="/airport-transfer/" class="text-sky-400 underline">Transfer guide</a>
                 </div>
             </div>
-        </div>
         </section>
 
         <div id="scanningToast" class="hidden bg-sky-950/90 border border-sky-500/40 rounded-2xl p-4 mb-6 flex items-center justify-center gap-3 text-sky-300 text-xs sm:text-sm font-bold shadow-2xl radar-scanning">
