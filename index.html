@@ -86,7 +86,7 @@
                 radial-gradient(circle at 50% 90%, rgba(168,85,247,.10), transparent 30%);
         }
         .glass-card {
-            background: linear-gradient(155deg,#bae6fd,#a5f3fc 30%,#99f6e4 58%,#fde68a 88%,#fed7aa);
+            background: linear-gradient(155deg,#e7f6fd,#d4eefc 55%,#c9ebe8);
             border: 1px solid rgba(201,162,75,.38);
             box-shadow: 0 16px 38px rgba(3,105,161,.12);
         }
@@ -94,36 +94,102 @@
             border: 1px solid rgba(56,189,248,.22);
             background: rgba(14,165,233,.08);
         }
-        .sk-day-return-ok { box-shadow: inset 0 0 0 1px rgba(16,185,129,.55); }
+        .sk-day-return-ok { box-shadow: inset 0 0 0 1px #7ec8ea; }
         .home-btn, #skyscannerRouteBtn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #020617;
-            color: #7dd3fc;
-            border: 1px solid #334155;
+            background: #e7f6fd;
+            color: #111111;
+            border: 1px solid #9fd4f2;
             border-radius: 12px;
             font-weight: 800;
             font-size: 12px;
             padding: .55rem .9rem;
         }
         #returnDateField {
-            color: #6ee7b7;
-            background: rgba(16,185,129,.1);
-            border: 1px solid rgba(16,185,129,.35);
+            color: #111111;
+            background: #ffffff;
+            border: 1px solid #b9dff3;
             border-radius: 8px;
             font-weight: 800;
-            font-size: 11px;
-            padding: .2rem .55rem;
+            font-size: 13px;
+            padding: .35rem .6rem;
         }
-        #returnDateField:disabled { opacity: .55; cursor: default; }
+        #returnDateField:disabled { opacity: 1; cursor: default; color: #111111; }
+
+        /* Homepage only: Trip.com-style search card. Yellow/orange becomes pale sky. Text stays black. */
+        body.hero-glow{
+            color:#111111 !important;
+            background:
+                radial-gradient(900px 520px at 8% -6%, rgba(56,189,248,.45), transparent 62%),
+                radial-gradient(860px 500px at 92% -4%, rgba(186,230,253,.85), transparent 60%),
+                radial-gradient(760px 560px at 52% 108%, rgba(125,211,252,.40), transparent 62%),
+                linear-gradient(168deg,#e7f6fd 0%,#d4eefc 24%,#c9ebe8 52%,#e8f7ff 100%) !important;
+        }
+        body.hero-glow header h1,
+        body.hero-glow header h1 i,
+        body.hero-glow h2,
+        body.hero-glow h2 i,
+        body.hero-glow h3,
+        body.hero-glow p,
+        body.hero-glow label,
+        body.hero-glow .text-white,
+        body.hero-glow .text-slate-200,
+        body.hero-glow .text-slate-300,
+        body.hero-glow .text-slate-400,
+        body.hero-glow .text-slate-500{
+            color:#111111 !important;
+            -webkit-text-fill-color:#111111 !important;
+            background:none !important;
+            filter:none !important;
+        }
+        .trip-hero{background:#e7f5fd;border-radius:28px;padding:1.15rem .85rem 1rem;margin-bottom:1.25rem}
+        .trip-tabs{display:flex;gap:.15rem;overflow-x:auto;border-bottom:1px solid #d7eef8;margin:0 0 .75rem;scrollbar-width:none}
+        .trip-tabs a{flex:0 0 auto;color:#111111 !important;font-weight:700;font-size:14px;line-height:1.2;padding:.7rem .75rem;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
+        .trip-tabs a.is-active{border-bottom-color:#38bdf8;color:#0c4a6e !important}
+        .trip-types{display:flex;flex-wrap:wrap;gap:.35rem;margin:0 0 .7rem}
+        .trip-types button{flex:0 1 auto !important;background:#f4fbff !important;color:#111111 !important;border:1px solid #d3ebf7 !important;box-shadow:none !important;border-radius:999px !important;min-height:36px}
+        #btnRoundTrip.bg-sky-500,#btnOneWay.bg-emerald-500,#btnMultiCity.bg-amber-500,
+        #btnRoundTrip.bg-sky-500 *,#btnOneWay.bg-emerald-500 *,#btnMultiCity.bg-amber-500 *{background:#d4eefc !important;color:#111111 !important;box-shadow:none !important}
+        .trip-fields{display:flex;flex-wrap:wrap;gap:.55rem;align-items:flex-end}
+        .trip-place,.trip-dates{flex:1 1 180px;min-width:0}
+        .trip-fields > #searchBtn{flex:1 1 200px;width:auto;min-height:52px;margin:0}
+        .luxury-search-card.glass-card{background:#ffffff !important;border:1px solid #d3ebf8 !important;box-shadow:0 10px 28px rgba(14,116,168,.12) !important;color:#111111 !important}
+        .luxury-search-card::before{background:#7ec8ea !important}
+        .luxury-search-card label{color:#111111 !important;font-weight:800}
+        .luxury-search-card [onclick^="openLocationModal"]{background:#ffffff !important;color:#111111 !important;border:1px solid #c5e4f4 !important;box-shadow:none !important}
+        #originDisplay,#destDisplay,#stopoverDisplay{color:#111111 !important}
+        .trip-date-box{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;background:#fff;border:1px solid #c5e4f4;border-radius:12px;padding:.35rem .45rem;min-height:48px}
+        #selectedTripLabel{color:#111111 !important;background:#f4fbff !important;border:1px solid #b9dff3 !important}
+        #returnDateField,#returnDateField:disabled{color:#111111 !important;background:#e7f6fd !important;border:1px solid #7ec8ea !important;opacity:1}
+        #searchBtn,#searchBtn *,#searchBtn:hover{background:#c5e8f8 !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;border-color:#7ec8ea !important;box-shadow:none !important}
+        #calendarCard,#calendarCard h3,#departMonthLabel,.sk-weekdays,.sk-weekdays div,#calendarHint,#calendarPickBadge{color:#111111 !important}
+        #calendarCard,#calendarGridWrapper > div{background:#f7fcff !important;border-color:#d3ebf8 !important}
+        .sk-day,.sk-day span{color:#111111 !important}
+        .sk-day.empty{opacity:1 !important;color:#334155 !important}
+        .sk-day-selected-dept,.sk-day-selected-ret,.sk-day-selected-dept span,.sk-day-selected-ret span{background:#9fd4f2 !important;color:#111111 !important}
+        .sk-day-in-range{background:#e7f6fd !important}
+        #calendarGridWrapper button,#calendarGridWrapper button i{color:#111111 !important;background:#e7f6fd !important}
+        .home-btn,#skyscannerRouteBtn{background:#e7f6fd !important;color:#111111 !important}
+        .cta-affiliate,.deal-chip,.luxury-trust-row span,#googleBookBar a,#googleBookBar a *,button.bg-amber-500,button.bg-amber-500 *{
+            background:#d4eefc !important;color:#111111 !important;border-color:#9fd4f2 !important;box-shadow:none !important
+        }
+        body.hero-glow h2,body.hero-glow h2 i{color:#0c4a6e !important;-webkit-text-fill-color:#0c4a6e !important}
+        #hotel-booking,#tour-package,#travel-sim,#airport-transport,#air-ticket{scroll-margin-top:12px}
+        @media (max-width:720px){
+            .trip-hero{padding:.85rem .55rem .8rem;border-radius:20px}
+            .trip-fields > #searchBtn{flex-basis:100%}
+            .trip-tabs a{padding:.65rem .6rem;font-size:13px}
+        }
     </style>
 </head>
 <body class="bg-amber-50 text-slate-800 min-h-screen pb-16 antialiased selection:bg-sky-500 selection:text-white hero-glow">
 
     <div class="max-w-6xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
 
-        <header class="text-center mb-6 sm:mb-8">
+        <section class="trip-hero">
+        <header class="text-center mb-4">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full deal-chip text-[10px] sm:text-xs font-bold text-sky-300 mb-3">
                 <i class="fa-solid fa-tags"></i> Cheap authentic ticket on Google Flights • We do not sell tickets
             </div>
@@ -140,34 +206,51 @@
             </div>
         </header>
 
-        <div class="glass-card luxury-search-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl mb-6">
-            <div class="flex items-center justify-center gap-2 mb-3 p-1 bg-slate-950/80 rounded-xl border border-slate-800 max-w-md mx-auto">
-                <button type="button" onclick="setTripType('round')" id="btnRoundTrip" class="flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-sky-500 text-white shadow">
+        <div id="air-ticket" class="glass-card luxury-search-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl">
+            <nav class="trip-tabs" aria-label="Travel categories">
+                <a class="is-active" href="#air-ticket">Air Ticket</a>
+                <a href="#hotel-booking">Hotel Booking</a>
+                <a href="#tour-package">Tour Package</a>
+                <a href="#travel-sim">Travel SIM</a>
+                <a href="#airport-transport">Airport Transport</a>
+            </nav>
+            <div class="trip-types">
+                <button type="button" onclick="setTripType('round')" id="btnRoundTrip" class="py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-sky-500 text-white shadow">
                     <i class="fa-solid fa-arrows-rotate mr-1"></i> Round Trip
                 </button>
-                <button type="button" onclick="setTripType('oneway')" id="btnOneWay" class="flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition text-slate-400 hover:text-white">
+                <button type="button" onclick="setTripType('oneway')" id="btnOneWay" class="py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition text-slate-400 hover:text-white">
                     <i class="fa-solid fa-arrow-right mr-1"></i> One Way
                 </button>
-                <button type="button" onclick="setTripType('multicity')" id="btnMultiCity" class="flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition text-slate-400 hover:text-white">
+                <button type="button" onclick="setTripType('multicity')" id="btnMultiCity" class="py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition text-slate-400 hover:text-white">
                     <i class="fa-solid fa-route mr-1"></i> Multi-City
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 mb-3">
-                <div>
+            <div class="trip-fields">
+                <div class="trip-place">
                     <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">From</label>
                     <div onclick="openLocationModal('origin')" class="w-full bg-slate-950 border border-slate-700 hover:border-sky-500 active:scale-[0.99] rounded-xl p-3 text-white cursor-pointer flex justify-between items-center text-xs sm:text-sm transition shadow-inner">
                         <span id="originDisplay" class="font-semibold text-slate-200 truncate">Hazrat Shahjalal Int. (DAC)</span>
                         <i class="fa-solid fa-plane-departure text-sky-400"></i>
                     </div>
                 </div>
-                <div>
+                <div class="trip-place">
                     <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">To</label>
                     <div onclick="openLocationModal('dest')" class="w-full bg-slate-950 border border-slate-700 hover:border-emerald-500 active:scale-[0.99] rounded-xl p-3 text-white cursor-pointer flex justify-between items-center text-xs sm:text-sm transition shadow-inner">
                         <span id="destDisplay" class="font-semibold text-slate-200 truncate">Suvarnabhumi Int. (BKK)</span>
                         <i class="fa-solid fa-plane-arrival text-emerald-400"></i>
                     </div>
                 </div>
+                <div class="trip-dates">
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Dates</label>
+                    <div class="trip-date-box">
+                        <span id="selectedTripLabel" class="text-[11px] sm:text-xs text-sky-400 bg-sky-500/10 border border-sky-500/30 px-2.5 py-1 rounded-lg font-bold">No dates yet</span>
+                        <button type="button" id="returnDateField" onclick="focusReturnPick()">Pick return date</button>
+                    </div>
+                </div>
+                <button type="button" onclick="triggerFullScan()" id="searchBtn" class="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 active:scale-[0.99] font-extrabold py-3.5 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-sky-500/25 text-sm text-white">
+                    <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i> <span id="btnText">Pick dates on the calendar</span>
+                </button>
             </div>
 
             <div id="multiCityRow" class="hidden bg-slate-950/70 p-3.5 rounded-xl border border-sky-500/30 mb-4">
@@ -180,20 +263,16 @@
                 </div>
             </div>
 
-            <div id="calendarCard" class="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 mb-3">
+            <div id="calendarCard" class="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 mb-3 mt-3">
                 <div class="flex flex-wrap justify-between items-center mb-2 pb-2 border-b border-slate-800 gap-x-2 gap-y-1.5">
                     <div>
                         <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
                             <i class="fa-solid fa-calendar-days text-sky-400"></i> One calendar — dates start empty
                         </h3>
                         <div class="text-[9px] sm:text-[10px] text-slate-500 mt-1" id="calendarHint">
-                            Nothing is pre-selected. Tap a day to set departure. For round trip, tap a later day for return.
+                            Tap a day for departure, then Pick return date.
                         </div>
                     </div>
-                    <span class="flex flex-wrap items-center gap-1.5">
-                        <span id="selectedTripLabel" class="text-[11px] sm:text-xs text-sky-400 bg-sky-500/10 border border-sky-500/30 px-2.5 py-1 rounded-lg font-bold">No dates yet</span>
-                        <button type="button" id="returnDateField" onclick="focusReturnPick()">Pick return date</button>
-                    </span>
                 </div>
 
                 <div id="calendarGridWrapper" class="w-full max-w-[480px] mx-auto">
@@ -216,14 +295,12 @@
 
             <div id="routeWarning" class="hidden mb-3 rounded-xl border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-xs font-semibold text-rose-300"></div>
 
-            <button type="button" onclick="triggerFullScan()" id="searchBtn" class="w-full bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 active:scale-[0.99] font-extrabold py-3.5 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-sky-500/25 text-sm text-white">
-                <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i> <span id="btnText">Pick dates on the calendar</span>
-            </button>
             <div class="flex flex-wrap justify-center gap-2 mt-3">
                 <a class="home-btn" href="https://www.skyscanner.com/" target="_blank" rel="noopener noreferrer">Search on Skyscanner</a>
                 <button type="button" id="skyscannerRouteBtn" onclick="openSkyscannerForDates()">Open this route on Skyscanner</button>
             </div>
         </div>
+        </section>
 
         <div id="scanningToast" class="hidden bg-sky-950/90 border border-sky-500/40 rounded-2xl p-4 mb-6 flex items-center justify-center gap-3 text-sky-300 text-xs sm:text-sm font-bold shadow-2xl radar-scanning">
             <i class="fa-solid fa-satellite-dish fa-spin text-sky-400 text-lg"></i>
@@ -296,7 +373,7 @@
                     <div class="text-3xl mb-2" aria-hidden="true">✈️</div>
                     <h3 class="font-bold text-base mb-1">Air Ticket</h3>
                     <p class="text-[11px] text-slate-500 leading-5 mb-3">Pick route and flexible dates in our search tool, then check the real total on Google Flights. কম দামে টিকিট খুঁজুন, ব্যাগেজসহ মোট দাম যাচাই করুন।</p>
-                    <a class="cta-affiliate" href="#search" style="display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(92deg,#d97706,#e9c979 45%,#f6de9c);color:#451a03;font-weight:800;padding:.65rem 1rem;border-radius:14px">Search flights above</a>
+                    <a class="cta-affiliate" href="#search" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Search flights above</a>
                     <p class="mt-2 text-[11px]"><a href="https://tp.media/r?campaign_id=100&marker=791994&p=4114&sub_id=cheapticketfinder-site&trs=587447&u=https%3A%2F%2Faviasales.com" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Or compare on Aviasales</a></p>
                 </div>
                 <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl">
@@ -305,40 +382,40 @@
                     <p class="text-[11px] text-slate-500 leading-5 mb-3">এয়ারলাইন গাইড — AirAsia, Malaysia Airlines, Qatar Airways, Biman, US-Bangla and more: search flights for your dates and check the final total on the provider.</p>
                     <p class="mt-2 text-[11px]"><a href="/airlines/" class="text-sky-400 underline">Airlines guide &amp; search →</a></p>
                 </div>
-                <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl">
+                <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl" id="hotel-booking">
                     <div class="text-3xl mb-2" aria-hidden="true">🏨</div>
                     <h3 class="font-bold text-base mb-1"><a href="/hotels/" class="hover:underline">Hotel Booking</a></h3>
                     <p class="text-[11px] text-slate-500 leading-5 mb-3">হোটেল ও ট্রাভেল বুকিং — search hotels, tours &amp; activities via Klook, compare room, cancellation and final total before you pay on the partner site.</p>
-                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=137&marker=791994&p=4110&sub_id=cheapticketfinder-hotels&trs=587447&u=https%3A%2F%2Fklook.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(92deg,#d97706,#e9c979 45%,#f6de9c);color:#451a03;font-weight:800;padding:.65rem 1rem;border-radius:14px">Book hotels on Klook</a>
+                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=137&marker=791994&p=4110&sub_id=cheapticketfinder-hotels&trs=587447&u=https%3A%2F%2Fklook.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Book hotels on Klook</a>
                     <p class="mt-2 text-[11px]"><a href="/hotels/" class="text-sky-400 underline">Hotel booking guide &amp; checks →</a></p>
                 </div>
-                <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl">
+                <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl" id="tour-package">
                     <div class="text-3xl mb-2" aria-hidden="true">🧳</div>
                     <h3 class="font-bold text-base mb-1"><a href="/packages/" class="hover:underline">Tour Packages</a></h3>
                     <p class="text-[11px] text-slate-500 leading-5 mb-3">ট্যুর প্যাকেজ — explore Asia tours via KKday or worldwide tours on Viator, check inclusions and cancellation before you pay on the partner site.</p>
-                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=633&marker=791994&p=9074&sub_id=cheapticketfinder-packages&trs=587447&u=https%3A%2F%2Fkkday.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(92deg,#d97706,#e9c979 45%,#f6de9c);color:#451a03;font-weight:800;padding:.65rem 1rem;border-radius:14px">Explore Asia packages on KKday</a>
+                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=633&marker=791994&p=9074&sub_id=cheapticketfinder-packages&trs=587447&u=https%3A%2F%2Fkkday.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Explore Asia packages on KKday</a>
                     <p class="mt-2 text-[11px]"><a href="https://www.viator.com/?pid=P00326733&uid=U00880752&mcid=58086&currency=USD" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Or worldwide tours on Viator</a></p>
                     <p class="mt-2 text-[11px]"><a href="/packages/" class="text-sky-400 underline">Tour package guide &amp; checks →</a></p>
                 </div>
-                <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl">
+                <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl" id="travel-sim">
                     <div class="text-3xl mb-2" aria-hidden="true">📶</div>
                     <h3 class="font-bold text-base mb-1"><a href="/esim/" class="hover:underline">Travel eSIM</a></h3>
                     <p class="text-[11px] text-slate-500 leading-5 mb-3">বিদেশে মোবাইল ইন্টারনেট — get mobile data after landing via Airalo eSIM, check phone compatibility, data and validity before you pay on the partner site.</p>
-                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=541&marker=791994&p=8310&sub_id=cheapticketfinder-esim&trs=587447&u=https%3A%2F%2Fairalo.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(92deg,#d97706,#e9c979 45%,#f6de9c);color:#451a03;font-weight:800;padding:.65rem 1rem;border-radius:14px">Check eSIM on Airalo</a>
+                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=541&marker=791994&p=8310&sub_id=cheapticketfinder-esim&trs=587447&u=https%3A%2F%2Fairalo.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Check eSIM on Airalo</a>
                     <p class="mt-2 text-[11px]"><a href="/esim/" class="text-sky-400 underline">Travel eSIM guide &amp; checks →</a></p>
                 </div>
-                <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl">
+                <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl" id="airport-transport">
                     <div class="text-3xl mb-2" aria-hidden="true">🚕</div>
                     <h3 class="font-bold text-base mb-1"><a href="/airport-transfer/" class="hover:underline">Airport Transfer</a></h3>
                     <p class="text-[11px] text-slate-500 leading-5 mb-3">এয়ারপোর্ট থেকে হোটেলের গাড়ি — pre-book your airport-to-hotel car via KiwiTaxi, check vehicle, pickup and final total before you pay on the partner site.</p>
-                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=1&marker=791994&p=647&sub_id=cheapticketfinder-transfer&trs=587447&u=https%3A%2F%2Fkiwitaxi.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(92deg,#d97706,#e9c979 45%,#f6de9c);color:#451a03;font-weight:800;padding:.65rem 1rem;border-radius:14px">Book transfer on KiwiTaxi</a>
+                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=1&marker=791994&p=647&sub_id=cheapticketfinder-transfer&trs=587447&u=https%3A%2F%2Fkiwitaxi.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Book transfer on KiwiTaxi</a>
                     <p class="mt-2 text-[11px]"><a href="/airport-transfer/" class="text-sky-400 underline">Airport transfer guide &amp; checks →</a></p>
                 </div>
                 <div class="glass-card backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-2xl">
                     <div class="text-3xl mb-2" aria-hidden="true">🛡️</div>
                     <h3 class="font-bold text-base mb-1"><a href="/travel-insurance/" class="hover:underline">Travel Insurance</a></h3>
                     <p class="text-[11px] text-slate-500 leading-5 mb-3">ভ্রমণ বীমা — check trip insurance on EKTA, read the policy terms, coverage and exclusions and the final price on the partner site before you buy.</p>
-                    <a class="cta-affiliate" href="https://ektatraveling.tpo.lv/ArgAETEF" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(92deg,#d97706,#e9c979 45%,#f6de9c);color:#451a03;font-weight:800;padding:.65rem 1rem;border-radius:14px">Check insurance on EKTA</a>
+                    <a class="cta-affiliate" href="https://ektatraveling.tpo.lv/ArgAETEF" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Check insurance on EKTA</a>
                     <p class="mt-2 text-[11px]"><a href="/travel-insurance/" class="text-sky-400 underline">Travel insurance guide &amp; checks →</a></p>
                 </div>
             </div>
