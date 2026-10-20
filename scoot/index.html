@@ -28,7 +28,8 @@
         h1,h2,h3,p,li,header p,main p,main li,header a{color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:none !important;filter:none !important}
         h2{color:#0c4a6e !important;-webkit-text-fill-color:#0c4a6e !important}
         a.sc-link{color:#0369a1 !important;-webkit-text-fill-color:#0369a1 !important;font-weight:800;text-decoration:underline}
-        .site-header{background:#ffffff;border-bottom:1px solid #d7eef8}
+        .site-header{position:sticky !important;top:0;z-index:40;background:#ffffff !important;border-bottom:1px solid #d7eef8}
+        .site-header.is-scrolled{box-shadow:0 2px 14px rgba(15,23,42,.08)}
         .site-header-inner{max-width:72rem;margin:0 auto;padding:.45rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;min-height:56px}
         .site-header h1{margin:0;font-size:1.05rem !important;line-height:1.15;font-weight:800;letter-spacing:-.02em}
         .site-header h1 a{text-decoration:none}
@@ -195,6 +196,9 @@
             refreshMetro();
         })();
     </script>
+<script>
+(function(){var header=document.querySelector(".site-header");if(!header)return;function paint(){header.classList.toggle("is-scrolled",window.scrollY>2);}paint();window.addEventListener("scroll",paint,{passive:true});})();
+</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

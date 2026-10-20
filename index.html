@@ -153,18 +153,21 @@
             filter:none !important;
         }
         body.hero-glow header::before{display:none !important}
-        .site-header{background:#ffffff;border-bottom:1px solid #d7eef8}
-        .site-header-inner{max-width:72rem;margin:0 auto;padding:.35rem 1rem;display:grid;grid-template-columns:minmax(150px,1fr) auto minmax(150px,1fr);align-items:center;gap:.5rem;min-height:68px}
-        .site-header h1{margin:0;justify-self:start;font-size:1.05rem !important;line-height:1.15;font-weight:800;letter-spacing:-.02em;white-space:nowrap;color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:none !important;filter:none !important}
-        .top-bar{justify-self:end;display:flex;align-items:center;gap:.7rem;margin:0}
+        .site-header{position:sticky !important;top:0;z-index:40;background:#ffffff !important;border-bottom:1px solid #d7eef8;overflow:visible}
+        .site-header.is-scrolled{box-shadow:0 2px 14px rgba(15,23,42,.08)}
+        .site-header-inner{max-width:72rem;margin:0 auto;padding:.45rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;min-height:56px}
+        .site-header h1{margin:0;font-size:1.05rem !important;line-height:1.15;font-weight:800;letter-spacing:-.02em;white-space:nowrap;color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:none !important;filter:none !important}
+        .top-bar{display:flex;align-items:center;gap:.7rem;margin:0}
         .top-bar a{display:inline-flex;align-items:center;color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:transparent !important;border:0 !important;border-radius:0;font-weight:800;font-size:13px;line-height:1.2;padding:.35rem 0;text-decoration:none;min-height:32px}
         .home-intro{margin:.65rem 0 0;color:#111111 !important;font-size:13px;line-height:1.45}
-        .trip-tabs{display:flex;justify-content:center;gap:.05rem;margin:0;overflow:visible;border:0;scrollbar-width:none}
-        .trip-tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:0 0 auto;min-width:78px;background:transparent !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;font-weight:700;font-size:11px;line-height:1.15;padding:.28rem .4rem .32rem;border:0 !important;border-bottom:2px solid transparent !important;border-radius:0 !important;box-shadow:none !important;white-space:nowrap;cursor:pointer;min-height:54px}
+        .hero-photo{background:#7ec8ea url("/assets/hero-sea.jpg") center 68%/cover no-repeat;padding:.15rem 0 2.5rem}
+        .search-stage{position:relative;max-width:1040px;margin:0 auto}
+        .trip-tabs{position:absolute;left:50%;top:100%;transform:translate(-50%,-42%);z-index:45;display:flex;justify-content:center;gap:.1rem;margin:0;background:#ffffff;border-radius:18px;box-shadow:0 10px 28px rgba(15,23,42,.14);padding:.35rem .5rem .15rem;max-width:calc(100% - 16px);overflow:visible;border:0;scrollbar-width:none}
+        .trip-tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:0 0 auto;min-width:78px;background:transparent !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;font-weight:700;font-size:11px;line-height:1.15;padding:.28rem .4rem .32rem;border:0 !important;border-bottom:2px solid transparent !important;border-radius:0 !important;box-shadow:none !important;white-space:nowrap;cursor:pointer;min-height:48px}
         .trip-tabs button i{font-size:16px;color:#38bdf8 !important;-webkit-text-fill-color:#38bdf8 !important;background:none !important}
         .trip-tabs button.is-active{border-bottom-color:#38bdf8 !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important}
         .trip-tabs button.is-active i{color:#0284c7 !important;-webkit-text-fill-color:#0284c7 !important}
-        .search-panel{background:#ffffff;border:1px solid #d7eef8;border-radius:12px;box-shadow:0 10px 28px rgba(14,116,168,.1);padding:14px 16px 16px;margin:1rem 0 1.5rem}
+        .search-panel{background:#ffffff;border:0;border-radius:22px;box-shadow:0 18px 46px rgba(15,23,42,.18);padding:2.35rem 18px 16px;margin:0}
         .home-panel[hidden]{display:none !important}
         .home-links{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
         .trip-types{display:flex;flex-wrap:wrap;align-items:center;gap:1.15rem;margin:0 0 12px}
@@ -198,14 +201,15 @@
             background:#d4eefc !important;color:#111111 !important;border-color:#9fd4f2 !important;box-shadow:none !important
         }
         body.hero-glow h2,body.hero-glow h2 i{color:#0c4a6e !important;-webkit-text-fill-color:#0c4a6e !important}
-        #hotel-booking,#tour-package,#travel-sim,#airport-transport,#air-ticket,#wl-flight-results{scroll-margin-top:12px}
+        #hotel-booking,#tour-package,#travel-sim,#airport-transport,#air-ticket,#wl-flight-results{scroll-margin-top:72px}
         @media (max-width:860px){
-            .site-header-inner{grid-template-columns:1fr auto;grid-template-areas:"brand contact" "tabs tabs";min-height:0;padding:.45rem .7rem .3rem}
-            .site-header h1{grid-area:brand;font-size:.98rem !important}
-            .top-bar{grid-area:contact}
-            .trip-tabs{grid-area:tabs;justify-content:flex-start;overflow-x:auto;margin-top:.1rem}
+            .site-header-inner{min-height:0;padding:.45rem .7rem}
+            .site-header h1{font-size:.98rem !important}
+            .top-bar a{font-size:12px}
+            .hero-photo{padding:.1rem 0 1.5rem}
+            .trip-tabs{justify-content:flex-start;overflow-x:auto;max-width:calc(100% - 12px)}
             .trip-tabs button{min-width:70px;font-size:10px;padding:.2rem .3rem .25rem}
-            .search-panel{padding:12px;margin:.75rem 0 1.15rem}
+            .search-panel{padding:2.7rem 12px 12px}
             .trip-fields{flex-direction:column}
             .trip-fields > #searchBtn{flex:1 1 auto;width:100%;min-height:52px}
         }
@@ -216,24 +220,26 @@
     <header class="site-header">
         <div class="site-header-inner">
             <h1>Cheap Ticket Finder</h1>
-            <nav class="trip-tabs" role="tablist" aria-label="Travel categories">
-                <button type="button" class="is-active" role="tab" aria-selected="true" data-tab="air" onclick="showHomeTab('air')"><i class="fa-solid fa-plane" aria-hidden="true"></i>Air Ticket</button>
-                <button type="button" role="tab" aria-selected="false" data-tab="airlines" onclick="showHomeTab('airlines')"><i class="fa-solid fa-plane-departure" aria-hidden="true"></i>Airlines</button>
-                <button type="button" role="tab" aria-selected="false" data-tab="hotel" onclick="showHomeTab('hotel')"><i class="fa-solid fa-hotel" aria-hidden="true"></i>Hotel Booking</button>
-                <button type="button" role="tab" aria-selected="false" data-tab="tour" onclick="showHomeTab('tour')"><i class="fa-solid fa-suitcase-rolling" aria-hidden="true"></i>Tour Package</button>
-                <button type="button" role="tab" aria-selected="false" data-tab="sim" onclick="showHomeTab('sim')"><i class="fa-solid fa-sim-card" aria-hidden="true"></i>Travel SIM</button>
-                <button type="button" role="tab" aria-selected="false" data-tab="transfer" onclick="showHomeTab('transfer')"><i class="fa-solid fa-taxi" aria-hidden="true"></i>Airport Transfer</button>
-            </nav>
             <nav class="top-bar" aria-label="Contact">
                 <a href="/offers/">Offers</a>
                 <a href="/contact">Contact</a>
                 <a href="https://www.facebook.com/CheapTFBD" target="_blank" rel="noopener noreferrer">Facebook</a>
             </nav>
         </div>
+        <nav class="trip-tabs" role="tablist" aria-label="Travel categories">
+            <button type="button" class="is-active" role="tab" aria-selected="true" data-tab="air" onclick="showHomeTab('air')"><i class="fa-solid fa-plane" aria-hidden="true"></i>Air Ticket</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="airlines" onclick="showHomeTab('airlines')"><i class="fa-solid fa-plane-departure" aria-hidden="true"></i>Airlines</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="hotel" onclick="showHomeTab('hotel')"><i class="fa-solid fa-hotel" aria-hidden="true"></i>Hotel Booking</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="tour" onclick="showHomeTab('tour')"><i class="fa-solid fa-suitcase-rolling" aria-hidden="true"></i>Tour Package</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="sim" onclick="showHomeTab('sim')"><i class="fa-solid fa-sim-card" aria-hidden="true"></i>Travel SIM</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="transfer" onclick="showHomeTab('transfer')"><i class="fa-solid fa-taxi" aria-hidden="true"></i>Airport Transfer</button>
+        </nav>
     </header>
 
-    <div class="max-w-6xl mx-auto px-3 sm:px-6 pt-4 pb-8">
-
+    <!-- Hero photo: Unsplash photo-1518509562904-e7ef99cdcc86, bright tropical sea and sky. Unsplash Licence https://unsplash.com/license — saved at /assets/hero-sea.jpg, not hotlinked. -->
+    <div class="hero-photo">
+    <div class="max-w-6xl mx-auto px-3 sm:px-6">
+        <div class="search-stage">
         <section class="search-panel" id="air-ticket">
             <div class="home-panel" data-tab="air" role="tabpanel">
             <div class="trip-types">
@@ -355,7 +361,11 @@
                 </div>
             </div>
         </section>
+        </div>
+    </div>
+    </div>
 
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 pt-4 pb-8">
         <div id="wl-flight-results" class="mb-6">
             <p class="text-[11px] text-slate-500 mb-2 leading-5">Prices here are approximate — the final total is confirmed on the booking site.</p>
             <div id="tpwl-tickets" style="width:100%;min-width:0"></div>
@@ -1793,6 +1803,9 @@
         resetResultsUntilDates();
         ensureWorldwideAirportsLoaded();
     </script>
+<script>
+(function(){var header=document.querySelector(".site-header");if(!header)return;function paint(){header.classList.toggle("is-scrolled",window.scrollY>2);}paint();window.addEventListener("scroll",paint,{passive:true});})();
+</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
