@@ -16,7 +16,7 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:alt" content="Cheap Ticket Finder BD — সস্তা ফ্লাইট, হোটেল ও ট্যুর প্যাকেজ">
+    <meta property="og:image:alt" content="Cheap Ticket Finder BD">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://cheapticketfinder.site/assets/og-image.png">
     <meta name="twitter:title" content="Airline offers — Domestic and International | Cheap Ticket Finder BD">
@@ -32,16 +32,32 @@
         .offer-card,.vietjet-focus{background:#ffffff;border:1px solid #c5e4f4;border-radius:12px;padding:14px 16px;margin:0 0 12px}
         .vietjet-focus{border:2px solid #0284c7;background:#f7fcff}
         .offer-link{color:#0369a1 !important;-webkit-text-fill-color:#0369a1 !important;font-weight:800;text-decoration:underline}
+        .site-header{position:sticky !important;top:0;z-index:40;background:#ffffff !important;border-bottom:1px solid #d7eef8}
+        .site-header.is-scrolled{box-shadow:0 2px 14px rgba(15,23,42,.08)}
+        .site-header-inner{max-width:72rem;margin:0 auto;padding:.45rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;min-height:56px}
+        .site-header h1{margin:0;font-size:1.05rem !important;line-height:1.15;font-weight:800;letter-spacing:0}
+        .site-header h1 a{text-decoration:none;color:#111111 !important;-webkit-text-fill-color:#111111 !important}
+        .top-bar{display:flex;align-items:center;gap:.7rem;margin:0}
+        .top-bar a{font-weight:800;font-size:13px;text-decoration:none;min-height:32px;display:inline-flex;align-items:center;color:#111111 !important;-webkit-text-fill-color:#111111 !important}
         .meta{font-size:12px;line-height:1.55;margin:.35rem 0}
     </style>
 </head>
 <body class="min-h-screen antialiased">
+    <header class="site-header">
+        <div class="site-header-inner">
+            <h1><a href="/">Cheap Ticket Finder</a></h1>
+            <nav class="top-bar" aria-label="Contact">
+                <a href="/offers/">Offers</a>
+                <a href="/contact">Contact</a>
+                <a href="https://www.facebook.com/CheapTFBD" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </nav>
+        </div>
+    </header>
     <div class="max-w-3xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
         <header class="mb-6">
             <a class="offer-link text-sm" href="/">Cheap Ticket Finder — home</a>
             <h1 class="text-2xl sm:text-3xl font-black mt-3">Airline offers</h1>
-            <p class="text-sm mt-2 leading-6">Domestic (Bangladesh) and International promotions seen on each airline’s own site. Verified 20 Oct 2026. Offers change. The final price is on the airline or provider site. We do not sell tickets.</p>
-            <p class="text-sm mt-2 leading-6">অফার বদলায়। চূড়ান্ত দাম এয়ারলাইন বা প্রোভাইডারের সাইটে। ভিয়েতজেট ঢাকা থেকে বা ঢাকায় উড়ে না।</p>
+            <p class="text-sm mt-2 leading-6">Domestic (Bangladesh) and International promotions seen on each airline’s own site. Verified 20 Oct 2026. Offers change. The final price is on the airline or provider site. We do not sell tickets. VietJet does not fly to or from Dhaka.</p>
         </header>
         <main>
             <section aria-labelledby="domestic-heading">
@@ -220,6 +236,9 @@
             </nav>
         </footer>
     </div>
+<script>
+(function(){var header=document.querySelector(".site-header");if(!header)return;function paint(){header.classList.toggle("is-scrolled",window.scrollY>2);}paint();window.addEventListener("scroll",paint,{passive:true});})();
+</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

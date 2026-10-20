@@ -28,6 +28,13 @@
         h1,h2,h3,p,li,header p,main p,main li{color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:none !important;filter:none !important}
         h2{color:#0c4a6e !important;-webkit-text-fill-color:#0c4a6e !important}
         a.vj-link{color:#0369a1 !important;-webkit-text-fill-color:#0369a1 !important;font-weight:800;text-decoration:underline}
+        .site-header{position:sticky !important;top:0;z-index:40;background:#ffffff !important;border-bottom:1px solid #d7eef8}
+        .site-header.is-scrolled{box-shadow:0 2px 14px rgba(15,23,42,.08)}
+        .site-header-inner{max-width:72rem;margin:0 auto;padding:.45rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;min-height:56px}
+        .site-header h1{margin:0;font-size:1.05rem !important;line-height:1.15;font-weight:800}
+        .site-header h1 a{text-decoration:none}
+        .top-bar{display:flex;align-items:center;gap:.7rem;margin:0}
+        .top-bar a{font-weight:800;font-size:13px;text-decoration:none;min-height:32px;display:inline-flex;align-items:center}
         .search-panel{background:#ffffff;border:1px solid #d7eef8;border-radius:12px;padding:14px 16px 16px;margin:1rem 0}
         .trip-types{display:flex;gap:1rem;margin:0 0 12px}
         .trip-types button{background:transparent;border:0;font-weight:800;font-size:13px;color:#111;padding:0 0 0 18px;position:relative}
@@ -43,6 +50,16 @@
     </style>
 </head>
 <body class="min-h-screen antialiased">
+    <header class="site-header">
+        <div class="site-header-inner">
+            <h1><a href="/">Cheap Ticket Finder</a></h1>
+            <nav class="top-bar" aria-label="Contact">
+                <a href="/offers/">Offers</a>
+                <a href="/contact">Contact</a>
+                <a href="https://www.facebook.com/CheapTFBD" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </nav>
+        </div>
+    </header>
     <div class="max-w-3xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
         <header class="mb-5">
             <a class="vj-link text-sm" href="/">Cheap Ticket Finder — home</a>
@@ -200,6 +217,9 @@
             refreshMetro();
         })();
     </script>
+<script>
+(function(){var header=document.querySelector(".site-header");if(!header)return;function paint(){header.classList.toggle("is-scrolled",window.scrollY>2);}paint();window.addEventListener("scroll",paint,{passive:true});})();
+</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
