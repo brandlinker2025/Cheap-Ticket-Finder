@@ -146,6 +146,9 @@ assert.ok(html.includes("sm:flex-row sm:items-center"), "promo/card chips sit be
 assert.ok(!html.includes("None — No official card or checkout code mapped"), "airlines with no published promo must not show extra none copy");
 assert.ok(html.includes("primaryGoogleCard"), "homepage still renders a primary results card");
 assert.ok(!html.includes("Google Flights"), "homepage must not name Google Flights");
+assert.ok(html.includes('id="tpwl-search"') && html.includes('id="tpwl-tickets"'), "White Label search and tickets stay on the same page");
+assert.ok(html.indexOf('id="btnRoundTrip"') < html.indexOf('id="tpwl-search"'), "White Label search sits below the Round Trip control");
+assert.ok(html.includes("tpwl-search-slot"), "White Label search stays out of the Round Trip row");
 assert.ok(!/[\u0980-\u09FF]/.test(html), "homepage must not contain Bengali characters");
 assert.ok(html.includes("Airline site (often Flex / higher fare family)"), "airline engines must be labeled secondary Flex");
 assert.ok(links.includes("Open Google Flights"), "Google Flights CTA is Open Google Flights");
