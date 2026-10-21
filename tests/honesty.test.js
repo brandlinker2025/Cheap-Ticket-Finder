@@ -50,7 +50,8 @@ assert.ok(html.includes("let selectedRetDate = null"), "calendars must start wit
 
 const required = [
     "We do not sell tickets",
-    "Google Flights",
+    "Travelpayouts results",
+    "on-site flight search",
     "Skyscanner",
     "Kayak",
     "Google Hotels",
@@ -61,7 +62,7 @@ const required = [
     "Cheap ticket path",
     "cheapPathResults",
     "Official % beside the book row",
-    "Open Google Flights",
+    "Open Travelpayouts results",
     "authentic airline-issued",
     "often Flex",
     "SCB card: official up to 10% on this OTA",
@@ -143,7 +144,12 @@ assert.ok(!links.includes("USBA15"), "Do not invent USBA15 without the airline o
 assert.ok(html.includes("cheapPathCard") && html.includes("savingsChips"), "cheap-path rows must attach official savings beside each book control");
 assert.ok(html.includes("sm:flex-row sm:items-center"), "promo/card chips sit beside the airline/OTA search/book row");
 assert.ok(!html.includes("None — No official card or checkout code mapped"), "airlines with no published promo must not show extra none copy");
-assert.ok(html.includes("primaryGoogleCard"), "Google Flights must be the primary cheap-path card");
+assert.ok(html.includes("primaryGoogleCard"), "homepage still renders a primary results card");
+assert.ok(!html.includes("Google Flights"), "homepage must not name Google Flights");
+assert.ok(html.includes('id="tpwl-search"') && html.includes('id="tpwl-tickets"'), "White Label search and tickets stay on the same page");
+assert.ok(html.indexOf('id="btnRoundTrip"') < html.indexOf('id="tpwl-search"'), "White Label search sits below the Round Trip control");
+assert.ok(html.includes("tpwl-search-slot"), "White Label search stays out of the Round Trip row");
+assert.ok(!/[\u0980-\u09FF]/.test(html), "homepage must not contain Bengali characters");
 assert.ok(html.includes("Airline site (often Flex / higher fare family)"), "airline engines must be labeled secondary Flex");
 assert.ok(links.includes("Open Google Flights"), "Google Flights CTA is Open Google Flights");
 assert.ok(links.includes("authentic airline-issued"), "Google Flights blurb must say the airline ticket there is authentic");
@@ -163,5 +169,20 @@ assert.ok(!readme.includes("Cheapest Ticket Finder"), "README must not use Cheap
 assert.ok(!readme.includes("Global Travel Tracker"), "README must not use Global Travel Tracker");
 assert.ok(readme.includes("cheap-ticket-finder.vercel.app"), "README must point at the stable Vercel host");
 assert.ok(readme.includes("cheapticketfinder.site"), "README must name the custom domain");
+
+function walkSite(dir, acc) {
+    for (const name of fs.readdirSync(dir)) {
+        if (name === "node_modules" || name === "tests" || name === ".git") continue;
+        const full = path.join(dir, name);
+        const st = fs.statSync(full);
+        if (st.isDirectory()) walkSite(full, acc);
+        else if (/\.(html|js)$/.test(name)) acc.push(full);
+    }
+    return acc;
+}
+walkSite(path.join(__dirname, ".."), []).forEach((file) => {
+    const text = fs.readFileSync(file, "utf8");
+    assert.ok(!/[\u0980-\u09FF]/.test(text), `${path.relative(path.join(__dirname, ".."), file)} must not contain Bengali characters`);
+});
 
 console.log("honesty.test.js passed");

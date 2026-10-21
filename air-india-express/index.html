@@ -70,7 +70,7 @@
     <div class="max-w-3xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
         <header class="mb-5">
             <h2 class="text-2xl sm:text-3xl font-black">Air India Express routes</h2>
-            <p class="text-sm mt-2 leading-6">Air India Express is Air India’s low-cost airline. Use these routes after you reach Kolkata or Delhi. This page does not list a Dhaka route. An announcement on 3 Sep 2024 of Kolkata–Dhaka and Chennai–Dhaka flights was not re-verified on 20 Oct 2026, and the official city-to-city list checked that day has no Dhaka entry. The list says these India routes are operated. It is not a timetable, and this page does not describe them as non-stop. Pick a route and dates. The airline name and the live total open on Google Flights and Skyscanner. The final price is confirmed on the booking site before payment. We do not sell tickets. There is no Air India Express affiliate link on this page. Bookings use this site’s existing Google Flights, Skyscanner, Trip.com and Aviasales links.</p>
+            <p class="text-sm mt-2 leading-6">Air India Express is Air India’s low-cost airline. Use these routes after you reach Kolkata or Delhi. This page does not list a Dhaka route. An announcement on 3 Sep 2024 of Kolkata–Dhaka and Chennai–Dhaka flights was not re-verified on 20 Oct 2026, and the official city-to-city list checked that day has no Dhaka entry. The list says these India routes are operated. It is not a timetable, and this page does not describe them as non-stop. Pick a route and dates. Compare prices from partner sites in the on-site flight search. The final price is confirmed on the booking site before payment. We do not sell tickets. There is no Air India Express affiliate link on this page. Bookings use this site’s on-site flight search, plus Trip.com and Aviasales links.</p>
         </header>
         <main>
             <section class="search-panel" aria-label="Air India Express route finder">
@@ -100,8 +100,7 @@
                 </div>
                 <p id="dateHint" class="text-xs mt-3" role="status"></p>
                 <div id="resultLinks" class="flex flex-wrap gap-2 mt-3" hidden>
-                    <a id="gfLink" class="home-btn" target="_blank" rel="noopener noreferrer">Open Google Flights</a>
-                    <a id="skyLink" class="home-btn" target="_blank" rel="noopener noreferrer">Open this route on Skyscanner</a>
+                    <a id="ownSearch" class="home-btn" href="/#wl-flight-results">Open on-site flight search</a>
                     <a class="home-btn" href="https://www.trip.com/flights?Allianceid=11059812&SID=333836392&trip_sub1=flights&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer">Trip.com flights</a>
                     <a class="home-btn" href="https://tp.media/r?campaign_id=100&marker=791994&p=4114&sub_id=cheapticketfinder-site&trs=587447&u=https%3A%2F%2Faviasales.com" target="_blank" rel="sponsored noopener noreferrer">Aviasales</a>
                 </div>
@@ -139,7 +138,6 @@
             </nav>
         </footer>
     </div>
-    <script src="/js/booking-links.js?v=gf-nearby-20260902"></script>
     <script>
         (function () {
             var items = Array.prototype.slice.call(document.querySelectorAll("[data-from]"));
@@ -184,12 +182,8 @@
                 if (dep < iso) { hint.textContent = "Pick a departure date that is today or later."; return; }
                 if (trip === "round" && !ret) { hint.textContent = "Pick a return date."; document.getElementById("returnDate").focus(); return; }
                 if (trip === "round" && ret < dep) { hint.textContent = "Pick a return date on or after departure."; return; }
-                var c = current();
-                var opts = { origin: c.origin, dest: c.dest, depart: dep, returnDate: trip === "round" ? ret : "", tripType: trip };
-                document.getElementById("gfLink").href = BookingLinks.googleFlightsUrl(Object.assign({ nearbyAirports: true }, opts));
-                document.getElementById("skyLink").href = BookingLinks.skyscannerUrl(opts);
                 document.getElementById("resultLinks").hidden = false;
-                hint.textContent = "The airline name and the live total are on the provider. The final price is confirmed on the booking site.";
+                hint.textContent = "Compare prices from partner sites. The final price is confirmed on the booking site.";
             });
         })();
     </script>

@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VietJet routes — Thailand, Vietnam, Cambodia, Malaysia | Cheap Ticket Finder BD</title>
-    <meta name="description" content="Find verified VietJet and Thai VietJet routes in Thailand, Vietnam, Cambodia and Malaysia. VietJet does not fly to or from Dhaka. The live total opens on Google Flights and Skyscanner.">
+    <meta name="description" content="Find verified VietJet and Thai VietJet routes in Thailand, Vietnam, Cambodia and Malaysia. VietJet does not fly to or from Dhaka. Compare prices from partner sites in the on-site flight search.">
     <link rel="canonical" href="https://cheapticketfinder.site/vietjet/">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Cheap Ticket Finder">
     <meta property="og:url" content="https://cheapticketfinder.site/vietjet/">
     <meta property="og:title" content="VietJet routes — Thailand, Vietnam, Cambodia, Malaysia">
-    <meta property="og:description" content="Verified VietJet and Thai VietJet routes only. VietJet does not fly to or from Dhaka. The live total is on the provider.">
+    <meta property="og:description" content="Verified VietJet and Thai VietJet routes only. VietJet does not fly to or from Dhaka. Compare prices from partner sites in the on-site flight search.">
     <meta property="og:image" content="https://cheapticketfinder.site/assets/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -64,7 +64,7 @@
         <header class="mb-5">
             <a class="vj-link text-sm" href="/">Cheap Ticket Finder — home</a>
             <h1 class="text-2xl sm:text-3xl font-black mt-3">VietJet routes</h1>
-            <p class="text-sm mt-2 leading-6">VietJet does not fly to or from Dhaka. These are routes inside Thailand and Vietnam, and between Thailand, Vietnam, Cambodia and Malaysia, that a traveller can connect to on a separate ticket. Pick a route and dates. The live total and the airline name open on Google Flights and Skyscanner. Booking and payment happen on the provider. We do not sell tickets. There is no VietJet affiliate link here.</p>
+            <p class="text-sm mt-2 leading-6">VietJet does not fly to or from Dhaka. These are routes inside Thailand and Vietnam, and between Thailand, Vietnam, Cambodia and Malaysia, that a traveller can connect to on a separate ticket. Pick a route and dates. Compare prices from partner sites in the on-site flight search. Booking and payment happen on the provider. We do not sell tickets. There is no VietJet affiliate link here.</p>
         </header>
         <main>
             <section class="search-panel" aria-label="VietJet route finder">
@@ -93,10 +93,9 @@
                     <button type="button" id="vjSearchBtn">Search</button>
                 </div>
                 <p id="dateHint" class="text-xs mt-3" role="status"></p>
-                <p id="metroHint" class="text-xs mt-2" hidden>Google Flights also includes Don Mueang (DMK) with Suvarnabhumi (BKK), the same as the homepage search. Thai VietJet’s verified Bangkok flights on this page are BKK.</p>
+                <p id="metroHint" class="text-xs mt-2" hidden>A Bangkok search can include Don Mueang (DMK) with Suvarnabhumi (BKK), the same as the homepage search. Thai VietJet’s verified Bangkok flights on this page are BKK.</p>
                 <div id="resultLinks" class="flex flex-wrap gap-2 mt-3" hidden>
-                    <a id="gfLink" class="home-btn" target="_blank" rel="noopener noreferrer">Open Google Flights</a>
-                    <a id="skyLink" class="home-btn" target="_blank" rel="noopener noreferrer">Open this route on Skyscanner</a>
+                    <a id="ownSearch" class="home-btn" href="/#wl-flight-results">Open on-site flight search</a>
                     <a class="home-btn" href="https://www.trip.com/flights?Allianceid=11059812&SID=333836392&trip_sub1=flights&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer">Trip.com flights</a>
                 </div>
             </section>
@@ -155,7 +154,6 @@
             </nav>
         </footer>
     </div>
-    <script src="/js/booking-links.js?v=gf-nearby-20260902"></script>
     <script>
         (function () {
             var items = Array.prototype.slice.call(document.querySelectorAll("[data-from]"));
@@ -206,12 +204,8 @@
                 if (dep < iso) { hint.textContent = "Pick a departure date that is today or later."; return; }
                 if (trip === "round" && !ret) { hint.textContent = "Pick a return date."; document.getElementById("returnDate").focus(); return; }
                 if (trip === "round" && ret < dep) { hint.textContent = "Pick a return date on or after departure."; return; }
-                var c = current();
-                var opts = { origin: c.origin, dest: c.dest, depart: dep, returnDate: trip === "round" ? ret : "", tripType: trip };
-                document.getElementById("gfLink").href = BookingLinks.googleFlightsUrl(Object.assign({ nearbyAirports: true }, opts));
-                document.getElementById("skyLink").href = BookingLinks.skyscannerUrl(opts);
                 document.getElementById("resultLinks").hidden = false;
-                hint.textContent = "The airline name and the live total are on the provider.";
+                hint.textContent = "Compare prices from partner sites. The final price is confirmed on the booking site.";
                 refreshMetro();
             });
             refreshMetro();

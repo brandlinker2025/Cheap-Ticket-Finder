@@ -1,4 +1,10 @@
 {
+  "redirects": [
+    { "source": "/travel-sim", "destination": "/esim/", "permanent": true },
+    { "source": "/travel-sim/", "destination": "/esim/", "permanent": true },
+    { "source": "/transfers", "destination": "/airport-transfer/", "permanent": true },
+    { "source": "/transfers/", "destination": "/airport-transfer/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/index.html" }
   ],
