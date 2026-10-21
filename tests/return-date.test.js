@@ -13,10 +13,9 @@ const scanStart = html.indexOf("function triggerFullScan");
 const scanFn = html.slice(scanStart, html.indexOf("renderCalendars();", scanStart));
 assert.ok(scanFn.includes("focusReturnPick"), "missing return date must open return picking instead of stopping");
 
-const sky = html.match(/<a class="home-btn" href="https:\/\/www\.skyscanner\.com\/"[^>]*>/);
-assert.ok(sky, "plain Skyscanner link must be present");
-assert.ok(sky[0].includes('rel="noopener noreferrer"'), "Skyscanner link stays a normal outbound link");
-assert.ok(!sky[0].includes("sponsored"), "Skyscanner link must not be marked as a paid placement");
+assert.ok(!html.includes("https://www.skyscanner.com/"), "homepage must not link out to Skyscanner");
+assert.ok(!html.includes("Search on Skyscanner"), "homepage must not offer a Search on Skyscanner button");
+assert.ok(html.includes('href="#wl-flight-results"'), "homepage search shortcut points at the on-site results");
 assert.ok(!/impact\.com|partners\.skyscanner\.net/i.test(html), "do not add Impact or affiliate-programme tracking");
 
 function extractFn(name, signature) {

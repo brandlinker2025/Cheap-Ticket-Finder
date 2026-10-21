@@ -21,6 +21,7 @@
     <meta name="application-name" content="Cheap Ticket Finder">
     <meta name="deploy" content="gf-nearby-20260902">
     <meta name='impact-site-verification' value='4af29459-fcb3-4f17-a171-999b80bb91e2'>
+    <link rel="icon" href="/favicon.ico" type="image/png">
     <link rel="canonical" href="https://cheapticketfinder.site/">
     <meta property="og:site_name" content="Cheap Ticket Finder">
     <meta property="og:type" content="website">
@@ -99,7 +100,7 @@
             background: rgba(14,165,233,.08);
         }
         .sk-day-return-ok { box-shadow: inset 0 0 0 1px #7ec8ea; }
-        .home-btn, #skyscannerRouteBtn {
+        .home-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -196,7 +197,7 @@
         .sk-day-selected-dept,.sk-day-selected-ret,.sk-day-selected-dept span,.sk-day-selected-ret span{background:#9fd4f2 !important;color:#111111 !important}
         .sk-day-in-range{background:#e7f6fd !important}
         #calendarGridWrapper button,#calendarGridWrapper button i{color:#111111 !important;background:#e7f6fd !important}
-        .home-btn,#skyscannerRouteBtn{background:#e7f6fd !important;color:#111111 !important}
+        .home-btn{background:#e7f6fd !important;color:#111111 !important}
         .cta-affiliate,.deal-chip,.luxury-trust-row span,#googleBookBar a,#googleBookBar a *,button.bg-amber-500,button.bg-amber-500 *{
             background:#d4eefc !important;color:#111111 !important;border-color:#9fd4f2 !important;box-shadow:none !important
         }
@@ -322,8 +323,7 @@
             <div id="routeWarning" class="hidden mb-3 rounded-xl border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-xs font-semibold text-rose-300"></div>
 
             <div class="flex flex-wrap justify-center gap-2 mt-3">
-                <a class="home-btn" href="https://www.skyscanner.com/" target="_blank" rel="noopener noreferrer">Search on Skyscanner</a>
-                <button type="button" id="skyscannerRouteBtn" onclick="openSkyscannerForDates()">Open this route on Skyscanner</button>
+                <a class="home-btn" href="#wl-flight-results">Open on-site flight search</a>
                 <a class="home-btn" href="https://www.trip.com/flights?Allianceid=11059812&SID=333836392&trip_sub1=flights&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer">Trip.com flights</a>
                 <a class="home-btn" href="https://tp.media/r?campaign_id=100&marker=791994&p=4114&sub_id=cheapticketfinder-site&trs=587447&u=https%3A%2F%2Faviasales.com" target="_blank" rel="sponsored noopener noreferrer">Aviasales</a>
                 <a class="home-btn" href="https://www.trip.com/?Allianceid=11059812&SID=333836392&trip_sub1=homepage&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer">Trip.com</a>
@@ -391,7 +391,7 @@
 
         <div class="mb-4 rounded-xl border border-sky-500/20 bg-sky-950/40 px-3.5 py-3 text-[11px] leading-5 text-slate-300">
             <i class="fa-solid fa-circle-info text-sky-400 mr-1"></i>
-            Use the on-site flight search and Travelpayouts results for the authentic airline-issued ticket. Official sites often show Flex. One official book button per airline stays below. Skyscanner is a plain search. Kayak is not a booking button.
+            Use the on-site flight search and Travelpayouts results for the authentic airline-issued ticket. Official sites often show Flex. One official book button per airline stays below. Skyscanner is not a search button on this page. Kayak is not a booking button.
         </div>
 
         <div id="tripSummary" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-3.5 mb-6 flex flex-wrap justify-between items-center text-xs sm:text-sm gap-2">
@@ -872,11 +872,7 @@
                     { name: "Thai Airways", website: "https://www.thaiairways.com" },
                     { name: "Biman Bangladesh", website: "https://www.biman-airlines.com" }
                 ],
-                attractions: [
-                    { name: "Grand Palace & Emerald Buddha Pass", priceBDT: "BDT 2,100", discount: "15% OFF", img: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=500&q=80" },
-                    { name: "Chao Phraya Luxury Dinner Cruise", priceBDT: "BDT 3,200", discount: "25% OFF", img: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=500&q=80" },
-                    { name: "Safari World & Marine Theme Park", priceBDT: "BDT 3,800", discount: "30% OFF", img: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=500&q=80" }
-                ]
+                attractions: []
             },
             { 
                 country: "Thailand 🇹🇭", city: "Bangkok (Budget Hub)", name: "Don Mueang Int. (DMK)", code: "dmk", 
@@ -887,11 +883,7 @@
                     { name: "Nok Air", website: "https://www.nokair.com" },
                     { name: "Thai Lion Air", website: "https://www.lionairthai.com" }
                 ],
-                attractions: [
-                    { name: "Chatuchak Weekend Market Guide", priceBDT: "Free Entry", discount: "Promo", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&q=80" },
-                    { name: "Siam Amazing Theme & Water Park", priceBDT: "BDT 2,800", discount: "20% OFF", img: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=500&q=80" },
-                    { name: "Dream World Bangkok Adventure Pass", priceBDT: "BDT 3,100", discount: "25% OFF", img: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=500&q=80" }
-                ]
+                attractions: []
             },
             { 
                 country: "Thailand 🇹🇭", city: "Phuket", name: "Phuket Int. Airport (HKT)", code: "hkt", 
@@ -902,11 +894,7 @@
                     { name: "Bangkok Airways", website: "https://www.bangkokair.com" },
                     { name: "Thai AirAsia", website: "https://www.airasia.com" }
                 ],
-                attractions: [
-                    { name: "Phi Phi Island Speedboat Day Pass", priceBDT: "BDT 4,200", discount: "25% OFF", img: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=500&q=80" },
-                    { name: "James Bond Island & Kayaking Tour", priceBDT: "BDT 3,900", discount: "20% OFF", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" },
-                    { name: "Big Buddha & Old Town Walking Tour", priceBDT: "BDT 1,800", discount: "15% OFF", img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=500&q=80" }
-                ]
+                attractions: []
             },
 
             // Bangladesh 🇧🇩
@@ -919,11 +907,7 @@
                     { name: "Air Astra", website: "https://airastra.com" },
                     { name: "Biman Bangladesh", website: "https://www.biman-airlines.com" }
                 ],
-                attractions: [
-                    { name: "Inani Coral Beach & Sunset View", priceBDT: "BDT 1,200", discount: "20% OFF", img: "https://images.unsplash.com/photo-1589802829985-817e51171b92?w=500&q=80" },
-                    { name: "Marine Drive Long Drive Experience", priceBDT: "BDT 2,500", discount: "15% OFF", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" },
-                    { name: "Himchari Waterfalls & National Park", priceBDT: "BDT 800", discount: "Local Pass", img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=500&q=80" }
-                ]
+                attractions: []
             },
             { 
                 country: "Bangladesh 🇧🇩", city: "Dhaka", name: "Hazrat Shahjalal Int. (DAC)", code: "dac", 
@@ -934,11 +918,7 @@
                     { name: "US-Bangla Airlines", website: "https://usbair.com" },
                     { name: "Air Astra", website: "https://airastra.com" }
                 ],
-                attractions: [
-                    { name: "Lalbagh Fort & Ahsan Manzil Pass", priceBDT: "BDT 500", discount: "Local Pass", img: "https://images.unsplash.com/photo-1608958435020-e8a7109ba809?w=500&q=80" },
-                    { name: "Old Dhaka Heritage & Food Walk", priceBDT: "BDT 1,500", discount: "Promo", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&q=80" },
-                    { name: "National Parliament & Hatirjheel Boat", priceBDT: "BDT 600", discount: "20% OFF", img: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=500&q=80" }
-                ]
+                attractions: []
             },
             { 
                 country: "Bangladesh 🇧🇩", city: "Chittagong", name: "Shah Amanat Int. (CGP)", code: "cgp", 
@@ -949,11 +929,7 @@
                     { name: "Air Astra", website: "https://airastra.com" },
                     { name: "Biman Bangladesh", website: "https://www.biman-airlines.com" }
                 ],
-                attractions: [
-                    { name: "Patenga Sea Beach Sunset Tour", priceBDT: "BDT 700", discount: "Local Pass", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" },
-                    { name: "Foy's Lake Resort & Amusement Pass", priceBDT: "BDT 1,200", discount: "15% OFF", img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=500&q=80" },
-                    { name: "Bhatiari Lake & Golf Club Walk", priceBDT: "BDT 500", discount: "Guide", img: "https://images.unsplash.com/photo-1589802829985-817e51171b92?w=500&q=80" }
-                ]
+                attractions: []
             },
 
             // India 🇮🇳
@@ -966,11 +942,7 @@
                     { name: "Air India", website: "https://www.airindia.com" },
                     { name: "SpiceJet", website: "https://www.spicejet.com" }
                 ],
-                attractions: [
-                    { name: "Victoria Memorial & Museum Tour", priceBDT: "BDT 500", discount: "Entry Pass", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&q=80" },
-                    { name: "Howrah Bridge & Ganga Ferry Ride", priceBDT: "BDT 400", discount: "Local Pass", img: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=500&q=80" },
-                    { name: "Science City & Eco Park Mega Pass", priceBDT: "BDT 800", discount: "15% OFF", img: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=500&q=80" }
-                ]
+                attractions: []
             },
             { 
                 country: "India 🇮🇳", city: "Delhi", name: "Indira Gandhi Int. (DEL)", code: "del", 
@@ -981,11 +953,7 @@
                     { name: "Vistara", website: "https://www.airvistara.com" },
                     { name: "Air India", website: "https://www.airindia.com" }
                 ],
-                attractions: [
-                    { name: "Taj Mahal Agra Sunrise Tour Pass", priceBDT: "BDT 4,500", discount: "20% OFF", img: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=500&q=80" },
-                    { name: "Red Fort & Qutub Minar Entry", priceBDT: "BDT 1,200", discount: "Guide", img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=500&q=80" },
-                    { name: "Old Delhi Chandni Chowk Food Tour", priceBDT: "BDT 1,500", discount: "Promo", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&q=80" }
-                ]
+                attractions: []
             },
 
             // UAE & Singapore 🇦🇪 🇸🇬
@@ -998,11 +966,7 @@
                     { name: "Flydubai", website: "https://www.flydubai.com" },
                     { name: "Biman Bangladesh", website: "https://www.biman-airlines.com" }
                 ],
-                attractions: [
-                    { name: "Burj Khalifa 124th Floor Sky View", priceBDT: "BDT 5,500", discount: "15% OFF", img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500&q=80" },
-                    { name: "Desert Safari & BBQ Dinner Show", priceBDT: "BDT 3,800", discount: "25% OFF", img: "https://images.unsplash.com/photo-1451337516015-6b6e9a44a8a3?w=500&q=80" },
-                    { name: "Dubai Miracle Garden & Global Village", priceBDT: "BDT 2,400", discount: "Combo", img: "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?w=500&q=80" }
-                ]
+                attractions: []
             },
             { 
                 country: "Singapore 🇸🇬", city: "Singapore", name: "Singapore Changi Int. (SIN)", code: "sin", 
@@ -1013,11 +977,7 @@
                     { name: "Scoot", website: "https://www.flyscoot.com" },
                     { name: "US-Bangla", website: "https://usbair.com" }
                 ],
-                attractions: [
-                    { name: "Gardens by the Bay & Cloud Forest", priceBDT: "BDT 2,800", discount: "15% OFF", img: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=500&q=80" },
-                    { name: "Universal Studios Singapore Pass", priceBDT: "BDT 7,200", discount: "20% OFF", img: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=500&q=80" },
-                    { name: "Marina Bay Sands SkyPark Deck", priceBDT: "BDT 2,400", discount: "Klook", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80" }
-                ]
+                attractions: []
             }
         ];
 
@@ -1422,20 +1382,6 @@
             btn.removeAttribute('aria-disabled');
             btn.textContent = selectedRetDate ? formatDate(selectedRetDate) : 'Pick return date';
             btn.setAttribute('aria-pressed', calendarPhase === 'return' ? 'true' : 'false');
-        }
-
-        function openSkyscannerForDates() {
-            if (currentTripType !== 'oneway' && selectedDeptDate && !selectedRetDate) {
-                focusReturnPick();
-                return;
-            }
-            if (!datesReady()) {
-                const card = document.getElementById('calendarCard');
-                if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
-            const url = BookingLinks.skyscannerUrl(currentSearchOpts());
-            window.open(url, '_blank', 'noopener,noreferrer');
         }
 
         function formatDate(d) {

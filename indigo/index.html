@@ -70,7 +70,7 @@
     <div class="max-w-3xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
         <header class="mb-5">
             <h2 class="text-2xl sm:text-3xl font-black">IndiGo routes</h2>
-            <p class="text-sm mt-2 leading-6">IndiGo flies Dhaka–Kolkata and Dhaka–Delhi direct (checked 20 Oct 2026 on goindigo.in). Kolkata–Delhi, Kolkata–Mumbai, Kolkata–Bengaluru, Kolkata–Chennai and Kolkata–Goa are onward India routes after Kolkata. Hyderabad–Dhaka is connecting only. Pick a route and dates. The airline name and the live total open on Google Flights and Skyscanner. The final price is confirmed on the booking site before payment. We do not sell tickets. There is no IndiGo affiliate link on this page. Bookings use this site’s existing Google Flights, Skyscanner, Trip.com and Aviasales links.</p>
+            <p class="text-sm mt-2 leading-6">IndiGo flies Dhaka–Kolkata and Dhaka–Delhi direct (checked 20 Oct 2026 on goindigo.in). Kolkata–Delhi, Kolkata–Mumbai, Kolkata–Bengaluru, Kolkata–Chennai and Kolkata–Goa are onward India routes after Kolkata. Hyderabad–Dhaka is connecting only. Pick a route and dates. The airline name and the live total open on Google Flights. The final price is confirmed on the booking site before payment. We do not sell tickets. There is no IndiGo affiliate link on this page. Bookings use this site’s existing Google Flights, Trip.com and Aviasales links.</p>
         </header>
         <main>
             <section class="search-panel" aria-label="IndiGo route finder">
@@ -102,7 +102,6 @@
                 <p id="connectHint" class="text-xs mt-2" hidden>Hyderabad–Dhaka is connecting only. The official page lists connecting flights for this pair.</p>
                 <div id="resultLinks" class="flex flex-wrap gap-2 mt-3" hidden>
                     <a id="gfLink" class="home-btn" target="_blank" rel="noopener noreferrer">Open Google Flights</a>
-                    <a id="skyLink" class="home-btn" target="_blank" rel="noopener noreferrer">Open this route on Skyscanner</a>
                     <a class="home-btn" href="https://www.trip.com/flights?Allianceid=11059812&SID=333836392&trip_sub1=flights&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer">Trip.com flights</a>
                     <a class="home-btn" href="https://tp.media/r?campaign_id=100&marker=791994&p=4114&sub_id=cheapticketfinder-site&trs=587447&u=https%3A%2F%2Faviasales.com" target="_blank" rel="sponsored noopener noreferrer">Aviasales</a>
                 </div>
@@ -198,7 +197,6 @@
                 var c = current();
                 var opts = { origin: c.origin, dest: c.dest, depart: dep, returnDate: trip === "round" ? ret : "", tripType: trip };
                 document.getElementById("gfLink").href = BookingLinks.googleFlightsUrl(Object.assign({ nearbyAirports: true }, opts));
-                document.getElementById("skyLink").href = BookingLinks.skyscannerUrl(opts);
                 document.getElementById("resultLinks").hidden = false;
                 hint.textContent = selected().getAttribute("data-connecting") === "1"
                     ? "Hyderabad–Dhaka is connecting only. The airline name and the live total are on the provider. The final price is confirmed on the booking site."

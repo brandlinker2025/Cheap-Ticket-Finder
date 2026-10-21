@@ -21,3 +21,23 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
     X-Deploy-Stamp = "cheap-ticket-finder-20260902"
+
+[[redirects]]
+  from = "/travel-sim"
+  to = "/esim/"
+  status = 301
+
+[[redirects]]
+  from = "/travel-sim/"
+  to = "/esim/"
+  status = 301
+
+[[redirects]]
+  from = "/transfers"
+  to = "/airport-transfer/"
+  status = 301
+
+[[redirects]]
+  from = "/transfers/"
+  to = "/airport-transfer/"
+  status = 301
