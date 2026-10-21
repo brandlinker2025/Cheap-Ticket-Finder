@@ -12,7 +12,7 @@
  * Official airline engines stay single-airport.
  * Official airline engines are secondary; they often open a higher fare family (Flex).
  * Official packages appear only for the searched destination country, and only with a real official URL.
- * No public fare API without secrets — show official up to X%, never a made-up ৳.
+ * No public fare API without secrets — show official up to X%, never a made-up fare.
  */
 (function (root, factory) {
     const api = factory();
@@ -558,7 +558,7 @@
             home: "https://usbair.com",
             match: /us-?bangla|usbair/i,
             relevant: (o, d) => BD_AIRPORTS.has(o) || BD_AIRPORTS.has(d),
-            blurb: "Official US-Bangla engine. It often opens a higher fare family such as Flex. The cheap authentic US-Bangla ticket is the airline-issued fare on Google Flights — we do not invent ৳.",
+            blurb: "Official US-Bangla engine. It often opens a higher fare family such as Flex. The cheap authentic US-Bangla ticket is the airline-issued fare on Google Flights — we do not invent a fare.",
             cta: "Open US-Bangla official engine",
             url(opts) {
                 return ttiZenithFrontOfficeUrl(USBA_FRONTOFFICE, opts);
@@ -837,7 +837,7 @@
                 name: airline.name,
                 home: airline.home,
                 url: airline.url(opts),
-                blurb: airline.blurb || "Official airline booking page for this route. Origin, destination and dates are in the link. Live fare is on the airline site — we do not invent ৳.",
+                blurb: airline.blurb || "Official airline booking page for this route. Origin, destination and dates are in the link. Live fare is on the airline site — we do not invent a fare.",
                 cta: airline.cta || `Open ${airline.name} booking`,
                 promo: airlineCheckoutPromo(airline.id),
                 savings: savingsForProvider(airline.id, opts)
@@ -1017,7 +1017,7 @@
         return savings;
     }
 
-    // Only when a real fare exists. Never call this with an invented ৳ amount.
+    // Only when a real fare exists. Never call this with an invented amount.
     function estimateAfterOfficialPercent(fareBdt, saving) {
         const fare = Number(fareBdt);
         if (!Number.isFinite(fare) || fare <= 0 || !saving || !Number.isFinite(Number(saving.percent))) {
@@ -1048,7 +1048,7 @@
                 cta: "Open Google Flights",
                 tier: "primary",
                 nearbyLabel,
-                blurb: "Dated tfs search, cheapest sort, BDT. Book with the airline there — that is the real ticket. A US-Bangla ৳ on Google Flights is an authentic airline-issued fare, not a Flex-only price from the airline site and not a number we invent." + (nearbyLabel ? " " + nearbyLabel + "." : ""),
+                blurb: "Dated tfs search, cheapest sort, BDT. Book with the airline there — that is the real ticket. A US-Bangla fare on Google Flights is an authentic airline-issued fare, not a Flex-only price from the airline site and not a number we invent." + (nearbyLabel ? " " + nearbyLabel + "." : ""),
                 savings: savingsForProvider("google-flights", opts)
             },
             {
@@ -1074,7 +1074,7 @@
                 cta: "Also compare on Aviasales",
                 tier: "secondary",
                 affiliate: true,
-                blurb: "Live fare is on Aviasales — we do not invent \u09f3.",
+                blurb: "Live fare is on Aviasales — we do not invent a fare.",
                 savings: []
             });
         }
@@ -1110,7 +1110,7 @@
             {
                 id: "google-flights",
                 name: "Google Flights",
-                blurb: "Opens Google Flights search results with From/To/dates already filled (tfs). Book the live fare there — we do not invent a ৳ amount. Same URL as the Book button below.",
+                blurb: "Opens Google Flights search results with From/To/dates already filled (tfs). Book the live fare there — we do not invent a fare. Same URL as the Book button below.",
                 cta: "Book these Google Flights results",
                 url: googleFlightsUrl(opts)
             },
