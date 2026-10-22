@@ -189,8 +189,19 @@
         #originDisplay,#destDisplay,#stopoverDisplay{color:#111111 !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;font-size:14px !important}
         #departDateField,#returnDateField,#returnDateField:disabled{color:#111111 !important;background:transparent !important;border:0 !important;box-shadow:none !important;opacity:1;padding:0 !important;min-height:0 !important;border-radius:0 !important;font-weight:800;font-size:14px;text-align:left;width:100%}
         #selectedTripLabel{color:#111111 !important;background:transparent !important;border:0 !important;padding:0 !important;font-size:14px !important;font-weight:800}
+        #originDisplay,#destDisplay,#stopoverDisplay,#selectedTripLabel,#returnDateField,.mc-value{display:block !important;max-width:100% !important;overflow:hidden !important;text-overflow:ellipsis !important;white-space:nowrap !important;font-size:13px !important;line-height:1.25}
         #originDisplay.is-placeholder,#destDisplay.is-placeholder,#stopoverDisplay.is-placeholder,
-        #selectedTripLabel.is-placeholder,#returnDateField.is-placeholder{color:#64748b !important;-webkit-text-fill-color:#64748b !important;font-weight:600 !important}
+        #selectedTripLabel.is-placeholder,#returnDateField.is-placeholder,.mc-value.is-placeholder{color:#64748b !important;-webkit-text-fill-color:#64748b !important;font-weight:600 !important}
+        .trip-seg > div,.trip-seg > button,.mc-hit{min-width:0;max-width:100%;overflow:hidden}
+        .mc-legs{margin:0 0 10px}
+        .mc-legs[hidden]{display:none !important}
+        .mc-leg{display:grid;grid-template-columns:28px minmax(0,1.15fr) minmax(0,1.15fr) minmax(0,.95fr) 36px;gap:8px;align-items:stretch;margin:0 0 8px}
+        .mc-index{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#0c4a6e;background:#e7f6fd;border:1px solid #c5e4f4;border-radius:8px}
+        .mc-remove{border:1px solid #c5e4f4;background:#fff;border-radius:8px;color:#111;font-weight:800;cursor:pointer}
+        .mc-remove:disabled{visibility:hidden;pointer-events:none}
+        .mc-add{margin:2px 0 4px;background:#e7f6fd;border:1px solid #9fd4f2;border-radius:10px;font-weight:800;padding:.5rem .9rem;color:#111;cursor:pointer}
+        .mc-add:disabled{opacity:.7;cursor:default}
+        #air-ticket.is-multicity .trip-fields > .trip-seg:not(.pax-seg){display:none}
         #searchBtn,#searchBtn *,#searchBtn:hover{background:#c5e8f8 !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;border-color:#7ec8ea !important;box-shadow:none !important}
         #calendarCard,#calendarCard h3,#departMonthLabel,.sk-weekdays,.sk-weekdays div,#calendarHint,#calendarPickBadge{color:#111111 !important}
         #calendarCard,#calendarGridWrapper > div{background:#f7fcff !important;border-color:#d3ebf8 !important}
@@ -238,6 +249,12 @@
             .pax-panel{left:0;right:auto;width:100%}
             .trip-fields{flex-direction:column}
             .trip-fields > #searchBtn{flex:1 1 auto;width:100%;min-height:52px}
+            .mc-leg{grid-template-columns:28px minmax(0,1fr) 36px;grid-template-areas:"n from x" "n to x" "n date x"}
+            .mc-index{grid-area:n}
+            .mc-from{grid-area:from}
+            .mc-to{grid-area:to}
+            .mc-date{grid-area:date}
+            .mc-remove{grid-area:x}
             .date-popover-backdrop{background:rgba(15,23,42,.28)}
             .date-popover{left:0 !important;right:0 !important;top:auto !important;bottom:0 !important;width:100% !important;max-width:none;border-radius:18px 18px 0 0;max-height:min(78vh,calc(100dvh - 128px));padding-bottom:calc(16px + env(safe-area-inset-bottom))}
         }
@@ -331,6 +348,11 @@
                 <button type="button" onclick="setTripType('multicity')" id="btnMultiCity">Multi-City</button>
             </div>
 
+            <div id="multiCityLegs" class="mc-legs" hidden>
+                <div id="mcLegList"></div>
+                <button type="button" id="mcAddLeg" class="mc-add" onclick="addMultiCityLeg()">Add flight</button>
+            </div>
+
             <div class="trip-fields">
                 <div class="trip-seg">
                     <label>From</label>
@@ -375,16 +397,6 @@
                 </button>
             </div>
             <p class="home-intro">Pick your route and dates. Search flights and compare prices from partner sites in the on-site flight search and Travelpayouts results. We do not sell tickets.</p>
-
-            <div id="multiCityRow" class="hidden bg-slate-950/70 p-3.5 rounded-xl border border-sky-500/30 mb-4">
-                <div class="flex items-center gap-2 mb-2 text-xs font-bold text-sky-400">
-                    <i class="fa-solid fa-route"></i> Multi-city third airport
-                </div>
-                <div onclick="openLocationModal('stopover')" class="w-full bg-slate-950 border border-slate-700 hover:border-amber-400 rounded-xl p-2.5 text-white cursor-pointer flex justify-between items-center text-xs sm:text-sm transition">
-                    <span id="stopoverDisplay" class="font-semibold text-slate-300">Phuket Int. Airport (HKT)</span>
-                    <i class="fa-solid fa-map-pin text-amber-400"></i>
-                </div>
-            </div>
 
             <div id="datePopoverBackdrop" class="date-popover-backdrop" hidden onclick="closeDatePopover()"></div>
             <div id="calendarPopover" class="date-popover" hidden>
@@ -1202,6 +1214,9 @@
         let selectedOriginCode = "";
         let selectedDestCode = "";
         let selectedStopoverCode = "hkt";
+        const MAX_LEGS = 6;
+        let legs = [blankLeg(), blankLeg()];
+        let activeLegIndex = 0;
 
         const today = new Date();
         let selectedDeptDate = null;
@@ -1210,10 +1225,15 @@
         let datePopoverTarget = null;
         let calMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
+        function blankLeg() {
+            return { origin: "", dest: "", date: null, originLabel: "", destLabel: "", originTitle: "", destTitle: "" };
+        }
+
         function setPlaceholder(id, text) {
             const el = document.getElementById(id);
             if (!el) return;
             el.textContent = text;
+            el.removeAttribute('title');
             el.classList.add('is-placeholder');
         }
 
@@ -1224,10 +1244,19 @@
             el.classList.remove('is-placeholder');
         }
 
+        function showAirportChoice(id, airport) {
+            const el = document.getElementById(id);
+            if (!el || !airport) return;
+            el.textContent = BookingLinks.compactAirportLabel(airport);
+            el.title = airport.name || el.textContent;
+            el.classList.remove('is-placeholder');
+        }
+
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
         function datesReady() {
+            if (currentTripType === 'multicity') return BookingLinks.multiCityLegsReady(legs);
             if (!selectedDeptDate) return false;
             if (currentTripType === 'oneway') return true;
             return Boolean(selectedRetDate);
@@ -1239,29 +1268,35 @@
             const btnRound = document.getElementById('btnRoundTrip');
             const btnOne = document.getElementById('btnOneWay');
             const btnMulti = document.getElementById('btnMultiCity');
-            const multiRow = document.getElementById('multiCityRow');
+            const multiRow = document.getElementById('multiCityLegs');
+            const ticket = document.getElementById('air-ticket');
 
             [btnRound, btnOne, btnMulti].forEach(b => b.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition text-slate-400 hover:text-white");
 
             if (type === 'round') {
                 btnRound.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-sky-500 text-white shadow";
-                multiRow.classList.add('hidden');
+                if (multiRow) multiRow.hidden = true;
+                if (ticket) ticket.classList.remove('is-multicity');
                 calendarPhase = selectedDeptDate && !selectedRetDate ? 'return' : (selectedRetDate ? 'return' : 'depart');
                 document.getElementById('tripTypeBadge').innerText = "ROUND TRIP";
                 document.getElementById('tripTypeBadge').className = "bg-sky-500/20 text-sky-400 px-2.5 py-0.5 rounded-full font-extrabold text-[10px] tracking-wider";
             } else if (type === 'oneway') {
                 btnOne.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-emerald-500 text-white shadow";
-                multiRow.classList.add('hidden');
+                if (multiRow) multiRow.hidden = true;
+                if (ticket) ticket.classList.remove('is-multicity');
                 selectedRetDate = null;
                 calendarPhase = 'depart';
                 document.getElementById('tripTypeBadge').innerText = "ONE WAY";
                 document.getElementById('tripTypeBadge').className = "bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded-full font-extrabold text-[10px] tracking-wider";
             } else {
                 btnMulti.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-amber-500 text-white shadow";
-                multiRow.classList.remove('hidden');
-                calendarPhase = selectedDeptDate && !selectedRetDate ? 'return' : (selectedRetDate ? 'return' : 'depart');
+                if (multiRow) multiRow.hidden = false;
+                if (ticket) ticket.classList.add('is-multicity');
+                calendarPhase = 'leg';
+                activeLegIndex = 0;
                 document.getElementById('tripTypeBadge').innerText = "MULTI-CITY";
                 document.getElementById('tripTypeBadge').className = "bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full font-extrabold text-[10px] tracking-wider";
+                renderMultiCityLegs();
             }
             renderCalendars();
             if (datesReady()) triggerFullScan();
@@ -1274,8 +1309,8 @@
             const modal = document.getElementById('locationModal');
             const title = document.getElementById('modalTitle');
             const input = document.getElementById('modalSearchInput');
-            if (type === 'origin') title.innerText = "Select Departure Airport";
-            else if (type === 'dest') title.innerText = "Select Destination Airport";
+            if (type === 'origin' || type === 'leg-origin') title.innerText = "Select Departure Airport";
+            else if (type === 'dest' || type === 'leg-dest') title.innerText = "Select Destination Airport";
             else title.innerText = "Select 3rd Stopover Airport";
             modal.classList.remove('hidden');
             input.value = '';
@@ -1370,13 +1405,31 @@
             if (!airport) return;
             if (activeModalType === 'origin') {
                 selectedOriginCode = airport.code;
-                showChosen('originDisplay', airport.name);
+                showAirportChoice('originDisplay', airport);
             } else if (activeModalType === 'dest') {
                 selectedDestCode = airport.code;
-                showChosen('destDisplay', airport.name);
+                showAirportChoice('destDisplay', airport);
             } else if (activeModalType === 'stopover') {
                 selectedStopoverCode = airport.code;
-                showChosen('stopoverDisplay', airport.name);
+                showAirportChoice('stopoverDisplay', airport);
+            } else if (activeModalType === 'leg-origin' || activeModalType === 'leg-dest') {
+                const leg = legs[activeLegIndex];
+                if (!leg) return;
+                const label = BookingLinks.compactAirportLabel(airport);
+                if (activeModalType === 'leg-origin') {
+                    leg.origin = airport.code;
+                    leg.originLabel = label;
+                    leg.originTitle = airport.name;
+                } else {
+                    leg.dest = airport.code;
+                    leg.destLabel = label;
+                    leg.destTitle = airport.name;
+                }
+                closeLocationModal();
+                renderMultiCityLegs();
+                if (datesReady()) triggerFullScan();
+                else resetResultsUntilDates();
+                return;
             }
             closeLocationModal();
             if (datesReady()) triggerFullScan();
@@ -1420,11 +1473,19 @@
                 else if (inRange) classes += " sk-day-in-range";
                 const todayStart = new Date();
                 todayStart.setHours(0, 0, 0, 0);
+                const prevLegDate = currentTripType === 'multicity' && calendarPhase === 'leg' && activeLegIndex > 0
+                    ? legs[activeLegIndex - 1].date
+                    : null;
+                const legDate = currentTripType === 'multicity' && calendarPhase === 'leg' && legs[activeLegIndex]
+                    ? legs[activeLegIndex].date
+                    : null;
                 const isPast = cur < todayStart;
-                const beforeDepart = currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate && cur < selectedDeptDate;
-                const blocked = isPast || beforeDepart;
+                const beforeDepart = currentTripType !== 'oneway' && currentTripType !== 'multicity' && calendarPhase === 'return' && selectedDeptDate && cur < selectedDeptDate;
+                const beforeLeg = Boolean(prevLegDate) && cur < prevLegDate;
+                const blocked = isPast || beforeDepart || beforeLeg;
                 if (blocked) classes += " empty";
                 if (isSameDay(cur, todayStart)) classes += " sk-day-today";
+                if (legDate && isSameDay(cur, legDate)) classes += " sk-day-selected-dept";
                 if (isDept && selectedRetDate && currentTripType !== 'oneway' && !isSameDay(selectedDeptDate, selectedRetDate)) classes += " cal-range-start";
                 if (isRet && selectedDeptDate && !isSameDay(selectedDeptDate, selectedRetDate)) classes += " cal-range-end";
                 else if (currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate && cur >= selectedDeptDate && !isDept && !isRet) classes += " sk-day-return-ok";
@@ -1432,6 +1493,12 @@
                 html += `<div class="${classes}" role="button" aria-label="${label}"${blocked ? ' aria-disabled="true"' : ` tabindex="0" onclick="selectDate(${year}, ${month}, ${day})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectDate(${year}, ${month}, ${day})}"`}><span>${day}</span></div>`;
             }
             grid.innerHTML = html;
+        }
+
+        function dateFieldElement() {
+            if (datePopoverTarget === 'return') return document.getElementById('returnDateField');
+            if (datePopoverTarget === 'leg') return document.getElementById('mcDate-' + activeLegIndex);
+            return document.getElementById('departDateField');
         }
 
         function openDatePopover(which) {
@@ -1451,7 +1518,7 @@
             if (departBtn) departBtn.setAttribute('aria-expanded', which === 'depart' ? 'true' : 'false');
             if (returnBtn && !returnBtn.disabled) returnBtn.setAttribute('aria-expanded', which === 'return' ? 'true' : 'false');
             document.querySelectorAll('.trip-seg.is-date-open').forEach((el) => el.classList.remove('is-date-open'));
-            const anchor = document.getElementById(which === 'return' ? 'returnDateField' : 'departDateField');
+            const anchor = dateFieldElement();
             if (anchor && anchor.closest) anchor.closest('.trip-seg').classList.add('is-date-open');
             renderCalendars();
             placeDatePopover();
@@ -1486,7 +1553,7 @@
                 pop.style.width = '';
                 return;
             }
-            const anchor = document.getElementById(datePopoverTarget === 'return' ? 'returnDateField' : 'departDateField');
+            const anchor = dateFieldElement();
             if (!anchor) return;
             const rect = anchor.getBoundingClientRect();
             const header = document.querySelector('.site-header');
@@ -1515,7 +1582,7 @@
             const pop = document.getElementById('calendarPopover');
             const card = document.getElementById('calendarCard');
             if (!pop || pop.hidden || !card) return;
-            if (card.contains(e.target) || e.target.closest('#departDateField,#returnDateField,#calendarPickBadge,#datePopoverBackdrop')) return;
+            if (card.contains(e.target) || e.target.closest('#departDateField,#returnDateField,#calendarPickBadge,[data-mc-date]')) return;
             if (!document.body.contains(e.target)) return;
             closeDatePopover();
         });
@@ -1548,6 +1615,23 @@
             todayStart.setHours(0, 0, 0, 0);
             if (clicked < todayStart) return;
             if (currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate && clicked < selectedDeptDate) return;
+            if (currentTripType === 'multicity' && calendarPhase === 'leg') {
+                const prev = activeLegIndex > 0 ? legs[activeLegIndex - 1].date : null;
+                if (prev && clicked < prev) return;
+                legs[activeLegIndex].date = clicked;
+                for (let j = activeLegIndex + 1; j < legs.length; j++) {
+                    if (legs[j].date && legs[j].date < clicked) legs[j].date = null;
+                }
+                const twoUpLeg = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(min-width:760px)').matches;
+                const viewEndLeg = new Date(calMonth.getFullYear(), calMonth.getMonth() + (twoUpLeg ? 2 : 1), 1);
+                if (clicked < calMonth || clicked >= viewEndLeg) calMonth = new Date(clicked.getFullYear(), clicked.getMonth(), 1);
+                renderCalendars();
+                closeDatePopover();
+                renderMultiCityLegs();
+                if (datesReady()) triggerFullScan();
+                else resetResultsUntilDates();
+                return;
+            }
 
             if (currentTripType === 'oneway') {
                 selectedDeptDate = clicked;
@@ -1618,6 +1702,15 @@
         function updateSelectionHeader() {
             const badge = document.getElementById('calendarPickBadge');
             const hint = document.getElementById('calendarHint');
+            if (currentTripType === 'multicity' && calendarPhase === 'leg') {
+                if (badge) badge.textContent = `Flight ${activeLegIndex + 1} date`;
+                const prev = activeLegIndex > 0 && legs[activeLegIndex - 1].date;
+                if (hint) hint.textContent = prev
+                    ? 'Dates before the previous flight are unavailable.'
+                    : 'Pick a departure date.';
+                syncReturnField();
+                return;
+            }
             if (selectedDeptDate) showChosen('selectedTripLabel', formatDate(selectedDeptDate));
             else setPlaceholder('selectedTripLabel', 'Select date');
             const pickingReturn = currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate;
@@ -1631,7 +1724,23 @@
         function validateRoute() {
             const warning = document.getElementById('routeWarning');
             let message = '';
-            if (!selectedOriginCode || !selectedDestCode) {
+            if (currentTripType === 'multicity') {
+                for (let i = 0; i < legs.length; i++) {
+                    const leg = legs[i];
+                    if (!leg.origin || !leg.dest) {
+                        message = `Choose a From airport and a To airport for flight ${i + 1}.`;
+                        break;
+                    }
+                    if (leg.origin === leg.dest) {
+                        message = `Flight ${i + 1} departure and destination must be different.`;
+                        break;
+                    }
+                    if (i > 0 && leg.date && legs[i - 1].date && leg.date < legs[i - 1].date) {
+                        message = `Flight ${i + 1} cannot leave before flight ${i}.`;
+                        break;
+                    }
+                }
+            } else if (!selectedOriginCode || !selectedDestCode) {
                 message = 'Choose a From airport and a To airport.';
             } else if (selectedOriginCode === selectedDestCode) {
                 message = 'Departure and destination airports must be different.';
@@ -1645,6 +1754,26 @@
         }
 
         function currentSearchOpts() {
+            if (currentTripType === 'multicity') {
+                const first = legs[0] || {};
+                const last = legs[legs.length - 1] || {};
+                const destAirport = getAllAirports().find(i => i.code === first.dest) || {};
+                return {
+                    origin: first.origin || "",
+                    dest: first.dest || "",
+                    stop: last.dest || "",
+                    depart: first.date,
+                    returnDate: last.date,
+                    tripType: 'multicity',
+                    legs: legs.map((leg) => ({ origin: leg.origin, dest: leg.dest, date: leg.date })),
+                    destCountry: destAirport.country || "",
+                    knownAirlines: destAirport.domesticAirlines || [],
+                    adults: paxState.adults,
+                    children: paxState.children,
+                    infants: paxState.infants,
+                    cabin: paxState.cabin
+                };
+            }
             const destAirport = getAllAirports().find(i => i.code === selectedDestCode) || {};
             return {
                 origin: selectedOriginCode,
@@ -1828,9 +1957,6 @@
             resetResultsUntilDates();
             if (!datesReady()) return;
 
-            const origCode = selectedOriginCode.toUpperCase();
-            const destCode = selectedDestCode.toUpperCase();
-            const stopCode = selectedStopoverCode.toUpperCase();
             const dStr = formatDate(selectedDeptDate);
             const rStr = formatDate(selectedRetDate);
             let diffDays = 1;
@@ -1840,15 +1966,25 @@
 
             const summary = document.getElementById('tripSummary');
             summary.classList.remove('hidden');
+            let hotelCode = selectedDestCode;
+            let checkinDate = selectedDeptDate;
+            let checkoutDate = selectedRetDate;
             if (currentTripType === 'oneway') {
+                const origCode = selectedOriginCode.toUpperCase();
+                const destCode = selectedDestCode.toUpperCase();
                 document.getElementById('routeBanner').innerText = `${origCode} ➔ ${destCode}`;
                 document.getElementById('stayNights').innerText = "One-way flight";
                 document.getElementById('dateBanner').innerText = dStr;
             } else if (currentTripType === 'multicity') {
-                document.getElementById('routeBanner').innerText = `${origCode} ➔ ${destCode} ➔ ${stopCode}`;
-                document.getElementById('stayNights').innerText = `${diffDays} days multi-city`;
-                document.getElementById('dateBanner').innerText = `${dStr} ➔ ${rStr}`;
+                document.getElementById('routeBanner').innerText = legs.map((leg) => `${leg.origin.toUpperCase()} ➔ ${leg.dest.toUpperCase()}`).join(' · ');
+                document.getElementById('stayNights').innerText = `${legs.length} flights`;
+                document.getElementById('dateBanner').innerText = legs.map((leg) => formatDate(leg.date)).join(' · ');
+                hotelCode = legs[0].dest;
+                checkinDate = legs[0].date;
+                checkoutDate = legs[legs.length - 1].date;
             } else {
+                const origCode = selectedOriginCode.toUpperCase();
+                const destCode = selectedDestCode.toUpperCase();
                 document.getElementById('routeBanner').innerText = `${origCode} 🔁 ${destCode}`;
                 document.getElementById('stayNights').innerText = `${diffDays} nights`;
                 document.getElementById('dateBanner').innerText = `${dStr} ➔ ${rStr}`;
@@ -1876,12 +2012,12 @@
             pathBox.innerHTML = secondaryHeading + secondary.map((item) => cheapPathCard(item)).join("");
             bindCopyButtons(pathBox);
 
-            const dest = getAllAirports().find(i => i.code === selectedDestCode) || COUNTRY_AIRPORTS[0];
-            const city = BookingLinks.hotelCityForCode(selectedDestCode, dest.city);
-            const checkin = BookingLinks.toISODate(selectedDeptDate);
+            const dest = getAllAirports().find(i => i.code === hotelCode) || COUNTRY_AIRPORTS[0];
+            const city = BookingLinks.hotelCityForCode(hotelCode, dest.city);
+            const checkin = BookingLinks.toISODate(checkinDate);
             const checkout = currentTripType === "oneway"
                 ? BookingLinks.addDaysISO(checkin, 1)
-                : BookingLinks.toISODate(selectedRetDate);
+                : BookingLinks.toISODate(checkoutDate);
             const hotelNote = currentTripType === "oneway"
                 ? `Arrival-night search in ${city} (${checkin} → ${checkout}).`
                 : `Stay in ${city} from ${checkin} to ${checkout}.`;
@@ -1897,7 +2033,7 @@
             document.getElementById('hotelSectionWrapper').classList.remove('hidden');
 
             const packages = BookingLinks.officialPackagesForRoute({
-                dest: selectedDestCode,
+                dest: hotelCode,
                 destCountry: dest.country || ""
             });
             const pkgWrap = document.getElementById('verifiedAgencySection');
@@ -1927,19 +2063,21 @@
         }
 
         function openWhiteLabelResults() {
-            const origin = selectedOriginCode.toUpperCase();
-            const dest = selectedDestCode.toUpperCase();
-            const depart = ddmm(selectedDeptDate);
             const paxTail = BookingLinks.aviasalesPaxSuffix(paxState);
-            let flightSearch = origin + depart + dest + paxTail;
+            let flightSearch = "";
             let airportIdx = "0";
             if (currentTripType === "multicity") {
-                const stop = selectedStopoverCode.toUpperCase();
-                flightSearch = origin + depart + stop + ddmm(selectedRetDate) + dest + paxTail;
-                airportIdx = "0,1";
-            } else if (currentTripType !== "oneway") {
-                flightSearch = origin + depart + dest + ddmm(selectedRetDate) + paxTail;
-                airportIdx = "0,1";
+                flightSearch = BookingLinks.aviasalesFlightSearch(legs, paxTail);
+                airportIdx = legs.map(() => "0").join(",");
+            } else {
+                const origin = selectedOriginCode.toUpperCase();
+                const dest = selectedDestCode.toUpperCase();
+                const depart = ddmm(selectedDeptDate);
+                flightSearch = origin + depart + dest + paxTail;
+                if (currentTripType !== "oneway") {
+                    flightSearch = origin + depart + dest + ddmm(selectedRetDate) + paxTail;
+                    airportIdx = "0,1";
+                }
             }
             const params = new URLSearchParams(window.location.search);
             ["origin", "origin_iata", "destination", "destination_iata", "depart_date", "return_date", "adults", "children", "infants", "trip_class", "ticketId"].forEach((key) => params.delete(key));
@@ -1955,6 +2093,13 @@
         function triggerFullScan() {
             if (!validateRoute()) return;
             if (!datesReady()) {
+                if (currentTripType === 'multicity') {
+                    const idx = legs.findIndex((leg) => !leg.date);
+                    focusLegDate(idx < 0 ? 0 : idx);
+                    renderMultiCityLegs();
+                    resetResultsUntilDates();
+                    return;
+                }
                 if (currentTripType !== 'oneway' && selectedDeptDate && !selectedRetDate) focusReturnPick();
                 else focusDepartPick();
                 renderCalendars();
@@ -2087,6 +2232,80 @@
         })();
         if (hashTabs[location.hash]) showHomeTab(hashTabs[location.hash]);
 
+        function renderMultiCityLegs() {
+            const list = document.getElementById('mcLegList');
+            const addBtn = document.getElementById('mcAddLeg');
+            if (!list) return;
+            list.innerHTML = legs.map((leg, i) => {
+                const fromText = leg.origin ? (leg.originLabel || leg.origin.toUpperCase()) : 'City or airport';
+                const toText = leg.dest ? (leg.destLabel || leg.dest.toUpperCase()) : 'City or airport';
+                const dateText = leg.date ? formatDate(leg.date) : 'Select date';
+                const open = datePopoverTarget === 'leg' && activeLegIndex === i;
+                return `
+                    <div class="mc-leg">
+                        <div class="mc-index">${i + 1}</div>
+                        <div class="trip-seg mc-from">
+                            <label>From</label>
+                            <div class="mc-hit" onclick="openLegAirport(${i}, 'origin')" title="${escapeHtml(leg.originTitle || '')}">
+                                <span class="mc-value${leg.origin ? '' : ' is-placeholder'}">${escapeHtml(fromText)}</span>
+                            </div>
+                        </div>
+                        <div class="trip-seg mc-to">
+                            <label>To</label>
+                            <div class="mc-hit" onclick="openLegAirport(${i}, 'dest')" title="${escapeHtml(leg.destTitle || '')}">
+                                <span class="mc-value${leg.dest ? '' : ' is-placeholder'}">${escapeHtml(toText)}</span>
+                            </div>
+                        </div>
+                        <div class="trip-seg mc-date${open ? ' is-date-open' : ''}">
+                            <label>Departure date</label>
+                            <button type="button" id="mcDate-${i}" data-mc-date="1" onclick="focusLegDate(${i})" aria-haspopup="dialog" aria-expanded="${open ? 'true' : 'false'}" aria-controls="calendarPopover" title="${escapeHtml(leg.date ? dateText : '')}">
+                                <span class="mc-value${leg.date ? '' : ' is-placeholder'}">${escapeHtml(dateText)}</span>
+                            </button>
+                        </div>
+                        <button type="button" class="mc-remove" aria-label="Remove flight ${i + 1}" onclick="removeMultiCityLeg(${i})" ${legs.length <= 2 ? 'disabled' : ''}>×</button>
+                    </div>`;
+            }).join('');
+            if (addBtn) {
+                addBtn.disabled = legs.length >= MAX_LEGS;
+                addBtn.textContent = legs.length >= MAX_LEGS ? 'Maximum 6 flights' : 'Add flight';
+            }
+        }
+
+        function addMultiCityLeg() {
+            if (legs.length >= MAX_LEGS) return;
+            legs.push(blankLeg());
+            renderMultiCityLegs();
+        }
+
+        function removeMultiCityLeg(index) {
+            if (legs.length <= 2) return;
+            legs.splice(index, 1);
+            if (activeLegIndex >= legs.length) activeLegIndex = legs.length - 1;
+            closeDatePopover();
+            renderMultiCityLegs();
+            if (datesReady()) triggerFullScan();
+            else resetResultsUntilDates();
+        }
+
+        function openLegAirport(index, which) {
+            activeLegIndex = index;
+            openLocationModal(which === 'dest' ? 'leg-dest' : 'leg-origin');
+        }
+
+        function focusLegDate(index) {
+            if (currentTripType !== 'multicity') return;
+            let target = index;
+            for (let j = 0; j < index; j++) {
+                if (!legs[j].date) {
+                    target = j;
+                    break;
+                }
+            }
+            activeLegIndex = target;
+            calendarPhase = 'leg';
+            openDatePopover('leg');
+        }
+
         function reinforceBlankSearchFields() {
             if (!selectedOriginCode) setPlaceholder('originDisplay', 'City or airport');
             if (!selectedDestCode) setPlaceholder('destDisplay', 'City or airport');
@@ -2101,7 +2320,7 @@
         }
 
         renderCalendars();
-        resetResultsUntilDates();
+        renderMultiCityLegs();
         reinforceBlankSearchFields();
         ensureWorldwideAirportsLoaded();
         const siteHeader = document.querySelector('.site-header');
