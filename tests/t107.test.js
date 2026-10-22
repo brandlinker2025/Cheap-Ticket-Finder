@@ -1,0 +1,22 @@
+const assert = require("assert");
+const fs = require("fs");
+const B = require("../js/booking-links");
+assert.strictEqual(B.aviasalesPaxSuffix({}), "1");
+assert.strictEqual(B.aviasalesPaxSuffix({ adults: 2, children: 1, infants: 1, cabin: "business" }), "c211");
+assert.strictEqual(B.aviasalesPaxSuffix({ adults: 1, infants: 3 }), "101"); // infants capped at adults
+assert.strictEqual(B.hotelCityForCode("ZYL"), "Sylhet");
+assert.strictEqual(B.hotelCityForCode("cgp", "Chittagong"), "Chattogram");
+assert.strictEqual(B.hotelCityForCode("CXB"), "Cox's Bazar");
+assert.strictEqual(B.hotelCityForCode("zzz", "Foo (Bar)"), "Foo");
+assert.ok(B.isBogusCarrier("Deutsche Bahn AG"));
+assert.ok(!B.isBogusCarrier("Biman Bangladesh Airlines"));
+assert.ok(!B.isBogusCarrier("US-Bangla Airlines"));
+const q = B.AIRLINE_DIRECTORY.find((a) => a.id === "qatar").url({ origin: "DAC", dest: "DOH", depart: new Date(2026, 10, 20), tripType: "oneway", adults: 2, children: 1, cabin: "business" });
+assert.ok(q.includes("adults=2") && q.includes("children=1") && q.includes("bookingClass=B"));
+const g = B.gozayaanUrl({ origin: "DAC", dest: "CXB", depart: new Date(2026, 10, 20), tripType: "oneway", adults: 3, cabin: "business" });
+assert.ok(g.includes("adult=3") && g.includes("cabin_class=Business"));
+const all = fs.readFileSync(__dirname + "/../js/booking-links.js", "utf8") + fs.readFileSync(__dirname + "/../index.html", "utf8");
+assert.ok(!all.includes("citybankplc.com/ramadan2026"));
+assert.ok(!all.includes("cdn.tailwindcss.com"));
+assert.strictEqual(B.bdSurfaceTransportLinks().length, 3);
+console.log("t107 ok");

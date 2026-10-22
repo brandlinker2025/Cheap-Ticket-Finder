@@ -15,7 +15,7 @@ const must = {
 for (const [k, v] of Object.entries(must)) assert.strictEqual(map[k], v, `${k} must be ${v}`);
 assert.ok(map["permissions-policy"].includes("camera=()") && map["permissions-policy"].includes("microphone=()") && map["permissions-policy"].includes("geolocation=()"), "Permissions-Policy must disable camera/mic/geo");
 const csp = map["content-security-policy"] || "";
-for (const needle of ["default-src 'self'", "object-src 'none'", "frame-ancestors 'self'", "base-uri 'self'", "https://tp-em.com", "https://*.tp.media", "https://cdn.tailwindcss.com", "https://cdnjs.cloudflare.com", "https://formsubmit.co", "upgrade-insecure-requests"]) {
+for (const needle of ["default-src 'self'", "object-src 'none'", "frame-ancestors 'self'", "base-uri 'self'", "https://tp-em.com", "https://*.tp.media", "https://cdnjs.cloudflare.com", "https://formsubmit.co", "upgrade-insecure-requests"]) {
   assert.ok(csp.includes(needle), `CSP missing: ${needle}`);
 }
 assert.ok(!csp.includes("http://"), "CSP must not allow plain-http sources");
