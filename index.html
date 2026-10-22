@@ -1842,13 +1842,23 @@
             if (seg && !seg.contains(e.target)) togglePax(false);
         });
         // T-110: hide non-airline "carriers" (e.g. Deutsche Bahn AG) in Travelpayouts results.
-        // The widget renders into #tpwl-tickets (light DOM, no iframe); cards fill in late, so re-check on every change.
+        // The widget renders late inside an open shadow root on #tpwl-tickets (no iframe), so observe every
+        // open shadow root under it and re-check cards on each change.
         (function filterBogusCarriers() {
             var root = document.getElementById('tpwl-tickets');
             if (!root || !window.MutationObserver) return;
             var CARD = '[data-role="flight-card"], [class*="DirectFlightsItem-module__root"]';
             var NAME = '[class*="AirCompany"], [class*="airline"], [class*="Airline"]';
-            var queued = false;
+            var queued = false, watched = [];
+            function scopes() {
+                var out = [root], i = 0;
+                while (i < out.length) {
+                    out[i].querySelectorAll('*').forEach(function (el) { if (el.shadowRoot) out.push(el.shadowRoot); });
+                    if (out[i] === root && root.shadowRoot) out.push(root.shadowRoot);
+                    i++;
+                }
+                return out;
+            }
             function carrierNames(card) {
                 var parts = [];
                 card.querySelectorAll(NAME).forEach(function (n) { parts.push(n.textContent); });
@@ -1857,20 +1867,34 @@
             }
             function sweep() {
                 queued = false;
-                root.querySelectorAll(CARD).forEach(function (card) {
-                    var bogus = BookingLinks.isBogusCarrier(carrierNames(card));
-                    if (bogus && card.getAttribute('data-ctf-hidden') !== 'non-airline') {
-                        card.setAttribute('data-ctf-hidden', 'non-airline');
-                        card.style.setProperty('display', 'none', 'important');
-                    } else if (!bogus && card.hasAttribute('data-ctf-hidden')) {
-                        card.removeAttribute('data-ctf-hidden');
-                        card.style.removeProperty('display');
-                    }
+                scopes().forEach(function (sc) {
+                    watch(sc);
+                    sc.querySelectorAll(CARD).forEach(function (card) {
+                        var bogus = BookingLinks.isBogusCarrier(carrierNames(card));
+                        if (bogus && card.getAttribute('data-ctf-hidden') !== 'non-airline') {
+                            card.setAttribute('data-ctf-hidden', 'non-airline');
+                            card.style.setProperty('display', 'none', 'important');
+                        } else if (!bogus && card.hasAttribute('data-ctf-hidden')) {
+                            card.removeAttribute('data-ctf-hidden');
+                            card.style.removeProperty('display');
+                        }
+                    });
                 });
             }
-            new MutationObserver(function () {
+            var mo = new MutationObserver(function () {
                 if (!queued) { queued = true; requestAnimationFrame(sweep); }
-            }).observe(root, { childList: true, subtree: true, characterData: true });
+            });
+            function watch(node) {
+                if (watched.indexOf(node) !== -1) return;
+                watched.push(node);
+                mo.observe(node, { childList: true, subtree: true, characterData: true });
+            }
+            watch(root);
+            // The shadow root is attached without a DOM mutation we can see, so check for it briefly.
+            var tries = 0, timer = setInterval(function () {
+                sweep();
+                if (++tries > 180) clearInterval(timer);
+            }, 1000);
         })();
 
         function showHomeTab(name) {
