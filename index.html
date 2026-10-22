@@ -1841,19 +1841,36 @@
             var seg = document.querySelector('.pax-seg');
             if (seg && !seg.contains(e.target)) togglePax(false);
         });
-        // T-107: hide non-airline "carriers" (e.g. Deutsche Bahn AG) if the Travelpayouts results list one.
+        // T-110: hide non-airline "carriers" (e.g. Deutsche Bahn AG) in Travelpayouts results.
+        // The widget renders into #tpwl-tickets (light DOM, no iframe); cards fill in late, so re-check on every change.
         (function filterBogusCarriers() {
             var root = document.getElementById('tpwl-tickets');
             if (!root || !window.MutationObserver) return;
+            var CARD = '[data-role="flight-card"], [class*="DirectFlightsItem-module__root"]';
+            var NAME = '[class*="AirCompany"], [class*="airline"], [class*="Airline"]';
+            var queued = false;
+            function carrierNames(card) {
+                var parts = [];
+                card.querySelectorAll(NAME).forEach(function (n) { parts.push(n.textContent); });
+                card.querySelectorAll('img[alt], [title]').forEach(function (n) { parts.push(n.getAttribute('alt') || n.getAttribute('title')); });
+                return parts.join(' | ');
+            }
             function sweep() {
-                root.querySelectorAll('[class*="ticket"], article, li').forEach(function (card) {
-                    if (card.dataset.ctfChecked) return;
-                    card.dataset.ctfChecked = '1';
-                    var names = [].map.call(card.querySelectorAll('img[alt], [title]'), function (n) { return n.getAttribute('alt') || n.getAttribute('title'); }).join(' ');
-                    if (BookingLinks.isBogusCarrier(names)) card.style.display = 'none';
+                queued = false;
+                root.querySelectorAll(CARD).forEach(function (card) {
+                    var bogus = BookingLinks.isBogusCarrier(carrierNames(card));
+                    if (bogus && card.getAttribute('data-ctf-hidden') !== 'non-airline') {
+                        card.setAttribute('data-ctf-hidden', 'non-airline');
+                        card.style.setProperty('display', 'none', 'important');
+                    } else if (!bogus && card.hasAttribute('data-ctf-hidden')) {
+                        card.removeAttribute('data-ctf-hidden');
+                        card.style.removeProperty('display');
+                    }
                 });
             }
-            new MutationObserver(sweep).observe(root, { childList: true, subtree: true });
+            new MutationObserver(function () {
+                if (!queued) { queued = true; requestAnimationFrame(sweep); }
+            }).observe(root, { childList: true, subtree: true, characterData: true });
         })();
 
         function showHomeTab(name) {
