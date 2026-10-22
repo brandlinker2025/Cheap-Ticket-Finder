@@ -27,6 +27,56 @@
     const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const BD_AIRPORTS = new Set(["dac", "cxb", "cgp", "zyl", "jsr", "spd", "rjh", "bzl", "ird"]);
 
+    // T-107: passengers + cabin. Adults 1-9, children 0-8, infants 0..adults, total seats <= 9.
+    const CABINS = ["economy", "premium", "business", "first"];
+    function pax(opts) {
+        const o = opts || {};
+        let adults = Math.min(9, Math.max(1, parseInt(o.adults, 10) || 1));
+        let children = Math.min(8, Math.max(0, parseInt(o.children, 10) || 0));
+        if (adults + children > 9) children = 9 - adults;
+        let infants = Math.min(adults, Math.max(0, parseInt(o.infants, 10) || 0));
+        const cabin = CABINS.includes(String(o.cabin || "").toLowerCase()) ? String(o.cabin).toLowerCase() : "economy";
+        return { adults, children, infants, cabin };
+    }
+    const CABIN_LABEL = { economy: "Economy", premium: "Premium Economy", business: "Business", first: "First" };
+
+    // Aviasales / Travelpayouts White Label search string suffix:
+    // optional trip-class letter (w = comfort/premium, c = business, f = first), then adults, children, infants digits.
+    function aviasalesPaxSuffix(opts) {
+        const p = pax(opts);
+        const cls = { economy: "", premium: "w", business: "c", first: "f" }[p.cabin];
+        let tail = String(p.adults);
+        if (p.children || p.infants) tail += String(p.children) + String(p.infants);
+        return cls + tail;
+    }
+
+    // T-107: airport code -> city name for hotel searches.
+    const CITY_BY_IATA = {
+        dac: "Dhaka", zyl: "Sylhet", cgp: "Chattogram", cxb: "Cox's Bazar", jsr: "Jashore", rjh: "Rajshahi",
+        spd: "Saidpur", bzl: "Barishal", ird: "Ishwardi",
+        bkk: "Bangkok", dmk: "Bangkok", hkt: "Phuket", cnx: "Chiang Mai", kbv: "Krabi", usm: "Koh Samui",
+        kul: "Kuala Lumpur", szb: "Kuala Lumpur", pen: "Penang", lgk: "Langkawi", bki: "Kota Kinabalu",
+        sin: "Singapore", ccu: "Kolkata", del: "New Delhi", bom: "Mumbai", maa: "Chennai", blr: "Bengaluru",
+        hyd: "Hyderabad", gau: "Guwahati", ktm: "Kathmandu", pkr: "Pokhara", cmb: "Colombo", mle: "Male",
+        dxb: "Dubai", dwc: "Dubai", auh: "Abu Dhabi", shj: "Sharjah", doh: "Doha", jed: "Jeddah", med: "Medina",
+        ruh: "Riyadh", mct: "Muscat", kwi: "Kuwait City", bah: "Bahrain", ist: "Istanbul", saw: "Istanbul",
+        lhr: "London", lgw: "London", stn: "London", ltn: "London", jfk: "New York", ewr: "New York",
+        nrt: "Tokyo", hnd: "Tokyo", kix: "Osaka", icn: "Seoul", gmp: "Seoul", hkg: "Hong Kong",
+        can: "Guangzhou", pvg: "Shanghai", pek: "Beijing", kmg: "Kunming", han: "Hanoi", sgn: "Ho Chi Minh City",
+        dad: "Da Nang", dps: "Bali", cgk: "Jakarta", mnl: "Manila", syd: "Sydney", mel: "Melbourne", yyz: "Toronto"
+    };
+    function hotelCityForCode(code, fallbackCity) {
+        const hit = CITY_BY_IATA[String(code || "").toLowerCase()];
+        if (hit) return hit;
+        return String(fallbackCity || "").replace(/\([^)]*\)/g, "").trim();
+    }
+
+    // T-107: Travelpayouts results sometimes list non-airline "carriers" (rail/bus operators).
+    const BOGUS_CARRIER = /\b(deutsche bahn|db fernverkehr|sncf|trenitalia|renfe|amtrak|flixbus|eurostar|ouigo|italo|ns international|\bbahn\b|railways?|rail\b|bus\b)/i;
+    function isBogusCarrier(name) {
+        return BOGUS_CARRIER.test(String(name || ""));
+    }
+
     function pad(n) {
         return String(n).padStart(2, "0");
     }
@@ -316,7 +366,13 @@
         const o = lower(opts.origin);
         const d = lower(opts.dest);
         const dep = toSkyDate(opts.depart);
-        const cheap = "adultsv2=1&cabinclass=economy&sortby=cheapest";
+        const p = pax(opts);
+        const skyCabin = { economy: "economy", premium: "premiumeconomy", business: "business", first: "first" }[p.cabin];
+        let cheap = `adultsv2=${p.adults}&cabinclass=${skyCabin}&sortby=cheapest`;
+        const kids = [];
+        for (let i = 0; i < p.children; i++) kids.push("8");
+        for (let i = 0; i < p.infants; i++) kids.push("0");
+        if (kids.length) cheap += `&childrenv2=${kids.join("%7C")}`;
         if (opts.tripType === "oneway") {
             return `https://www.skyscanner.net/transport/flights/${o}/${d}/${dep}/?${cheap}`;
         }
@@ -372,11 +428,12 @@
         if (opts.tripType !== "oneway" && opts.returnDate) {
             trips = `${o},${d},${dep},${d},${o},${toISODate(opts.returnDate)}`;
         }
+        const p = pax(opts);
         const params = new URLSearchParams({
-            adult: "1",
-            cabin_class: "Economy",
-            child: "0",
-            infant: "0",
+            adult: String(p.adults),
+            cabin_class: p.cabin === "economy" ? "Economy" : p.cabin === "premium" ? "Premium Economy" : p.cabin === "business" ? "Business" : "First",
+            child: String(p.children),
+            infant: String(p.infants),
             trips
         });
         return `https://gozayaan.com/flight/list?${params.toString()}`;
@@ -457,7 +514,13 @@
         const o = lower(opts.origin);
         const d = lower(opts.dest);
         const ym = toSkyDate(opts.depart).slice(0, 4);
-        const cheap = "adultsv2=1&cabinclass=economy&sortby=cheapest";
+        const p = pax(opts);
+        const skyCabin = { economy: "economy", premium: "premiumeconomy", business: "business", first: "first" }[p.cabin];
+        let cheap = `adultsv2=${p.adults}&cabinclass=${skyCabin}&sortby=cheapest`;
+        const kids = [];
+        for (let i = 0; i < p.children; i++) kids.push("8");
+        for (let i = 0; i < p.infants; i++) kids.push("0");
+        if (kids.length) cheap += `&childrenv2=${kids.join("%7C")}`;
         if (opts.tripType === "oneway") {
             return `https://www.skyscanner.net/transport/flights/${o}/${d}/${ym}/?${cheap}`;
         }
@@ -543,13 +606,8 @@
             match: /biman/i,
             relevant: (o, d) => BD_AIRPORTS.has(o) || BD_AIRPORTS.has(d),
             url(opts) {
-                return withQuery("https://www.biman-airlines.com/", {
-                    origin: upper(opts.origin),
-                    destination: upper(opts.dest),
-                    departDate: toISODate(opts.depart),
-                    returnDate: opts.tripType === "oneway" ? "" : toISODate(opts.returnDate),
-                    tripType: opts.tripType === "oneway" ? "oneway" : "round"
-                });
+                // T-107: no verified public deep-link params; open the official homepage.
+                return this.home;
             }
         },
         {
@@ -605,9 +663,10 @@
                     origin: upper(opts.origin),
                     destination: upper(opts.dest),
                     departing: toDayMonYear(opts.depart),
-                    adults: "1",
-                    children: "0",
-                    class: "Economy",
+                    adults: String(pax(opts).adults),
+                    children: String(pax(opts).children),
+                    infants: String(pax(opts).infants),
+                    class: { economy: "Economy", premium: "Premium Economy", business: "Business", first: "First" }[pax(opts).cabin],
                     tripType: opts.tripType === "oneway" ? "oneway" : "return"
                 };
                 if (opts.tripType !== "oneway" && opts.returnDate) {
@@ -628,10 +687,10 @@
                     fromStation: upper(opts.origin),
                     toStation: upper(opts.dest),
                     departing: toISODate(opts.depart),
-                    adults: "1",
-                    children: "0",
-                    infants: "0",
-                    bookingClass: "E",
+                    adults: String(pax(opts).adults),
+                    children: String(pax(opts).children),
+                    infants: String(pax(opts).infants),
+                    bookingClass: { economy: "E", premium: "E", business: "B", first: "F" }[pax(opts).cabin],
                     tripType: opts.tripType === "oneway" ? "O" : "R"
                 };
                 if (opts.tripType !== "oneway" && opts.returnDate) {
@@ -647,12 +706,8 @@
             match: /flydubai/i,
             hubs: ["dxb"],
             url(opts) {
-                return withQuery("https://www.flydubai.com/en/book-a-flight", {
-                    origin: upper(opts.origin),
-                    destination: upper(opts.dest),
-                    departureDate: toISODate(opts.depart),
-                    returnDate: opts.tripType === "oneway" ? "" : toISODate(opts.returnDate)
-                });
+                // T-107: no verified public deep-link params; open the official homepage.
+                return this.home;
             }
         },
         {
@@ -662,12 +717,8 @@
             match: /singapore/i,
             hubs: ["sin"],
             url(opts) {
-                return withQuery("https://www.singaporeair.com/en_UK/plan-and-book/", {
-                    origin: upper(opts.origin),
-                    destination: upper(opts.dest),
-                    departureDate: toISODate(opts.depart),
-                    returnDate: opts.tripType === "oneway" ? "" : toISODate(opts.returnDate)
-                });
+                // T-107: no verified public deep-link params; open the official homepage.
+                return this.home;
             }
         },
         {
@@ -683,9 +734,9 @@
                     dst1: upper(opts.origin),
                     ast1: upper(opts.dest),
                     dd: toISODate(opts.depart),
-                    adt: "1",
-                    chd: "0",
-                    inf: "0"
+                    adt: String(pax(opts).adults),
+                    chd: String(pax(opts).children),
+                    inf: String(pax(opts).infants)
                 };
                 if (opts.tripType !== "oneway" && opts.returnDate) {
                     params.rd = toISODate(opts.returnDate);
@@ -704,12 +755,8 @@
             match: /thai airways/i,
             hubs: ["bkk"],
             url(opts) {
-                return withQuery("https://www.thaiairways.com", {
-                    origin: upper(opts.origin),
-                    destination: upper(opts.dest),
-                    departDate: toISODate(opts.depart),
-                    returnDate: opts.tripType === "oneway" ? "" : toISODate(opts.returnDate)
-                });
+                // T-107: no verified public deep-link params; open the official homepage.
+                return this.home;
             }
         },
         {
@@ -724,9 +771,9 @@
                     destination: upper(opts.dest),
                     departDate: toDmySlash(opts.depart),
                     tripType: opts.tripType === "oneway" ? "O" : "R",
-                    adult: "1",
-                    child: "0",
-                    infant: "0",
+                    adult: String(pax(opts).adults),
+                    child: String(pax(opts).children),
+                    infant: String(pax(opts).infants),
                     locale: "en-gb"
                 };
                 if (opts.tripType !== "oneway" && opts.returnDate) {
@@ -742,12 +789,8 @@
             match: /indigo/i,
             hubs: ["del", "ccu", "bom", "maa", "blr", "hyd"],
             url(opts) {
-                return withQuery("https://www.goindigo.in/", {
-                    origin: upper(opts.origin),
-                    destination: upper(opts.dest),
-                    departureDate: toDmySlash(opts.depart),
-                    returnDate: opts.tripType === "oneway" ? "" : toDmySlash(opts.returnDate)
-                });
+                // T-107: no verified public deep-link params; open the official homepage.
+                return this.home;
             }
         },
         {
@@ -757,12 +800,8 @@
             match: /air india/i,
             hubs: ["del", "ccu", "bom"],
             url(opts) {
-                return withQuery("https://www.airindia.com", {
-                    origin: upper(opts.origin),
-                    destination: upper(opts.dest),
-                    departDate: toISODate(opts.depart),
-                    returnDate: opts.tripType === "oneway" ? "" : toISODate(opts.returnDate)
-                });
+                // T-107: no verified public deep-link params; open the official homepage.
+                return this.home;
             }
         },
         {
@@ -772,17 +811,8 @@
             match: /turkish/i,
             hubs: ["ist"],
             url(opts) {
-                const params = {
-                    origin: upper(opts.origin),
-                    destination: upper(opts.dest),
-                    outDate: toDotDate(opts.depart),
-                    adult: "1",
-                    cabin: "ECONOMY"
-                };
-                if (opts.tripType !== "oneway" && opts.returnDate) {
-                    params.returnDate = toDotDate(opts.returnDate);
-                }
-                return withQuery("https://www.turkishairlines.com/en-int/flights/booking/", params);
+                // T-107: no verified public deep-link params; open the official homepage.
+                return this.home;
             }
         },
         {
@@ -792,12 +822,8 @@
             match: /malaysia airlines/i,
             hubs: ["kul"],
             url(opts) {
-                return withQuery("https://www.malaysiaairlines.com/", {
-                    origin: upper(opts.origin),
-                    destination: upper(opts.dest),
-                    departDate: toISODate(opts.depart),
-                    returnDate: opts.tripType === "oneway" ? "" : toISODate(opts.returnDate)
-                });
+                // T-107: no verified public deep-link params; open the official homepage.
+                return this.home;
             }
         },
         {
@@ -807,12 +833,8 @@
             match: /saudia|saudi/i,
             hubs: ["jed", "ruh"],
             url(opts) {
-                return withQuery("https://www.saudia.com/", {
-                    origin: upper(opts.origin),
-                    destination: upper(opts.dest),
-                    departDate: toISODate(opts.depart),
-                    returnDate: opts.tripType === "oneway" ? "" : toISODate(opts.returnDate)
-                });
+                // T-107: no verified public deep-link params; open the official homepage.
+                return this.home;
             }
         }
     ];
@@ -1229,14 +1251,6 @@
                 url: "https://gozayaan.com/campaign/id/644"
             },
             {
-                id: "citybank-travel",
-                bank: "City Bank",
-                name: "City Bank travel page",
-                claim: "City Bank’s official travel page describes the same Amex × GoZayaan savings. Confirm live terms on City Bank.",
-                validity: "See the City Bank page",
-                url: "https://www.citybankplc.com/ramadan2026/travel.php"
-            },
-            {
                 id: "ebl-stellar",
                 bank: "Eastern Bank (EBL)",
                 name: "EBL Stellar Platinum card",
@@ -1411,6 +1425,15 @@
         ];
     }
 
+    // T-107: Bangladesh surface transport (bus / train / launch). Official or operator sites only.
+    function bdSurfaceTransportLinks() {
+        return [
+            { id: "shohoz-bus", mode: "Bus", name: "Shohoz bus tickets", url: "https://www.shohoz.com/bus-tickets", blurb: "Bangladesh intercity bus tickets (Green Line, Hanif, Shyamoli and more). Fare and seats are on Shohoz." },
+            { id: "railway-eticket", mode: "Train", name: "Bangladesh Railway e-ticket", url: "https://eticket.railway.gov.bd/", blurb: "Official Bangladesh Railway e-ticketing (Rail Sheba). Registration with NID is required by Bangladesh Railway." },
+            { id: "shohoz-launch", mode: "Launch", name: "Shohoz launch tickets", url: "https://www.shohoz.com/launch-tickets", blurb: "Dhaka–Barishal and other river routes. Cabin availability and price are on Shohoz." }
+        ];
+    }
+
     function addDaysISO(iso, days) {
         const { y, m, day } = fromISO(iso);
         const dt = new Date(y, m - 1, day);
@@ -1451,6 +1474,13 @@
         officialPackagesForRoute,
         hotelLinks,
         addDaysISO,
+        pax,
+        CABIN_LABEL,
+        aviasalesPaxSuffix,
+        CITY_BY_IATA,
+        hotelCityForCode,
+        isBogusCarrier,
+        bdSurfaceTransportLinks,
         stayLengthDays,
         flexibleNearbyDays,
         flexibleMonthDays,
