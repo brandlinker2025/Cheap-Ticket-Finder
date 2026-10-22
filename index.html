@@ -237,6 +237,9 @@
             .trip-fields{flex-direction:column}
             .trip-fields > #searchBtn{flex:1 1 auto;width:100%;min-height:52px}
         }
+      /* T-109: empty Travelpayouts modal host must not block clicks */
+      #tpwl-modals:empty { pointer-events: none !important; }
+      #tpwl-modals > * { pointer-events: auto; }
     </style>
     <link rel="stylesheet" href="/assets/tailwind.css?v=t107">
 </head>
