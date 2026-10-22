@@ -1,0 +1,10 @@
+{
+  "name": "cheap-ticket-finder",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i assets/src/tailwind.css -o assets/tailwind.css --minify",
+    "check-links": "node scripts/check-links.js",
+    "test": "for t in tests/*.test.js; do node $t || exit 1; done"
+  },
+  "devDependencies": { "tailwindcss": "3.4.17" }
+}

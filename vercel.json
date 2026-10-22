@@ -46,7 +46,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://formsubmit.co; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://tp-em.com https://tpwdg.com https://*.tp.media https://*.tp.st https://*.tpo.li https://*.tpo.lu https://*.tpo.lv https://*.tpo.mx https://*.travelpayouts.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' https:; connect-src 'self' https:; worker-src 'self' blob:; frame-src 'self' https:; manifest-src 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://formsubmit.co; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://tp-em.com https://tpwdg.com https://*.tp.media https://*.tp.st https://*.tpo.li https://*.tpo.lu https://*.tpo.lv https://*.tpo.mx https://*.travelpayouts.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' https:; connect-src 'self' https:; worker-src 'self' blob:; frame-src 'self' https:; manifest-src 'self'; upgrade-insecure-requests"
         }
       ]
     }

@@ -222,11 +222,7 @@ assert.ok(thaiPromo);
 assert.strictEqual(thaiPromo.promo, null);
 
 const bimanOne = BookingLinks.AIRLINE_DIRECTORY.find((a) => a.id === "biman").url(oneway);
-assert.ok(bimanOne.includes("origin=DAC"));
-assert.ok(bimanOne.includes("destination=CAN"));
-assert.ok(bimanOne.includes("departDate=2026-09-07"));
-assert.ok(bimanOne.includes("tripType=oneway"));
-assert.ok(!bimanOne.includes("returnDate=2026"));
+assert.strictEqual(bimanOne, "https://www.biman-airlines.com/"); // T-107: homepage, no unverified params
 
 const emirates = BookingLinks.AIRLINE_DIRECTORY.find((a) => a.id === "emirates");
 const emUrl = emirates.url({ ...oneway, dest: "DXB" });

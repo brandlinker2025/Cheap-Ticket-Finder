@@ -42,7 +42,7 @@
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"WebSite","name":"Cheap Ticket Finder","alternateName":"Cheap Ticket Finder BD","url":"https://cheapticketfinder.site/","inLanguage":"en","description":"Flexible-date cheap flight ticket search helper for Bangladesh-based travellers. This site does not sell tickets; the final price is shown by the provider."}
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/luxury.css?v=compact-20261019">
     <style>
@@ -205,18 +205,40 @@
         #hotel-booking,#tour-package,#travel-sim,#airport-transport,#air-ticket,#wl-flight-results{scroll-margin-top:72px}
         #wl-flight-results{position:relative}
         .tpwl-search-slot{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0,0,0,0) !important;clip-path:inset(50%) !important;white-space:nowrap !important;border:0 !important}
+        /* T-107: tabs sit in the header flow so the sticky bar never covers page text */
+        .trip-tabs{position:static !important;transform:none !important;margin:0 auto .35rem;box-shadow:0 4px 14px rgba(15,23,42,.08);width:max-content}
+        .search-panel{padding-top:16px}
+        .hero-photo{padding-top:1rem}
+        .pax-seg{position:relative}
+        .pax-toggle{background:transparent;border:0;padding:0;text-align:left;cursor:pointer;width:100%}
+        .pax-panel{position:absolute;z-index:60;top:100%;right:0;margin-top:6px;width:260px;background:#fff;border:1px solid #c5e4f4;border-radius:12px;box-shadow:0 12px 30px rgba(15,23,42,.18);padding:12px}
+        .pax-panel[hidden]{display:none}
+        .pax-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px;font-weight:700;color:#111}
+        .pax-row small{display:block;font-weight:500;color:#475569;font-size:11px}
+        .pax-row button{width:30px;height:30px;border-radius:50%;border:1px solid #9fd4f2;background:#e7f6fd;font-weight:800;color:#111}
+        .pax-row b{display:inline-block;min-width:26px;text-align:center}
+        .pax-cabin{display:block;margin-top:8px;font-size:12px !important;font-weight:800;color:#111;text-transform:none !important;letter-spacing:0 !important}
+        .pax-cabin select{display:block;width:100%;margin-top:4px;padding:6px;border:1px solid #c5e4f4;border-radius:8px;background:#fff;color:#111}
+        .pax-done{margin-top:10px;width:100%;padding:8px;border-radius:8px;background:#c5e8f8;font-weight:800;color:#111}
+        .bd-card{display:flex;flex-direction:column;gap:4px;flex:1 1 220px;padding:12px 14px;border:1px solid #c5e4f4;border-radius:12px;background:#f7fcff;color:#111;text-decoration:none;font-size:13px}
+        .bd-card span{font-size:12px;color:#334155}
+        #hotel-booking,#tour-package,#travel-sim,#airport-transport,#bd-transport,#air-ticket,#wl-flight-results{scroll-margin-top:130px}
         @media (max-width:860px){
+            .site-header{position:relative !important}
+            #hotel-booking,#tour-package,#travel-sim,#airport-transport,#bd-transport,#air-ticket,#wl-flight-results{scroll-margin-top:12px}
             .site-header-inner{min-height:0;padding:.45rem .7rem}
             .site-header h1{font-size:.98rem !important}
             .top-bar a{font-size:12px}
             .hero-photo{padding:.1rem 0 1.5rem}
-            .trip-tabs{justify-content:flex-start;overflow-x:auto;max-width:calc(100% - 12px);transform:translate(-50%,0)}
-            .trip-tabs button{min-width:70px;font-size:10px;padding:.2rem .3rem .25rem}
-            .search-panel{padding:4.4rem 12px 12px}
+            .trip-tabs{display:grid !important;grid-template-columns:repeat(4,minmax(0,1fr));width:auto;max-width:calc(100% - 12px);overflow:visible}
+            .trip-tabs button{min-width:0;font-size:10px;padding:.2rem .2rem .25rem;white-space:normal;text-align:center}
+            .search-panel{padding:14px 12px 12px}
+            .pax-panel{left:0;right:auto;width:100%}
             .trip-fields{flex-direction:column}
             .trip-fields > #searchBtn{flex:1 1 auto;width:100%;min-height:52px}
         }
     </style>
+    <link rel="stylesheet" href="/assets/tailwind.css?v=t107">
 </head>
 <body class="bg-amber-50 text-slate-800 min-h-screen pb-16 antialiased selection:bg-sky-500 selection:text-white hero-glow">
 
@@ -236,6 +258,7 @@
             <button type="button" role="tab" aria-selected="false" data-tab="tour" onclick="showHomeTab('tour')"><i class="fa-solid fa-suitcase-rolling" aria-hidden="true"></i>Tour Package</button>
             <button type="button" role="tab" aria-selected="false" data-tab="sim" onclick="showHomeTab('sim')"><i class="fa-solid fa-sim-card" aria-hidden="true"></i>Travel SIM</button>
             <button type="button" role="tab" aria-selected="false" data-tab="transfer" onclick="showHomeTab('transfer')"><i class="fa-solid fa-taxi" aria-hidden="true"></i>Airport Transfer</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="bd" onclick="showHomeTab('bd')"><i class="fa-solid fa-bus" aria-hidden="true"></i>Bus / Train / Launch</button>
         </nav>
     </header>
 
@@ -272,9 +295,23 @@
                     <label>Return date</label>
                     <button type="button" id="returnDateField" onclick="focusReturnPick()">Pick return date</button>
                 </div>
-                <div class="trip-seg">
-                    <label>Traveller / class</label>
-                    <span class="seg-value">1 adult · Economy</span>
+                <div class="trip-seg pax-seg">
+                    <label for="paxToggle">Traveller / class</label>
+                    <button type="button" id="paxToggle" class="seg-value pax-toggle" aria-expanded="false" aria-controls="paxPanel" onclick="togglePax()"><span id="paxSummary">1 adult · Economy</span></button>
+                    <div id="paxPanel" class="pax-panel" hidden>
+                        <div class="pax-row"><span>Adults <small>12+</small></span><span><button type="button" aria-label="Fewer adults" onclick="stepPax('adults',-1)">−</button><b id="paxAdults">1</b><button type="button" aria-label="More adults" onclick="stepPax('adults',1)">+</button></span></div>
+                        <div class="pax-row"><span>Children <small>2–11</small></span><span><button type="button" aria-label="Fewer children" onclick="stepPax('children',-1)">−</button><b id="paxChildren">0</b><button type="button" aria-label="More children" onclick="stepPax('children',1)">+</button></span></div>
+                        <div class="pax-row"><span>Infants <small>under 2</small></span><span><button type="button" aria-label="Fewer infants" onclick="stepPax('infants',-1)">−</button><b id="paxInfants">0</b><button type="button" aria-label="More infants" onclick="stepPax('infants',1)">+</button></span></div>
+                        <label class="pax-cabin">Cabin class
+                            <select id="paxCabin" onchange="setCabin(this.value)">
+                                <option value="economy">Economy</option>
+                                <option value="premium">Premium Economy</option>
+                                <option value="business">Business</option>
+                                <option value="first">First</option>
+                            </select>
+                        </label>
+                        <button type="button" class="pax-done" onclick="togglePax(false)">Done</button>
+                    </div>
                 </div>
                 <button type="button" onclick="triggerFullScan()" id="searchBtn" class="font-extrabold flex items-center justify-center gap-2">
                     <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i> <span id="btnText">Search</span>
@@ -361,6 +398,10 @@
                     <a href="https://www.trip.com/airport-transfers/index/?Allianceid=11059812&SID=333836392&trip_sub1=transfer&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Trip.com airport transfers</a>
                     <a href="/airport-transfer/" class="text-sky-400 underline">Transfer guide</a>
                 </div>
+            </div>
+            <div class="home-panel" id="bd-transport" data-tab="bd" role="tabpanel" hidden>
+                <p class="home-intro" style="margin:0 0 .6rem">Bangladesh bus, train and launch tickets. These open the official or operator booking sites; the fare and seats are shown there. We do not sell tickets.</p>
+                <div class="home-links" id="bdTransportLinks"></div>
             </div>
         </section>
         </div>
@@ -1445,7 +1486,11 @@
                 returnDate: selectedRetDate,
                 tripType: currentTripType,
                 destCountry: destAirport.country || "",
-                knownAirlines: destAirport.domesticAirlines || []
+                knownAirlines: destAirport.domesticAirlines || [],
+                adults: paxState.adults,
+                children: paxState.children,
+                infants: paxState.infants,
+                cabin: paxState.cabin
             };
         }
 
@@ -1664,7 +1709,7 @@
             bindCopyButtons(pathBox);
 
             const dest = getAllAirports().find(i => i.code === selectedDestCode) || COUNTRY_AIRPORTS[0];
-            const city = String(dest.city || "").replace(/\([^)]*\)/g, "").trim();
+            const city = BookingLinks.hotelCityForCode(selectedDestCode, dest.city);
             const checkin = BookingLinks.toISODate(selectedDeptDate);
             const checkout = currentTripType === "oneway"
                 ? BookingLinks.addDaysISO(checkin, 1)
@@ -1717,14 +1762,15 @@
             const origin = selectedOriginCode.toUpperCase();
             const dest = selectedDestCode.toUpperCase();
             const depart = ddmm(selectedDeptDate);
-            let flightSearch = origin + depart + dest + "1";
+            const paxTail = BookingLinks.aviasalesPaxSuffix(paxState);
+            let flightSearch = origin + depart + dest + paxTail;
             let airportIdx = "0";
             if (currentTripType === "multicity") {
                 const stop = selectedStopoverCode.toUpperCase();
-                flightSearch = origin + depart + stop + ddmm(selectedRetDate) + dest + "1";
+                flightSearch = origin + depart + stop + ddmm(selectedRetDate) + dest + paxTail;
                 airportIdx = "0,1";
             } else if (currentTripType !== "oneway") {
-                flightSearch = origin + depart + dest + ddmm(selectedRetDate) + "1";
+                flightSearch = origin + depart + dest + ddmm(selectedRetDate) + paxTail;
                 airportIdx = "0,1";
             }
             const params = new URLSearchParams(window.location.search);
@@ -1765,6 +1811,48 @@
             }, 180);
         }
 
+        var paxState = { adults: 1, children: 0, infants: 0, cabin: 'economy' };
+        function paintPax() {
+            paxState = BookingLinks.pax(paxState);
+            document.getElementById('paxAdults').textContent = paxState.adults;
+            document.getElementById('paxChildren').textContent = paxState.children;
+            document.getElementById('paxInfants').textContent = paxState.infants;
+            document.getElementById('paxCabin').value = paxState.cabin;
+            var total = paxState.adults + paxState.children + paxState.infants;
+            document.getElementById('paxSummary').textContent = total + (total === 1 ? ' traveller' : ' travellers') + ' · ' + BookingLinks.CABIN_LABEL[paxState.cabin];
+            if (total === 1) document.getElementById('paxSummary').textContent = '1 adult · ' + BookingLinks.CABIN_LABEL[paxState.cabin];
+        }
+        function stepPax(key, delta) {
+            paxState[key] = (paxState[key] || 0) + delta;
+            paintPax();
+            if (datesReady()) renderResults();
+        }
+        function setCabin(v) { paxState.cabin = v; paintPax(); if (datesReady()) renderResults(); }
+        function togglePax(force) {
+            var panel = document.getElementById('paxPanel');
+            var open = typeof force === 'boolean' ? force : panel.hidden;
+            panel.hidden = !open;
+            document.getElementById('paxToggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+        document.addEventListener('click', function (e) {
+            var seg = document.querySelector('.pax-seg');
+            if (seg && !seg.contains(e.target)) togglePax(false);
+        });
+        // T-107: hide non-airline "carriers" (e.g. Deutsche Bahn AG) if the Travelpayouts results list one.
+        (function filterBogusCarriers() {
+            var root = document.getElementById('tpwl-tickets');
+            if (!root || !window.MutationObserver) return;
+            function sweep() {
+                root.querySelectorAll('[class*="ticket"], article, li').forEach(function (card) {
+                    if (card.dataset.ctfChecked) return;
+                    card.dataset.ctfChecked = '1';
+                    var names = [].map.call(card.querySelectorAll('img[alt], [title]'), function (n) { return n.getAttribute('alt') || n.getAttribute('title'); }).join(' ');
+                    if (BookingLinks.isBogusCarrier(names)) card.style.display = 'none';
+                });
+            }
+            new MutationObserver(sweep).observe(root, { childList: true, subtree: true });
+        })();
+
         function showHomeTab(name) {
             document.querySelectorAll('.home-panel').forEach(function (panel) {
                 panel.hidden = panel.getAttribute('data-tab') !== name;
@@ -1781,8 +1869,16 @@
             '#hotel-booking': 'hotel',
             '#tour-package': 'tour',
             '#travel-sim': 'sim',
-            '#airport-transport': 'transfer'
+            '#airport-transport': 'transfer',
+            '#bd-transport': 'bd'
         };
+        (function renderBdTransport() {
+            var box = document.getElementById('bdTransportLinks');
+            if (!box) return;
+            box.innerHTML = BookingLinks.bdSurfaceTransportLinks().map(function (item) {
+                return '<a class="bd-card" href="' + item.url + '" target="_blank" rel="noopener noreferrer"><b>' + escapeHtml(item.mode) + ' · ' + escapeHtml(item.name) + '</b><span>' + escapeHtml(item.blurb) + '</span></a>';
+            }).join('');
+        })();
         if (hashTabs[location.hash]) showHomeTab(hashTabs[location.hash]);
 
         renderCalendars();
