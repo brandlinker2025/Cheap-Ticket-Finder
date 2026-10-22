@@ -189,11 +189,13 @@
         #originDisplay,#destDisplay,#stopoverDisplay{color:#111111 !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;font-size:14px !important}
         #departDateField,#returnDateField,#returnDateField:disabled{color:#111111 !important;background:transparent !important;border:0 !important;box-shadow:none !important;opacity:1;padding:0 !important;min-height:0 !important;border-radius:0 !important;font-weight:800;font-size:14px;text-align:left;width:100%}
         #selectedTripLabel{color:#111111 !important;background:transparent !important;border:0 !important;padding:0 !important;font-size:14px !important;font-weight:800}
+        #originDisplay.is-placeholder,#destDisplay.is-placeholder,#stopoverDisplay.is-placeholder,
+        #selectedTripLabel.is-placeholder,#returnDateField.is-placeholder{color:#64748b !important;-webkit-text-fill-color:#64748b !important;font-weight:600 !important}
         #searchBtn,#searchBtn *,#searchBtn:hover{background:#c5e8f8 !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;border-color:#7ec8ea !important;box-shadow:none !important}
         #calendarCard,#calendarCard h3,#departMonthLabel,.sk-weekdays,.sk-weekdays div,#calendarHint,#calendarPickBadge{color:#111111 !important}
         #calendarCard,#calendarGridWrapper > div{background:#f7fcff !important;border-color:#d3ebf8 !important}
         .sk-day,.sk-day span{color:#111111 !important}
-        .sk-day.empty{opacity:1 !important;color:#334155 !important}
+        .sk-day.empty{opacity:.38 !important;color:#334155 !important;cursor:not-allowed !important}
         .sk-day-selected-dept,.sk-day-selected-ret,.sk-day-selected-dept span,.sk-day-selected-ret span{background:#9fd4f2 !important;color:#111111 !important}
         .sk-day-in-range{background:#e7f6fd !important}
         #calendarGridWrapper button,#calendarGridWrapper button i{color:#111111 !important;background:#e7f6fd !important}
@@ -205,6 +207,14 @@
         #hotel-booking,#tour-package,#travel-sim,#airport-transport,#air-ticket,#wl-flight-results{scroll-margin-top:72px}
         #wl-flight-results{position:relative}
         .tpwl-search-slot{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0,0,0,0) !important;clip-path:inset(50%) !important;white-space:nowrap !important;border:0 !important}
+        .date-popover{position:fixed;z-index:30;width:min(360px,calc(100vw - 16px));background:#ffffff;border:1px solid #d3ebf8;border-radius:16px;box-shadow:0 18px 42px rgba(15,23,42,.16);padding:12px 12px 14px;max-height:min(440px,calc(100vh - 88px));overflow:auto}
+        .date-popover[hidden],.date-popover-backdrop[hidden]{display:none !important}
+        .date-popover-backdrop{position:fixed;inset:0;z-index:29;background:transparent}
+        .date-popover-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 4px}
+        #calendarPickBadge{font-size:13px;font-weight:800}
+        .date-popover-hint{font-size:11px;line-height:1.35;margin:0 0 8px}
+        .date-popover-close,.date-popover-nav{width:28px;height:28px;border:0;border-radius:8px;background:#e7f6fd;color:#111111;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+        .trip-seg.is-date-open{border-color:#38bdf8;box-shadow:0 0 0 2px rgba(56,189,248,.28)}
         @media (max-width:860px){
             .site-header-inner{min-height:0;padding:.45rem .7rem}
             .site-header h1{font-size:.98rem !important}
@@ -215,6 +225,8 @@
             .search-panel{padding:4.4rem 12px 12px}
             .trip-fields{flex-direction:column}
             .trip-fields > #searchBtn{flex:1 1 auto;width:100%;min-height:52px}
+            .date-popover-backdrop{background:rgba(15,23,42,.28)}
+            .date-popover{left:0 !important;right:0 !important;top:auto !important;bottom:0 !important;width:100% !important;max-height:min(78vh,calc(100dvh - 128px));border-radius:18px 18px 0 0;padding:12px 14px calc(16px + env(safe-area-inset-bottom))}
         }
     </style>
 </head>
@@ -255,22 +267,22 @@
                 <div class="trip-seg">
                     <label>From</label>
                     <div onclick="openLocationModal('origin')" class="cursor-pointer">
-                        <span id="originDisplay" class="font-semibold">Hazrat Shahjalal Int. (DAC)</span>
+                        <span id="originDisplay" class="font-semibold is-placeholder">City or airport</span>
                     </div>
                 </div>
                 <div class="trip-seg">
                     <label>To</label>
                     <div onclick="openLocationModal('dest')" class="cursor-pointer">
-                        <span id="destDisplay" class="font-semibold">Suvarnabhumi Int. (BKK)</span>
+                        <span id="destDisplay" class="font-semibold is-placeholder">City or airport</span>
                     </div>
                 </div>
                 <div class="trip-seg">
                     <label>Departure date</label>
-                    <button type="button" id="departDateField" onclick="focusDepartPick()"><span id="selectedTripLabel">No dates yet</span></button>
+                    <button type="button" id="departDateField" onclick="focusDepartPick()" aria-haspopup="dialog" aria-expanded="false" aria-controls="calendarPopover"><span id="selectedTripLabel" class="is-placeholder">Select date</span></button>
                 </div>
                 <div class="trip-seg">
                     <label>Return date</label>
-                    <button type="button" id="returnDateField" onclick="focusReturnPick()">Pick return date</button>
+                    <button type="button" id="returnDateField" class="is-placeholder" onclick="focusReturnPick()" aria-haspopup="dialog" aria-expanded="false" aria-controls="calendarPopover">Select date</button>
                 </div>
                 <div class="trip-seg">
                     <label>Traveller / class</label>
@@ -292,32 +304,28 @@
                 </div>
             </div>
 
-            <div id="calendarCard" class="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 mb-3 mt-3">
-                <div class="flex flex-wrap justify-between items-center mb-2 pb-2 border-b border-slate-800 gap-x-2 gap-y-1.5">
-                    <div>
-                        <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
-                            <i class="fa-solid fa-calendar-days text-sky-400"></i> One calendar — dates start empty
-                        </h3>
-                        <div class="text-[9px] sm:text-[10px] text-slate-500 mt-1" id="calendarHint">
-                            Tap a day for departure, then Pick return date.
-                        </div>
+            <div id="datePopoverBackdrop" class="date-popover-backdrop" hidden onclick="closeDatePopover()"></div>
+            <div id="calendarPopover" class="date-popover" hidden role="dialog" aria-modal="false" aria-labelledby="calendarPickBadge">
+                <div id="calendarCard">
+                    <div class="date-popover-head">
+                        <span id="calendarPickBadge">Departure date</span>
+                        <button type="button" class="date-popover-close" onclick="closeDatePopover()" aria-label="Close calendar"><i class="fa-solid fa-xmark"></i></button>
                     </div>
-                </div>
-
-                <div id="calendarGridWrapper" class="w-full max-w-[480px] mx-auto">
-                    <div class="bg-slate-900/60 p-2 sm:p-2.5 rounded-xl border border-slate-800/80">
-                        <div class="flex justify-between items-center mb-1.5 gap-2">
-                            <span id="calendarPickBadge" onclick="focusDepartPick()" class="text-[10px] font-extrabold uppercase text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded">Pick depart</span>
-                            <span id="departMonthLabel" class="text-xs sm:text-sm font-bold text-white"></span>
-                            <div class="flex gap-1">
-                                <button type="button" onclick="navigateMonth(-1)" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 rounded text-xs text-white flex items-center justify-center" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button>
-                                <button type="button" onclick="navigateMonth(1)" class="w-7 h-7 bg-slate-800 hover:bg-slate-700 rounded text-xs text-white flex items-center justify-center" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div id="calendarHint" class="date-popover-hint">Pick a departure date.</div>
+                    <div id="calendarGridWrapper">
+                        <div class="date-popover-grid">
+                            <div class="flex justify-between items-center mb-1.5 gap-2">
+                                <span id="departMonthLabel" class="text-xs sm:text-sm font-bold"></span>
+                                <div class="flex gap-1">
+                                    <button type="button" onclick="navigateMonth(-1)" class="date-popover-nav" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button>
+                                    <button type="button" onclick="navigateMonth(1)" class="date-popover-nav" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button>
+                                </div>
                             </div>
+                            <div class="sk-weekdays grid grid-cols-7 gap-[3px] text-center text-[11px] font-bold mb-1">
+                                <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+                            </div>
+                            <div id="tripCalendarGrid" class="grid grid-cols-7 gap-[3px]"></div>
                         </div>
-                        <div class="sk-weekdays grid grid-cols-7 gap-[3px] text-center text-[11px] font-bold text-slate-500 mb-1">
-                            <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
-                        </div>
-                        <div id="tripCalendarGrid" class="grid grid-cols-7 gap-[3px] text-slate-200"></div>
                     </div>
                 </div>
             </div>
@@ -1099,15 +1107,32 @@
 
         let currentTripType = 'round';
         let activeModalType = 'dest';
-        let selectedOriginCode = "dac";
-        let selectedDestCode = "bkk";
+        // Fresh visit: From, To, and dates stay empty. ?flightSearch= belongs to the
+        // Travelpayouts White Label results widget and is not copied into these fields.
+        let selectedOriginCode = "";
+        let selectedDestCode = "";
         let selectedStopoverCode = "hkt";
 
         const today = new Date();
         let selectedDeptDate = null;
         let selectedRetDate = null;
         let calendarPhase = 'depart';
+        let datePopoverTarget = null;
         let calMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+        function setPlaceholder(id, text) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = text;
+            el.classList.add('is-placeholder');
+        }
+
+        function showChosen(id, text) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = text;
+            el.classList.remove('is-placeholder');
+        }
 
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -1119,6 +1144,7 @@
         }
 
         function setTripType(type) {
+            closeDatePopover();
             currentTripType = type;
             const btnRound = document.getElementById('btnRoundTrip');
             const btnOne = document.getElementById('btnOneWay');
@@ -1153,6 +1179,7 @@
         }
 
         function openLocationModal(type) {
+            closeDatePopover();
             activeModalType = type;
             const modal = document.getElementById('locationModal');
             const title = document.getElementById('modalTitle');
@@ -1253,13 +1280,13 @@
             if (!airport) return;
             if (activeModalType === 'origin') {
                 selectedOriginCode = airport.code;
-                document.getElementById('originDisplay').innerText = airport.name;
+                showChosen('originDisplay', airport.name);
             } else if (activeModalType === 'dest') {
                 selectedDestCode = airport.code;
-                document.getElementById('destDisplay').innerText = airport.name;
+                showChosen('destDisplay', airport.name);
             } else if (activeModalType === 'stopover') {
                 selectedStopoverCode = airport.code;
-                document.getElementById('stopoverDisplay').innerText = airport.name;
+                showChosen('stopoverDisplay', airport.name);
             }
             closeLocationModal();
             if (datesReady()) triggerFullScan();
@@ -1299,10 +1326,12 @@
                 const todayStart = new Date();
                 todayStart.setHours(0, 0, 0, 0);
                 const isPast = cur < todayStart;
-                if (isPast) classes += " empty opacity-30 cursor-not-allowed";
+                const beforeDepart = currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate && cur < selectedDeptDate;
+                const blocked = isPast || beforeDepart;
+                if (blocked) classes += " empty opacity-30 cursor-not-allowed";
                 else if (currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate && cur >= selectedDeptDate && !isDept && !isRet) classes += " sk-day-return-ok";
                 grid.innerHTML += `
-                    <div class="${classes}" ${isPast ? '' : `onclick="selectDate(${year}, ${month}, ${day})"`}>
+                    <div class="${classes}" ${blocked ? '' : `onclick="selectDate(${year}, ${month}, ${day})"`}>
                         <span class="text-xs font-semibold">${day}</span>
                     </div>
                 `;
@@ -1328,6 +1357,7 @@
             const todayStart = new Date();
             todayStart.setHours(0, 0, 0, 0);
             if (clicked < todayStart) return;
+            if (currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate && clicked < selectedDeptDate) return;
 
             if (currentTripType === 'oneway') {
                 selectedDeptDate = clicked;
@@ -1335,10 +1365,6 @@
                 calendarPhase = 'depart';
             } else if (calendarPhase === 'return' && selectedDeptDate && clicked >= selectedDeptDate) {
                 selectedRetDate = clicked;
-            } else if (calendarPhase === 'return' && selectedDeptDate && clicked < selectedDeptDate) {
-                selectedDeptDate = clicked;
-                selectedRetDate = null;
-                calendarPhase = 'return';
             } else {
                 selectedDeptDate = clicked;
                 selectedRetDate = null;
@@ -1347,29 +1373,89 @@
 
             calMonth = new Date(clicked.getFullYear(), clicked.getMonth(), 1);
             renderCalendars();
+            closeDatePopover();
             if (datesReady()) triggerFullScan();
             else resetResultsUntilDates();
         }
 
         function focusDepartPick() {
             calendarPhase = 'depart';
-            updateSelectionHeader();
-            const card = document.getElementById('calendarCard');
-            if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            openDatePopover('depart');
         }
 
         function focusReturnPick() {
-            const card = document.getElementById('calendarCard');
             if (currentTripType === 'oneway') return;
             if (!selectedDeptDate) {
                 calendarPhase = 'depart';
-                updateSelectionHeader();
-                if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                openDatePopover('depart');
                 return;
             }
             calendarPhase = 'return';
-            updateSelectionHeader();
-            if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            openDatePopover('return');
+        }
+
+        function openDatePopover(which) {
+            datePopoverTarget = which;
+            const pop = document.getElementById('calendarPopover');
+            const backdrop = document.getElementById('datePopoverBackdrop');
+            if (!pop) return;
+            pop.hidden = false;
+            if (backdrop) backdrop.hidden = false;
+            const departBtn = document.getElementById('departDateField');
+            const returnBtn = document.getElementById('returnDateField');
+            if (departBtn) departBtn.setAttribute('aria-expanded', which === 'depart' ? 'true' : 'false');
+            if (returnBtn && !returnBtn.disabled) returnBtn.setAttribute('aria-expanded', which === 'return' ? 'true' : 'false');
+            document.querySelectorAll('.trip-seg.is-date-open').forEach((el) => el.classList.remove('is-date-open'));
+            const anchor = document.getElementById(which === 'return' ? 'returnDateField' : 'departDateField');
+            if (anchor && anchor.closest) anchor.closest('.trip-seg').classList.add('is-date-open');
+            renderCalendars();
+            placeDatePopover();
+        }
+
+        function closeDatePopover() {
+            datePopoverTarget = null;
+            const pop = document.getElementById('calendarPopover');
+            const backdrop = document.getElementById('datePopoverBackdrop');
+            if (pop) pop.hidden = true;
+            if (backdrop) backdrop.hidden = true;
+            const departBtn = document.getElementById('departDateField');
+            const returnBtn = document.getElementById('returnDateField');
+            if (departBtn) departBtn.setAttribute('aria-expanded', 'false');
+            if (returnBtn) returnBtn.setAttribute('aria-expanded', 'false');
+            document.querySelectorAll('.trip-seg.is-date-open').forEach((el) => el.classList.remove('is-date-open'));
+        }
+
+        function placeDatePopover() {
+            const pop = document.getElementById('calendarPopover');
+            if (!pop || pop.hidden) return;
+            if (window.innerWidth <= 860) {
+                pop.style.left = '';
+                pop.style.top = '';
+                pop.style.width = '';
+                return;
+            }
+            const anchor = document.getElementById(datePopoverTarget === 'return' ? 'returnDateField' : 'departDateField');
+            if (!anchor) return;
+            const rect = anchor.getBoundingClientRect();
+            const header = document.querySelector('.site-header');
+            const tabs = document.querySelector('.trip-tabs');
+            const headerBottom = Math.max(
+                header ? header.getBoundingClientRect().bottom : 0,
+                tabs ? tabs.getBoundingClientRect().bottom : 0
+            );
+            const width = Math.min(360, window.innerWidth - 16);
+            let left = rect.left;
+            if (left + width > window.innerWidth - 8) left = window.innerWidth - 8 - width;
+            if (left < 8) left = 8;
+            let top = rect.bottom + 6;
+            const popHeight = pop.offsetHeight || 320;
+            if (window.innerHeight - top < Math.min(popHeight, 240) && rect.top - headerBottom > popHeight + 12) {
+                top = rect.top - popHeight - 6;
+            }
+            if (top < headerBottom + 8) top = headerBottom + 8;
+            pop.style.width = width + 'px';
+            pop.style.left = left + 'px';
+            pop.style.top = top + 'px';
         }
 
         function syncReturnField() {
@@ -1378,13 +1464,21 @@
             if (currentTripType === 'oneway') {
                 btn.disabled = true;
                 btn.textContent = 'One way — no return date';
+                btn.classList.add('is-placeholder');
                 btn.setAttribute('aria-disabled', 'true');
+                btn.setAttribute('aria-expanded', 'false');
                 return;
             }
             btn.disabled = false;
             btn.removeAttribute('aria-disabled');
-            btn.textContent = selectedRetDate ? formatDate(selectedRetDate) : 'Pick return date';
-            btn.setAttribute('aria-pressed', calendarPhase === 'return' ? 'true' : 'false');
+            if (selectedRetDate) {
+                btn.textContent = formatDate(selectedRetDate);
+                btn.classList.remove('is-placeholder');
+            } else {
+                btn.textContent = 'Select date';
+                btn.classList.add('is-placeholder');
+            }
+            btn.setAttribute('aria-expanded', datePopoverTarget === 'return' ? 'true' : 'false');
         }
 
         function formatDate(d) {
@@ -1396,35 +1490,22 @@
         function updateSelectionHeader() {
             const badge = document.getElementById('calendarPickBadge');
             const hint = document.getElementById('calendarHint');
-            const dStr = selectedDeptDate ? formatDate(selectedDeptDate) : "";
-            const label = document.getElementById('selectedTripLabel');
-            if (label) label.textContent = dStr || "No dates yet";
-            if (currentTripType === 'oneway') {
-                badge.textContent = selectedDeptDate ? "Depart" : "Pick depart";
-                badge.className = "text-[10px] font-extrabold uppercase text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded";
-                hint.textContent = "Tap a day for the one-way departure.";
-            } else if (!selectedDeptDate) {
-                badge.textContent = "Pick depart";
-                badge.className = "text-[10px] font-extrabold uppercase text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded";
-                hint.textContent = "Tap a day for departure, then Pick return date.";
-            } else if (!selectedRetDate || calendarPhase === 'return') {
-                badge.textContent = selectedRetDate ? "Change depart" : "Pick return";
-                badge.className = "text-[10px] font-extrabold uppercase text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded";
-                hint.textContent = "Pick return date, then tap the same day or a later day.";
-            } else if (currentTripType === 'multicity') {
-                badge.textContent = "Dates set";
-                hint.textContent = "Pick return date to change the second date.";
-            } else {
-                badge.textContent = "Dates set";
-                hint.textContent = "Pick return date to change the return.";
-            }
+            if (selectedDeptDate) showChosen('selectedTripLabel', formatDate(selectedDeptDate));
+            else setPlaceholder('selectedTripLabel', 'Select date');
+            const pickingReturn = currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate;
+            if (badge) badge.textContent = pickingReturn ? 'Return date' : 'Departure date';
+            if (hint) hint.textContent = pickingReturn
+                ? 'Dates before departure are unavailable.'
+                : 'Pick a departure date.';
             syncReturnField();
         }
 
         function validateRoute() {
             const warning = document.getElementById('routeWarning');
             let message = '';
-            if (selectedOriginCode === selectedDestCode) {
+            if (!selectedOriginCode || !selectedDestCode) {
+                message = 'Choose a From airport and a To airport.';
+            } else if (selectedOriginCode === selectedDestCode) {
                 message = 'Departure and destination airports must be different.';
             } else if (currentTripType === 'multicity' &&
                        (selectedStopoverCode === selectedOriginCode || selectedStopoverCode === selectedDestCode)) {
@@ -1742,10 +1823,7 @@
             if (!validateRoute()) return;
             if (!datesReady()) {
                 if (currentTripType !== 'oneway' && selectedDeptDate && !selectedRetDate) focusReturnPick();
-                else {
-                    const card = document.getElementById('calendarCard');
-                    if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+                else focusDepartPick();
                 renderCalendars();
                 resetResultsUntilDates();
                 return;
@@ -1785,10 +1863,31 @@
         };
         if (hashTabs[location.hash]) showHomeTab(hashTabs[location.hash]);
 
+        function reinforceBlankSearchFields() {
+            if (!selectedOriginCode) setPlaceholder('originDisplay', 'City or airport');
+            if (!selectedDestCode) setPlaceholder('destDisplay', 'City or airport');
+            if (!selectedDeptDate) setPlaceholder('selectedTripLabel', 'Select date');
+            if (!selectedRetDate && currentTripType !== 'oneway') {
+                const btn = document.getElementById('returnDateField');
+                if (btn) {
+                    btn.textContent = 'Select date';
+                    btn.classList.add('is-placeholder');
+                }
+            }
+        }
+
         renderCalendars();
-        validateRoute();
         resetResultsUntilDates();
+        reinforceBlankSearchFields();
         ensureWorldwideAirportsLoaded();
+        window.addEventListener('resize', placeDatePopover);
+        window.addEventListener('scroll', placeDatePopover, { passive: true });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeDatePopover();
+        });
+        const siteHeader = document.querySelector('.site-header');
+        if (siteHeader) siteHeader.addEventListener('click', closeDatePopover);
+        window.addEventListener('load', reinforceBlankSearchFields);
     </script>
 <script>
 (function(){var header=document.querySelector(".site-header");if(!header)return;function paint(){header.classList.toggle("is-scrolled",window.scrollY>2);}paint();window.addEventListener("scroll",paint,{passive:true});})();

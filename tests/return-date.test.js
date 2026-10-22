@@ -5,8 +5,12 @@ const vm = require("vm");
 
 const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
 assert.ok(html.includes('id="returnDateField"'), "return date control must exist");
-assert.ok(html.includes(">Pick return date<"), "return date control must start as Pick return date");
+assert.ok(html.includes('id="returnDateField" class="is-placeholder" onclick="focusReturnPick()"'), "return date control must start empty");
+assert.ok(html.includes(">Select date</button>"), "return date control must start as Select date");
 assert.ok(html.includes("function focusReturnPick"), "return date control must have a handler");
+assert.ok(html.includes("function openDatePopover"), "date fields open a calendar popover");
+assert.ok(html.includes("clicked < selectedDeptDate) return"), "return calendar must ignore dates before departure");
+assert.ok(html.includes("closeDatePopover()"), "picking a date closes the calendar");
 assert.ok(!html.includes("we do not put Skyscanner"), "homepage must not say Skyscanner is kept off the page");
 
 const scanStart = html.indexOf("function triggerFullScan");
@@ -35,6 +39,7 @@ const sandbox = {
     scanCalls: 0,
     resetCalls: 0,
     renderCalendars() { sandbox.renderCalls += 1; },
+    closeDatePopover() {},
     triggerFullScan() { sandbox.scanCalls += 1; },
     resetResultsUntilDates() { sandbox.resetCalls += 1; },
     console
@@ -74,6 +79,13 @@ sandbox.calendarPhase = "return";
 sandbox.selectDate(later.getFullYear(), later.getMonth(), later.getDate());
 assert.strictEqual(sandbox.selectedRetDate.getDate(), later.getDate(), "an active return pick must update the return date");
 assert.strictEqual(sandbox.selectedDeptDate.getDate(), depart.getDate(), "changing the return must keep the departure");
+
+sandbox.calendarPhase = "return";
+sandbox.currentTripType = "round";
+const tooEarly = ymd(3);
+sandbox.selectDate(tooEarly.getFullYear(), tooEarly.getMonth(), tooEarly.getDate());
+assert.strictEqual(sandbox.selectedDeptDate.getDate(), depart.getDate(), "a day before departure must not change departure");
+assert.strictEqual(sandbox.selectedRetDate.getDate(), later.getDate(), "a day before departure must not change the return");
 
 sandbox.currentTripType = "oneway";
 sandbox.calendarPhase = "depart";

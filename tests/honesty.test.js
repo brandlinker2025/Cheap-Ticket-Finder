@@ -68,9 +68,9 @@ const required = [
     "SCB card: official up to 10% on this OTA",
     "AIRASTRA15: 15% at airline checkout",
     "estimate from official %",
-    "One calendar",
-    "dates start empty",
-    "No dates yet",
+    "City or airport",
+    "Select date",
+    "calendarPopover",
     "tripCalendarGrid",
     "googleBookBar",
     "Official packages",
@@ -146,6 +146,14 @@ assert.ok(html.includes("sm:flex-row sm:items-center"), "promo/card chips sit be
 assert.ok(!html.includes("None — No official card or checkout code mapped"), "airlines with no published promo must not show extra none copy");
 assert.ok(html.includes("primaryGoogleCard"), "homepage still renders a primary results card");
 assert.ok(!html.includes("Google Flights"), "homepage must not name Google Flights");
+assert.ok(html.includes('let selectedOriginCode = ""'), "From must start with no airport");
+assert.ok(html.includes('let selectedDestCode = ""'), "To must start with no airport");
+assert.ok(html.includes('id="originDisplay" class="font-semibold is-placeholder">City or airport</span>'), "From starts as an empty placeholder");
+assert.ok(html.includes('id="destDisplay" class="font-semibold is-placeholder">City or airport</span>'), "To starts as an empty placeholder");
+assert.ok(html.includes('id="calendarPopover" class="date-popover" hidden'), "date calendar stays closed until a date field is opened");
+assert.ok(!html.includes("One calendar"), "the inline calendar block is removed");
+assert.ok(!html.includes("No dates yet"), "departure no longer shows a prefilled empty-state sentence");
+assert.ok(html.includes("flightSearch") && html.includes("not copied into these fields"), "URL flightSearch stays on the White Label widget and does not refill the form");
 assert.ok(html.includes('id="tpwl-search"') && html.includes('id="tpwl-tickets"'), "White Label search and tickets stay on the same page");
 assert.ok(html.indexOf('id="btnRoundTrip"') < html.indexOf('id="tpwl-search"'), "White Label search sits below the Round Trip control");
 assert.ok(html.includes("tpwl-search-slot"), "White Label search stays out of the Round Trip row");
