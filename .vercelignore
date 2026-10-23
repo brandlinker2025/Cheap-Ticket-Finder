@@ -7,3 +7,7 @@ README.md
 PRODUCTION_SHIP.txt
 netlify.toml
 _headers
+tailwind.config.js
+package.json
+assets/src
+PRODUCTION_SHIP.txt

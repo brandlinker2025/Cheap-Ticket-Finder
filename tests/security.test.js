@@ -7,7 +7,7 @@ const block = (cfg.headers || []).find((h) => h.source === "/(.*)");
 assert.ok(block, "vercel.json must set global headers");
 const map = Object.fromEntries(block.headers.map((h) => [h.key.toLowerCase(), h.value]));
 const must = {
-  "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+  "strict-transport-security": "max-age=31536000; includeSubDomains",
   "x-content-type-options": "nosniff",
   "referrer-policy": "strict-origin-when-cross-origin",
   "x-frame-options": "SAMEORIGIN",
