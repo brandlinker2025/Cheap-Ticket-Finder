@@ -50,6 +50,74 @@
         return cls + tail;
     }
 
+    // Aviasales / Travelpayouts White Label path.
+    // Connected legs collapse the repeated airport: DAC 30 Nov KUL, KUL 5 Dec HKT, 1 adult
+    // is DAC3011KUL0512HKT1. An open jaw inserts the next origin: DAC3011KULBKK0512HKT1.
+    function ddmmToken(date) {
+        const iso = toISODate(date);
+        if (!iso || iso.length < 10) return "";
+        return iso.slice(8, 10) + iso.slice(5, 7);
+    }
+
+    function aviasalesFlightSearch(legs, paxSuffix) {
+        const list = Array.isArray(legs) ? legs : [];
+        let path = "";
+        list.forEach((leg, index) => {
+            const origin = upper(leg.origin);
+            const dest = upper(leg.dest);
+            const date = ddmmToken(leg.date);
+            if (index === 0) {
+                path += origin + date + dest;
+                return;
+            }
+            const prevDest = upper(list[index - 1].dest);
+            if (origin !== prevDest) path += origin;
+            path += date + dest;
+        });
+        return path + String(paxSuffix || "");
+    }
+
+    function multiCityLegsReady(legs) {
+        const list = Array.isArray(legs) ? legs : [];
+        if (list.length < 2 || list.length > 6) return false;
+        let prev = "";
+        for (const leg of list) {
+            const origin = upper(leg.origin);
+            const dest = upper(leg.dest);
+            const date = toISODate(leg.date);
+            if (!origin || !dest || origin === dest || !date) return false;
+            if (prev && date < prev) return false;
+            prev = date;
+        }
+        return true;
+    }
+
+    function compactAirportLabel(airport) {
+        const city = String((airport && airport.city) || "").replace(/\s*\([^)]*\)/g, "").replace(/\s+/g, " ").trim();
+        const code = upper(airport && airport.code);
+        if (city && code) return `${city} (${code})`;
+        return code || city;
+    }
+
+    function tripComFlightsUrl(opts) {
+        const p = pax(opts);
+        const cabin = { economy: "y", premium: "w", business: "c", first: "f" }[p.cabin] || "y";
+        const base = "https://www.trip.com/flights/showfarefirst?Allianceid=11059812&SID=333836392&trip_sub1=flights&trip_sub3=D20343143";
+        const common = `&quantity=${p.adults}&childqty=${p.children}&babyqty=${p.infants}&class=${cabin}`;
+        if (Array.isArray(opts.legs) && opts.legs.length >= 2) {
+            const parts = opts.legs.map((leg, index) => {
+                const n = index + 1;
+                return `dcity${n}=${lower(leg.origin)}&acity${n}=${lower(leg.dest)}&ddate${n}=${toISODate(leg.date)}`;
+            });
+            return `${base}&triptype=mt&${parts.join("&")}${common}`;
+        }
+        const dep = toISODate(opts.depart);
+        if (opts.tripType === "oneway") {
+            return `${base}&triptype=ow&dcity=${lower(opts.origin)}&acity=${lower(opts.dest)}&ddate=${dep}${common}`;
+        }
+        return `${base}&triptype=rt&dcity=${lower(opts.origin)}&acity=${lower(opts.dest)}&ddate=${dep}&rdate=${toISODate(opts.returnDate)}${common}`;
+    }
+
     // T-107: airport code -> city name for hotel searches.
     const CITY_BY_IATA = {
         dac: "Dhaka", zyl: "Sylhet", cgp: "Chattogram", cxb: "Cox's Bazar", jsr: "Jashore", rjh: "Rajshahi",
@@ -317,7 +385,12 @@
 
         const legs = [];
         let tripType = 1;
-        if (opts.tripType === "oneway") {
+        if (Array.isArray(opts.legs) && opts.legs.length >= 2) {
+            tripType = 3;
+            opts.legs.forEach((leg) => {
+                legs.push(encodeFlightLeg(toISODate(leg.date), [upper(leg.origin)], [upper(leg.dest)]));
+            });
+        } else if (opts.tripType === "oneway") {
             tripType = 2;
             legs.push(encodeFlightLeg(depart, originList, destList));
         } else if (opts.tripType === "multicity" && stop && ret) {
@@ -373,6 +446,10 @@
         for (let i = 0; i < p.children; i++) kids.push("8");
         for (let i = 0; i < p.infants; i++) kids.push("0");
         if (kids.length) cheap += `&childrenv2=${kids.join("%7C")}`;
+        if (Array.isArray(opts.legs) && opts.legs.length >= 2) {
+            const path = opts.legs.map((leg) => `${lower(leg.origin)}/${lower(leg.dest)}/${toSkyDate(leg.date)}`).join("/");
+            return `https://www.skyscanner.net/transport/flights/${path}/?${cheap}`;
+        }
         if (opts.tripType === "oneway") {
             return `https://www.skyscanner.net/transport/flights/${o}/${d}/${dep}/?${cheap}`;
         }
@@ -389,6 +466,10 @@
         const o = upper(opts.origin);
         const d = upper(opts.dest);
         const dep = toISODate(opts.depart);
+        if (Array.isArray(opts.legs) && opts.legs.length >= 2) {
+            const path = opts.legs.map((leg) => `${upper(leg.origin)}-${upper(leg.dest)}/${toISODate(leg.date)}`).join("/");
+            return `https://www.kayak.com/flights/${path}?sort=price_a`;
+        }
         if (opts.tripType === "oneway") {
             return `https://www.kayak.com/flights/${o}-${d}/${dep}?sort=price_a`;
         }
@@ -1477,6 +1558,10 @@
         pax,
         CABIN_LABEL,
         aviasalesPaxSuffix,
+        aviasalesFlightSearch,
+        multiCityLegsReady,
+        compactAirportLabel,
+        tripComFlightsUrl,
         CITY_BY_IATA,
         hotelCityForCode,
         isBogusCarrier,
