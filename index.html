@@ -291,6 +291,48 @@
         @media (max-width:640px){#calendarCard.cal-pop{padding:12px 10px 10px}#calendarCard .sk-day{height:44px !important;min-height:44px !important}#calendarCard .sk-day span{font-size:14px !important}}
         @media (prefers-reduced-motion:reduce){#calendarCard.cal-pop,#calendarCard.cal-open{transition:none}.cal-anim-next .cal-grid,.cal-anim-prev .cal-grid,.cal-anim-next .cal-month-label,.cal-anim-prev .cal-month-label{animation:none}}
 
+        #originDisplay:not(.is-placeholder),#destDisplay:not(.is-placeholder),#stopoverDisplay:not(.is-placeholder){display:flex !important;align-items:center;gap:6px;min-width:0;max-width:100%}
+        #originDisplay .ap-name,#destDisplay .ap-name,#stopoverDisplay .ap-name{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        #originDisplay .ap-code,#destDisplay .ap-code,#stopoverDisplay .ap-code{flex:0 0 auto;font-size:11px;font-weight:800;padding:1px 6px;border-radius:6px;background:#e0f2fe;color:#0369a1 !important}
+        .trip-seg,.trip-seg>div{min-width:0;max-width:100%}
+    
+        /* T-112: compact tab bar */
+        .trip-tabs{padding:.2rem .35rem !important;border-radius:14px !important;gap:0 !important}
+        .trip-tabs button{flex-direction:row !important;gap:6px !important;min-height:34px !important;min-width:0 !important;padding:.3rem .6rem !important;font-size:12px !important}
+        .trip-tabs button i{font-size:13px !important}
+        @media (max-width:860px){
+            .trip-tabs{display:flex !important;flex-wrap:nowrap !important;overflow-x:auto !important;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;justify-content:flex-start !important;width:auto !important;max-width:calc(100% - 12px) !important;scrollbar-width:none}
+            .trip-tabs::-webkit-scrollbar{display:none}
+            .trip-tabs button{flex:0 0 auto !important;white-space:nowrap !important;font-size:11.5px !important;min-height:32px !important;padding:.25rem .55rem !important}
+        }
+        /* T-112: brand logo */
+        .site-header h1 .brand-logo{display:block;height:36px;width:auto}
+        @media (max-width:860px){.site-header h1 .brand-logo{height:30px}}
+        /* T-112: scenic section cards */
+        .lux-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+        @media (max-width:860px){.lux-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+        .lux-card{position:relative;display:block;aspect-ratio:4/3;border-radius:18px;overflow:hidden;text-decoration:none;color:#fff;border:1px solid rgba(201,162,75,.55);box-shadow:0 14px 30px rgba(12,74,110,.16);background:#0c4a6e;cursor:pointer;padding:0;text-align:left;width:100%}
+        .lux-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+        .lux-card:hover img,.lux-card:focus-visible img{transform:scale(1.05)}
+        .lux-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,6,23,0) 35%,rgba(2,6,23,.78))}
+        .lux-card .lc-text{position:absolute;left:14px;right:14px;bottom:12px;z-index:1}
+        .lux-card b{display:block;font-family:Georgia,'Times New Roman',serif;font-size:19px;line-height:1.15;color:#fff;-webkit-text-fill-color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.45)}
+        .lux-card small{display:block;margin-top:3px;font-size:11.5px;color:#f3d58a;-webkit-text-fill-color:#f3d58a;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+        @media (max-width:480px){.lux-card b{font-size:15px}.lux-card small{font-size:10px}.lux-card .lc-text{left:10px;right:10px;bottom:9px}}
+        .lux-h2{font-family:Georgia,'Times New Roman',serif;font-size:22px;color:#0c4a6e;margin:0 0 4px}
+        .lux-sub{font-size:12px;color:#475569;margin:0 0 12px}
+        /* T-112: domestic form */
+        .dom-form{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:#fff;border:1px solid #c5e4f4;border-radius:16px;padding:14px}
+        .dom-form label{display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:800;color:#0c4a6e;text-transform:uppercase;letter-spacing:.05em;min-width:0}
+        .dom-form select,.dom-form input{padding:9px;border:1px solid #c5e4f4;border-radius:10px;background:#f7fcff;color:#111;font-size:14px;width:100%;min-width:0}
+        .dom-actions{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+        .dom-actions a{flex:1 1 160px;text-align:center;padding:10px 12px;border-radius:12px;font-weight:800;font-size:13px;text-decoration:none;background:#d4eefc;color:#111;border:1px solid #9fd4f2}
+        .dom-note{grid-column:1/-1;font-size:11px;color:#475569;margin:0;line-height:1.5}
+        @media (max-width:640px){.dom-form{grid-template-columns:1fr}}
+        /* T-112: partner logos */
+        .partner-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 22px;background:#fff;border:1px solid #e2eef5;border-radius:16px;padding:14px}
+        .partner-row img{height:26px;width:auto;max-width:110px;object-fit:contain}
+        .note-plain{display:block;width:100%;font-size:11px;color:#475569;margin-top:4px}
     </style>
     <link rel="stylesheet" href="/assets/tailwind.css?v=t107">
 </head>
@@ -298,7 +340,7 @@
 
     <header class="site-header">
         <div class="site-header-inner">
-            <h1>Cheap Ticket Finder</h1>
+            <h1><a href="/" aria-label="Cheap Ticket Finder home"><img class="brand-logo" src="/assets/logo.svg" alt="Cheap Ticket Finder" width="200" height="40"></a></h1>
             <nav class="top-bar" aria-label="Contact">
                 <a href="/offers/">Offers</a>
                 <a href="/contact">Contact</a>
@@ -429,7 +471,10 @@
                 <div class="home-links">
                     <a class="cta-affiliate" href="https://tp.media/r?campaign_id=137&marker=791994&p=4110&sub_id=cheapticketfinder-hotels&trs=587447&u=https%3A%2F%2Fklook.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Book hotels on Klook</a>
                     <a href="https://www.trip.com/hotels?Allianceid=11059812&SID=333836392&trip_sub1=hotels&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Trip.com hotels</a>
+                    <a href="https://www.agoda.com/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">Agoda hotels</a>
+                    <a href="https://www.booking.com/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">Booking.com hotels</a>
                     <a href="/hotels/" class="text-sky-400 underline">Hotel guide</a>
+                    <span class="note-plain">Agoda and Booking.com open the official sites directly; they are not affiliate links yet.</span>
                 </div>
             </div>
             <div class="home-panel" id="tour-package" data-tab="tour" role="tabpanel" hidden>
@@ -437,7 +482,11 @@
                     <a class="cta-affiliate" href="https://tp.media/r?campaign_id=633&marker=791994&p=9074&sub_id=cheapticketfinder-packages&trs=587447&u=https%3A%2F%2Fkkday.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Explore Asia packages on KKday</a>
                     <a href="https://www.viator.com/?pid=P00326733&uid=U00880752&mcid=58086&currency=USD" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Or worldwide tours on Viator</a>
                     <a href="https://www.trip.com/things-to-do/?Allianceid=11059812&SID=333836392&trip_sub1=tours&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Trip.com tours</a>
+                    <a href="https://tp.media/r?campaign_id=137&marker=791994&p=4110&sub_id=cheapticketfinder-tours&trs=587447&u=https%3A%2F%2Fklook.com" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Klook activities</a>
+                    <a href="https://www.getyourguide.com/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">GetYourGuide</a>
+                    <a href="https://gozayaan.com/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">GoZayaan holidays &amp; offers</a>
                     <a href="/packages/" class="text-sky-400 underline">Tour guide</a>
+                    <span class="note-plain">GetYourGuide and GoZayaan open the official sites directly; they are not affiliate links.</span>
                 </div>
             </div>
             <div class="home-panel" id="travel-sim" data-tab="sim" role="tabpanel" hidden>
@@ -463,6 +512,23 @@
     </div>
 
     <div class="max-w-6xl mx-auto px-3 sm:px-6 pt-4 pb-8">
+
+        <section class="mb-8" id="explore" aria-label="Explore by section">
+            <h2 class="lux-h2">Where to next?</h2>
+            <p class="lux-sub">Pick a section. Prices are shown only on the provider sites.</p>
+            <div class="lux-cards">
+                <button type="button" class="lux-card" data-open-tab="air" aria-label="Open Air Ticket"><img src="/assets/cards/air.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Air Ticket</b><small>Compare fares</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="airlines" aria-label="Open Airlines"><img src="/assets/cards/airlines.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Airlines</b><small>Official carriers</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="hotel" aria-label="Open Hotel"><img src="/assets/cards/hotel.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Hotel</b><small>Stays in Asia</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="tour" aria-label="Open Tour Package"><img src="/assets/cards/tour.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Tour Package</b><small>Tours &amp; activities</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="sim" aria-label="Open Travel SIM"><img src="/assets/cards/sim.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Travel SIM</b><small>eSIM data</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="transfer" aria-label="Open Airport Transfer"><img src="/assets/cards/transfer.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Airport Transfer</b><small>Arrive in comfort</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="bd" aria-label="Open Bus / Train / Launch"><img src="/assets/cards/bd.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Bus / Train / Launch</b><small>Bangladesh routes</small></span></button>
+                <a class="lux-card" href="/cruise/" aria-label="Cruise"><img src="/assets/cards/cruise.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Cruise</b><small>Asian sailings</small></span></a>
+                <a class="lux-card" href="#domestic" aria-label="Domestic"><img src="/assets/cards/domestic.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Domestic</b><small>Plan a trip in Bangladesh</small></span></a>
+            </div>
+            <p class="text-[10px] text-slate-500 mt-2">Photos: Wikimedia Commons, see <a class="underline" href="/credits/">credits</a>.</p>
+        </section>
         <div id="wl-flight-results" class="mb-6">
             <p class="text-[11px] text-slate-500 mb-2 leading-5">On-site flight search (Travelpayouts). Search flights and compare prices from partner sites. The final total is confirmed on the booking site.</p>
             <div class="tpwl-search-slot" aria-hidden="true"><div id="tpwl-search"></div></div>
@@ -545,12 +611,47 @@
         </div>
 
 
+
+        <section class="mb-8" id="domestic" aria-label="Domestic bus, train and launch">
+            <h2 class="lux-h2">Domestic: bus, train &amp; launch</h2>
+            <p class="lux-sub">Choose a route and date, then continue to the operator's site to see real seats and fares.</p>
+            <form class="dom-form" id="domForm" onsubmit="return false">
+                <label>From<select id="domFrom"><option selected>Dhaka</option><option>Chittagong</option><option>Cox&#39;s Bazar</option><option>Sylhet</option><option>Rajshahi</option><option>Khulna</option><option>Barisal</option><option>Rangpur</option><option>Bogra</option><option>Jessore</option><option>Comilla</option><option>Mymensingh</option><option>Dinajpur</option><option>Kuakata</option><option>Bandarban</option><option>Rangamati</option><option>Khagrachari</option><option>Srimangal</option><option>Teknaf</option><option>Saidpur</option></select></label>
+                <label>To<select id="domTo"><option>Dhaka</option><option selected>Chittagong</option><option>Cox&#39;s Bazar</option><option>Sylhet</option><option>Rajshahi</option><option>Khulna</option><option>Barisal</option><option>Rangpur</option><option>Bogra</option><option>Jessore</option><option>Comilla</option><option>Mymensingh</option><option>Dinajpur</option><option>Kuakata</option><option>Bandarban</option><option>Rangamati</option><option>Khagrachari</option><option>Srimangal</option><option>Teknaf</option><option>Saidpur</option></select></label>
+                <label>Date<input type="date" id="domDate"></label>
+                <div class="dom-actions">
+                    <a id="domBus" href="https://www.shohoz.com/bus-tickets" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-bus" aria-hidden="true"></i> Bus on Shohoz</a>
+                    <a id="domTrain" href="https://eticket.railway.gov.bd/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-train" aria-hidden="true"></i> Train on Bangladesh Railway</a>
+                    <a id="domLaunch" href="https://www.shohoz.com/launch-tickets" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-ship" aria-hidden="true"></i> Launch on Shohoz</a>
+                </div>
+                <p class="dom-note">Bus opens Shohoz search results for your route and date. Train opens the official Bangladesh Railway e-ticket site; you must log in there, then search your route. Launch opens Shohoz launch tickets; pick your route there. We do not sell tickets.</p>
+            </form>
+        </section>
+        <section class="mb-8" aria-label="Partners">
+            <h2 class="lux-h2" style="font-size:18px">Official sites we link to</h2>
+            <div class="partner-row">
+                <img src="/assets/logos/biman.svg" alt="Biman Bangladesh Airlines" loading="lazy">
+                <img src="/assets/logos/tripcom.svg" alt="Trip.com" loading="lazy">
+                <img src="/assets/logos/aviasales.png" alt="Aviasales" loading="lazy">
+                <img src="/assets/logos/agoda.svg" alt="Agoda" loading="lazy">
+                <img src="/assets/logos/booking.svg" alt="Booking.com" loading="lazy">
+                <img src="/assets/logos/klook.svg" alt="Klook" loading="lazy">
+                <img src="/assets/logos/kkday.svg" alt="KKday" loading="lazy">
+                <img src="/assets/logos/getyourguide.svg" alt="GetYourGuide" loading="lazy">
+                <img src="/assets/logos/airalo.svg" alt="Airalo" loading="lazy">
+                <img src="/assets/logos/kiwitaxi.png" alt="Kiwitaxi" loading="lazy">
+                <img src="/assets/logos/bangladesh-railway.svg" alt="Bangladesh Railway" loading="lazy">
+                <img src="/assets/logos/royal-caribbean.svg" alt="Royal Caribbean" loading="lazy">
+            </div>
+            <p class="text-[10px] text-slate-500 mt-2 text-center">Logos are trademarks of their owners, shown unaltered to identify the sites we link to. Sources: <a class="underline" href="/credits/">credits</a>.</p>
+        </section>
         <section class="mb-8" id="servicesSection" aria-label="Travel insurance">
             <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">Travel Insurance</h2>
             <div class="home-links">
-                <a class="cta-affiliate" href="https://ektatraveling.tpo.lv/ArgAETEF" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Check insurance on EKTA</a>
+                <a class="cta-affiliate" href="https://ektatraveling.com/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Check insurance on EKTA</a>
                 <a href="/travel-insurance/" class="text-sky-400 underline">Travel insurance guide</a>
             </div>
+            <p class="text-[11px] text-slate-500 mt-2">Opens EKTA's official site directly (not an affiliate link).</p>
         </section>
         <section class="mb-8" aria-label="Local cheap flight guides in Asia">
             <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">Local Cheap Flight</h2>
@@ -1214,11 +1315,18 @@
             el.classList.add('is-placeholder');
         }
 
-        function showChosen(id, text) {
+        function showChosen(id, text, code) {
             const el = document.getElementById(id);
             if (!el) return;
-            el.textContent = text;
             el.classList.remove('is-placeholder');
+            if (!code) { el.textContent = text; return; }
+            code = String(code).toUpperCase();
+            const name = String(text || code).replace(new RegExp('\\s*\\(' + code + '\\)\\s*$'), '');
+            el.textContent = '';
+            const n = document.createElement('span'); n.className = 'ap-name'; n.textContent = name;
+            const c = document.createElement('span'); c.className = 'ap-code'; c.textContent = code;
+            el.append(n, c);
+            el.title = name + ' (' + code + ')';
         }
 
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -1367,13 +1475,13 @@
             if (!airport) return;
             if (activeModalType === 'origin') {
                 selectedOriginCode = airport.code;
-                showChosen('originDisplay', airport.name);
+                showChosen('originDisplay', airport.name, airport.code);
             } else if (activeModalType === 'dest') {
                 selectedDestCode = airport.code;
-                showChosen('destDisplay', airport.name);
+                showChosen('destDisplay', airport.name, airport.code);
             } else if (activeModalType === 'stopover') {
                 selectedStopoverCode = airport.code;
-                showChosen('stopoverDisplay', airport.name);
+                showChosen('stopoverDisplay', airport.name, airport.code);
             }
             closeLocationModal();
             if (datesReady()) triggerFullScan();
@@ -2081,6 +2189,32 @@
             box.innerHTML = BookingLinks.bdSurfaceTransportLinks().map(function (item) {
                 return '<a class="bd-card" href="' + item.url + '" target="_blank" rel="noopener noreferrer"><b>' + escapeHtml(item.mode) + ' · ' + escapeHtml(item.name) + '</b><span>' + escapeHtml(item.blurb) + '</span></a>';
             }).join('');
+        })();
+
+        (function t112Cards() {
+            document.querySelectorAll('.lux-card[data-open-tab]').forEach(function (card) {
+                card.addEventListener('click', function () {
+                    showHomeTab(card.getAttribute('data-open-tab'));
+                    var t = document.querySelector('.trip-tabs');
+                    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        })();
+        (function t112Domestic() {
+            var f = document.getElementById('domFrom'), t = document.getElementById('domTo'), d = document.getElementById('domDate'), bus = document.getElementById('domBus');
+            if (!f || !t || !d || !bus) return;
+            var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+            var today = new Date();
+            d.min = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
+            function upd() {
+                var p = (d.value || '').split('-');
+                if (p.length !== 3 || f.value === t.value) { bus.href = 'https://www.shohoz.com/bus-tickets'; return; }
+                var doj = p[2] + '-' + M[parseInt(p[1], 10) - 1] + '-' + p[0];
+                bus.href = 'https://www.shohoz.com/bus-tickets/booking/bus/search?fromcity=' + encodeURIComponent(f.value) + '&tocity=' + encodeURIComponent(t.value) + '&doj=' + doj;
+            }
+            [f, t, d].forEach(function (el) { el.addEventListener('change', upd); el.addEventListener('input', upd); });
+            upd();
         })();
         if (hashTabs[location.hash]) showHomeTab(hashTabs[location.hash]);
 

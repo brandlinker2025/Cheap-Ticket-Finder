@@ -45,12 +45,13 @@ assert.ok(sitemap.includes("https://cheapticketfinder.site/packages/"), "sitemap
 assert.ok(sitemap.includes("https://cheapticketfinder.site/esim/"), "sitemap must include esim");
 assert.ok(sitemap.includes("https://cheapticketfinder.site/airport-transfer/"), "sitemap must include airport-transfer");
 assert.ok(sitemap.includes("https://cheapticketfinder.site/travel-insurance/"), "sitemap must include travel-insurance");
-assert.ok(insurance.includes("https://ektatraveling.tpo.lv/ArgAETEF"), "travel-insurance must contain EKTA link");
+assert.ok(insurance.includes("https://ektatraveling.com/"), "travel-insurance must contain EKTA link");
 assert.ok(insurance.includes("EKTA") && insurance.includes("policy terms"), "travel-insurance must name EKTA and tell users to check policy terms");
 assert.ok(packages.includes("https://tiqets.tpo.lv/zc9OgjmX") && packages.includes("Tiqets"), "packages must contain Tiqets link");
 assert.ok(esim.includes("https://yesim.tpo.lv/ZAsUxhwZ") && esim.includes("Yesim"), "esim must contain Yesim link as second option");
-assert.ok(home.includes("https://ektatraveling.tpo.lv/ArgAETEF") && home.includes('href="/travel-insurance/"'), "homepage services card must contain EKTA link and travel-insurance guide");
-for (const [name, url] of [["EKTA", "https://ektatraveling.tpo.lv/ArgAETEF"], ["Tiqets", "https://tiqets.tpo.lv/zc9OgjmX"], ["Yesim", "https://yesim.tpo.lv/ZAsUxhwZ"]]) {
+assert.ok(!(home + insurance).includes("ektatraveling.tpo.lv/ArgAETEF"), "broken EKTA tpo.lv link (marker not subscribed) must stay removed");
+assert.ok(home.includes("https://ektatraveling.com/") && home.includes('href="/travel-insurance/"'), "homepage services card must contain EKTA link and travel-insurance guide");
+for (const [name, url] of [["Tiqets", "https://tiqets.tpo.lv/zc9OgjmX"], ["Yesim", "https://yesim.tpo.lv/ZAsUxhwZ"]]) {
   const all = home + packages + esim + insurance;
   assert.ok(all.includes(`href="${url}" target="_blank" rel="sponsored noopener noreferrer"`), `${name} CTA must use exact sponsored rel`);
 }
