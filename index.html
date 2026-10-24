@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+    /* Stale deep link guard: Travelpayouts rejects a past departure date (search/start returns 400)
+       and its widget then spins on "Searching at providers" forever. Runs before the widget loader. */
+    (function () {
+        try {
+            var q = new URLSearchParams(location.search), fs = q.get('flightSearch');
+            if (!fs) return;
+            var m = /^[a-z]{3}(\d{2})(\d{2})/i.exec(fs);
+            if (!m) return;
+            var d = +m[1], mo = +m[2];
+            if (d < 1 || d > 31 || mo < 1 || mo > 12) return;
+            var now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var dep = new Date(now.getFullYear(), mo - 1, d);
+            var ageDays = (today - dep) / 86400000;
+            if (ageDays <= 0 || ageDays > 183) return;
+            ['flightSearch', 'origin_airports', 'destination_airports'].forEach(function (k) { q.delete(k); });
+            var rest = q.toString();
+            history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + '#wl-flight-results');
+            window.__ctfStaleDate = dep.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        } catch (e) {}
+    })();
+    </script>
     <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
       (function () {
           var script = document.createElement("script");
@@ -533,6 +555,8 @@
             <p class="text-[11px] text-slate-500 mb-2 leading-5">On-site flight search (Travelpayouts). Search flights and compare prices from partner sites. The final total is confirmed on the booking site.</p>
             <div class="tpwl-search-slot" aria-hidden="true"><div id="tpwl-search"></div></div>
             <div id="tpwl-tickets" style="width:100%;min-width:0"></div>
+            <p id="staleDateNote" hidden role="status" class="text-sm text-amber-300 border border-amber-400/40 rounded-lg p-3 mb-2"></p>
+            <script>(function(){var d=window.__ctfStaleDate,n=document.getElementById('staleDateNote');if(!d||!n)return;n.textContent='This search link has a past date ('+d+'). Please choose a new date and search again.';n.hidden=false;})();</script>
         </div>
 
         <section class="mb-8" id="airlineOffers" aria-label="Airline offers">
