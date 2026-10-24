@@ -22,6 +22,37 @@
             window.__ctfStaleDate = dep.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
         } catch (e) {}
     })();
+    /* Backstop: the device clock or time zone can disagree with Travelpayouts (it judged 24 Oct as past
+       while London/New York devices were still on 24 Oct). If search/start is rejected, show the note
+       instead of an endless spinner. */
+    (function () {
+        function stuck() {
+            window.__ctfSearchRejected = true;
+            var show = function () {
+                var n = document.getElementById('staleDateNote'), t = document.getElementById('tpwl-tickets');
+                if (!n) return;
+                n.textContent = 'This search could not run. The date may be in the past. Please choose a new date and search again.';
+                n.hidden = false;
+                if (t) t.style.display = 'none';
+            };
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', show); else show();
+        }
+        function isStart(u) { return /\/search\/wl\/start/.test(String(u || '')); }
+        try {
+            var f = window.fetch;
+            if (f) window.fetch = function (input) {
+                var u = input && input.url ? input.url : input;
+                var p = f.apply(this, arguments);
+                if (isStart(u)) p.then(function (r) { if (r && r.status >= 400 && r.status < 500) stuck(); }, function () {});
+                return p;
+            };
+            var o = XMLHttpRequest.prototype.open;
+            XMLHttpRequest.prototype.open = function (m, u) {
+                if (isStart(u)) this.addEventListener('load', function () { if (this.status >= 400 && this.status < 500) stuck(); });
+                return o.apply(this, arguments);
+            };
+        } catch (e) {}
+    })();
     </script>
     <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
       (function () {
