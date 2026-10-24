@@ -11,3 +11,11 @@ tailwind.config.js
 package.json
 assets/src
 PRODUCTION_SHIP.txt
+T112_AUDIT.md
+T112_INCOME.md
+node_modules
+package-lock.json
+T112_AUDIT.md
+T112_INCOME.md
+node_modules
+package-lock.json
