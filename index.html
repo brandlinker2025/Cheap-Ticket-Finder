@@ -34,7 +34,21 @@
                 n.textContent = 'This search could not run. The date may be in the past. Please choose a new date and search again.';
                 n.hidden = false;
                 if (t) t.style.display = 'none';
+                /* The widget also opens its own dark "Oops" modal; hide it so the page does not stay dimmed. */
+                document.documentElement.classList.add('ctf-rejected');
+                try {
+                    var q = new URLSearchParams(location.search);
+                    ['flightSearch', 'origin_airports', 'destination_airports'].forEach(function (k) { q.delete(k); });
+                    var rest = q.toString();
+                    history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + '#wl-flight-results');
+                } catch (e) {}
             };
+            window.addEventListener('urlchange', function () {
+                var n = document.getElementById('staleDateNote'), t = document.getElementById('tpwl-tickets');
+                if (n) n.hidden = true;
+                if (t) t.style.display = '';
+                document.documentElement.classList.remove('ctf-rejected');
+            }, { once: true });
             if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', show); else show();
         }
         function isStart(u) { return /\/search\/wl\/start/.test(String(u || '')); }
@@ -2298,7 +2312,7 @@
 (function(){var header=document.querySelector(".site-header");if(!header)return;function paint(){header.classList.toggle("is-scrolled",window.scrollY>2);}paint();window.addEventListener("scroll",paint,{passive:true});})();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
-<style>#tpwl-modals:not([data-ctf-open]){pointer-events:none !important}</style>
+<style>html.ctf-rejected #tpwl-modals{display:none !important}#tpwl-modals:not([data-ctf-open]){pointer-events:none !important}</style>
 <script>
 // Hotfix: #tpwl-modals renders its modal in an open shadow root, so it is always :empty in the light DOM.
 // Let clicks pass through the host only while a modal is visible inside it (CSS rule above keys off data-ctf-open).
