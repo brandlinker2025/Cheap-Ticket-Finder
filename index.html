@@ -43,7 +43,6 @@
     <meta name="application-name" content="Cheap Ticket Finder">
     <meta name="deploy" content="gf-nearby-20260902">
     <meta name='impact-site-verification' value='4af29459-fcb3-4f17-a171-999b80bb91e2'>
-    <link rel="icon" href="/favicon.ico" type="image/png">
     <link rel="canonical" href="https://cheapticketfinder.site/">
     <meta property="og:site_name" content="Cheap Ticket Finder">
     <meta property="og:type" content="website">
@@ -61,9 +60,7 @@
     <meta name="twitter:description" content="Flexible-date cheap ticket search for Bangladesh travellers. Search flights and compare prices from partner sites in the on-site flight search and Travelpayouts results.">
     <link rel="alternate" hreflang="en" href="https://cheapticketfinder.site/">
     <link rel="alternate" hreflang="x-default" href="https://cheapticketfinder.site/">
-    <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"WebSite","name":"Cheap Ticket Finder","alternateName":"Cheap Ticket Finder BD","url":"https://cheapticketfinder.site/","inLanguage":"en","description":"Flexible-date cheap flight ticket search helper for Bangladesh-based travellers. This site does not sell tickets; the final price is shown by the provider."}
-    </script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://cheapticketfinder.site/#organization", "name": "Cheap Ticket Finder", "alternateName": "Cheap Ticket Finder BD", "url": "https://cheapticketfinder.site/", "logo": "https://cheapticketfinder.site/icon-v2-512.png", "sameAs": ["https://www.facebook.com/CheapTFBD"]}, {"@type": "WebSite", "@id": "https://cheapticketfinder.site/#website", "name": "Cheap Ticket Finder", "alternateName": "Cheap Ticket Finder BD", "url": "https://cheapticketfinder.site/", "inLanguage": "en", "publisher": {"@id": "https://cheapticketfinder.site/#organization"}, "description": "Flexible-date cheap flight ticket search helper for Bangladesh-based travellers. This site does not sell tickets; the final price is shown by the provider."}]}</script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/luxury.css?v=compact-20261019">
@@ -328,8 +325,8 @@
             .trip-tabs button{flex:0 0 auto !important;white-space:nowrap !important;font-size:11.5px !important;min-height:32px !important;padding:.25rem .55rem !important}
         }
         /* T-112: brand logo */
-        .site-header h1 .brand-logo{display:block;height:36px;width:auto}
-        @media (max-width:860px){.site-header h1 .brand-logo{height:30px}}
+        .site-header h1 .brand-logo{display:block;height:84px;width:auto}
+        @media (max-width:860px){.site-header h1 .brand-logo{height:64px}}
         /* T-112: scenic section cards */
         .lux-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
         @media (max-width:860px){.lux-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
@@ -357,12 +354,17 @@
         .note-plain{display:block;width:100%;font-size:11px;color:#475569;margin-top:4px}
     </style>
     <link rel="stylesheet" href="/assets/tailwind.css?v=t107">
+    <link rel="icon" href="/favicon-v2.ico?v=2" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-v2-32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-v2-16.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v2.png?v=2">
+    <link rel="manifest" href="/site.webmanifest?v=2">
 </head>
 <body class="bg-amber-50 text-slate-800 min-h-screen pb-16 antialiased selection:bg-sky-500 selection:text-white hero-glow">
 
     <header class="site-header">
         <div class="site-header-inner">
-            <h1><a href="/" aria-label="Cheap Ticket Finder home"><img class="brand-logo" src="/assets/logo.svg" alt="Cheap Ticket Finder" width="200" height="40"></a></h1>
+            <h1><a href="/" aria-label="Cheap Ticket Finder home"><img class="brand-logo" src="/assets/brand/ctf-logo-header.webp" srcset="/assets/brand/ctf-logo-header.webp 321w, /assets/brand/ctf-logo-header-2x.webp 642w, /assets/brand/ctf-logo-header-3x.webp 963w" sizes="(max-width:860px) 184px, 241px" alt="Cheap Ticket Finder" width="321" height="112"></a></h1>
             <nav class="top-bar" aria-label="Contact">
                 <a href="/offers/">Offers</a>
                 <a href="/contact">Contact</a>
@@ -549,6 +551,7 @@
                 <a class="lux-card" href="/cruise/" aria-label="Cruise"><img src="/assets/cards/cruise.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Cruise</b><small>Asian sailings</small></span></a>
                 <a class="lux-card" href="#domestic" aria-label="Domestic"><img src="/assets/cards/domestic.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Domestic</b><small>Plan a trip in Bangladesh</small></span></a>
             </div>
+            <p class="text-sm mt-3"><a class="underline font-semibold" href="/medical/" style="color:#0c4a6e">কম খরচে বিদেশে চিকিৎসা / Low-cost medical treatment abroad &rarr;</a></p>
             <p class="text-[10px] text-slate-500 mt-2">Photos: Wikimedia Commons, see <a class="underline" href="/credits/">credits</a>.</p>
         </section>
         <div id="wl-flight-results" class="mb-6">
@@ -601,7 +604,7 @@
                 </h2>
                 <span class="text-[10px] sm:text-xs bg-sky-500/20 text-sky-300 px-2.5 py-0.5 rounded-full font-semibold">Primary: Travelpayouts results</span>
             </div>
-            <p class="text-[11px] text-slate-500 mb-3">Search the on-site flight results. Metros include LHR + LGW + STN + LTN (example: Includes nearby: BKK, DMK). Nearby airports stay within 50 km. Checkout notes only: AIRASTRA15: 15% at airline checkout, “SCB card: official up to 10% on this OTA”, labeled estimate from official % when a fare is known.</p>
+            <p class="text-[11px] text-slate-500 mb-3">Search the on-site flight results. Metros include LHR + LGW + STN + LTN (example: Includes nearby: BKK, DMK). Nearby airports stay within 50 km. Checkout notes only: AIRASTRA10: 10% at airline checkout, “SCB card: official up to 10% on this OTA”, labeled estimate from official % when a fare is known.</p>
             <div id="needDatesHint" class="rounded-xl border border-slate-800 bg-slate-950/60 px-3.5 py-3 text-xs text-slate-400">Pick dates, then open the on-site flight search. Airline sites are secondary (often Flex).</div>
             <div id="googleBookBar" class="hidden mb-4"></div>
             <div id="nearbyAirportSection" class="hidden mb-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-3.5">
@@ -700,6 +703,12 @@
                 <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/dhaka-to-dubai-cheap-ticket/">Dhaka to Dubai cheap ticket</a>
                 <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/dhaka-to-chattogram-ticket-price/">Dhaka to Chattogram ticket price</a>
             </nav>
+        </section>
+        <section class="glass-card p-4 sm:p-6 rounded-2xl mb-6 text-sm leading-6" aria-labelledby="cheap-guide-h">
+            <h2 id="cheap-guide-h" class="text-base font-bold text-sky-400">How can I find a cheap air ticket from Bangladesh?</h2>
+            <p>Search with flexible dates, compare the full price (including baggage and fees) on several sites and on the airline's own website, then book with the airline or a trusted provider. No site or day guarantees the lowest fare. <a class="text-sky-400 underline font-bold" href="/how-to-find-cheap-air-tickets/">Read the 7-step guide</a></p>
+            <h2 class="text-base font-bold text-sky-400 mt-3" lang="bn">বাংলাদেশ থেকে কম দামে বিমান টিকিট কীভাবে পাবো?</h2>
+            <p lang="bn">ফ্লেক্সিবল তারিখে খুঁজুন, কয়েকটি সাইট ও এয়ারলাইনের নিজের ওয়েবসাইটে ব্যাগেজ ও ফি সহ মোট দাম তুলনা করুন, তারপর এয়ারলাইন বা বিশ্বস্ত প্রোভাইডার থেকে বুক করুন। কোনো সাইট বা দিন সবচেয়ে কম দামের নিশ্চয়তা দেয় না। <a class="text-sky-400 underline font-bold" href="/bn/how-to-find-cheap-air-tickets/">৭ ধাপের গাইড পড়ুন</a></p>
         </section>
         <footer class="text-center text-[10px] text-slate-500 leading-5 pb-4">
             Cheap Ticket Finder does not sell tickets and does not scrape airlines. The final price is on the provider. cheapticketfinder.site

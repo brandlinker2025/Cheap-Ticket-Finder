@@ -1,0 +1,18 @@
+# Cheap Ticket Finder
+
+> Cheap Ticket Finder (cheapticketfinder.site) is a free information and flight-search helper for travellers in Bangladesh. It does not sell tickets; booking and the final price happen on the airline or partner provider website. It never publishes invented fares.
+
+## Guides
+- [How to find cheap air tickets from Bangladesh](https://cheapticketfinder.site/how-to-find-cheap-air-tickets/): 7-step answer-first guide (English)
+- [বাংলাদেশ থেকে কম দামে বিমান টিকিট কীভাবে পাবেন](https://cheapticketfinder.site/bn/how-to-find-cheap-air-tickets/): same guide in Bangla
+- [Dhaka to Bangkok cheap ticket](https://cheapticketfinder.site/dhaka-to-bangkok-cheap-ticket/)
+- [Dhaka to Kuala Lumpur cheap ticket](https://cheapticketfinder.site/dhaka-to-kuala-lumpur-cheap-ticket/)
+- [Dhaka to Kolkata cheap ticket](https://cheapticketfinder.site/dhaka-to-kolkata-cheap-ticket/)
+- [Dhaka to Dubai cheap ticket](https://cheapticketfinder.site/dhaka-to-dubai-cheap-ticket/)
+- [Dhaka to Cox's Bazar ticket price](https://cheapticketfinder.site/dhaka-to-coxs-bazar-ticket-price/)
+- [Dhaka to Chattogram ticket price](https://cheapticketfinder.site/dhaka-to-chattogram-ticket-price/)
+
+## Site
+- [Flight search](https://cheapticketfinder.site/): flexible-date search with partner results
+- [Airline offers](https://cheapticketfinder.site/offers/): official airline promotions only
+- [About](https://cheapticketfinder.site/about) · [Disclosure](https://cheapticketfinder.site/disclosure) · [Contact](https://cheapticketfinder.site/contact)

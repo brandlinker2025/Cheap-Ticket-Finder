@@ -887,8 +887,8 @@
     // Official airline-site checkout codes only. Never invent unpublished airline codes.
     const AIRLINE_CHECKOUT_PROMOS = {
         airastra: {
-            code: "AIRASTRA15",
-            summary: "15% off base fare on the website or app, except blackout dates.",
+            code: "AIRASTRA10",
+            summary: "10% off base fare on the Air Astra website or mobile app, except blackout dates.",
             sourceUrl: "https://www.airastra.com/node?field_offers_type_target_id=All"
         },
         qatar: {
@@ -974,15 +974,15 @@
 
         if (providerId === "airastra") {
             savings.push({
-                id: "airastra15",
+                id: "airastra10",
                 kind: "code",
-                label: "AIRASTRA15",
-                headline: "AIRASTRA15: 15% at airline checkout",
-                percent: 15,
+                label: "AIRASTRA10",
+                headline: "AIRASTRA10: 10% at airline checkout",
+                percent: 10,
                 how: "flat",
                 capBdt: null,
-                code: "AIRASTRA15",
-                detail: "Official AIR ASTRA offers page: 15% on base fare on website or app, except blackout dates. Enter the code at AIR ASTRA checkout — not on Google Flights.",
+                code: "AIRASTRA10",
+                detail: "Official AIR ASTRA offers page: 10% on base fare on website or mobile app, except blackout dates. Enter the code at AIR ASTRA checkout — not on Google Flights.",
                 validity: "No expiry date printed on the official offers page",
                 sourceUrl: "https://www.airastra.com/node?field_offers_type_target_id=All"
             });
@@ -1306,10 +1306,10 @@
         const qatar = AIRLINE_DIRECTORY.find((a) => a.id === "qatar");
         return [
             {
-                id: "airastra15",
+                id: "airastra10",
                 airline: "AIR ASTRA",
-                code: "AIRASTRA15",
-                appliesTo: "Official AIR ASTRA offers page: book on website or app, 15% on base fare, except blackout dates. Enter the code at AIR ASTRA checkout.",
+                code: "AIRASTRA10",
+                appliesTo: "Official AIR ASTRA offers page: book on website or mobile app, 10% on base fare, except blackout dates. Enter the code at AIR ASTRA checkout.",
                 expiry: "No expiry date printed on the official offers page",
                 sourceUrl: "https://www.airastra.com/node?field_offers_type_target_id=All",
                 checkoutUrl: astra ? astra.url(opts) : "https://airastra.com",

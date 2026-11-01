@@ -31,13 +31,19 @@
         .cta-affiliate { display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(92deg,#d97706,#e9c979 45%,#f6de9c);color:#451a03 !important;font-weight:800;padding:.7rem 1.1rem;border-radius:16px;border:1px solid rgba(146,64,14,.28);box-shadow:0 14px 30px rgba(217,119,6,.25) }
     </style>
     <link rel="stylesheet" href="/assets/tailwind.css?v=t107">
+    <link rel="icon" href="/favicon-v2.ico?v=2" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-v2-32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-v2-16.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v2.png?v=2">
+    <link rel="manifest" href="/site.webmanifest?v=2">
 </head>
 <body class="bg-amber-50 text-slate-800 min-h-screen pb-16 antialiased hero-glow">
     <div class="max-w-3xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
         <header class="text-center mb-6">
-            <a href="/" class="inline-flex items-center gap-2 px-3 py-1 rounded-full deal-chip text-[10px] sm:text-xs font-bold mb-3"><i class="fa-solid fa-plane-departure"></i> Cheap Ticket Finder — home</a>
+            <a href="/" aria-label="Cheap Ticket Finder home" style="display:inline-block;margin-bottom:12px"><img class="ctf-logo" src="/assets/brand/ctf-logo-header.webp" srcset="/assets/brand/ctf-logo-header.webp 321w, /assets/brand/ctf-logo-header-2x.webp 642w, /assets/brand/ctf-logo-header-3x.webp 963w" sizes="(max-width:860px) 210px, 241px" alt="Cheap Ticket Finder" width="321" height="112" style="display:block;height:84px;width:auto;max-width:100%"></a>
             <h1 class="text-2xl sm:text-3xl font-bold" style="font-family:Georgia,serif;color:#0c4a6e">Cruises from Asia</h1>
             <p class="text-sm text-slate-600 mt-2">Three cruise lines that sail from ports Bangladesh travellers can reach easily. We show no prices: fares, cabins and dates are only on each cruise line's official site.</p>
+                    <a class="cb-jump" href="#thailand-vietnam" lang="bn">নতুন: থাইল্যান্ড-ভিয়েতনাম ক্রুজ ও সৈকত ↓</a>
         </header>
         <img src="/assets/cards/cruise.webp" alt="Cruise ship at sea, aerial view" width="720" height="540" loading="lazy" style="width:100%;height:auto;border-radius:18px;margin-bottom:18px">
         <section class="glass-card rounded-2xl p-4 mb-4">
@@ -58,6 +64,145 @@
             <p class="text-sm"><a class="cta-affiliate" href="https://www.cordeliacruises.com/srilanka" target="_blank" rel="noopener noreferrer">Sri Lanka cruises</a> <a class="cta-affiliate" href="https://www.cordeliacruises.com/maldives-cruises" target="_blank" rel="noopener noreferrer">Maldives cruises</a></p>
             <p class="text-xs mt-2">Sources: <a class="underline" href="https://www.cordeliacruises.com/srilanka" target="_blank" rel="noopener noreferrer">cordeliacruises.com/srilanka</a>, <a class="underline" href="https://www.cordeliacruises.com/maldives-cruises" target="_blank" rel="noopener noreferrer">cordeliacruises.com/maldives-cruises</a></p>
         </section>
+<!-- cruise-beach-v1 START (additive section) -->
+<style>
+#thailand-vietnam{scroll-margin-top:12px}
+.cb-wrap{margin:26px 0 18px}
+.cb-h{font-family:Georgia,serif;color:#0c4a6e;font-size:1.45rem;font-weight:700;line-height:1.2;margin:0 0 4px}
+.cb-sub{font-size:.9rem;color:#475569;margin:0 0 14px}
+.cb-h3{font-family:Georgia,serif;color:#0c4a6e;font-size:1.15rem;font-weight:700;margin:22px 0 10px}
+.cb-grid{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:720px){.cb-grid{grid-template-columns:1fr 1fr}}
+.cb-card{background:rgba(255,255,255,.82);border:1px solid rgba(201,162,75,.38);border-radius:20px;overflow:hidden;box-shadow:0 16px 38px rgba(3,105,161,.12);display:flex;flex-direction:column}
+.cb-card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.cb-body{padding:14px 15px 15px;font-size:.88rem;color:#1e293b}
+.cb-body h4{font-size:1rem;font-weight:800;margin:0 0 2px;color:#0f172a}
+.cb-body p{margin:0 0 8px}
+.cb-bn{color:#0369a1;font-weight:600}
+.cb-how{background:#f0f9ff;border-radius:12px;padding:8px 10px}
+.cb-price{font-size:.8rem;color:#92400e}.cb-price span{color:#64748b}
+.cb-btn{display:inline-flex;align-items:center;background:linear-gradient(92deg,#d97706,#e9c979 45%,#f6de9c);color:#451a03!important;font-weight:800;padding:.55rem .95rem;border-radius:14px;border:1px solid rgba(146,64,14,.28);text-decoration:none;margin:2px 4px 2px 0;font-size:.85rem}
+.cb-ghost{background:#fff;color:#0c4a6e!important;border-color:#bae6fd}
+.cb-small,.cb-credit{font-size:.72rem;color:#64748b}.cb-small a,.cb-credit a{text-decoration:underline}
+.cb-note{font-size:.78rem;background:#fff;border:1px solid #e0f2fe;border-radius:16px;padding:12px 14px;margin-top:14px;color:#334155}
+.cb-jump{display:inline-block;margin-top:10px;font-size:.85rem;font-weight:700;color:#0c4a6e;background:rgba(255,255,255,.75);border:1px solid rgba(201,162,75,.45);border-radius:999px;padding:.4rem .9rem;text-decoration:none}
+</style>
+<section id="thailand-vietnam" class="cb-wrap" aria-labelledby="cb-title">
+  <h2 id="cb-title" class="cb-h">Thailand & Vietnam cruises</h2>
+  <p class="cb-sub" lang="bn">থাইল্যান্ড ও ভিয়েতনামের ক্রুজ — অফিসিয়াল ক্রুজ লাইন আর রিভিউ করা অপারেটরের লিংক।</p>
+  <div class="cb-grid">
+<article class="cb-card">
+  <img src="/assets/cruise-beach/rc-navigator.webp" alt="Royal Caribbean" width="900" height="416" loading="lazy" decoding="async">
+  <div class="cb-body">
+    <h4>Royal Caribbean — 10-night Thailand &amp; Vietnam cruise from Singapore</h4>
+    <p class="cb-bn" lang="bn">সিঙ্গাপুর থেকে ১০ রাতের থাইল্যান্ড ও ভিয়েতনাম ক্রুজ (Navigator of the Seas)</p>
+    <p>Round trip from Singapore on Navigator of the Seas with Thailand and Vietnam ports. Dates, cabins and fares are on the cruise line page.</p>
+    <p class="cb-how"><b>Cheapest authentic way:</b> Book directly on Royal Caribbean (official). Fly Dhaka–Singapore one day before sailing.</p>
+    <p class="cb-price" lang="bn">দাম: এখানে লেখা হয়নি — দাম তারিখ ও কেবিন অনুযায়ী বদলায়, বুক করার আগে লিংকে দেখুন <span>(যাচাই: ২৬ অক্টোবর ২০২৬)</span></p>
+    <p class="cb-links"><a class="cb-btn" href="https://www.royalcaribbean.com/itinerary/10-night-thailand-vietnam-cruise-from-singapore-on-navigator-NV10I042" target="_blank" rel="noopener noreferrer">See official itinerary</a></p>
+    
+    <p class="cb-credit">Photo: Oreocooke, CC0, <a href="https://commons.wikimedia.org/wiki/File:Navigator_of_the_Seas_-_Avalon_Jan_2026.jpg" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a></p>
+  </div>
+</article>
+<article class="cb-card">
+  <img src="/assets/cruise-beach/rc-quantum.webp" alt="Royal Caribbean" width="900" height="568" loading="lazy" decoding="async">
+  <div class="cb-body">
+    <h4>Royal Caribbean — 10-night Bangkok &amp; Vietnam cruise from Singapore</h4>
+    <p class="cb-bn" lang="bn">সিঙ্গাপুর থেকে ১০ রাতের ব্যাংকক ও ভিয়েতনাম ক্রুজ (Quantum of the Seas)</p>
+    <p>Round trip from Singapore on Quantum of the Seas, calling at Bangkok (Laem Chabang) and Vietnam ports.</p>
+    <p class="cb-how"><b>Cheapest authentic way:</b> Book directly on Royal Caribbean Singapore (official).</p>
+    <p class="cb-price" lang="bn">দাম: এখানে লেখা হয়নি — দাম তারিখ ও কেবিন অনুযায়ী বদলায়, বুক করার আগে লিংকে দেখুন <span>(যাচাই: ২৬ অক্টোবর ২০২৬)</span></p>
+    <p class="cb-links"><a class="cb-btn" href="https://www.royalcaribbean.com/sgp/en/itinerary/10-night-bangkok-vietnam-cruise-from-singapore-on-quantum-QN10I043" target="_blank" rel="noopener noreferrer">See official itinerary</a></p>
+    
+    <p class="cb-credit">Photo: Frank Schwichtenberg, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Quantum_of_the_Seas_-_Wedel_04.jpg" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a></p>
+  </div>
+</article>
+<article class="cb-card">
+  <img src="/assets/cruise-beach/halong.webp" alt="Ha Long Bay overnight cruise, Vietnam" width="900" height="600" loading="lazy" decoding="async">
+  <div class="cb-body">
+    <h4>Ha Long Bay overnight cruise, Vietnam</h4>
+    <p class="cb-bn" lang="bn">হা লং বে-তে এক রাতের ক্রুজ, ভিয়েতনাম</p>
+    <p>UNESCO World Heritage bay of limestone islands. 2-day/1-night boats include a cabin, meals, kayaking and cave visits; most offer pickup from Hanoi.</p>
+    <p class="cb-how"><b>Cheapest authentic way:</b> Compare reviewed overnight cruises on Viator (free cancellation on many), or book an operator such as Ambassador Cruise directly.</p>
+    <p class="cb-price" lang="bn">দাম: এখানে লেখা হয়নি — দাম তারিখ ও কেবিন অনুযায়ী বদলায়, বুক করার আগে লিংকে দেখুন <span>(যাচাই: ২৬ অক্টোবর ২০২৬)</span></p>
+    <p class="cb-links"><a class="cb-btn" href="https://www.viator.com/Ha-Long-Bay-tours/Overnight-Tours/d22692-g20-c84?pid=P00326733&amp;uid=U00880752&amp;mcid=58086&amp;currency=USD" target="_blank" rel="sponsored noopener noreferrer">Book on Viator</a> <a class="cb-btn cb-ghost" href="https://ambassadorcruise.com/" target="_blank" rel="noopener noreferrer">Ambassador Cruise (operator)</a></p>
+    <p class="cb-small">Official info: <a href="https://whc.unesco.org/en/list/672/" target="_blank" rel="noopener noreferrer">UNESCO World Heritage Centre</a></p>
+    <p class="cb-credit">Photo: Arianos, Public domain, <a href="https://commons.wikimedia.org/wiki/File:Asia_Cruise_Junk_in_Halong_bay.JPG" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a></p>
+  </div>
+</article>
+  </div>
+  <h3 id="beaches-boats" class="cb-h3">Beaches & Boat Activities</h3>
+  <p class="cb-sub" lang="bn">সৈকত ও নৌকা ভ্রমণ — আন্দামান সাগর (ফুকেট, ফি ফি, ক্রাবি, সিমিলান) আর মালয়েশিয়ার লংকাউই: কী করবেন আর কোন নৌকা বা ফেরিতে যাবেন।</p>
+  <div class="cb-grid">
+<article class="cb-card">
+  <img src="/assets/cruise-beach/phuket.webp" alt="Phuket" width="900" height="675" loading="lazy" decoding="async">
+  <div class="cb-body">
+    <h4>Phuket — beaches and island boat trips</h4>
+    <p class="cb-bn" lang="bn">ফুকেট — সৈকত আর দ্বীপে নৌকা ভ্রমণ</p>
+    <p>Patong, Kata and Karon beaches; day boats to Phang Nga Bay, James Bond Island and the Phi Phi Islands; snorkelling and sunset cruises.</p>
+    <p class="cb-how"><b>Cheapest authentic way:</b> Book day cruises and speedboat trips on Viator; fly Dhaka–Phuket via Bangkok or Kuala Lumpur.</p>
+    <p class="cb-price" lang="bn">দাম: এখানে লেখা হয়নি — দাম তারিখ ও কেবিন অনুযায়ী বদলায়, বুক করার আগে লিংকে দেখুন <span>(যাচাই: ২৬ অক্টোবর ২০২৬)</span></p>
+    <p class="cb-links"><a class="cb-btn" href="https://www.viator.com/Phuket/d349-ttd?pid=P00326733&amp;uid=U00880752&amp;mcid=58086&amp;currency=USD" target="_blank" rel="sponsored noopener noreferrer">Book on Viator</a></p>
+    <p class="cb-small">Official info: <a href="https://www.tourismthailand.org/Destinations/Provinces/Phuket/350" target="_blank" rel="noopener noreferrer">Tourism Authority of Thailand (official)</a></p>
+    <p class="cb-credit">Photo: Arnaud-Victor Monteux, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Long-tail_boats_on_Patong_Beach_Phuket.jpg" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a></p>
+  </div>
+</article>
+<article class="cb-card">
+  <img src="/assets/cruise-beach/phiphi.webp" alt="Phi Phi Islands &amp; Maya Bay" width="900" height="554" loading="lazy" decoding="async">
+  <div class="cb-body">
+    <h4>Phi Phi Islands &amp; Maya Bay — speedboat day trip</h4>
+    <p class="cb-bn" lang="bn">ফি ফি দ্বীপ ও মায়া বে — স্পিডবোটে একদিনের ভ্রমণ</p>
+    <p>Maya Bay, Pileh Lagoon, Viking Cave, Monkey Beach and Bamboo Island. Ferries run daily from Krabi and Phuket; a national park fee is paid separately.</p>
+    <p class="cb-how"><b>Cheapest authentic way:</b> Early-departure speedboat tour on Viator with hotel pickup from Ao Nang, Railay and Krabi.</p>
+    <p class="cb-price" lang="bn">দাম: এখানে লেখা হয়নি — দাম তারিখ ও কেবিন অনুযায়ী বদলায়, বুক করার আগে লিংকে দেখুন <span>(যাচাই: ২৬ অক্টোবর ২০২৬)</span></p>
+    <p class="cb-links"><a class="cb-btn" href="https://www.viator.com/tours/Krabi/Phi-Phi-Early-Bird-and-Krabi-4-Islands-Beat-the-crowds/d348-108960P1?pid=P00326733&amp;uid=U00880752&amp;mcid=58086&amp;currency=USD" target="_blank" rel="sponsored noopener noreferrer">Book on Viator</a></p>
+    <p class="cb-small">Official info: <a href="https://www.tourismthailand.org/Articles/10-things-to-do-in-krabi" target="_blank" rel="noopener noreferrer">Tourism Authority of Thailand (official)</a></p>
+    <p class="cb-credit">Photo: Diego Delso, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/wiki/File:Playa_Maya,_Ko_Phi_Phi,_Tailandia,_2013-08-19,_DD_13.JPG" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a></p>
+  </div>
+</article>
+<article class="cb-card">
+  <img src="/assets/cruise-beach/krabi.webp" alt="Krabi" width="900" height="1201" loading="lazy" decoding="async">
+  <div class="cb-body">
+    <h4>Krabi — Railay, Ao Nang and the 4 Islands</h4>
+    <p class="cb-bn" lang="bn">ক্রাবি — রাইলে, আও নাং আর ৪ দ্বীপ</p>
+    <p>Rock climbing at Railay, kayaking in mangroves, longtail boats from Ao Nang, Thale Waek sandbar, Koh Hong and Koh Poda.</p>
+    <p class="cb-how"><b>Cheapest authentic way:</b> Book 4-island and Hong Island boat tours on Viator; longtail boats to Railay leave from Ao Nang beach.</p>
+    <p class="cb-price" lang="bn">দাম: এখানে লেখা হয়নি — দাম তারিখ ও কেবিন অনুযায়ী বদলায়, বুক করার আগে লিংকে দেখুন <span>(যাচাই: ২৬ অক্টোবর ২০২৬)</span></p>
+    <p class="cb-links"><a class="cb-btn" href="https://www.viator.com/Krabi/d348-ttd?pid=P00326733&amp;uid=U00880752&amp;mcid=58086&amp;currency=USD" target="_blank" rel="sponsored noopener noreferrer">Book on Viator</a></p>
+    <p class="cb-small">Official info: <a href="https://www.tourismthailand.org/Destinations/Provinces/Krabi/344" target="_blank" rel="noopener noreferrer">Tourism Authority of Thailand (official)</a></p>
+    <p class="cb-credit">Photo: Nnthurber, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Limestone_karst_cliff_and_longtail_boats_at_Railay_West_Beach_Krabi.jpg" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a></p>
+  </div>
+</article>
+<article class="cb-card">
+  <img src="/assets/cruise-beach/similan.webp" alt="Similan Islands" width="900" height="377" loading="lazy" decoding="async">
+  <div class="cb-body">
+    <h4>Similan Islands — Andaman Sea snorkelling (seasonal)</h4>
+    <p class="cb-bn" lang="bn">সিমিলান দ্বীপপুঞ্জ — আন্দামান সাগরে স্নরকেলিং (মৌসুমি)</p>
+    <p>Mu Ko Similan National Park opens 15 October to 15 May only. Speedboats leave from Khao Lak and Phuket; a national park fee is paid separately.</p>
+    <p class="cb-how"><b>Cheapest authentic way:</b> Speedboat day tour from Phuket on Viator; check the park is open on your date.</p>
+    <p class="cb-price" lang="bn">দাম: এখানে লেখা হয়নি — দাম তারিখ ও কেবিন অনুযায়ী বদলায়, বুক করার আগে লিংকে দেখুন <span>(যাচাই: ২৬ অক্টোবর ২০২৬)</span></p>
+    <p class="cb-links"><a class="cb-btn" href="https://www.viator.com/tours/Phuket/SIMILAN-ISLANDS-Early-Departure-Tour/d349-160694P25?pid=P00326733&amp;uid=U00880752&amp;mcid=58086&amp;currency=USD" target="_blank" rel="sponsored noopener noreferrer">Book on Viator</a></p>
+    <p class="cb-small">Official info: <a href="https://portal.dnp.go.th/Content/nationalpark?contentId=865" target="_blank" rel="noopener noreferrer">Department of National Parks, Thailand (official)</a></p>
+    <p class="cb-credit">Photo: Mathias Krumbholz, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/wiki/File:Similan_Island_01_(MK).jpg" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a></p>
+  </div>
+</article>
+<article class="cb-card">
+  <img src="/assets/cruise-beach/langkawi.webp" alt="Langkawi, Malaysia" width="900" height="600" loading="lazy" decoding="async">
+  <div class="cb-body">
+    <h4>Langkawi, Malaysia — island hopping and ferries</h4>
+    <p class="cb-bn" lang="bn">লংকাউই, মালয়েশিয়া — দ্বীপ ঘোরা আর ফেরি</p>
+    <p>Island hopping to Dayang Bunting (Pregnant Maiden Lake), eagle feeding at Singa Besar and the beach at Beras Basah. Ferries connect Langkawi with Kuala Perlis, Kuala Kedah and Penang.</p>
+    <p class="cb-how"><b>Cheapest authentic way:</b> Island hopping on Viator; ferry tickets direct from Langkawi Ferry Line. Fly Dhaka–Kuala Lumpur–Langkawi.</p>
+    <p class="cb-price" lang="bn">দাম: এখানে লেখা হয়নি — দাম তারিখ ও কেবিন অনুযায়ী বদলায়, বুক করার আগে লিংকে দেখুন <span>(যাচাই: ২৬ অক্টোবর ২০২৬)</span></p>
+    <p class="cb-links"><a class="cb-btn" href="https://www.viator.com/tours/Langkawi/Langkawi-Island-Hopping-Tour-SIC/d338-38355P377?pid=P00326733&amp;uid=U00880752&amp;mcid=58086&amp;currency=USD" target="_blank" rel="sponsored noopener noreferrer">Book on Viator</a> <a class="cb-btn cb-ghost" href="https://www.langkawiferryline.com/" target="_blank" rel="noopener noreferrer">Langkawi Ferry Line (ferry operator)</a></p>
+    <p class="cb-small">Official info: <a href="https://naturallylangkawi.my/" target="_blank" rel="noopener noreferrer">Langkawi Development Authority (official tourism site)</a></p>
+    <p class="cb-credit">Photo: Hendrojkson, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Pulau_Beras_Basah.jpg" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a></p>
+  </div>
+</article>
+  </div>
+  <div class="cb-note" lang="bn"><b>জেনে রাখুন:</b> “Book on Viator” লিংকগুলো অ্যাফিলিয়েট লিংক — আপনি বুক করলে আমরা কমিশন পেতে পারি, আপনার দাম বাড়ে না। Royal Caribbean, ফেরি অপারেটর ও সরকারি পর্যটন লিংকগুলো সাধারণ লিংক। আমরা নিজেরা কোনো দাম লিখিনি; দাম, সময়সূচি আর বাতিলের নিয়ম বুক করার আগে অপারেটরের পেজে মিলিয়ে নিন। সমুদ্র ও আবহাওয়ার কারণে নৌকা ভ্রমণ বাতিল হতে পারে। <a class="underline" href="/disclosure/">Disclosure</a></div>
+</section>
+<!-- cruise-beach-v1 END -->
         <section class="rounded-2xl p-4 mb-4 bg-white border border-sky-100 text-sm">
             <h2 class="font-bold mb-1">Before you book</h2>
             <ul class="list-disc pl-5 space-y-1">
