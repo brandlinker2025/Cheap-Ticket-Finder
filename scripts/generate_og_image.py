@@ -33,7 +33,7 @@ f_pill=ImageFont.truetype(latin_sb,26); label="CHEAPTICKETFINDER.SITE"
 tw=d.textbbox((0,0),label,font=f_pill)[2]
 d.rounded_rectangle([70,64,70+tw+44,116],radius=26,fill=(245,197,66,255)); d.text((92,77),label,font=f_pill,fill=slate)
 f_title=ImageFont.truetype(latin_b,76)
-d.text((70,150),"Cheap Ticket",font=f_title,fill=slate); d.text((70,238),"Finder BD",font=f_title,fill=slate)
+d.text((70,150),"Cheap Ticket",font=f_title,fill=slate); d.text((70,238),"Finder",font=f_title,fill=slate)
 d.rounded_rectangle([72,332,372,344],radius=6,fill=(217,164,32,255))
 d.text((70,362),"সস্তা ফ্লাইট, হোটেল ও ট্যুর প্যাকেজ",font=ImageFont.truetype(beng_b,54),fill=slate)
 d.text((70,452),"Flights  \u2022  Hotels  \u2022  Packages  \u2022  eSIM  \u2022  Transfers",font=ImageFont.truetype(latin_sb,30),fill=slate2)

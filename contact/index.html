@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact — Cheap Ticket Finder BD</title>
+    <title>Contact — Cheap Ticket Finder</title>
     <meta name="description" content="Contact Cheap Ticket Finder to report a wrong link, an expired offer, or a question about a route guide.">
     <link rel="canonical" href="https://cheapticketfinder.site/contact">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Cheap Ticket Finder">
     <meta property="og:url" content="https://cheapticketfinder.site/contact">
-    <meta property="og:title" content="Contact — Cheap Ticket Finder BD">
+    <meta property="og:title" content="Contact — Cheap Ticket Finder">
     <meta property="og:description" content="Contact Cheap Ticket Finder to report a wrong link, an expired offer, or a question about a route guide.">
     <meta property="og:image" content="https://cheapticketfinder.site/assets/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:alt" content="Cheap Ticket Finder BD">
+    <meta property="og:image:alt" content="Cheap Ticket Finder">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://cheapticketfinder.site/assets/og-image.png">
-    <meta name="twitter:title" content="Contact — Cheap Ticket Finder BD">
+    <meta name="twitter:title" content="Contact — Cheap Ticket Finder">
     <meta name="twitter:description" content="Contact Cheap Ticket Finder to report a wrong link, an expired offer, or a question about a route guide.">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -87,7 +87,7 @@
                 btn.disabled=true; btn.textContent='Sending\u2026';
                 // Endpoint assembled at runtime so the inbox address is never written in this page.
                 var inbox=['jara','go','bd'].join('.')+'@'+['gmail','com'].join('.');
-                var data={name:name,contact:contact,subject_route:document.getElementById('cf-subject').value.trim(),message:msg,_subject:'New message \u2014 Cheap Ticket Finder BD contact form',_template:'table',_captcha:'false',_honey:''};
+                var data={name:name,contact:contact,subject_route:document.getElementById('cf-subject').value.trim(),message:msg,_subject:'New message \u2014 Cheap Ticket Finder contact form',_template:'table',_captcha:'false',_honey:''};
                 if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)){ data.email=contact; data._replyto=contact; }
                 fetch('https://formsubmit.co/ajax/'+inbox,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
                 .then(function(r){ if(!r.ok) throw new Error('send failed'); return r.json(); })
