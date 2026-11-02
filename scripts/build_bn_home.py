@@ -208,8 +208,8 @@ def main():
     head = head.replace('src="js/', 'src="/js/')
 
     # --- body: switch link in the top bar becomes "English"
-    body = body.replace('<a href="/bn/" hreflang="bn" lang="bn" title="বাংলা সংস্করণ">বাংলা</a>',
-                        '<a href="/" hreflang="en" lang="en" title="English version">English</a>', 1)
+    body = body.replace('<nav class="top-bar" aria-label="Contact">\n',
+                        '<nav class="top-bar" aria-label="Contact">\n                <a href="/" hreflang="en" lang="en" title="English version">English</a>\n', 1)
     # The Bangla-guide chips on the English homepage are redundant here (the main chips already go to /bn/)
     body = re.sub(r'\n\s*<p class="[^"]*" lang="bn">বাংলায় রুট গাইড:</p>\s*<nav [^>]*lang="bn">.*?</nav>', "", body, count=1, flags=re.S)
 

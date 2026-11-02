@@ -17,7 +17,8 @@ n = 0
 for bn in glob.glob('bn/*/index.html'):
     slug = bn.split('/')[1]; en = f'{slug}/index.html'
     if not os.path.exists(en): continue
-    for f, cur in ((en, 'en'), (bn, 'bn')):
+    # English pages stay English-only (no visible Bangla switch); Bangla pages link back to English.
+    for f, cur in ((bn, 'bn'),):
         t = open(f, encoding='utf-8').read()
         if MARK in t: continue
         t2, k = logo.subn(lambda m: m.group(1) + '\n            ' + pill(f'/{slug}/', f'/bn/{slug}/', cur), t, count=1)
@@ -27,11 +28,4 @@ for bn in glob.glob('bn/*/index.html'):
 f = 'bn/index.html'; t = open(f, encoding='utf-8').read()
 if MARK not in t:
     t = t.replace('<a class="lang" href="/" hreflang="en" lang="en">English version</a>', pill('/', '/bn/', 'bn'), 1); open(f, 'w', encoding='utf-8').write(t); n += 1
-# English homepage: link in top bar + hreflang
-f = 'index.html'; t = open(f, encoding='utf-8').read()
-if 'href="/bn/" hreflang="bn"' not in t:
-    t = t.replace('<nav class="top-bar" aria-label="Contact">\n', '<nav class="top-bar" aria-label="Contact">\n                <a href="/bn/" hreflang="bn" lang="bn" title="বাংলা সংস্করণ">বাংলা</a>\n', 1)
-    t = t.replace('<link rel="alternate" hreflang="en" href="https://cheapticketfinder.site/">',
-                  '<link rel="alternate" hreflang="en" href="https://cheapticketfinder.site/">\n    <link rel="alternate" hreflang="bn" href="https://cheapticketfinder.site/bn/">', 1)
-    open(f, 'w', encoding='utf-8').write(t); n += 1
 print('updated', n, 'files')

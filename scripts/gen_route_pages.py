@@ -281,7 +281,6 @@ def en_page(r, others):
     for q, a in faqs:
         secs += [f'            <h3 class="font-bold text-white">{html.escape(q)}</h3>', p(html.escape(a))]
     secs += [p(f'<a class="text-sky-400 underline font-bold" href="/">→ Check Dhaka to {html.escape(city)} dates in the search tool</a>'),
-             f'            <p lang="bn">বাংলায় পড়ুন: <a class="text-sky-400 underline" href="/bn/{r["slug"]}/">ঢাকা থেকে {r["city_bn"]} সস্তা টিকিট</a></p>',
              "            " + book_nav("en"),
              p("More route guides: " + " · ".join(f'<a class="text-sky-400 underline" href="/{o["slug"]}/">Dhaka to {html.escape(o["city"])}</a>' for o in others))]
     sub = f"{r['code']} — how to check the cheapest real fare for your dates. Last updated: {UPDATED_EN}. No live fare is published on this page."
