@@ -330,3 +330,6 @@ if __name__ == "__main__":
             write(f"{r['slug']}/index.html", en_page(r, en_others))
         write(f"bn/{r['slug']}/index.html", bn_page(r, others))
     print("generated", sum(r["new"] for r in ROUTES), "EN +", len(ROUTES), "BN pages")
+
+    # keep the Bangla/English switch on regenerated pages
+    os.system("python3 scripts/add_lang_switch.py")

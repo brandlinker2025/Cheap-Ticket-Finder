@@ -22,3 +22,4 @@
 - [Flight search](https://cheapticketfinder.site/): flexible-date search with partner results
 - [Airline offers](https://cheapticketfinder.site/offers/): official airline promotions only
 - [About](https://cheapticketfinder.site/about) · [Disclosure](https://cheapticketfinder.site/disclosure) · [Contact](https://cheapticketfinder.site/contact)
+- [বাংলা হোম (Bangla homepage)](https://cheapticketfinder.site/bn/)
