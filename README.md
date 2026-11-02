@@ -50,3 +50,9 @@ SEO files are live-ready in this repo: `/robots.txt`, `/sitemap.xml`, canonical/
 5. Use **URL Inspection → Request indexing** for `/` and the six route-guide pages. This asks Google to crawl; it does not guarantee ranking or timing.
 
 No ranking is promised: indexing can take days–weeks and positions depend on Google, competition and fresh, honest content.
+
+## Bangla homepage
+
+`bn/index.html` is generated from `index.html` (same search, tabs and buttons; Bangla text). After any change to `index.html`, run:
+
+    python3 scripts/build_bn_home.py

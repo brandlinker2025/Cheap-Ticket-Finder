@@ -1,20 +1,54 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
+    <script>
+    /* Stale deep link guard: Travelpayouts rejects a past departure date (search/start returns 400)
+       and its widget then spins on "Searching at providers" forever. Runs before the widget loader. */
+    (function () {
+        try {
+            var q = new URLSearchParams(location.search), fs = q.get('flightSearch');
+            if (!fs) return;
+            var m = /^[a-z]{3}(\d{2})(\d{2})/i.exec(fs);
+            if (!m) return;
+            var d = +m[1], mo = +m[2];
+            if (d < 1 || d > 31 || mo < 1 || mo > 12) return;
+            var now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var dep = new Date(now.getFullYear(), mo - 1, d);
+            var ageDays = (today - dep) / 86400000;
+            if (ageDays <= 0 || ageDays > 183) return;
+            ['flightSearch', 'origin_airports', 'destination_airports'].forEach(function (k) { q.delete(k); });
+            var rest = q.toString();
+            history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + '#wl-flight-results');
+            window.__ctfStaleDate = dep.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        } catch (e) {}
+    })();
+    </script>
+    <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
+      (function () {
+          var script = document.createElement("script");
+          script.async = 1;
+          script.setAttribute("data-cmp-ab","2");
+          script.src = 'https://tp-em.com/NTg3NDQ3.js?t=587447';
+          document.head.appendChild(script);
+      })();
+    </script>
+    <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1">
+(function(){var script=document.createElement("script");script.async=1;script.type="module";script.src="https://tpwdg.com/wl_web/main.js?wl_id=23606";document.head.appendChild(script);})();
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>সস্তা বিমান টিকিট — বাংলাদেশ থেকে দাম তুলনা করুন | Cheap Ticket Finder</title>
-    <meta name="description" content="বাংলাদেশ থেকে সস্তা বিমান টিকিট খুঁজুন: নমনীয় তারিখে ঢাকা থেকে ব্যাংকক, দুবাই, কলকাতা, জেদ্দা, লন্ডনসহ জনপ্রিয় রুটের ভাড়া পার্টনার সাইটে তুলনা করুন। আমরা টিকিট বিক্রি করি না, বানানো দামও দেখাই না।">
+    <meta name="description" content="বাংলাদেশ থেকে সস্তা বিমান টিকিট খুঁজুন: রুট ও তারিখ দিয়ে পার্টনার সাইটের লাইভ দাম তুলনা করুন। আমরা টিকিট বিক্রি করি না, বানানো দামও দেখাই না।">
     <meta name="robots" content="index, follow">
+    <meta name="application-name" content="Cheap Ticket Finder">
+    <meta name="deploy" content="gf-nearby-20260902">
+    <meta name='impact-site-verification' value='4af29459-fcb3-4f17-a171-999b80bb91e2'>
     <link rel="canonical" href="https://cheapticketfinder.site/bn/">
-    <link rel="alternate" hreflang="en" href="https://cheapticketfinder.site/">
-    <link rel="alternate" hreflang="bn" href="https://cheapticketfinder.site/bn/">
-    <link rel="alternate" hreflang="x-default" href="https://cheapticketfinder.site/">
-    <meta property="og:type" content="website">
     <meta property="og:site_name" content="Cheap Ticket Finder">
+    <meta property="og:type" content="website">
     <meta property="og:url" content="https://cheapticketfinder.site/bn/">
     <meta property="og:title" content="সস্তা বিমান টিকিট — বাংলাদেশ থেকে দাম তুলনা করুন">
-    <meta property="og:description" content="নমনীয় তারিখে ভাড়া তুলনা করুন, ব্যাগেজসহ মোট দাম দেখে বুক করুন। কোনো বানানো দাম নেই।">
+    <meta property="og:description" content="বাংলাদেশ থেকে সস্তা বিমান টিকিট খুঁজুন: রুট ও তারিখ দিয়ে পার্টনার সাইটের লাইভ দাম তুলনা করুন। আমরা টিকিট বিক্রি করি না, বানানো দামও দেখাই না।">
     <meta property="og:image" content="https://cheapticketfinder.site/assets/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -23,20 +57,302 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://cheapticketfinder.site/assets/og-image.png">
     <meta name="twitter:title" content="সস্তা বিমান টিকিট — বাংলাদেশ থেকে দাম তুলনা করুন">
-    <meta name="twitter:description" content="নমনীয় তারিখে ভাড়া তুলনা করুন, ব্যাগেজসহ মোট দাম দেখে বুক করুন। কোনো বানানো দাম নেই।">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "bn", "mainEntity": [{"@type": "Question", "name": "Cheap Ticket Finder কি টিকিট বিক্রি করে?", "acceptedAnswer": {"@type": "Answer", "text": "না। আমরা আপনার রুট ও তারিখ দিয়ে সার্চ তৈরি করে দিই। টিকিট কেনা ও পেমেন্ট হয় এয়ারলাইন বা বুকিং সাইটে।"}}, {"@type": "Question", "name": "সাইটে কি আসল দাম দেখায়?", "acceptedAnswer": {"@type": "Answer", "text": "আমরা নিজেরা কোনো দাম বানাই না। অন-সাইট ফ্লাইট সার্চে পার্টনার সাইটগুলোর দাম দেখায়; চূড়ান্ত দাম বুকিং সাইটে নিশ্চিত হয়।"}}, {"@type": "Question", "name": "কোন দিনে টিকিট সবচেয়ে সস্তা?", "acceptedAnswer": {"@type": "Answer", "text": "কোনো নির্দিষ্ট দিন সবচেয়ে কম দামের নিশ্চয়তা দেয় না। তারিখ নমনীয় রাখুন, আশেপাশের কয়েকটি দিন তুলনা করুন এবং ব্যাগেজসহ মোট দাম দেখুন।"}}, {"@type": "Question", "name": "এই সাইট ব্যবহার করতে কি টাকা লাগে?", "acceptedAnswer": {"@type": "Answer", "text": "না, সম্পূর্ণ বিনা খরচে। কিছু লিংক অ্যাফিলিয়েট লিংক; সেখান থেকে বুক করলে আমরা ছোট কমিশন পেতে পারি, আপনার দাম বাড়ে না।"}}]}</script>
+    <meta name="twitter:description" content="বাংলাদেশ থেকে সস্তা বিমান টিকিট খুঁজুন: রুট ও তারিখ দিয়ে পার্টনার সাইটের লাইভ দাম তুলনা করুন। আমরা টিকিট বিক্রি করি না, বানানো দামও দেখাই না।">
+    <link rel="alternate" hreflang="en" href="https://cheapticketfinder.site/">
+    <link rel="alternate" hreflang="bn" href="https://cheapticketfinder.site/bn/">
+    <link rel="alternate" hreflang="x-default" href="https://cheapticketfinder.site/">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://cheapticketfinder.site/#organization", "name": "Cheap Ticket Finder", "alternateName": "Cheap Ticket Finder", "url": "https://cheapticketfinder.site/", "logo": "https://cheapticketfinder.site/icon-v2-512.png", "sameAs": ["https://www.facebook.com/CheapTFBD"]}, {"@type": "WebSite", "@id": "https://cheapticketfinder.site/#website", "name": "Cheap Ticket Finder", "alternateName": "Cheap Ticket Finder", "url": "https://cheapticketfinder.site/", "inLanguage": "bn", "publisher": {"@id": "https://cheapticketfinder.site/#organization"}, "description": "Flexible-date cheap flight ticket search helper for Bangladesh-based travellers. This site does not sell tickets; the final price is shown by the provider."}]}</script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/assets/luxury.css?v=clear-20261019">
+    <link rel="stylesheet" href="/assets/luxury.css?v=compact-20261019">
     <style>
-        .hero-glow { background: radial-gradient(circle at 20% 20%, rgba(56,189,248,.28), transparent 32%), radial-gradient(circle at 80% 10%, rgba(246,222,156,.55), transparent 30%), linear-gradient(165deg,#7dd3fc,#a5f3fc 26%,#99f6e4 52%,#fde68a 82%,#fed7aa); }
-        .glass-card { background: linear-gradient(155deg,#bae6fd,#a5f3fc 30%,#99f6e4 58%,#fde68a 88%,#fed7aa); border: 1px solid rgba(201,162,75,.38); box-shadow: 0 16px 38px rgba(3,105,161,.12); color:#1E293B; }
-        .deal-chip { border: 1px solid rgba(201,162,75,.48); background: linear-gradient(90deg, rgba(246,222,156,.50), rgba(224,242,254,.75)); color:#92400E; }
-        .cta { display:inline-block; background:#0c4a6e; color:#fff !important; font-weight:800; padding:.8rem 1.4rem; border-radius:14px; text-decoration:none; box-shadow:0 8px 20px rgba(12,74,110,.25); }
-        .cta:hover { background:#075985; }
-        .svc { display:flex; align-items:center; gap:.6rem; background:rgba(255,255,255,.7); border:1px solid rgba(201,162,75,.38); border-radius:12px; padding:.7rem .8rem; text-decoration:none; color:#0c4a6e; font-weight:700; }
-        .svc i { width:1.2rem; text-align:center; color:#0369a1; }
-        .lang { display:inline-block; margin-top:.4rem; font-size:12px; color:#0369a1; text-decoration:underline; }
-        body { font-family: system-ui, "Noto Sans Bengali", Arial, sans-serif; }
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background-color: #38bdf8; border-radius: 4px; }
+        .custom-scroll::-webkit-scrollbar-track { background-color: #E0F2FE; }
+        .sk-day {
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        @media (max-width: 640px) { .sk-day { height: 36px; font-size: 0.875rem; } }
+        .sk-day:hover:not(.empty) {
+            background-color: #E0F2FE;
+            border: 1px solid #38bdf8;
+        }
+        .sk-day-selected-dept {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+            font-weight: bold;
+        }
+        .sk-day-selected-ret {
+            background-color: #059669 !important;
+            color: #ffffff !important;
+            font-weight: bold;
+        }
+        .sk-day-in-range {
+            background-color: rgba(2, 132, 199, 0.15) !important;
+            border-radius: 0 !important;
+        }
+        @keyframes radar-scan {
+            0% { transform: scale(0.98); opacity: 0.85; }
+            50% { transform: scale(1.01); opacity: 1; }
+            100% { transform: scale(0.98); opacity: 0.85; }
+        }
+        .radar-scanning { animation: radar-scan 1s infinite ease-in-out; }
+        .hero-glow {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(14,165,233,.18), transparent 30%),
+                radial-gradient(circle at 80% 10%, rgba(16,185,129,.12), transparent 28%),
+                radial-gradient(circle at 50% 90%, rgba(168,85,247,.10), transparent 30%);
+        }
+        .glass-card {
+            background: linear-gradient(155deg,#e7f6fd,#d4eefc 55%,#c9ebe8);
+            border: 1px solid rgba(201,162,75,.38);
+            box-shadow: 0 16px 38px rgba(3,105,161,.12);
+        }
+        .deal-chip {
+            border: 1px solid rgba(56,189,248,.22);
+            background: rgba(14,165,233,.08);
+        }
+        .sk-day-return-ok { box-shadow: inset 0 0 0 1px #7ec8ea; }
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #e7f6fd;
+            color: #111111;
+            border: 1px solid #9fd4f2;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 12px;
+            padding: .55rem .9rem;
+        }
+        #returnDateField {
+            color: #111111;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            font-weight: 800;
+            font-size: 14px;
+            padding: 0;
+            text-align: left;
+            width: 100%;
+            line-height: 1.3;
+            white-space: normal;
+        }
+        #returnDateField:disabled { opacity: 1; cursor: default; color: #111111; }
+
+        /* Homepage only: Trip.com-style search card. Yellow/orange becomes pale sky. Text stays black. */
+        body.hero-glow{
+            color:#111111 !important;
+            background:
+                radial-gradient(900px 520px at 8% -6%, rgba(56,189,248,.45), transparent 62%),
+                radial-gradient(860px 500px at 92% -4%, rgba(186,230,253,.85), transparent 60%),
+                radial-gradient(760px 560px at 52% 108%, rgba(125,211,252,.40), transparent 62%),
+                linear-gradient(168deg,#e7f6fd 0%,#d4eefc 24%,#c9ebe8 52%,#e8f7ff 100%) !important;
+        }
+        body.hero-glow header h1,
+        body.hero-glow header h1 i,
+        body.hero-glow h2,
+        body.hero-glow h2 i,
+        body.hero-glow h3,
+        body.hero-glow p,
+        body.hero-glow label,
+        body.hero-glow .text-white,
+        body.hero-glow .text-slate-200,
+        body.hero-glow .text-slate-300,
+        body.hero-glow .text-slate-400,
+        body.hero-glow .text-slate-500{
+            color:#111111 !important;
+            -webkit-text-fill-color:#111111 !important;
+            background:none !important;
+            filter:none !important;
+        }
+        body.hero-glow header::before{display:none !important}
+        .site-header{position:sticky !important;top:0;z-index:40;background:#ffffff !important;border-bottom:1px solid #d7eef8;overflow:visible}
+        .site-header.is-scrolled{box-shadow:0 2px 14px rgba(15,23,42,.08)}
+        .site-header-inner{max-width:72rem;margin:0 auto;padding:.45rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;min-height:56px}
+        .site-header h1{margin:0;font-size:1.05rem !important;line-height:1.15;font-weight:800;letter-spacing:-.02em;white-space:nowrap;color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:none !important;filter:none !important}
+        .top-bar{display:flex;align-items:center;gap:.7rem;margin:0}
+        .top-bar a{display:inline-flex;align-items:center;color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:transparent !important;border:0 !important;border-radius:0;font-weight:800;font-size:13px;line-height:1.2;padding:.35rem 0;text-decoration:none;min-height:32px}
+        .home-intro{margin:.65rem 0 0;color:#111111 !important;font-size:13px;line-height:1.45}
+        .hero-photo{background:#7ec8ea url("/assets/hero-sea.jpg") center 68%/cover no-repeat;padding:.15rem 0 2.5rem}
+        .search-stage{position:relative;max-width:1040px;margin:0 auto}
+        .trip-tabs{position:absolute;left:50%;top:100%;transform:translate(-50%,-42%);z-index:45;display:flex;justify-content:center;gap:.1rem;margin:0;background:#ffffff;border-radius:18px;box-shadow:0 10px 28px rgba(15,23,42,.14);padding:.35rem .5rem .15rem;max-width:calc(100% - 16px);overflow:visible;border:0;scrollbar-width:none}
+        .trip-tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:0 0 auto;min-width:78px;background:transparent !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;font-weight:700;font-size:11px;line-height:1.15;padding:.28rem .4rem .32rem;border:0 !important;border-bottom:2px solid transparent !important;border-radius:0 !important;box-shadow:none !important;white-space:nowrap;cursor:pointer;min-height:48px}
+        .trip-tabs button i{font-size:16px;color:#38bdf8 !important;-webkit-text-fill-color:#38bdf8 !important;background:none !important}
+        .trip-tabs button.is-active{border-bottom-color:#38bdf8 !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important}
+        .trip-tabs button.is-active i{color:#0284c7 !important;-webkit-text-fill-color:#0284c7 !important}
+        .search-panel{background:#ffffff;border:0;border-radius:22px;box-shadow:0 18px 46px rgba(15,23,42,.18);padding:2.35rem 18px 16px;margin:0}
+        .home-panel[hidden]{display:none !important}
+        .home-links{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
+        .trip-types{display:flex;flex-wrap:wrap;align-items:center;gap:1.15rem;margin:0 0 12px}
+        .trip-types button{position:relative;flex:0 1 auto !important;background:transparent !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;border:0 !important;box-shadow:none !important;border-radius:0 !important;min-height:28px;padding:0 0 0 20px !important;font-weight:700;font-size:13px}
+        .trip-types button::before{content:"";position:absolute;left:0;top:50%;width:14px;height:14px;transform:translateY(-50%);border:2px solid #9fd4f2;border-radius:50%;background:#ffffff;box-shadow:none !important}
+        #btnRoundTrip.bg-sky-500,#btnOneWay.bg-emerald-500,#btnMultiCity.bg-amber-500,
+        #btnRoundTrip.bg-sky-500 *,#btnOneWay.bg-emerald-500 *,#btnMultiCity.bg-amber-500 *{background:transparent !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;box-shadow:none !important}
+        #btnRoundTrip.bg-sky-500::before,#btnOneWay.bg-emerald-500::before,#btnMultiCity.bg-amber-500::before{border-color:#38bdf8;background:radial-gradient(circle,#38bdf8 0 4px,#ffffff 5px)}
+        .trip-fields{display:flex;flex-wrap:nowrap;align-items:stretch;gap:8px;background:transparent;border:0;border-radius:0;overflow:visible}
+        .trip-seg{flex:1 1 0;min-width:0;min-height:72px;padding:8px 12px;border:1px solid #c5e4f4;border-radius:8px;background:#ffffff;display:flex;flex-direction:column;justify-content:center}
+        .trip-seg label{display:block;margin:0 0 2px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#111111 !important}
+        .seg-value{font-size:14px;font-weight:800;color:#111111;line-height:1.3}
+        .trip-fields > #searchBtn{flex:0 0 156px;width:156px;min-height:72px;margin:0;border-radius:8px !important;align-self:stretch;font-size:16px}
+        .luxury-search-card.glass-card{background:transparent !important;border:0 !important;box-shadow:none !important;color:#111111 !important;padding:0 !important}
+        .luxury-search-card::before{display:none !important}
+        .luxury-search-card label{color:#111111 !important;font-weight:800}
+        .trip-fields [onclick^="openLocationModal"]{background:transparent !important;color:#111111 !important;border:0 !important;box-shadow:none !important;padding:0 !important;min-height:0 !important;border-radius:0 !important}
+        #originDisplay,#destDisplay,#stopoverDisplay{color:#111111 !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;font-size:14px !important}
+        #departDateField,#returnDateField,#returnDateField:disabled{color:#111111 !important;background:transparent !important;border:0 !important;box-shadow:none !important;opacity:1;padding:0 !important;min-height:0 !important;border-radius:0 !important;font-weight:800;font-size:14px;text-align:left;width:100%}
+        #selectedTripLabel{color:#111111 !important;background:transparent !important;border:0 !important;padding:0 !important;font-size:14px !important;font-weight:800}
+        #originDisplay.is-placeholder,#destDisplay.is-placeholder,#stopoverDisplay.is-placeholder,
+        #selectedTripLabel.is-placeholder,#returnDateField.is-placeholder{color:#64748b !important;-webkit-text-fill-color:#64748b !important;font-weight:600 !important}
+        #searchBtn,#searchBtn *,#searchBtn:hover{background:#c5e8f8 !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;border-color:#7ec8ea !important;box-shadow:none !important}
+        #calendarCard,#calendarCard h3,#departMonthLabel,.sk-weekdays,.sk-weekdays div,#calendarHint,#calendarPickBadge{color:#111111 !important}
+        #calendarCard,#calendarGridWrapper > div{background:#f7fcff !important;border-color:#d3ebf8 !important}
+        .sk-day,.sk-day span{color:#111111 !important}
+        .sk-day.empty{opacity:1 !important;color:#334155 !important}
+        .sk-day-selected-dept,.sk-day-selected-ret,.sk-day-selected-dept span,.sk-day-selected-ret span{background:#9fd4f2 !important;color:#111111 !important}
+        .sk-day-in-range{background:#e7f6fd !important}
+        #calendarGridWrapper button,#calendarGridWrapper button i{color:#111111 !important;background:#e7f6fd !important}
+        .home-btn{background:#e7f6fd !important;color:#111111 !important}
+        .cta-affiliate,.deal-chip,.luxury-trust-row span,#googleBookBar a,#googleBookBar a *,button.bg-amber-500,button.bg-amber-500 *{
+            background:#d4eefc !important;color:#111111 !important;border-color:#9fd4f2 !important;box-shadow:none !important
+        }
+        body.hero-glow h2,body.hero-glow h2 i{color:#0c4a6e !important;-webkit-text-fill-color:#0c4a6e !important}
+        #hotel-booking,#tour-package,#travel-sim,#airport-transport,#air-ticket,#wl-flight-results{scroll-margin-top:72px}
+        #wl-flight-results{position:relative}
+        .tpwl-search-slot{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0,0,0,0) !important;clip-path:inset(50%) !important;white-space:nowrap !important;border:0 !important}
+        /* T-107: tabs sit in the header flow so the sticky bar never covers page text */
+        .trip-tabs{position:static !important;transform:none !important;margin:0 auto .35rem;box-shadow:0 4px 14px rgba(15,23,42,.08);width:max-content}
+        .search-panel{padding-top:16px}
+        .hero-photo{padding-top:1rem}
+        .pax-seg{position:relative}
+        .pax-toggle{background:transparent;border:0;padding:0;text-align:left;cursor:pointer;width:100%}
+        .pax-panel{position:absolute;z-index:60;top:100%;right:0;margin-top:6px;width:260px;background:#fff;border:1px solid #c5e4f4;border-radius:12px;box-shadow:0 12px 30px rgba(15,23,42,.18);padding:12px}
+        .pax-panel[hidden]{display:none}
+        .pax-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px;font-weight:700;color:#111}
+        .pax-row small{display:block;font-weight:500;color:#475569;font-size:11px}
+        .pax-row button{width:30px;height:30px;border-radius:50%;border:1px solid #9fd4f2;background:#e7f6fd;font-weight:800;color:#111}
+        .pax-row b{display:inline-block;min-width:26px;text-align:center}
+        .pax-cabin{display:block;margin-top:8px;font-size:12px !important;font-weight:800;color:#111;text-transform:none !important;letter-spacing:0 !important}
+        .pax-cabin select{display:block;width:100%;margin-top:4px;padding:6px;border:1px solid #c5e4f4;border-radius:8px;background:#fff;color:#111}
+        .pax-done{margin-top:10px;width:100%;padding:8px;border-radius:8px;background:#c5e8f8;font-weight:800;color:#111}
+        .bd-card{display:flex;flex-direction:column;gap:4px;flex:1 1 220px;padding:12px 14px;border:1px solid #c5e4f4;border-radius:12px;background:#f7fcff;color:#111;text-decoration:none;font-size:13px}
+        .bd-card span{font-size:12px;color:#334155}
+        #hotel-booking,#tour-package,#travel-sim,#airport-transport,#bd-transport,#air-ticket,#wl-flight-results{scroll-margin-top:130px}
+        @media (max-width:860px){
+            .site-header{position:relative !important}
+            #hotel-booking,#tour-package,#travel-sim,#airport-transport,#bd-transport,#air-ticket,#wl-flight-results{scroll-margin-top:12px}
+            .site-header-inner{min-height:0;padding:.45rem .7rem}
+            .site-header h1{font-size:.98rem !important}
+            .top-bar a{font-size:12px}
+            .hero-photo{padding:.1rem 0 1.5rem}
+            .trip-tabs{display:grid !important;grid-template-columns:repeat(4,minmax(0,1fr));width:auto;max-width:calc(100% - 12px);overflow:visible}
+            .trip-tabs button{min-width:0;font-size:10px;padding:.2rem .2rem .25rem;white-space:normal;text-align:center}
+            .search-panel{padding:14px 12px 12px}
+            .pax-panel{left:0;right:auto;width:100%}
+            .trip-fields{flex-direction:column}
+            .trip-fields > #searchBtn{flex:1 1 auto;width:100%;min-height:52px}
+            .date-popover-backdrop{background:rgba(15,23,42,.28)}
+            .date-popover{left:0 !important;right:0 !important;top:auto !important;bottom:0 !important;width:100% !important;max-width:none;border-radius:18px 18px 0 0;max-height:min(78vh,calc(100dvh - 128px));padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+        }
+        /* Date popover sits under the field that opened it. The sticky header stays above it. */
+        .date-popover{position:fixed;z-index:30;width:min(720px,calc(100vw - 16px));background:#fff;border:1px solid #cfe8f6;border-radius:18px;box-shadow:0 18px 42px rgba(15,23,42,.16);max-height:min(78vh,calc(100dvh - 96px));overflow:auto}
+        .date-popover[hidden],.date-popover-backdrop[hidden]{display:none !important}
+        .date-popover-backdrop{position:fixed;inset:0;z-index:29;background:transparent}
+        #calendarCard.cal-pop{position:relative;left:auto;right:auto;top:auto;width:auto;max-width:none;opacity:1;visibility:visible;transform:none;margin:0 !important;padding:14px 14px 12px;border-radius:18px !important;border:0 !important;background:#f7fcff !important;box-shadow:none}
+        .trip-seg.is-date-open{border-color:#38bdf8;box-shadow:0 0 0 2px rgba(56,189,248,.28)}
+        .cal-toolbar{padding-right:34px}
+        #calendarCard > .flex{padding-right:34px}
+        .cal-close{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:999px;background:#e7f6fd;color:#111;display:flex;align-items:center;justify-content:center}
+        .cal-close:hover{background:#d4eefc}
+        #calendarGridWrapper{max-width:none !important;width:100% !important;background:transparent !important;border:0 !important;padding:0 !important}
+        #calendarGridWrapper .cal-done{width:auto !important;height:auto !important;display:inline-flex;align-items:center}
+        .cal-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:2px 0 6px}
+        .cal-nav{display:flex;gap:6px}
+        #calendarGridWrapper .cal-nav-btn{width:36px;height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:#e7f6fd !important;border:1px solid #cfe8f6;transition:background .15s,transform .15s}
+        #calendarGridWrapper .cal-nav-btn:hover{background:#d4eefc !important;transform:translateY(-1px)}
+        .cal-months{display:grid;grid-template-columns:1fr;gap:22px}
+        .cal-month-2{display:none}
+        @media (min-width:760px){.cal-months{grid-template-columns:1fr 1fr}.cal-month-2{display:block}}
+        .cal-month-label{text-align:center;font-weight:800;font-size:14px;color:#0c4a6e !important;margin-bottom:6px;letter-spacing:.01em}
+        .cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:11px;font-weight:700;color:#64748b !important;margin-bottom:4px}
+        .cal-weekdays div{color:#64748b !important}
+        .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);row-gap:3px}
+        .cal-anim-next .cal-grid,.cal-anim-next .cal-month-label{animation:calInNext .26s ease}
+        .cal-anim-prev .cal-grid,.cal-anim-prev .cal-month-label{animation:calInPrev .26s ease}
+        @keyframes calInNext{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+        @keyframes calInPrev{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+        #calendarCard .sk-day{height:40px !important;min-height:40px !important;max-height:none !important;border-radius:10px;border:0 !important;font-size:13px;position:relative}
+        #calendarCard .sk-day span{font-size:13px !important;font-weight:600}
+        #calendarCard .sk-day:hover:not(.empty):not(.sk-day-selected-dept):not(.sk-day-selected-ret){background:#e0f2fe !important;box-shadow:inset 0 0 0 1px #7ec8ea}
+        #calendarCard .sk-day.cal-pad{visibility:hidden}
+        #calendarCard .sk-day.empty{color:#94a3b8 !important;cursor:not-allowed}
+        #calendarCard .sk-day.empty span{color:#94a3b8 !important;text-decoration:line-through;text-decoration-color:rgba(148,163,184,.5)}
+        #calendarCard .sk-day-today:not(.sk-day-selected-dept):not(.sk-day-selected-ret){box-shadow:inset 0 0 0 1.5px #0284c7}
+        #calendarCard .sk-day-today::after{content:"";position:absolute;bottom:5px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:#0284c7}
+        #calendarCard .sk-day-in-range{background:#e7f6fd !important;border-radius:0 !important}
+        #calendarCard .sk-day-selected-dept,#calendarCard .sk-day-selected-ret{background:#0284c7 !important;box-shadow:0 4px 12px rgba(2,132,199,.3)}
+        #calendarCard .sk-day-selected-dept span,#calendarCard .sk-day-selected-ret span{background:transparent !important;color:#fff !important;font-weight:800}
+        #calendarCard .sk-day-selected-ret{background:#0369a1 !important}
+        #calendarCard .cal-range-start{border-radius:10px 0 0 10px !important}
+        #calendarCard .cal-range-end{border-radius:0 10px 10px 0 !important}
+        #calendarCard .sk-day-return-ok{box-shadow:none}
+        .cal-legend{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid #d3ebf8;font-size:11px;font-weight:700;color:#334155}
+        .cal-legend span{display:inline-flex;align-items:center;gap:5px;color:#334155 !important}
+        .cal-legend .lg{width:10px;height:10px;border-radius:3px;display:inline-block}
+        .lg-d{background:#0284c7}.lg-r{background:#0369a1}.lg-t{box-shadow:inset 0 0 0 1.5px #0284c7}
+        #calendarGridWrapper .cal-done{margin-left:auto;padding:8px 18px;min-height:36px;border-radius:999px;background:#c5e8f8 !important;border:1px solid #7ec8ea;font-weight:800;font-size:13px}
+        @media (max-width:640px){#calendarCard.cal-pop{padding:12px 10px 10px}#calendarCard .sk-day{height:44px !important;min-height:44px !important}#calendarCard .sk-day span{font-size:14px !important}}
+        @media (prefers-reduced-motion:reduce){#calendarCard.cal-pop,#calendarCard.cal-open{transition:none}.cal-anim-next .cal-grid,.cal-anim-prev .cal-grid,.cal-anim-next .cal-month-label,.cal-anim-prev .cal-month-label{animation:none}}
+
+        #originDisplay:not(.is-placeholder),#destDisplay:not(.is-placeholder),#stopoverDisplay:not(.is-placeholder){display:flex !important;align-items:center;gap:6px;min-width:0;max-width:100%}
+        #originDisplay .ap-name,#destDisplay .ap-name,#stopoverDisplay .ap-name{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        #originDisplay .ap-code,#destDisplay .ap-code,#stopoverDisplay .ap-code{flex:0 0 auto;font-size:11px;font-weight:800;padding:1px 6px;border-radius:6px;background:#e0f2fe;color:#0369a1 !important}
+        .trip-seg,.trip-seg>div{min-width:0;max-width:100%}
+    
+        /* T-112: compact tab bar */
+        .trip-tabs{padding:.2rem .35rem !important;border-radius:14px !important;gap:0 !important}
+        .trip-tabs button{flex-direction:row !important;gap:6px !important;min-height:34px !important;min-width:0 !important;padding:.3rem .6rem !important;font-size:12px !important}
+        .trip-tabs button i{font-size:13px !important}
+        @media (max-width:860px){
+            .trip-tabs{display:flex !important;flex-wrap:nowrap !important;overflow-x:auto !important;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;justify-content:flex-start !important;width:auto !important;max-width:calc(100% - 12px) !important;scrollbar-width:none}
+            .trip-tabs::-webkit-scrollbar{display:none}
+            .trip-tabs button{flex:0 0 auto !important;white-space:nowrap !important;font-size:11.5px !important;min-height:32px !important;padding:.25rem .55rem !important}
+        }
+        /* T-112: brand logo */
+        .site-header h1 .brand-logo{display:block;height:84px;width:auto}
+        @media (max-width:860px){.site-header h1 .brand-logo{height:64px}}
+        /* T-112: scenic section cards */
+        .lux-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+        @media (max-width:860px){.lux-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+        .lux-card{position:relative;display:block;aspect-ratio:4/3;border-radius:18px;overflow:hidden;text-decoration:none;color:#fff;border:1px solid rgba(201,162,75,.55);box-shadow:0 14px 30px rgba(12,74,110,.16);background:#0c4a6e;cursor:pointer;padding:0;text-align:left;width:100%}
+        .lux-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+        .lux-card:hover img,.lux-card:focus-visible img{transform:scale(1.05)}
+        .lux-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,6,23,0) 35%,rgba(2,6,23,.78))}
+        .lux-card .lc-text{position:absolute;left:14px;right:14px;bottom:12px;z-index:1}
+        .lux-card b{display:block;font-family:Georgia,'Times New Roman',serif;font-size:19px;line-height:1.15;color:#fff;-webkit-text-fill-color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.45)}
+        .lux-card small{display:block;margin-top:3px;font-size:11.5px;color:#f3d58a;-webkit-text-fill-color:#f3d58a;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+        @media (max-width:480px){.lux-card b{font-size:15px}.lux-card small{font-size:10px}.lux-card .lc-text{left:10px;right:10px;bottom:9px}}
+        .lux-h2{font-family:Georgia,'Times New Roman',serif;font-size:22px;color:#0c4a6e;margin:0 0 4px}
+        .lux-sub{font-size:12px;color:#475569;margin:0 0 12px}
+        /* T-112: domestic form */
+        .dom-form{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:#fff;border:1px solid #c5e4f4;border-radius:16px;padding:14px}
+        .dom-form label{display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:800;color:#0c4a6e;text-transform:uppercase;letter-spacing:.05em;min-width:0}
+        .dom-form select,.dom-form input{padding:9px;border:1px solid #c5e4f4;border-radius:10px;background:#f7fcff;color:#111;font-size:14px;width:100%;min-width:0}
+        .dom-actions{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+        .dom-actions a{flex:1 1 160px;text-align:center;padding:10px 12px;border-radius:12px;font-weight:800;font-size:13px;text-decoration:none;background:#d4eefc;color:#111;border:1px solid #9fd4f2}
+        .dom-note{grid-column:1/-1;font-size:11px;color:#475569;margin:0;line-height:1.5}
+        @media (max-width:640px){.dom-form{grid-template-columns:1fr}}
+        /* T-112: partner logos */
+        .partner-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 22px;background:#fff;border:1px solid #e2eef5;border-radius:16px;padding:14px}
+        .partner-row img{height:26px;width:auto;max-width:110px;object-fit:contain}
+        .note-plain{display:block;width:100%;font-size:11px;color:#475569;margin-top:4px}
     </style>
     <link rel="stylesheet" href="/assets/tailwind.css?v=t107">
     <link rel="icon" href="/favicon-v2.ico?v=2" sizes="any">
@@ -45,89 +361,1969 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v2.png?v=2">
     <link rel="manifest" href="/site.webmanifest?v=2">
 </head>
-<body class="bg-amber-50 text-slate-800 min-h-screen pb-16 antialiased hero-glow">
-    <div class="max-w-3xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
-        <header class="text-center mb-6">
-            <a href="/bn/" aria-label="Cheap Ticket Finder বাংলা হোম" style="display:inline-block;margin-bottom:12px"><img class="ctf-logo" src="/assets/brand/ctf-logo-header.webp" srcset="/assets/brand/ctf-logo-header.webp 321w, /assets/brand/ctf-logo-header-2x.webp 642w, /assets/brand/ctf-logo-header-3x.webp 963w" sizes="241px" alt="Cheap Ticket Finder" width="321" height="112" style="display:block;height:64px;width:auto;max-width:100%"></a>
-            <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">বাংলাদেশ থেকে সস্তা বিমান টিকিট খুঁজুন</h1>
-            <p class="text-slate-400 text-sm sm:text-base mt-3 leading-6">রুট আর তারিখ দিন, পার্টনার সাইটগুলোর দাম এক জায়গায় তুলনা করুন। আমরা টিকিট বিক্রি করি না, কোনো বানানো দামও দেখাই না।</p>
-            <p class="mt-5"><a class="cta" href="/#wl-flight-results">✈️ এখনই টিকিটের দাম দেখুন</a></p>
-            <div class="ctf-lang-switch" style="margin:4px 0 10px;font-size:13px;font-weight:700"><span style="display:inline-flex;border:1px solid rgba(201,162,75,.6);border-radius:999px;overflow:hidden;background:rgba(255,255,255,.75)"><a href="/" hreflang="en" lang="en" style="padding:4px 12px;text-decoration:none;color:#0c4a6e">English</a><span style="padding:4px 12px;text-decoration:none;background:#0c4a6e;color:#fff" aria-current="true" lang="bn">বাংলা</span></span></div>
-        </header>
+<body class="bg-amber-50 text-slate-800 min-h-screen pb-16 antialiased selection:bg-sky-500 selection:text-white hero-glow">
 
-        <main class="space-y-6">
-            <section class="glass-card p-4 sm:p-6 rounded-2xl text-sm leading-6 text-slate-300" aria-labelledby="routes">
-                <h2 id="routes" class="text-base sm:text-lg font-bold text-sky-400 mb-3">জনপ্রিয় রুট — বাংলা গাইড</h2>
-                <nav class="flex flex-wrap gap-2 text-[13px]">
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-kolkata-cheap-ticket/">ঢাকা–কলকাতা</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-bangkok-cheap-ticket/">ঢাকা–ব্যাংকক</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-dubai-cheap-ticket/">ঢাকা–দুবাই</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-kuala-lumpur-cheap-ticket/">ঢাকা–কুয়ালালামপুর</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-singapore-cheap-ticket/">ঢাকা–সিঙ্গাপুর</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-jeddah-cheap-ticket/">ঢাকা–জেদ্দা (উমরাহ)</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-doha-cheap-ticket/">ঢাকা–দোহা</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-delhi-cheap-ticket/">ঢাকা–দিল্লি</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-kathmandu-cheap-ticket/">ঢাকা–কাঠমান্ডু</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-london-cheap-ticket/">ঢাকা–লন্ডন</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-coxs-bazar-ticket-price/">ঢাকা–কক্সবাজার</a>
-                    <a class="deal-chip rounded-lg px-3 py-2" href="/bn/dhaka-to-chattogram-ticket-price/">ঢাকা–চট্টগ্রাম</a>
-                </nav>
-            </section>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <h1><a href="/" aria-label="Cheap Ticket Finder হোম"><img class="brand-logo" src="/assets/brand/ctf-logo-header.webp" srcset="/assets/brand/ctf-logo-header.webp 321w, /assets/brand/ctf-logo-header-2x.webp 642w, /assets/brand/ctf-logo-header-3x.webp 963w" sizes="(max-width:860px) 184px, 241px" alt="Cheap Ticket Finder" width="321" height="112"></a></h1>
+            <nav class="top-bar" aria-label="Contact">
+                <a href="/" hreflang="en" lang="en" title="English version">English</a>
+                <a href="/offers/">অফার</a>
+                <a href="/contact">যোগাযোগ</a>
+                <a href="https://www.facebook.com/CheapTFBD" target="_blank" rel="noopener noreferrer">ফেসবুক</a>
+            </nav>
+        </div>
+        <nav class="trip-tabs" role="tablist" aria-label="ভ্রমণের বিভাগ">
+            <button type="button" class="is-active" role="tab" aria-selected="true" data-tab="air" onclick="showHomeTab('air')"><i class="fa-solid fa-plane" aria-hidden="true"></i>বিমান টিকিট</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="airlines" onclick="showHomeTab('airlines')"><i class="fa-solid fa-plane-departure" aria-hidden="true"></i>এয়ারলাইন</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="hotel" onclick="showHomeTab('hotel')"><i class="fa-solid fa-hotel" aria-hidden="true"></i>হোটেল বুকিং</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="tour" onclick="showHomeTab('tour')"><i class="fa-solid fa-suitcase-rolling" aria-hidden="true"></i>ট্যুর প্যাকেজ</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="sim" onclick="showHomeTab('sim')"><i class="fa-solid fa-sim-card" aria-hidden="true"></i>ট্রাভেল সিম</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="transfer" onclick="showHomeTab('transfer')"><i class="fa-solid fa-taxi" aria-hidden="true"></i>এয়ারপোর্ট ট্রান্সফার</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="bd" onclick="showHomeTab('bd')"><i class="fa-solid fa-bus" aria-hidden="true"></i>বাস / ট্রেন / লঞ্চ</button>
+        </nav>
+    </header>
 
-            <section class="glass-card p-4 sm:p-6 rounded-2xl text-sm leading-6 text-slate-300" aria-labelledby="how">
-                <h2 id="how" class="text-base sm:text-lg font-bold text-sky-400 mb-2">কম দামে টিকিট পাওয়ার ৩টি ধাপ</h2>
-                <ol class="list-decimal pl-5 space-y-1">
-                    <li><a class="text-sky-400 underline" href="/">সার্চ টুলে</a> From আর To দিন, ক্যালেন্ডারে নমনীয় তারিখ বাছুন।</li>
-                    <li>পার্টনার সাইটগুলোর দাম তুলনা করুন; আশেপাশের কয়েকটি দিনও দেখুন।</li>
-                    <li>পেমেন্টের আগে ব্যাগেজ, সিট ও পেমেন্ট ফি যোগ করে মোট দাম দেখুন, তারপর এয়ারলাইন বা বিশ্বস্ত সাইটে বুক করুন।</li>
-                </ol>
-                <p class="mt-2"><a class="text-sky-400 underline font-bold" href="/bn/how-to-find-cheap-air-tickets/">→ বিস্তারিত পড়ুন: কম দামে বিমান টিকিট পাওয়ার ৭টি ধাপ</a></p>
-            </section>
+    <!-- Hero photo: Unsplash photo-1518509562904-e7ef99cdcc86, bright tropical sea and sky. Unsplash Licence https://unsplash.com/license — saved at /assets/hero-sea.jpg, not hotlinked. -->
+    <div class="hero-photo">
+    <div class="max-w-6xl mx-auto px-3 sm:px-6">
+        <div class="search-stage">
+        <section class="search-panel" id="air-ticket">
+            <div class="home-panel" data-tab="air" role="tabpanel">
+            <div class="trip-types">
+                <button type="button" onclick="setTripType('round')" id="btnRoundTrip" class="bg-sky-500">রাউন্ড ট্রিপ</button>
+                <button type="button" onclick="setTripType('oneway')" id="btnOneWay">ওয়ান ওয়ে</button>
+                <button type="button" onclick="setTripType('multicity')" id="btnMultiCity">মাল্টি-সিটি</button>
+            </div>
 
-            <section class="glass-card p-4 sm:p-6 rounded-2xl text-sm leading-6 text-slate-300" aria-labelledby="svc">
-                <h2 id="svc" class="text-base sm:text-lg font-bold text-sky-400 mb-3">ভ্রমণের আরও যা লাগে</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <a class="svc" href="/hotels/"><i class="fa-solid fa-hotel" aria-hidden="true"></i>হোটেল বুকিং</a>
-                    <a class="svc" href="/packages/"><i class="fa-solid fa-umbrella-beach" aria-hidden="true"></i>ট্যুর প্যাকেজ ও অ্যাক্টিভিটি</a>
-                    <a class="svc" href="/esim/"><i class="fa-solid fa-sim-card" aria-hidden="true"></i>ট্রাভেল সিম (eSIM)</a>
-                    <a class="svc" href="/airport-transfer/"><i class="fa-solid fa-taxi" aria-hidden="true"></i>এয়ারপোর্ট ট্রান্সফার</a>
-                    <a class="svc" href="/travel-insurance/"><i class="fa-solid fa-shield-heart" aria-hidden="true"></i>ট্রাভেল ইন্স্যুরেন্স</a>
-                    <a class="svc" href="/offers/"><i class="fa-solid fa-tags" aria-hidden="true"></i>এয়ারলাইন অফার</a>
-                    <a class="svc" href="/medical/"><i class="fa-solid fa-hospital" aria-hidden="true"></i>কম খরচে বিদেশে চিকিৎসা</a>
-                    <a class="svc" href="/#domestic"><i class="fa-solid fa-bus" aria-hidden="true"></i>বাস / ট্রেন / লঞ্চ (দেশের ভেতরে)</a>
+            <div class="trip-fields">
+                <div class="trip-seg">
+                    <label>কোথা থেকে</label>
+                    <div onclick="openLocationModal('origin')" class="cursor-pointer">
+                        <span id="originDisplay" class="font-semibold is-placeholder">শহর বা এয়ারপোর্ট</span>
+                    </div>
                 </div>
-            </section>
+                <div class="trip-seg">
+                    <label>কোথায়</label>
+                    <div onclick="openLocationModal('dest')" class="cursor-pointer">
+                        <span id="destDisplay" class="font-semibold is-placeholder">শহর বা এয়ারপোর্ট</span>
+                    </div>
+                </div>
+                <div class="trip-seg">
+                    <label>যাওয়ার তারিখ</label>
+                    <button type="button" id="departDateField" onclick="focusDepartPick()" aria-haspopup="dialog" aria-expanded="false" aria-controls="calendarPopover"><span id="selectedTripLabel" class="is-placeholder">তারিখ বাছুন</span></button>
+                </div>
+                <div class="trip-seg">
+                    <label>ফেরার তারিখ</label>
+                    <button type="button" id="returnDateField" class="is-placeholder" onclick="focusReturnPick()" aria-haspopup="dialog" aria-expanded="false" aria-controls="calendarPopover">তারিখ বাছুন</button>
+                </div>
+                <div class="trip-seg pax-seg">
+                    <label for="paxToggle">যাত্রী / ক্লাস</label>
+                    <button type="button" id="paxToggle" class="seg-value pax-toggle" aria-expanded="false" aria-controls="paxPanel" onclick="togglePax()"><span id="paxSummary">১ জন প্রাপ্তবয়স্ক · ইকোনমি</span></button>
+                    <div id="paxPanel" class="pax-panel" hidden>
+                        <div class="pax-row"><span>প্রাপ্তবয়স্ক <small>12+</small></span><span><button type="button" aria-label="প্রাপ্তবয়স্ক কমান" onclick="stepPax('adults',-1)">−</button><b id="paxAdults">1</b><button type="button" aria-label="প্রাপ্তবয়স্ক বাড়ান" onclick="stepPax('adults',1)">+</button></span></div>
+                        <div class="pax-row"><span>শিশু <small>2–11</small></span><span><button type="button" aria-label="শিশু কমান" onclick="stepPax('children',-1)">−</button><b id="paxChildren">0</b><button type="button" aria-label="শিশু বাড়ান" onclick="stepPax('children',1)">+</button></span></div>
+                        <div class="pax-row"><span>ইনফ্যান্ট <small>২ বছরের কম</small></span><span><button type="button" aria-label="ইনফ্যান্ট কমান" onclick="stepPax('infants',-1)">−</button><b id="paxInfants">0</b><button type="button" aria-label="ইনফ্যান্ট বাড়ান" onclick="stepPax('infants',1)">+</button></span></div>
+                        <label class="pax-cabin">ক্লাস
+                            <select id="paxCabin" onchange="setCabin(this.value)">
+                                <option value="economy">ইকোনমি</option>
+                                <option value="premium">প্রিমিয়াম ইকোনমি</option>
+                                <option value="business">বিজনেস</option>
+                                <option value="first">ফার্স্ট</option>
+                            </select>
+                        </label>
+                        <button type="button" class="pax-done" onclick="togglePax(false)">ঠিক আছে</button>
+                    </div>
+                </div>
+                <button type="button" onclick="triggerFullScan()" id="searchBtn" class="font-extrabold flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i> <span id="btnText">খুঁজুন</span>
+                </button>
+            </div>
+            <p class="home-intro">রুট আর তারিখ দিন, পার্টনার সাইটগুলোর ফ্লাইটের দাম এখানেই তুলনা করুন। আমরা টিকিট বিক্রি করি না।</p>
 
-            <section class="glass-card p-4 sm:p-6 rounded-2xl text-sm leading-6 text-slate-300" aria-labelledby="faq">
-                <h2 id="faq" class="text-base sm:text-lg font-bold text-sky-400 mb-2">সাধারণ প্রশ্ন (FAQ)</h2>
-                <h3 class="font-bold text-white">Cheap Ticket Finder কি টিকিট বিক্রি করে?</h3>
-                <p>না। আমরা আপনার রুট ও তারিখ দিয়ে সার্চ তৈরি করে দিই। টিকিট কেনা ও পেমেন্ট হয় এয়ারলাইন বা বুকিং সাইটে।</p>
-                <h3 class="font-bold text-white mt-3">সাইটে কি আসল দাম দেখায়?</h3>
-                <p>আমরা নিজেরা কোনো দাম বানাই না। অন-সাইট ফ্লাইট সার্চে পার্টনার সাইটগুলোর দাম দেখায়; চূড়ান্ত দাম বুকিং সাইটে নিশ্চিত হয়।</p>
-                <h3 class="font-bold text-white mt-3">কোন দিনে টিকিট সবচেয়ে সস্তা?</h3>
-                <p>কোনো নির্দিষ্ট দিন সবচেয়ে কম দামের নিশ্চয়তা দেয় না। তারিখ নমনীয় রাখুন, আশেপাশের কয়েকটি দিন তুলনা করুন এবং ব্যাগেজসহ মোট দাম দেখুন।</p>
-                <h3 class="font-bold text-white mt-3">এই সাইট ব্যবহার করতে কি টাকা লাগে?</h3>
-                <p>না, সম্পূর্ণ বিনা খরচে। কিছু লিংক অ্যাফিলিয়েট লিংক; সেখান থেকে বুক করলে আমরা ছোট কমিশন পেতে পারি, আপনার দাম বাড়ে না। বিস্তারিত: <a class="text-sky-400 underline" href="/disclosure">Disclosure</a>।</p>
-            </section>
+            <div id="multiCityRow" class="hidden bg-slate-950/70 p-3.5 rounded-xl border border-sky-500/30 mb-4">
+                <div class="flex items-center gap-2 mb-2 text-xs font-bold text-sky-400">
+                    <i class="fa-solid fa-route"></i> মাল্টি-সিটি: আরেকটি এয়ারপোর্ট যোগ করুন
+                </div>
+                <div onclick="openLocationModal('stopover')" class="w-full bg-slate-950 border border-slate-700 hover:border-amber-400 rounded-xl p-2.5 text-white cursor-pointer flex justify-between items-center text-xs sm:text-sm transition">
+                    <span id="stopoverDisplay" class="font-semibold text-slate-300">Phuket Int. Airport (HKT)</span>
+                    <i class="fa-solid fa-map-pin text-amber-400"></i>
+                </div>
+            </div>
 
-            <p class="text-center"><a class="cta" href="/#wl-flight-results">✈️ সার্চ টুল খুলুন</a></p>
-        </main>
+            <div id="datePopoverBackdrop" class="date-popover-backdrop" hidden onclick="closeDatePopover()"></div>
+            <div id="calendarPopover" class="date-popover" hidden>
+            <div id="calendarCard" class="cal-pop" role="dialog" aria-modal="false" aria-labelledby="calendarPickBadge" aria-hidden="true">
+                <button type="button" class="cal-close" onclick="closeDatePopover()" aria-label="ক্যালেন্ডার বন্ধ করুন"><i class="fa-solid fa-xmark"></i></button>
+                <div id="calendarGridWrapper" class="w-full">
+                    <div class="cal-toolbar">
+                        <span id="calendarPickBadge" class="text-[10px] font-extrabold uppercase text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded">যাওয়ার তারিখ</span>
+                        <div id="calendarHint" class="text-[10px] text-slate-500">যাওয়ার তারিখ বাছুন।</div>
+                        <div class="cal-nav">
+                            <button type="button" onclick="navigateMonth(-1)" class="cal-nav-btn" aria-label="আগের মাস"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button type="button" onclick="navigateMonth(1)" class="cal-nav-btn" aria-label="পরের মাস"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div id="calMonths" class="cal-months">
+                        <div class="cal-month">
+                            <div id="departMonthLabel" class="cal-month-label"></div>
+                            <div class="sk-weekdays cal-weekdays"><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div></div>
+                            <div id="tripCalendarGrid" class="cal-grid"></div>
+                        </div>
+                        <div class="cal-month cal-month-2">
+                            <div id="departMonthLabel2" class="cal-month-label"></div>
+                            <div class="sk-weekdays cal-weekdays"><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div></div>
+                            <div id="tripCalendarGrid2" class="cal-grid"></div>
+                        </div>
+                    </div>
+                    <div class="cal-legend"><span><i class="lg lg-d"></i>যাওয়া</span><span><i class="lg lg-r"></i>ফেরা</span><span><i class="lg lg-t"></i>আজ</span><button type="button" class="cal-done" onclick="closeDatePopover()">ঠিক আছে</button></div>
+                </div>
+            </div>
+            </div>
 
-        <footer class="text-center text-[10px] text-slate-500 leading-5 pb-4 mt-6">
-            Cheap Ticket Finder টিকিট বিক্রি করে না। চূড়ান্ত দাম এয়ারলাইন বা বুকিং সাইটে নিশ্চিত হয়। cheapticketfinder.site
+            <div id="routeWarning" class="hidden mb-3 rounded-xl border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-xs font-semibold text-rose-300"></div>
+
+            <div class="flex flex-wrap justify-center gap-2 mt-3">
+                <a class="home-btn" href="#wl-flight-results">ফ্লাইট সার্চ খুলুন</a>
+                <a class="home-btn" href="https://www.trip.com/flights?Allianceid=11059812&SID=333836392&trip_sub1=flights&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer">Trip.com flights</a>
+                <a class="home-btn" href="https://tp.media/r?campaign_id=100&marker=791994&p=4114&sub_id=cheapticketfinder-site&trs=587447&u=https%3A%2F%2Faviasales.com" target="_blank" rel="sponsored noopener noreferrer">Aviasales</a>
+                <a class="home-btn" href="https://www.trip.com/?Allianceid=11059812&SID=333836392&trip_sub1=homepage&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer">Trip.com</a>
+            </div>
+            </div>
+            <div class="home-panel" id="airlines" data-tab="airlines" role="tabpanel" hidden>
+                <a class="home-btn" href="/airlines/">এয়ারলাইন গাইড</a>
+            </div>
+            <div class="home-panel" id="hotel-booking" data-tab="hotel" role="tabpanel" hidden>
+                <div class="home-links">
+                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=137&marker=791994&p=4110&sub_id=cheapticketfinder-hotels&trs=587447&u=https%3A%2F%2Fklook.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Klook-এ হোটেল বুক করুন</a>
+                    <a href="https://www.trip.com/hotels?Allianceid=11059812&SID=333836392&trip_sub1=hotels&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Trip.com হোটেল</a>
+                    <a href="https://www.agoda.com/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">Agoda হোটেল</a>
+                    <a href="https://www.booking.com/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">Booking.com হোটেল</a>
+                    <a href="/hotels/" class="text-sky-400 underline">হোটেল গাইড</a>
+                    <span class="note-plain">Agoda ও Booking.com সরাসরি তাদের অফিসিয়াল সাইটে খোলে; এগুলো এখনো অ্যাফিলিয়েট লিংক নয়।</span>
+                </div>
+            </div>
+            <div class="home-panel" id="tour-package" data-tab="tour" role="tabpanel" hidden>
+                <div class="home-links">
+                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=633&marker=791994&p=9074&sub_id=cheapticketfinder-packages&trs=587447&u=https%3A%2F%2Fkkday.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">KKday-তে এশিয়ার প্যাকেজ দেখুন</a>
+                    <a href="https://www.viator.com/?pid=P00326733&amp;uid=U00880752&amp;mcid=58086&amp;currency=USD" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">অথবা Viator-এ বিশ্বজুড়ে ট্যুর</a>
+                    <a href="https://www.trip.com/things-to-do/?Allianceid=11059812&SID=333836392&trip_sub1=tours&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Trip.com ট্যুর</a>
+                    <a href="https://tp.media/r?campaign_id=137&marker=791994&p=4110&sub_id=cheapticketfinder-tours&trs=587447&u=https%3A%2F%2Fklook.com" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Klook অ্যাক্টিভিটি</a>
+                    <a href="https://www.getyourguide.com/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">GetYourGuide</a>
+                    <a href="https://gozayaan.com/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">GoZayaan হলিডে ও অফার</a>
+                    <a href="/packages/" class="text-sky-400 underline">ট্যুর গাইড</a>
+                    <span class="note-plain">GetYourGuide ও GoZayaan সরাসরি তাদের অফিসিয়াল সাইটে খোলে; এগুলো অ্যাফিলিয়েট লিংক নয়।</span>
+                </div>
+            </div>
+            <div class="home-panel" id="travel-sim" data-tab="sim" role="tabpanel" hidden>
+                <div class="home-links">
+                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=541&marker=791994&p=8310&sub_id=cheapticketfinder-esim&trs=587447&u=https%3A%2F%2Fairalo.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Airalo-তে eSIM দেখুন</a>
+                    <a href="/esim/" class="text-sky-400 underline">ট্রাভেল eSIM গাইড</a>
+                </div>
+            </div>
+            <div class="home-panel" id="airport-transport" data-tab="transfer" role="tabpanel" hidden>
+                <div class="home-links">
+                    <a class="cta-affiliate" href="https://tp.media/r?campaign_id=1&marker=791994&p=647&sub_id=cheapticketfinder-transfer&trs=587447&u=https%3A%2F%2Fkiwitaxi.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">KiwiTaxi-তে ট্রান্সফার বুক করুন</a>
+                    <a href="https://www.trip.com/airport-transfers/index/?Allianceid=11059812&SID=333836392&trip_sub1=transfer&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Trip.com এয়ারপোর্ট ট্রান্সফার</a>
+                    <a href="/airport-transfer/" class="text-sky-400 underline">ট্রান্সফার গাইড</a>
+                </div>
+            </div>
+            <div class="home-panel" id="bd-transport" data-tab="bd" role="tabpanel" hidden>
+                <p class="home-intro" style="margin:0 0 .6rem">দেশের ভেতরে বাস, ট্রেন ও লঞ্চের টিকিট। এগুলো অফিসিয়াল বা অপারেটরের বুকিং সাইটে খোলে; ভাড়া ও সিট সেখানেই দেখা যায়। আমরা টিকিট বিক্রি করি না।</p>
+                <div class="home-links" id="bdTransportLinks"></div>
+            </div>
+        </section>
+        </div>
+    </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 pt-4 pb-8">
+
+        <section class="mb-8" id="explore" aria-label="বিভাগ অনুযায়ী দেখুন">
+            <h2 class="lux-h2">এবার কোথায় যাবেন?</h2>
+            <p class="lux-sub">একটি বিভাগ বাছুন। দাম শুধু বুকিং সাইটেই দেখা যায়।</p>
+            <div class="lux-cards">
+                <button type="button" class="lux-card" data-open-tab="air" aria-label="Open Air Ticket"><img src="/assets/cards/air.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>বিমান টিকিট</b><small>ভাড়া তুলনা</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="airlines" aria-label="Open Airlines"><img src="/assets/cards/airlines.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>এয়ারলাইন</b><small>অফিসিয়াল এয়ারলাইন</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="hotel" aria-label="Open Hotel"><img src="/assets/cards/hotel.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>হোটেল</b><small>এশিয়ায় থাকা</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="tour" aria-label="Open Tour Package"><img src="/assets/cards/tour.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>ট্যুর প্যাকেজ</b><small>ট্যুর ও অ্যাক্টিভিটি</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="sim" aria-label="Open Travel SIM"><img src="/assets/cards/sim.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>ট্রাভেল সিম</b><small>eSIM ডেটা</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="transfer" aria-label="Open Airport Transfer"><img src="/assets/cards/transfer.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>এয়ারপোর্ট ট্রান্সফার</b><small>আরামে পৌঁছান</small></span></button>
+                <button type="button" class="lux-card" data-open-tab="bd" aria-label="Open Bus / Train / Launch"><img src="/assets/cards/bd.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>বাস / ট্রেন / লঞ্চ</b><small>দেশের ভেতরের রুট</small></span></button>
+                <a class="lux-card" href="/cruise/" aria-label="Cruise"><img src="/assets/cards/cruise.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>ক্রুজ</b><small>এশিয়ার সমুদ্রযাত্রা</small></span></a>
+                <a class="lux-card" href="#domestic" aria-label="Domestic"><img src="/assets/cards/domestic.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>দেশের ভেতরে</b><small>বাংলাদেশে ভ্রমণ পরিকল্পনা</small></span></a>
+            </div>
+            <p class="text-sm mt-3"><a class="underline font-semibold" href="/medical/" style="color:#0c4a6e" lang="bn">কম খরচে বিদেশে চিকিৎসা / Low-cost medical treatment abroad &rarr;</a></p>
+            <p class="text-[10px] text-slate-500 mt-2">ছবি: Wikimedia Commons, দেখুন <a class="underline" href="/credits/">ক্রেডিট</a>.</p>
+        </section>
+        <div id="wl-flight-results" class="mb-6">
+            <p class="text-[11px] text-slate-500 mb-2 leading-5">আমাদের পার্টনার Aviasales (Travelpayouts) থেকে লাইভ ফ্লাইটের দাম। চূড়ান্ত মোট দাম বুকিং সাইটে নিশ্চিত হয়।</p>
+            <div class="tpwl-search-slot" aria-hidden="true"><div id="tpwl-search"></div></div>
+            <div id="tpwl-tickets" style="width:100%;min-width:0"></div>
+            <p id="staleDateNote" hidden role="status" class="text-sm text-amber-300 border border-amber-400/40 rounded-lg p-3 mb-2"></p>
+            <script>(function(){var d=window.__ctfStaleDate,n=document.getElementById('staleDateNote');if(!d||!n)return;n.textContent='This search link has a past date ('+d+'). Please choose a new date and search again.';n.hidden=false;})();</script>
+        </div>
+
+        <section class="mb-8" id="airlineOffers" aria-label="Airline offers">
+            <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">এয়ারলাইন অফার</h2>
+            <p class="text-[11px] text-slate-500 mb-2 leading-5">দেশের ভেতরের ও আন্তর্জাতিক অফার প্রতিটি এয়ারলাইনের অফিসিয়াল সাইটে যাচাই করা। যাচাই: ২০ অক্টোবর ২০২৬। অফার বদলায়; চূড়ান্ত দাম এয়ারলাইন বা বুকিং সাইটে।</p>
+            <p class="text-[11px] text-slate-500 mb-3 leading-5">VietJet থাইল্যান্ড–ভিয়েতনাম ও আশেপাশের রুটের অফার হিসেবে দেওয়া। VietJet ঢাকায় আসা-যাওয়া করে না।</p>
+            <a class="home-btn" href="/offers/">এয়ারলাইন অফার দেখুন</a>
+            <a class="home-btn" href="/vietjet/">VietJet রুট</a>
+            <a class="home-btn" href="/indigo/">IndiGo রুট</a>
+            <a class="home-btn" href="/thai-lion-air/">Thai Lion Air রুট</a>
+            <a class="home-btn" href="/scoot/">Scoot রুট</a>
+            <a class="home-btn" href="/spicejet/">SpiceJet রুট</a>
+            <a class="home-btn" href="/air-india-express/">Air India Express রুট</a>
+        </section>
+
+        <div id="scanningToast" class="hidden bg-sky-950/90 border border-sky-500/40 rounded-2xl p-4 mb-6 flex items-center justify-center gap-3 text-sky-300 text-xs sm:text-sm font-bold shadow-2xl radar-scanning">
+            <i class="fa-solid fa-satellite-dish fa-spin text-sky-400 text-lg"></i>
+            <span>আপনার সার্চ তৈরি হচ্ছে…</span>
+        </div>
+
+        <div class="mb-4 rounded-xl border border-sky-500/20 bg-sky-950/40 px-3.5 py-3 text-[11px] leading-5 text-slate-300">
+            <i class="fa-solid fa-circle-info text-sky-400 mr-1"></i>
+            টিপস: আগে ফ্লাইট সার্চে দাম তুলনা করুন। এয়ারলাইনের সাইট অনেক সময় আগে বেশি দামের ভাড়া (যেমন “Flex”) দেখায়, তাই পেমেন্টের আগে মোট দাম দেখে নিন।
+        </div>
+
+        <div id="tripSummary" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-3.5 mb-6 flex flex-wrap justify-between items-center text-xs sm:text-sm gap-2">
+            <div class="flex items-center gap-2">
+                <span id="tripTypeBadge" class="bg-sky-500/20 text-sky-400 px-2.5 py-0.5 rounded-full font-extrabold text-[10px] tracking-wider">রাউন্ড ট্রিপ</span>
+                <span id="routeBanner" class="font-bold text-white text-xs sm:text-sm">DAC 🔁 BKK</span>
+            </div>
+            <div>
+                <span class="text-slate-400">থাকা:</span> <span id="stayNights" class="text-emerald-400 font-bold"></span>
+            </div>
+            <div class="text-slate-300 text-xs font-semibold" id="dateBanner"></div>
+        </div>
+
+        <div id="search"></div>
+        <div class="mb-8" id="cheapPathSection">
+            <div class="flex justify-between items-center mb-3 gap-2">
+                <h2 class="text-sm sm:text-lg font-bold text-sky-400 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt"></i> সস্তা টিকিটের পথ
+                </h2>
+                <span class="text-[10px] sm:text-xs bg-sky-500/20 text-sky-300 px-2.5 py-0.5 rounded-full font-semibold">ফ্লাইট সার্চ দিয়ে শুরু করুন</span>
+            </div>
+            <p class="text-[11px] text-slate-500 mb-3">বড় শহরের সব এয়ারপোর্ট একসাথে দেখায় (যেমন লন্ডন: হিথ্রো, গ্যাটউইক, স্ট্যানস্টেড, লুটন; ব্যাংকক: BKK ও DMK)। এয়ারলাইনের পাশে দেখানো প্রোমো কোড ও কার্ড অফার সেই সাইটের চেকআউটে প্রযোজ্য; “ডিসকাউন্টের পর” দাম শুধু আনুমানিক।</p>
+            <div id="needDatesHint" class="rounded-xl border border-slate-800 bg-slate-950/60 px-3.5 py-3 text-xs text-slate-400">কোথায় তুলনা ও বুক করবেন দেখতে উপরে তারিখ বাছুন।</div>
+            <div id="googleBookBar" class="hidden mb-4"></div>
+            <div id="nearbyAirportSection" class="hidden mb-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-3.5">
+                <h3 class="text-xs sm:text-sm font-black text-sky-200 uppercase tracking-wider">কাছের এয়ারপোর্ট, যেখানে সস্তা হতে পারে — ৫০ কিমির মধ্যে</h3>
+                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-5">গন্তব্যের ৫০ কিমির মধ্যে অন্য এয়ারপোর্ট। একটিতে চাপ দিলে একই তারিখে সার্চ হবে — কখনো সস্তা হয়। আমরা কখনো দাম বানাই না।</p>
+                <div id="nearbyAirportResults" class="space-y-1.5"></div>
+            </div>
+            <div id="cheapPathResults" class="space-y-2"></div>
+        </div>
+
+        <div class="mb-8 hidden" id="hotelSectionWrapper">
+            <div class="flex justify-between items-center mb-3 gap-2">
+                <h2 class="text-sm sm:text-lg font-bold text-emerald-400 flex items-center gap-2">
+                    <i class="fa-solid fa-hotel"></i> এই তারিখের হোটেল
+                </h2>
+                <span class="text-[10px] sm:text-xs bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded-full font-semibold">Google Hotels / Booking.com</span>
+            </div>
+            <div id="hotelResults" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
+
+        <div class="mb-8 hidden" id="verifiedAgencySection">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <div>
+                    <h2 class="text-sm sm:text-lg font-bold text-emerald-300 flex items-center gap-2">
+                        <i class="fa-solid fa-suitcase-rolling"></i> অফিসিয়াল প্যাকেজ
+                    </h2>
+                    <p class="text-[10px] text-slate-500 mt-1">এই দেশের শুধু অফিসিয়াল হলিডে পাতা। আসল লিংক না থাকলে এই অংশ দেখানো হয় না।</p>
+                </div>
+            </div>
+            <div id="officialPackageResults" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3"></div>
+        </div>
+
+
+
+        <section class="mb-8" id="domestic" aria-label="Domestic bus, train and launch">
+            <h2 class="lux-h2">দেশের ভেতরে: বাস, ট্রেন ও লঞ্চ</h2>
+            <p class="lux-sub">রুট ও তারিখ বাছুন, তারপর অপারেটরের সাইটে গিয়ে আসল সিট ও ভাড়া দেখুন।</p>
+            <form class="dom-form" id="domForm" onsubmit="return false">
+                <label>কোথা থেকে<select id="domFrom"><option selected>ঢাকা</option><option>চট্টগ্রাম</option><option>কক্সবাজার</option><option>সিলেট</option><option>রাজশাহী</option><option>খুলনা</option><option>বরিশাল</option><option>রংপুর</option><option>বগুড়া</option><option>যশোর</option><option>কুমিল্লা</option><option>ময়মনসিংহ</option><option>দিনাজপুর</option><option>কুয়াকাটা</option><option>বান্দরবান</option><option>রাঙামাটি</option><option>খাগড়াছড়ি</option><option>শ্রীমঙ্গল</option><option>টেকনাফ</option><option>সৈয়দপুর</option></select></label>
+                <label>কোথায়<select id="domTo"><option>ঢাকা</option><option selected>চট্টগ্রাম</option><option>কক্সবাজার</option><option>সিলেট</option><option>রাজশাহী</option><option>খুলনা</option><option>বরিশাল</option><option>রংপুর</option><option>বগুড়া</option><option>যশোর</option><option>কুমিল্লা</option><option>ময়মনসিংহ</option><option>দিনাজপুর</option><option>কুয়াকাটা</option><option>বান্দরবান</option><option>রাঙামাটি</option><option>খাগড়াছড়ি</option><option>শ্রীমঙ্গল</option><option>টেকনাফ</option><option>সৈয়দপুর</option></select></label>
+                <label>তারিখ<input type="date" id="domDate"></label>
+                <div class="dom-actions">
+                    <a id="domBus" href="https://www.shohoz.com/bus-tickets" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-bus" aria-hidden="true"></i> Shohoz-এ বাস</a>
+                    <a id="domTrain" href="https://eticket.railway.gov.bd/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-train" aria-hidden="true"></i> বাংলাদেশ রেলওয়েতে ট্রেন</a>
+                    <a id="domLaunch" href="https://www.shohoz.com/launch-tickets" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-ship" aria-hidden="true"></i> Shohoz-এ লঞ্চ</a>
+                </div>
+                <p class="dom-note">বাস: আপনার রুট ও তারিখে Shohoz-এর সার্চ খোলে। ট্রেন: বাংলাদেশ রেলওয়ের অফিসিয়াল ই-টিকিট সাইট খোলে; সেখানে লগইন করে রুট খুঁজুন। লঞ্চ: Shohoz-এর লঞ্চ টিকিট খোলে; সেখানে রুট বাছুন। আমরা টিকিট বিক্রি করি না।</p>
+            </form>
+        </section>
+        <section class="mb-8" aria-label="Partners">
+            <h2 class="lux-h2" style="font-size:18px">যে অফিসিয়াল সাইটে আমরা লিংক দিই</h2>
+            <div class="partner-row">
+                <img src="/assets/logos/biman.svg" alt="Biman Bangladesh Airlines" loading="lazy">
+                <img src="/assets/logos/tripcom.svg" alt="Trip.com" loading="lazy">
+                <img src="/assets/logos/aviasales.png" alt="Aviasales" loading="lazy">
+                <img src="/assets/logos/agoda.svg" alt="Agoda" loading="lazy">
+                <img src="/assets/logos/booking.svg" alt="Booking.com" loading="lazy">
+                <img src="/assets/logos/klook.svg" alt="Klook" loading="lazy">
+                <img src="/assets/logos/kkday.svg" alt="KKday" loading="lazy">
+                <img src="/assets/logos/getyourguide.svg" alt="GetYourGuide" loading="lazy">
+                <img src="/assets/logos/airalo.svg" alt="Airalo" loading="lazy">
+                <img src="/assets/logos/kiwitaxi.png" alt="Kiwitaxi" loading="lazy">
+                <img src="/assets/logos/bangladesh-railway.svg" alt="Bangladesh Railway" loading="lazy">
+                <img src="/assets/logos/royal-caribbean.svg" alt="Royal Caribbean" loading="lazy">
+            </div>
+            <p class="text-[10px] text-slate-500 mt-2 text-center">লোগোগুলো তাদের মালিকের ট্রেডমার্ক; কোন সাইটে লিংক দিচ্ছি বোঝাতে অপরিবর্তিত দেখানো হয়েছে। সূত্র: <a class="underline" href="/credits/">ক্রেডিট</a>.</p>
+        </section>
+        <section class="mb-8" id="servicesSection" aria-label="Travel insurance">
+            <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">ট্রাভেল ইন্স্যুরেন্স</h2>
+            <div class="home-links">
+                <a class="cta-affiliate" href="https://ektatraveling.com/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">EKTA-তে ইন্স্যুরেন্স দেখুন</a>
+                <a href="/travel-insurance/" class="text-sky-400 underline">ট্রাভেল ইন্স্যুরেন্স গাইড</a>
+            </div>
+            <p class="text-[11px] text-slate-500 mt-2">সরাসরি EKTA-র অফিসিয়াল সাইট খোলে (অ্যাফিলিয়েট লিংক নয়)।</p>
+        </section>
+        <section class="mb-8" aria-label="Local cheap flight guides in Asia">
+            <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">এশিয়ার ভেতরের সস্তা ফ্লাইট</h2>
+            <p class="text-[11px] text-slate-500 mb-3 leading-5">মালয়েশিয়া, থাইল্যান্ড ও ভিয়েতনামের ভেতরের ফ্লাইট স্থানীয় এয়ারলাইনের দামে: ফ্লাইট সার্চে তুলনা করে অফিসিয়াল এয়ারলাইন সাইটে MYR/THB/VND-তে কিনুন।</p>
+            <nav class="flex flex-wrap gap-2 text-[11px]">
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/kuala-lumpur-to-langkawi-cheap-flight/">কুয়ালালামপুর–লংকাউই সস্তা ফ্লাইট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/kuala-lumpur-to-penang-cheap-flight/">কুয়ালালামপুর–পেনাং সস্তা ফ্লাইট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bangkok-to-phuket-cheap-flight/">ব্যাংকক–ফুকেট সস্তা ফ্লাইট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bangkok-to-chiang-mai-cheap-flight/">ব্যাংকক–চিয়াং মাই সস্তা ফ্লাইট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/ho-chi-minh-to-hanoi-cheap-flight/">হো চি মিন সিটি–হ্যানয় সস্তা ফ্লাইট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/ho-chi-minh-to-da-nang-cheap-flight/">হো চি মিন সিটি–দা নাং সস্তা ফ্লাইট</a>
+            </nav>
+        </section>
+        <section class="mb-8" aria-label="Popular route guides">
+            <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">জনপ্রিয় রুট গাইড</h2>
+            <p class="text-[11px] text-slate-500 mb-3 leading-5">প্রতিটি রুটে সবচেয়ে সস্তা তারিখ কীভাবে খুঁজবেন, সাথে ব্যাগেজ ও মোট খরচের হিসাব। আমরা বানানো দাম দেখাই না — উপরের টুলে আপনার তারিখ দেখুন। <a class="text-sky-400 underline" href="/">টিকিট সার্চ টুল খুলুন</a></p>
+            <nav class="flex flex-wrap gap-2 text-[11px]">
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-bangkok-cheap-ticket/">ঢাকা–ব্যাংকক সস্তা টিকিট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-coxs-bazar-ticket-price/">ঢাকা–কক্সবাজার টিকিটের দাম</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-kuala-lumpur-cheap-ticket/">ঢাকা–কুয়ালালামপুর সস্তা টিকিট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-kolkata-cheap-ticket/">ঢাকা–কলকাতা সস্তা টিকিট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-dubai-cheap-ticket/">ঢাকা–দুবাই সস্তা টিকিট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-chattogram-ticket-price/">ঢাকা–চট্টগ্রাম টিকিটের দাম</a>
+                            <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-singapore-cheap-ticket/">ঢাকা–সিঙ্গাপুর সস্তা টিকিট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-delhi-cheap-ticket/">ঢাকা–দিল্লি সস্তা টিকিট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-kathmandu-cheap-ticket/">ঢাকা–কাঠমান্ডু সস্তা টিকিট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-jeddah-cheap-ticket/">ঢাকা–জেদ্দা সস্তা টিকিট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-doha-cheap-ticket/">ঢাকা–দোহা সস্তা টিকিট</a>
+                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-london-cheap-ticket/">ঢাকা–লন্ডন সস্তা টিকিট</a>
+            </nav>
+        </section>
+        <section class="glass-card p-4 sm:p-6 rounded-2xl mb-6 text-sm leading-6" aria-labelledby="cheap-guide-h">
+            <h2 id="cheap-guide-h" class="text-base font-bold text-sky-400" lang="bn">বাংলাদেশ থেকে কম দামে বিমান টিকিট কীভাবে পাবো?</h2>
+            <p lang="bn">ফ্লেক্সিবল তারিখে খুঁজুন, কয়েকটি সাইট ও এয়ারলাইনের নিজের ওয়েবসাইটে ব্যাগেজ ও ফি সহ মোট দাম তুলনা করুন, তারপর এয়ারলাইন বা বিশ্বস্ত প্রোভাইডার থেকে বুক করুন। কোনো সাইট বা দিন সবচেয়ে কম দামের নিশ্চয়তা দেয় না। <a class="text-sky-400 underline font-bold" href="/bn/how-to-find-cheap-air-tickets/">৭ ধাপের গাইড পড়ুন</a></p>
+        </section>
+        <footer class="text-center text-[10px] text-slate-500 leading-5 pb-4">
+            Cheap Ticket Finder টিকিট বিক্রি করে না। চূড়ান্ত দাম এয়ারলাইন বা বুকিং সাইটে। cheapticketfinder.site
             <nav class="mt-2 flex flex-wrap justify-center gap-x-3 gap-y-1 text-[11px]">
-                <a class="text-sky-400 hover:text-sky-300" href="/">English</a>
-                <a class="text-sky-400 hover:text-sky-300" href="/offers/">Offers</a>
-                <a class="text-sky-400 hover:text-sky-300" href="/airlines/">Airlines</a>
-                <a class="text-sky-400 hover:text-sky-300" href="/about">About</a>
-                <a class="text-sky-400 hover:text-sky-300" href="/terms">Terms</a>
-                <a class="text-sky-400 hover:text-sky-300" href="/privacy">Privacy</a>
-                <a class="text-sky-400 hover:text-sky-300" href="/contact">Contact</a>
-                <a class="text-sky-400 hover:text-sky-300" href="https://www.facebook.com/CheapTFBD" target="_blank" rel="noopener noreferrer">Facebook</a>
-                <a class="text-sky-400 hover:text-sky-300" href="/disclosure">Disclosure</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/offers/">অফার</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/airlines/">এয়ারলাইন</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/hotels/">হোটেল</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/packages/">প্যাকেজ</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/esim/">ট্রাভেল eSIM</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/airport-transfer/">এয়ারপোর্ট ট্রান্সফার</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/travel-insurance/">ট্রাভেল ইন্স্যুরেন্স</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/about">আমাদের সম্পর্কে</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/terms">শর্তাবলি</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/privacy">প্রাইভেসি</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/contact">যোগাযোগ</a>
+                <a class="text-sky-400 hover:text-sky-300" href="https://www.facebook.com/CheapTFBD" target="_blank" rel="noopener noreferrer">ফেসবুক</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/disclosure">ডিসক্লোজার</a>
             </nav>
         </footer>
     </div>
+
+    <div id="locationModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl p-5" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
+                <span id="modalTitle" class="text-sm font-bold text-sky-400 uppercase tracking-wider">এয়ারপোর্ট বাছুন</span>
+                <button type="button" onclick="closeLocationModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="relative mb-3">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
+                <input type="text" id="modalSearchInput" placeholder="দেশ, শহর, এয়ারপোর্ট বা কোড লিখুন — যেমন India, Dhaka, DEL..." oninput="filterModalAirports()" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-sky-500">
+            </div>
+            <div id="airportDataStatus" class="mb-2 text-[10px] text-slate-500">শহর, এয়ারপোর্ট বা দেশের নাম লিখুন।</div>
+            <div id="modalAirportList" class="max-h-72 overflow-y-auto custom-scroll space-y-1.5 pr-1"></div>
+        </div>
+    </div>
+
+    <script src="/js/booking-links.js?v=gf-nearby-20260902"></script>
+    <script src="/js/travelpayouts.js?v=aviasales-791994"></script>
+    <script>
+        const COUNTRY_AIRPORTS = [
+
+            // Built-in worldwide fallback airports — works even if remote airport data fails
+            {
+                country: "Nepal \ud83c\uddf3\ud83c\uddf5", city: "Kathmandu", name: "Tribhuvan International Airport (KTM)", code: "ktm",
+                keywords: "nepal kathmandu tribhuvan ktm",
+                baseRoundBDT: 42000, hotelBaseBDT: 2600,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Nepal \ud83c\uddf3\ud83c\uddf5", city: "Pokhara", name: "Pokhara International Airport (PKR)", code: "pkr",
+                keywords: "nepal pokhara pkr",
+                baseRoundBDT: 45500, hotelBaseBDT: 2800,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Nepal \ud83c\uddf3\ud83c\uddf5", city: "Bhairahawa", name: "Gautam Buddha International Airport (BWA)", code: "bwa",
+                keywords: "nepal bhairahawa lumbini gautam buddha bwa",
+                baseRoundBDT: 47000, hotelBaseBDT: 2400,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Nepal \ud83c\uddf3\ud83c\uddf5", city: "Biratnagar", name: "Biratnagar Airport (BIR)", code: "bir",
+                keywords: "nepal biratnagar bir",
+                baseRoundBDT: 48000, hotelBaseBDT: 2200,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Nepal \ud83c\uddf3\ud83c\uddf5", city: "Nepalgunj", name: "Nepalgunj Airport (KEP)", code: "kep",
+                keywords: "nepal nepalgunj kep",
+                baseRoundBDT: 50000, hotelBaseBDT: 2200,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Sri Lanka \ud83c\uddf1\ud83c\uddf0", city: "Colombo", name: "Bandaranaike International Airport (CMB)", code: "cmb",
+                keywords: "sri lanka colombo bandaranaike cmb",
+                baseRoundBDT: 39000, hotelBaseBDT: 3200,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Sri Lanka \ud83c\uddf1\ud83c\uddf0", city: "Colombo", name: "Ratmalana International Airport (RML)", code: "rml",
+                keywords: "sri lanka colombo ratmalana rml",
+                baseRoundBDT: 42000, hotelBaseBDT: 3000,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Sri Lanka \ud83c\uddf1\ud83c\uddf0", city: "Hambantota", name: "Mattala Rajapaksa International Airport (HRI)", code: "hri",
+                keywords: "sri lanka hambantota mattala hri",
+                baseRoundBDT: 47000, hotelBaseBDT: 2900,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Sri Lanka \ud83c\uddf1\ud83c\uddf0", city: "Jaffna", name: "Jaffna International Airport (JAF)", code: "jaf",
+                keywords: "sri lanka jaffna jaf",
+                baseRoundBDT: 49000, hotelBaseBDT: 2500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Mumbai", name: "Chhatrapati Shivaji Maharaj International Airport (BOM)", code: "bom",
+                keywords: "india mumbai bombay bom",
+                baseRoundBDT: 26000, hotelBaseBDT: 3200,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Chennai", name: "Chennai International Airport (MAA)", code: "maa",
+                keywords: "india chennai madras maa",
+                baseRoundBDT: 24000, hotelBaseBDT: 2800,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Bengaluru", name: "Kempegowda International Airport (BLR)", code: "blr",
+                keywords: "india bengaluru bangalore blr",
+                baseRoundBDT: 28500, hotelBaseBDT: 3200,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Hyderabad", name: "Rajiv Gandhi International Airport (HYD)", code: "hyd",
+                keywords: "india hyderabad hyd",
+                baseRoundBDT: 28500, hotelBaseBDT: 3000,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Kochi", name: "Cochin International Airport (COK)", code: "cok",
+                keywords: "india kochi cochin kerala cok",
+                baseRoundBDT: 30000, hotelBaseBDT: 2800,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Goa", name: "Dabolim Airport (GOI)", code: "goi",
+                keywords: "india goa dabolim goi",
+                baseRoundBDT: 31000, hotelBaseBDT: 3500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Goa", name: "Manohar International Airport (GOX)", code: "gox",
+                keywords: "india goa mopa gox",
+                baseRoundBDT: 32000, hotelBaseBDT: 3500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Ahmedabad", name: "Sardar Vallabhbhai Patel International Airport (AMD)", code: "amd",
+                keywords: "india ahmedabad amd",
+                baseRoundBDT: 29000, hotelBaseBDT: 2700,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Jaipur", name: "Jaipur International Airport (JAI)", code: "jai",
+                keywords: "india jaipur rajasthan jai",
+                baseRoundBDT: 30000, hotelBaseBDT: 2600,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Lucknow", name: "Chaudhary Charan Singh International Airport (LKO)", code: "lko",
+                keywords: "india lucknow lko",
+                baseRoundBDT: 28000, hotelBaseBDT: 2500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "India \ud83c\uddee\ud83c\uddf3", city: "Guwahati", name: "Lokpriya Gopinath Bordoloi International Airport (GAU)", code: "gau",
+                keywords: "india guwahati assam gau",
+                baseRoundBDT: 22000, hotelBaseBDT: 2400,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Malaysia \ud83c\uddf2\ud83c\uddfe", city: "Kuala Lumpur", name: "Kuala Lumpur International Airport (KUL)", code: "kul",
+                keywords: "malaysia kuala lumpur kul klia",
+                baseRoundBDT: 36000, hotelBaseBDT: 3300,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Malaysia \ud83c\uddf2\ud83c\uddfe", city: "Penang", name: "Penang International Airport (PEN)", code: "pen",
+                keywords: "malaysia penang pen",
+                baseRoundBDT: 42000, hotelBaseBDT: 3000,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Malaysia \ud83c\uddf2\ud83c\uddfe", city: "Langkawi", name: "Langkawi International Airport (LGK)", code: "lgk",
+                keywords: "malaysia langkawi lgk",
+                baseRoundBDT: 45000, hotelBaseBDT: 3600,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Malaysia \ud83c\uddf2\ud83c\uddfe", city: "Kota Kinabalu", name: "Kota Kinabalu International Airport (BKI)", code: "bki",
+                keywords: "malaysia kota kinabalu sabah bki",
+                baseRoundBDT: 48000, hotelBaseBDT: 3300,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Maldives \ud83c\uddf2\ud83c\uddfb", city: "Mal\u00e9", name: "Velana International Airport (MLE)", code: "mle",
+                keywords: "maldives male velana mle",
+                baseRoundBDT: 42000, hotelBaseBDT: 8500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Maldives \ud83c\uddf2\ud83c\uddfb", city: "Gan", name: "Gan International Airport (GAN)", code: "gan",
+                keywords: "maldives gan addu gan",
+                baseRoundBDT: 52000, hotelBaseBDT: 6500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Indonesia \ud83c\uddee\ud83c\udde9", city: "Bali / Denpasar", name: "I Gusti Ngurah Rai International Airport (DPS)", code: "dps",
+                keywords: "indonesia bali denpasar dps",
+                baseRoundBDT: 55000, hotelBaseBDT: 4800,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Indonesia \ud83c\uddee\ud83c\udde9", city: "Jakarta", name: "Soekarno-Hatta International Airport (CGK)", code: "cgk",
+                keywords: "indonesia jakarta cgk",
+                baseRoundBDT: 52000, hotelBaseBDT: 3600,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Vietnam \ud83c\uddfb\ud83c\uddf3", city: "Hanoi", name: "Noi Bai International Airport (HAN)", code: "han",
+                keywords: "vietnam hanoi han",
+                baseRoundBDT: 50000, hotelBaseBDT: 3200,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Vietnam \ud83c\uddfb\ud83c\uddf3", city: "Ho Chi Minh City", name: "Tan Son Nhat International Airport (SGN)", code: "sgn",
+                keywords: "vietnam ho chi minh saigon sgn",
+                baseRoundBDT: 52000, hotelBaseBDT: 3400,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Vietnam \ud83c\uddfb\ud83c\uddf3", city: "Da Nang", name: "Da Nang International Airport (DAD)", code: "dad",
+                keywords: "vietnam da nang dad",
+                baseRoundBDT: 56000, hotelBaseBDT: 3600,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Japan \ud83c\uddef\ud83c\uddf5", city: "Tokyo", name: "Narita International Airport (NRT)", code: "nrt",
+                keywords: "japan tokyo narita nrt",
+                baseRoundBDT: 85000, hotelBaseBDT: 7000,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Japan \ud83c\uddef\ud83c\uddf5", city: "Tokyo", name: "Haneda Airport (HND)", code: "hnd",
+                keywords: "japan tokyo haneda hnd",
+                baseRoundBDT: 90000, hotelBaseBDT: 7600,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Japan \ud83c\uddef\ud83c\uddf5", city: "Osaka", name: "Kansai International Airport (KIX)", code: "kix",
+                keywords: "japan osaka kansai kix",
+                baseRoundBDT: 88000, hotelBaseBDT: 6500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "South Korea \ud83c\uddf0\ud83c\uddf7", city: "Seoul", name: "Incheon International Airport (ICN)", code: "icn",
+                keywords: "south korea seoul incheon icn korea",
+                baseRoundBDT: 78000, hotelBaseBDT: 5800,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "South Korea \ud83c\uddf0\ud83c\uddf7", city: "Seoul", name: "Gimpo International Airport (GMP)", code: "gmp",
+                keywords: "south korea seoul gimpo gmp",
+                baseRoundBDT: 80000, hotelBaseBDT: 5600,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Hong Kong \ud83c\udded\ud83c\uddf0", city: "Hong Kong", name: "Hong Kong International Airport (HKG)", code: "hkg",
+                keywords: "hong kong hkg",
+                baseRoundBDT: 62000, hotelBaseBDT: 6500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "China \ud83c\udde8\ud83c\uddf3", city: "Guangzhou", name: "Guangzhou Baiyun International Airport (CAN)", code: "can",
+                keywords: "china guangzhou canton can",
+                baseRoundBDT: 62000, hotelBaseBDT: 4200,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "China \ud83c\udde8\ud83c\uddf3", city: "Shanghai", name: "Shanghai Pudong International Airport (PVG)", code: "pvg",
+                keywords: "china shanghai pudong pvg",
+                baseRoundBDT: 68000, hotelBaseBDT: 5000,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "China \ud83c\udde8\ud83c\uddf3", city: "Beijing", name: "Beijing Capital International Airport (PEK)", code: "pek",
+                keywords: "china beijing pek",
+                baseRoundBDT: 70000, hotelBaseBDT: 5200,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Qatar \ud83c\uddf6\ud83c\udde6", city: "Doha", name: "Hamad International Airport (DOH)", code: "doh",
+                keywords: "qatar doha hamad doh",
+                baseRoundBDT: 60000, hotelBaseBDT: 5500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Saudi Arabia \ud83c\uddf8\ud83c\udde6", city: "Jeddah", name: "King Abdulaziz International Airport (JED)", code: "jed",
+                keywords: "saudi arabia jeddah jed makkah umrah",
+                baseRoundBDT: 65000, hotelBaseBDT: 5200,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Saudi Arabia \ud83c\uddf8\ud83c\udde6", city: "Riyadh", name: "King Khalid International Airport (RUH)", code: "ruh",
+                keywords: "saudi arabia riyadh ruh",
+                baseRoundBDT: 68000, hotelBaseBDT: 5000,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "Oman \ud83c\uddf4\ud83c\uddf2", city: "Muscat", name: "Muscat International Airport (MCT)", code: "mct",
+                keywords: "oman muscat mct",
+                baseRoundBDT: 62000, hotelBaseBDT: 4500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "T\u00fcrkiye \ud83c\uddf9\ud83c\uddf7", city: "Istanbul", name: "Istanbul Airport (IST)", code: "ist",
+                keywords: "turkey turkiye istanbul ist",
+                baseRoundBDT: 78000, hotelBaseBDT: 5200,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "United Kingdom \ud83c\uddec\ud83c\udde7", city: "London", name: "Heathrow Airport (LHR)", code: "lhr",
+                keywords: "uk united kingdom london heathrow lhr",
+                baseRoundBDT: 110000, hotelBaseBDT: 8500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "United Kingdom \ud83c\uddec\ud83c\udde7", city: "London", name: "Gatwick Airport (LGW)", code: "lgw",
+                keywords: "uk united kingdom london gatwick lgw",
+                baseRoundBDT: 105000, hotelBaseBDT: 7800,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "United States \ud83c\uddfa\ud83c\uddf8", city: "New York", name: "John F. Kennedy International Airport (JFK)", code: "jfk",
+                keywords: "usa united states new york jfk",
+                baseRoundBDT: 135000, hotelBaseBDT: 11000,
+                domesticAirlines: [],
+                attractions: []
+            },
+            {
+                country: "United States \ud83c\uddfa\ud83c\uddf8", city: "Newark", name: "Newark Liberty International Airport (EWR)", code: "ewr",
+                keywords: "usa united states newark new york ewr",
+                baseRoundBDT: 132000, hotelBaseBDT: 10500,
+                domesticAirlines: [],
+                attractions: []
+            },
+            // Thailand 🇹🇭
+            { 
+                country: "Thailand 🇹🇭", city: "Bangkok (Main Hub)", name: "Suvarnabhumi Int. (BKK)", code: "bkk", 
+                keywords: "bangkok bkk suvarnabhumi thailand", 
+                baseRoundBDT: 38500, hotelBaseBDT: 2800, 
+                domesticAirlines: [
+                    { name: "US-Bangla Airlines", website: "https://usbair.com" },
+                    { name: "Thai Airways", website: "https://www.thaiairways.com" },
+                    { name: "Biman Bangladesh", website: "https://www.biman-airlines.com" }
+                ],
+                attractions: []
+            },
+            { 
+                country: "Thailand 🇹🇭", city: "Bangkok (Budget Hub)", name: "Don Mueang Int. (DMK)", code: "dmk", 
+                keywords: "bangkok dmk don mueang thailand", 
+                baseRoundBDT: 34500, hotelBaseBDT: 2400, 
+                domesticAirlines: [
+                    { name: "Thai AirAsia", website: "https://www.airasia.com" },
+                    { name: "Nok Air", website: "https://www.nokair.com" },
+                    { name: "Thai Lion Air", website: "https://www.lionairthai.com" }
+                ],
+                attractions: []
+            },
+            { 
+                country: "Thailand 🇹🇭", city: "Phuket", name: "Phuket Int. Airport (HKT)", code: "hkt", 
+                keywords: "phuket hkt thailand island patong phi phi", 
+                baseRoundBDT: 46500, hotelBaseBDT: 3400, 
+                domesticAirlines: [
+                    { name: "Thai VietJet", website: "https://www.vietjetair.com" },
+                    { name: "Bangkok Airways", website: "https://www.bangkokair.com" },
+                    { name: "Thai AirAsia", website: "https://www.airasia.com" }
+                ],
+                attractions: []
+            },
+
+            // Bangladesh 🇧🇩
+            { 
+                country: "Bangladesh 🇧🇩", city: "Cox's Bazar", name: "Cox's Bazar Airport (CXB)", code: "cxb", 
+                keywords: "coxsbazar coxs bazar cozbazar coz bazar cox cxb sea beach inani himchari", 
+                baseRoundBDT: 9500, hotelBaseBDT: 3200, 
+                domesticAirlines: [
+                    { name: "US-Bangla Airlines", website: "https://usbair.com" },
+                    { name: "Air Astra", website: "https://airastra.com" },
+                    { name: "Biman Bangladesh", website: "https://www.biman-airlines.com" }
+                ],
+                attractions: []
+            },
+            { 
+                country: "Bangladesh 🇧🇩", city: "Dhaka", name: "Hazrat Shahjalal Int. (DAC)", code: "dac", 
+                keywords: "dhaka shahjalal dac airport capital bangladesh", 
+                baseRoundBDT: 0, hotelBaseBDT: 2500, 
+                domesticAirlines: [
+                    { name: "Biman Bangladesh", website: "https://www.biman-airlines.com" },
+                    { name: "US-Bangla Airlines", website: "https://usbair.com" },
+                    { name: "Air Astra", website: "https://airastra.com" }
+                ],
+                attractions: []
+            },
+            { 
+                country: "Bangladesh 🇧🇩", city: "Chittagong", name: "Shah Amanat Int. (CGP)", code: "cgp", 
+                keywords: "chittagong ctg cgp chatto gram shah amanat", 
+                baseRoundBDT: 8500, hotelBaseBDT: 2600, 
+                domesticAirlines: [
+                    { name: "US-Bangla", website: "https://usbair.com" },
+                    { name: "Air Astra", website: "https://airastra.com" },
+                    { name: "Biman Bangladesh", website: "https://www.biman-airlines.com" }
+                ],
+                attractions: []
+            },
+
+            // India 🇮🇳
+            { 
+                country: "India 🇮🇳", city: "Kolkata", name: "Netaji Subhash Chandra Bose Int. (CCU)", code: "ccu", 
+                keywords: "kolkata calcutta ccu west bengal india", 
+                baseRoundBDT: 13500, hotelBaseBDT: 2200, 
+                domesticAirlines: [
+                    { name: "IndiGo", website: "https://www.goindigo.in" },
+                    { name: "Air India", website: "https://www.airindia.com" },
+                    { name: "SpiceJet", website: "https://www.spicejet.com" }
+                ],
+                attractions: []
+            },
+            { 
+                country: "India 🇮🇳", city: "Delhi", name: "Indira Gandhi Int. (DEL)", code: "del", 
+                keywords: "delhi new delhi del igi india agra", 
+                baseRoundBDT: 24500, hotelBaseBDT: 2800, 
+                domesticAirlines: [
+                    { name: "IndiGo", website: "https://www.goindigo.in" },
+                    { name: "Vistara", website: "https://www.airvistara.com" },
+                    { name: "Air India", website: "https://www.airindia.com" }
+                ],
+                attractions: []
+            },
+
+            // UAE & Singapore 🇦🇪 🇸🇬
+            { 
+                country: "United Arab Emirates 🇦🇪", city: "Dubai", name: "Dubai Int. Airport (DXB)", code: "dxb", 
+                keywords: "dubai dxb uae emirates middle east", 
+                baseRoundBDT: 56000, hotelBaseBDT: 4500, 
+                domesticAirlines: [
+                    { name: "Emirates", website: "https://www.emirates.com" },
+                    { name: "Flydubai", website: "https://www.flydubai.com" },
+                    { name: "Biman Bangladesh", website: "https://www.biman-airlines.com" }
+                ],
+                attractions: []
+            },
+            { 
+                country: "Singapore 🇸🇬", city: "Singapore", name: "Singapore Changi Int. (SIN)", code: "sin", 
+                keywords: "singapore sin changi sentosa marina bay", 
+                baseRoundBDT: 52000, hotelBaseBDT: 5500, 
+                domesticAirlines: [
+                    { name: "Singapore Airlines", website: "https://www.singaporeair.com" },
+                    { name: "Scoot", website: "https://www.flyscoot.com" },
+                    { name: "US-Bangla", website: "https://usbair.com" }
+                ],
+                attractions: []
+            }
+        ];
+
+
+        const GLOBAL_AIRPORTS_URLS = [
+            "https://raw.githubusercontent.com/jbrooksuk/JSON-Airports/master/airports.json",
+            "https://cdn.jsdelivr.net/gh/jbrooksuk/JSON-Airports@master/airports.json"
+        ];
+        let worldwideAirports = [];
+        let worldwideAirportsLoaded = false;
+        let worldwideAirportsLoading = false;
+
+        function getCountryName(iso) {
+            try {
+                if (!iso) return "Unknown Country";
+                return new Intl.DisplayNames(['en'], { type: 'region' }).of(String(iso).toUpperCase()) || iso;
+            } catch (e) {
+                return String(iso || "Unknown").toUpperCase();
+            }
+        }
+
+        function normalizeRemoteAirport(item) {
+            if (!item || item.status === 0 || !item.iata || !item.name) return null;
+            const iata = String(item.iata).trim().toLowerCase();
+            if (!/^[a-z0-9]{3}$/i.test(iata)) return null;
+            const countryName = getCountryName(item.iso);
+            const cityGuess = String(item.name)
+                .replace(/\bInternational\b/gi, '')
+                .replace(/\bAirport\b/gi, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+            const lat = Number(item.lat);
+            const lon = Number(item.lon);
+            const out = {
+                country: `${countryName}`,
+                city: cityGuess || item.name,
+                name: `${item.name} (${iata.toUpperCase()})`,
+                code: iata,
+                keywords: `${countryName} ${item.iso || ''} ${item.name} ${iata}`,
+                domesticAirlines: [],
+                source: "global"
+            };
+            if (Number.isFinite(lat) && Number.isFinite(lon)) {
+                out.lat = lat;
+                out.lon = lon;
+            }
+            if (item.type) out.type = String(item.type);
+            if (item.size) out.size = String(item.size);
+            return out;
+        }
+
+        function setAirportStatus(message, tone = 'muted') {
+            const el = document.getElementById('airportDataStatus');
+            if (!el) return;
+            el.textContent = message;
+            el.className = tone === 'ok'
+                ? "mb-2 text-[10px] text-emerald-400"
+                : tone === 'error'
+                    ? "mb-2 text-[10px] text-amber-400"
+                    : "mb-2 text-[10px] text-slate-500";
+        }
+
+        async function ensureWorldwideAirportsLoaded() {
+            if (worldwideAirportsLoaded || worldwideAirportsLoading) return;
+            worldwideAirportsLoading = true;
+            setAirportStatus("Loading worldwide airport database…");
+            try {
+                let data = null;
+                let lastError = null;
+                for (const url of GLOBAL_AIRPORTS_URLS) {
+                    try {
+                        const response = await fetch(url, { cache: "force-cache" });
+                        if (!response.ok) throw new Error(`Airport data HTTP ${response.status}`);
+                        data = await response.json();
+                        if (Array.isArray(data) && data.length) break;
+                    } catch (error) {
+                        lastError = error;
+                    }
+                }
+                if (!Array.isArray(data) || !data.length) {
+                    throw lastError || new Error("Worldwide airport data unavailable");
+                }
+                const builtinByCode = new Map(COUNTRY_AIRPORTS.map(a => [a.code.toLowerCase(), a]));
+                const seen = new Set(COUNTRY_AIRPORTS.map(a => a.code.toLowerCase()));
+                worldwideAirports = [];
+                data.map(normalizeRemoteAirport).filter(Boolean).forEach((a) => {
+                    const builtin = builtinByCode.get(a.code);
+                    if (builtin) {
+                        if (a.lat != null) builtin.lat = a.lat;
+                        if (a.lon != null) builtin.lon = a.lon;
+                        if (a.type) builtin.type = a.type;
+                        if (a.size) builtin.size = a.size;
+                        return;
+                    }
+                    if (seen.has(a.code)) return;
+                    seen.add(a.code);
+                    worldwideAirports.push(a);
+                });
+                worldwideAirportsLoaded = true;
+                setAirportStatus('শহর, এয়ারপোর্ট বা দেশের নাম লিখুন।', 'ok');
+                filterModalAirports(false);
+                if (datesReady()) renderResults();
+            } catch (error) {
+                console.warn("Worldwide airport database unavailable:", error);
+                setAirportStatus("Worldwide database could not load. Built-in airports are still available.", 'error');
+            } finally {
+                worldwideAirportsLoading = false;
+            }
+        }
+
+        function getAllAirports() {
+            return worldwideAirportsLoaded
+                ? COUNTRY_AIRPORTS.concat(worldwideAirports)
+                : COUNTRY_AIRPORTS;
+        }
+
+        let currentTripType = 'round';
+        let activeModalType = 'dest';
+        // Fresh visit: From, To, and dates stay empty. ?flightSearch= belongs to the
+        // Travelpayouts White Label results widget and is not copied into these fields.
+        let selectedOriginCode = "";
+        let selectedDestCode = "";
+        let selectedStopoverCode = "hkt";
+
+        const today = new Date();
+        let selectedDeptDate = null;
+        let selectedRetDate = null;
+        let calendarPhase = 'depart';
+        let datePopoverTarget = null;
+        let calMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+        function setPlaceholder(id, text) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = text;
+            el.classList.add('is-placeholder');
+        }
+
+        function showChosen(id, text, code) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.remove('is-placeholder');
+            if (!code) { el.textContent = text; return; }
+            code = String(code).toUpperCase();
+            const name = String(text || code).replace(new RegExp('\\s*\\(' + code + '\\)\\s*$'), '');
+            el.textContent = '';
+            const n = document.createElement('span'); n.className = 'ap-name'; n.textContent = name;
+            const c = document.createElement('span'); c.className = 'ap-code'; c.textContent = code;
+            el.append(n, c);
+            el.title = name + ' (' + code + ')';
+        }
+
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        function datesReady() {
+            if (!selectedDeptDate) return false;
+            if (currentTripType === 'oneway') return true;
+            return Boolean(selectedRetDate);
+        }
+
+        function setTripType(type) {
+            closeDatePopover();
+            currentTripType = type;
+            const btnRound = document.getElementById('btnRoundTrip');
+            const btnOne = document.getElementById('btnOneWay');
+            const btnMulti = document.getElementById('btnMultiCity');
+            const multiRow = document.getElementById('multiCityRow');
+
+            [btnRound, btnOne, btnMulti].forEach(b => b.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition text-slate-400 hover:text-white");
+
+            if (type === 'round') {
+                btnRound.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-sky-500 text-white shadow";
+                multiRow.classList.add('hidden');
+                calendarPhase = selectedDeptDate && !selectedRetDate ? 'return' : (selectedRetDate ? 'return' : 'depart');
+                document.getElementById('tripTypeBadge').innerText = "ROUND TRIP";
+                document.getElementById('tripTypeBadge').className = "bg-sky-500/20 text-sky-400 px-2.5 py-0.5 rounded-full font-extrabold text-[10px] tracking-wider";
+            } else if (type === 'oneway') {
+                btnOne.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-emerald-500 text-white shadow";
+                multiRow.classList.add('hidden');
+                selectedRetDate = null;
+                calendarPhase = 'depart';
+                document.getElementById('tripTypeBadge').innerText = "ONE WAY";
+                document.getElementById('tripTypeBadge').className = "bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded-full font-extrabold text-[10px] tracking-wider";
+            } else {
+                btnMulti.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-amber-500 text-white shadow";
+                multiRow.classList.remove('hidden');
+                calendarPhase = selectedDeptDate && !selectedRetDate ? 'return' : (selectedRetDate ? 'return' : 'depart');
+                document.getElementById('tripTypeBadge').innerText = "MULTI-CITY";
+                document.getElementById('tripTypeBadge').className = "bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full font-extrabold text-[10px] tracking-wider";
+            }
+            renderCalendars();
+            if (datesReady()) triggerFullScan();
+            else resetResultsUntilDates();
+        }
+
+        function openLocationModal(type) {
+            closeDatePopover();
+            activeModalType = type;
+            const modal = document.getElementById('locationModal');
+            const title = document.getElementById('modalTitle');
+            const input = document.getElementById('modalSearchInput');
+            if (type === 'origin') title.innerText = "Select Departure Airport";
+            else if (type === 'dest') title.innerText = "Select Destination Airport";
+            else title.innerText = "Select 3rd Stopover Airport";
+            modal.classList.remove('hidden');
+            input.value = '';
+            filterModalAirports(false);
+            ensureWorldwideAirportsLoaded();
+            setTimeout(() => input.focus(), 50);
+        }
+
+        function closeLocationModal() {
+            document.getElementById('locationModal').classList.add('hidden');
+        }
+
+        document.getElementById('locationModal').addEventListener('click', function(e) {
+            if (e.target === this) closeLocationModal();
+        });
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&' + 'amp;')
+                .replace(/</g, '&' + 'lt;')
+                .replace(/>/g, '&' + 'gt;')
+                .replace(/"/g, '&' + 'quot;')
+                .replace(/'/g, '&' + '#039;');
+        }
+
+        function cleanString(str) {
+            return (str || "").toLowerCase().replace(/['\s\-_]/g, "");
+        }
+
+        function filterModalAirports(loadIfNeeded = true) {
+            const rawOriginal = document.getElementById('modalSearchInput').value.trim();
+            const raw = rawOriginal.toLowerCase();
+            const clean = cleanString(raw);
+            const listContainer = document.getElementById('modalAirportList');
+            if (loadIfNeeded && raw.length >= 2 && !worldwideAirportsLoaded) {
+                ensureWorldwideAirportsLoaded();
+            }
+            const airports = getAllAirports();
+            let filtered = airports.filter(item => {
+                const fullText = `${item.country} ${item.city} ${item.name} ${item.code} ${item.keywords || ''}`.toLowerCase();
+                const cleanFull = cleanString(fullText);
+                return !raw || fullText.includes(raw) || cleanFull.includes(clean) || (clean.startsWith('co') && cleanFull.includes('cox'));
+            });
+            filtered = filtered
+                .map(item => {
+                    const code = String(item.code || '').toLowerCase();
+                    const country = String(item.country || '').toLowerCase();
+                    const city = String(item.city || '').toLowerCase();
+                    const name = String(item.name || '').toLowerCase();
+                    let score = 0;
+                    if (raw && code === raw) score += 100;
+                    if (raw && country === raw) score += 80;
+                    if (raw && city === raw) score += 70;
+                    if (raw && country.startsWith(raw)) score += 50;
+                    if (raw && city.startsWith(raw)) score += 40;
+                    if (raw && name.startsWith(raw)) score += 30;
+                    if (item.source !== 'global') score += 5;
+                    return { item, score };
+                })
+                .sort((a, b) => b.score - a.score || a.item.country.localeCompare(b.item.country) || a.item.name.localeCompare(b.item.name))
+                .slice(0, raw ? 250 : 80)
+                .map(x => x.item);
+
+            if (!filtered.length) {
+                const loadingNote = !worldwideAirportsLoaded
+                    ? `<div class="text-[10px] text-slate-500 mt-1">Worldwide airport data is still loading; results may appear automatically.</div>`
+                    : '';
+                listContainer.innerHTML = `
+                    <div class="rounded-xl border border-slate-800 bg-slate-950/60 p-4 text-center">
+                        <div class="text-sm font-bold text-slate-300">No airport found for “${escapeHtml(rawOriginal)}”</div>
+                        <div class="text-[11px] text-slate-500 mt-1">Try a country, city, airport name or IATA code.</div>
+                        ${loadingNote}
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = filtered.map(item => `
+                <div onclick="selectAirportFromModal('${item.code}')"
+                     class="p-2.5 rounded-xl border border-slate-800 bg-slate-950/60 hover:bg-slate-800 cursor-pointer flex justify-between items-center transition">
+                    <div class="min-w-0 pr-2">
+                        <div class="text-xs font-bold text-white truncate">${escapeHtml(item.name)}</div>
+                        <div class="text-[11px] text-slate-400 truncate">${escapeHtml(item.city)} • <span class="text-sky-400 font-semibold">${escapeHtml(item.country)}</span></div>
+                    </div>
+                    <span class="shrink-0 text-[11px] font-black px-2 py-0.5 rounded bg-slate-800 text-sky-400 border border-slate-700 uppercase">${escapeHtml(item.code)}</span>
+                </div>
+            `).join('');
+        }
+
+        function selectAirportFromModal(code) {
+            const airport = getAllAirports().find(item => item.code === code);
+            if (!airport) return;
+            if (activeModalType === 'origin') {
+                selectedOriginCode = airport.code;
+                showChosen('originDisplay', airport.name, airport.code);
+            } else if (activeModalType === 'dest') {
+                selectedDestCode = airport.code;
+                showChosen('destDisplay', airport.name, airport.code);
+            } else if (activeModalType === 'stopover') {
+                selectedStopoverCode = airport.code;
+                showChosen('stopoverDisplay', airport.name, airport.code);
+            }
+            closeLocationModal();
+            if (selectedOriginCode && selectedDestCode) validateRoute();
+            if (datesReady()) triggerFullScan();
+            else resetResultsUntilDates();
+        }
+
+        function renderCalendars() {
+            const m2 = shiftCalendarMonth(calMonth, 1);
+            document.getElementById('departMonthLabel').innerText = `${monthNames[calMonth.getMonth()]} ${calMonth.getFullYear()}`;
+            const l2 = document.getElementById('departMonthLabel2');
+            if (l2) l2.innerText = `${monthNames[m2.getMonth()]} ${m2.getFullYear()}`;
+            renderMonthGrid('tripCalendarGrid', calMonth);
+            renderMonthGrid('tripCalendarGrid2', m2);
+            updateSelectionHeader();
+        }
+
+        function renderMonthGrid(gridId, monthDate) {
+            const grid = document.getElementById(gridId || 'tripCalendarGrid');
+            if (!grid) return;
+            monthDate = monthDate || calMonth;
+            let html = '';
+            const year = monthDate.getFullYear();
+            const month = monthDate.getMonth();
+            let firstDay = new Date(year, month, 1).getDay();
+            let startOffset = (firstDay === 0 ? 6 : firstDay - 1);
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const prevMonthDays = new Date(year, month, 0).getDate();
+
+            for (let i = startOffset - 1; i >= 0; i--) {
+                html += `<div class="sk-day empty cal-pad" aria-hidden="true">${prevMonthDays - i}</div>`;
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const cur = new Date(year, month, day);
+                const isDept = selectedDeptDate && isSameDay(cur, selectedDeptDate);
+                const isRet = selectedRetDate && isSameDay(cur, selectedRetDate);
+                const inRange = currentTripType !== 'oneway' && selectedDeptDate && selectedRetDate && cur > selectedDeptDate && cur < selectedRetDate;
+                let classes = "sk-day text-slate-300";
+                if (isDept) classes += " sk-day-selected-dept";
+                else if (isRet) classes += " sk-day-selected-ret";
+                else if (inRange) classes += " sk-day-in-range";
+                const todayStart = new Date();
+                todayStart.setHours(0, 0, 0, 0);
+                const isPast = cur < todayStart;
+                const beforeDepart = currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate && cur < selectedDeptDate;
+                const blocked = isPast || beforeDepart;
+                if (blocked) classes += " empty";
+                if (isSameDay(cur, todayStart)) classes += " sk-day-today";
+                if (isDept && selectedRetDate && currentTripType !== 'oneway' && !isSameDay(selectedDeptDate, selectedRetDate)) classes += " cal-range-start";
+                if (isRet && selectedDeptDate && !isSameDay(selectedDeptDate, selectedRetDate)) classes += " cal-range-end";
+                else if (currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate && cur >= selectedDeptDate && !isDept && !isRet) classes += " sk-day-return-ok";
+                const label = cur.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+                html += `<div class="${classes}" role="button" aria-label="${label}"${blocked ? ' aria-disabled="true"' : ` tabindex="0" onclick="selectDate(${year}, ${month}, ${day})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectDate(${year}, ${month}, ${day})}"`}><span>${day}</span></div>`;
+            }
+            grid.innerHTML = html;
+        }
+
+        function openDatePopover(which) {
+            datePopoverTarget = which;
+            const pop = document.getElementById('calendarPopover');
+            const backdrop = document.getElementById('datePopoverBackdrop');
+            const card = document.getElementById('calendarCard');
+            if (!pop) return;
+            pop.hidden = false;
+            if (backdrop) backdrop.hidden = false;
+            if (card) {
+                card.classList.add('cal-open');
+                card.setAttribute('aria-hidden', 'false');
+            }
+            const departBtn = document.getElementById('departDateField');
+            const returnBtn = document.getElementById('returnDateField');
+            if (departBtn) departBtn.setAttribute('aria-expanded', which === 'depart' ? 'true' : 'false');
+            if (returnBtn && !returnBtn.disabled) returnBtn.setAttribute('aria-expanded', which === 'return' ? 'true' : 'false');
+            document.querySelectorAll('.trip-seg.is-date-open').forEach((el) => el.classList.remove('is-date-open'));
+            const anchor = document.getElementById(which === 'return' ? 'returnDateField' : 'departDateField');
+            if (anchor && anchor.closest) anchor.closest('.trip-seg').classList.add('is-date-open');
+            renderCalendars();
+            placeDatePopover();
+        }
+
+        function closeDatePopover() {
+            datePopoverTarget = null;
+            const pop = document.getElementById('calendarPopover');
+            const backdrop = document.getElementById('datePopoverBackdrop');
+            const card = document.getElementById('calendarCard');
+            if (pop) pop.hidden = true;
+            if (backdrop) backdrop.hidden = true;
+            if (card) {
+                card.classList.remove('cal-open');
+                card.setAttribute('aria-hidden', 'true');
+            }
+            const departBtn = document.getElementById('departDateField');
+            const returnBtn = document.getElementById('returnDateField');
+            if (departBtn) departBtn.setAttribute('aria-expanded', 'false');
+            if (returnBtn) returnBtn.setAttribute('aria-expanded', 'false');
+            document.querySelectorAll('.trip-seg.is-date-open').forEach((el) => el.classList.remove('is-date-open'));
+        }
+
+        function closeCalendar() { closeDatePopover(); }
+
+        function placeDatePopover() {
+            const pop = document.getElementById('calendarPopover');
+            if (!pop || pop.hidden) return;
+            if (window.innerWidth <= 860) {
+                pop.style.left = '';
+                pop.style.top = '';
+                pop.style.width = '';
+                return;
+            }
+            const anchor = document.getElementById(datePopoverTarget === 'return' ? 'returnDateField' : 'departDateField');
+            if (!anchor) return;
+            const rect = anchor.getBoundingClientRect();
+            const header = document.querySelector('.site-header');
+            const tabs = document.querySelector('.trip-tabs');
+            const headerBottom = Math.max(
+                header ? header.getBoundingClientRect().bottom : 0,
+                tabs ? tabs.getBoundingClientRect().bottom : 0
+            );
+            const width = Math.min(720, window.innerWidth - 16);
+            let left = rect.left;
+            if (left + width > window.innerWidth - 8) left = window.innerWidth - 8 - width;
+            if (left < 8) left = 8;
+            let top = rect.bottom + 6;
+            const popHeight = pop.offsetHeight || 420;
+            if (window.innerHeight - top < Math.min(popHeight, 280) && rect.top - headerBottom > popHeight + 12) {
+                top = rect.top - popHeight - 6;
+            }
+            if (top < headerBottom + 8) top = headerBottom + 8;
+            pop.style.width = width + 'px';
+            pop.style.left = left + 'px';
+            pop.style.top = top + 'px';
+        }
+
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDatePopover(); });
+        document.addEventListener('click', (e) => {
+            const pop = document.getElementById('calendarPopover');
+            const card = document.getElementById('calendarCard');
+            if (!pop || pop.hidden || !card) return;
+            if (card.contains(e.target) || e.target.closest('#departDateField,#returnDateField,#calendarPickBadge,#datePopoverBackdrop')) return;
+            if (!document.body.contains(e.target)) return;
+            closeDatePopover();
+        });
+        window.addEventListener('resize', placeDatePopover);
+        window.addEventListener('scroll', placeDatePopover, { passive: true });
+
+        function isSameDay(d1, d2) {
+            return d1 && d2 && d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+        }
+
+        function shiftCalendarMonth(dateObj, delta) {
+            return new Date(dateObj.getFullYear(), dateObj.getMonth() + delta, 1);
+        }
+
+        function navigateMonth(delta) {
+            calMonth = shiftCalendarMonth(calMonth, delta);
+            renderCalendars();
+            const months = document.getElementById('calMonths');
+            if (months) {
+                months.classList.remove('cal-anim-next', 'cal-anim-prev');
+                void months.offsetWidth;
+                months.classList.add(delta > 0 ? 'cal-anim-next' : 'cal-anim-prev');
+            }
+        }
+
+        function selectDate(y, m, d) {
+            const clicked = new Date(y, m, d);
+            clicked.setHours(0, 0, 0, 0);
+            const todayStart = new Date();
+            todayStart.setHours(0, 0, 0, 0);
+            if (clicked < todayStart) return;
+            if (currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate && clicked < selectedDeptDate) return;
+
+            if (currentTripType === 'oneway') {
+                selectedDeptDate = clicked;
+                selectedRetDate = null;
+                calendarPhase = 'depart';
+            } else if (calendarPhase === 'return' && selectedDeptDate && clicked >= selectedDeptDate) {
+                selectedRetDate = clicked;
+            } else {
+                selectedDeptDate = clicked;
+                selectedRetDate = null;
+                calendarPhase = 'return';
+            }
+
+            const twoUp = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(min-width:760px)').matches;
+            const viewEnd = new Date(calMonth.getFullYear(), calMonth.getMonth() + (twoUp ? 2 : 1), 1);
+            if (clicked < calMonth || clicked >= viewEnd) calMonth = new Date(clicked.getFullYear(), clicked.getMonth(), 1);
+            renderCalendars();
+            if (currentTripType !== 'oneway' && selectedDeptDate && !selectedRetDate) {
+                // Round trip: stay open so the visitor can pick the return date right away.
+                datePopoverTarget = 'return';
+                if (typeof updateSelectionHeader === 'function') updateSelectionHeader();
+                const w = typeof document !== 'undefined' ? document.getElementById('routeWarning') : null;
+                if (w && !w.classList.contains('hidden')) w.textContent = 'এবার ফেরার তারিখ বাছুন (অথবা ওয়ান ওয়ে বাছুন)।';
+                resetResultsUntilDates();
+                return;
+            }
+            closeDatePopover();
+            if (datesReady()) triggerFullScan();
+            else resetResultsUntilDates();
+        }
+
+        function focusDepartPick() {
+            calendarPhase = 'depart';
+            openDatePopover('depart');
+        }
+
+        function focusReturnPick() {
+            if (currentTripType === 'oneway') return;
+            if (!selectedDeptDate) {
+                calendarPhase = 'depart';
+                openDatePopover('depart');
+                return;
+            }
+            calendarPhase = 'return';
+            openDatePopover('return');
+        }
+
+        function syncReturnField() {
+            const btn = document.getElementById('returnDateField');
+            if (!btn) return;
+            if (currentTripType === 'oneway') {
+                btn.disabled = true;
+                btn.textContent = 'One way — no return date';
+                btn.classList.add('is-placeholder');
+                btn.setAttribute('aria-disabled', 'true');
+                btn.setAttribute('aria-expanded', 'false');
+                return;
+            }
+            btn.disabled = false;
+            btn.removeAttribute('aria-disabled');
+            if (selectedRetDate) {
+                btn.textContent = formatDate(selectedRetDate);
+                btn.classList.remove('is-placeholder');
+            } else {
+                btn.textContent = 'তারিখ বাছুন';
+                btn.classList.add('is-placeholder');
+            }
+            btn.setAttribute('aria-expanded', datePopoverTarget === 'return' ? 'true' : 'false');
+        }
+
+        function formatDate(d) {
+            if (!d) return "";
+            const dayName = dayNamesShort[d.getDay()];
+            return `${dayName}, ${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+        }
+
+        function updateSelectionHeader() {
+            const badge = document.getElementById('calendarPickBadge');
+            const hint = document.getElementById('calendarHint');
+            if (selectedDeptDate) showChosen('selectedTripLabel', formatDate(selectedDeptDate));
+            else setPlaceholder('selectedTripLabel', 'তারিখ বাছুন');
+            const pickingReturn = currentTripType !== 'oneway' && calendarPhase === 'return' && selectedDeptDate;
+            if (badge) badge.textContent = pickingReturn ? 'ফেরার তারিখ' : 'যাওয়ার তারিখ';
+            if (hint) hint.textContent = pickingReturn
+                ? 'যাওয়ার তারিখের আগের দিন বাছা যাবে না।'
+                : 'যাওয়ার তারিখ বাছুন।';
+            syncReturnField();
+        }
+
+        function validateRoute() {
+            const warning = document.getElementById('routeWarning');
+            let message = '';
+            if (!selectedOriginCode || !selectedDestCode) {
+                message = 'কোথা থেকে আর কোথায় — দুটো এয়ারপোর্টই বাছুন।';
+            } else if (selectedOriginCode === selectedDestCode) {
+                message = 'যাওয়া আর গন্তব্যের এয়ারপোর্ট আলাদা হতে হবে।';
+            } else if (currentTripType === 'multicity' &&
+                       (selectedStopoverCode === selectedOriginCode || selectedStopoverCode === selectedDestCode)) {
+                message = 'মাল্টি-সিটিতে তৃতীয় এয়ারপোর্ট প্রথম দুটি থেকে আলাদা হতে হবে।';
+            }
+            warning.textContent = message;
+            warning.classList.toggle('hidden', !message);
+            return !message;
+        }
+
+        function currentSearchOpts() {
+            const destAirport = getAllAirports().find(i => i.code === selectedDestCode) || {};
+            return {
+                origin: selectedOriginCode,
+                dest: selectedDestCode,
+                stop: selectedStopoverCode,
+                depart: selectedDeptDate,
+                returnDate: selectedRetDate,
+                tripType: currentTripType,
+                destCountry: destAirport.country || "",
+                knownAirlines: destAirport.domesticAirlines || [],
+                adults: paxState.adults,
+                children: paxState.children,
+                infants: paxState.infants,
+                cabin: paxState.cabin
+            };
+        }
+
+        function savingsChips(savings, liveFareBdt) {
+            const list = Array.isArray(savings) ? savings : [];
+            if (!list.length) {
+                return "";
+            }
+            return `<div class="flex flex-wrap items-center gap-1.5">${list.map((item) => {
+                const estimate = liveFareBdt != null
+                    ? BookingLinks.estimateAfterOfficialPercent(liveFareBdt, item)
+                    : null;
+                const estimateHtml = estimate
+                    ? `<span class="text-[10px] text-emerald-200/90">${escapeHtml(estimate.label)}: BDT ${estimate.afterBdt.toLocaleString("en-BD")}</span>`
+                    : "";
+                const codeHtml = item.code
+                    ? `<code class="font-mono text-[11px] font-black text-white tracking-wide">${escapeHtml(item.code)}</code>
+                       <button type="button" data-copy-code="${escapeHtml(item.code)}" class="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-amber-500 text-slate-950 hover:bg-amber-400">Copy</button>`
+                    : "";
+                return `
+                    <span class="inline-flex flex-wrap items-center gap-1.5 rounded-lg border border-amber-500/40 bg-amber-500/10 px-2 py-1 max-w-full">
+                        <span class="text-[10px] font-black text-amber-200">${escapeHtml(item.headline)}</span>
+                        ${codeHtml}
+                        ${estimateHtml}
+                        <a href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-semibold text-sky-300 hover:underline">অফিসিয়াল সূত্র</a>
+                    </span>
+                `;
+            }).join("")}</div>`;
+        }
+
+        function nearbyAirportRow(item) {
+            return `
+                <button type="button" data-nearby-code="${escapeHtml(item.code)}" class="w-full flex items-center justify-between gap-2 rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-2.5 hover:border-sky-500/50 transition text-left">
+                    <span class="min-w-0 truncate">
+                        <span class="font-mono font-black text-white tracking-wide">${escapeHtml(item.code)}</span>
+                        <span class="text-slate-400 text-xs ml-2">${escapeHtml(item.city || "")}</span>
+                    </span>
+                    <span class="text-[11px] font-bold text-sky-300 whitespace-nowrap">~${item.km} km</span>
+                </button>
+            `;
+        }
+
+        function renderNearbyAirports(opts) {
+            const section = document.getElementById('nearbyAirportSection');
+            const box = document.getElementById('nearbyAirportResults');
+            if (!section || !box) return;
+            const alts = BookingLinks.cheaperNearbyAirportLinks(opts, getAllAirports());
+            if (!alts.length) {
+                box.innerHTML = "";
+                section.classList.add('hidden');
+                return;
+            }
+            box.innerHTML = alts.map((item) => nearbyAirportRow(item)).join("");
+            box.querySelectorAll("[data-nearby-code]").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const code = String(btn.getAttribute("data-nearby-code") || "").toLowerCase();
+                    const airport = getAllAirports().find((item) => String(item.code).toLowerCase() === code);
+                    activeModalType = "dest";
+                    if (airport) selectAirportFromModal(airport.code);
+                });
+            });
+            section.classList.remove('hidden');
+        }
+
+        function primaryGoogleCard(item) {
+            return `
+                <div class="rounded-2xl border-2 border-sky-400/60 bg-sky-950/40 p-4 sm:p-5 shadow-xl shadow-sky-900/20">
+                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-sky-300 mb-2">ফ্লাইট সার্চ</div>
+                    <h3 class="text-lg sm:text-xl font-black text-white">লাইভ ফ্লাইটের দাম</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-5">${escapeHtml(item.blurb || "Compare prices from partner sites on Aviasales. We do not invent a fare.")}</p>
+                    ${item.nearbyLabel ? `<div class="mt-2 text-[11px] font-black text-sky-200">${escapeHtml(item.nearbyLabel)}</div>` : ""}
+                    <a href="${item.url}" target="_blank" rel="sponsored noopener noreferrer" class="mt-4 w-full block text-center bg-sky-500 hover:bg-sky-400 text-white font-black py-3.5 rounded-xl text-sm sm:text-base transition shadow-lg shadow-sky-500/30">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i> ${escapeHtml(item.cta || "Open Travelpayouts results")}
+                    </a>
+                    <p class="text-[11px] text-slate-500 mt-2">দাম আসে সরাসরি আমাদের পার্টনার Aviasales থেকে। আমরা কখনো দাম বানাই না। চূড়ান্ত মোট দাম বুকিং সাইটে নিশ্চিত হয়।</p>
+                </div>
+            `;
+        }
+
+        function cheapPathCard(item) {
+            const tone = item.id === "gozayaan"
+                ? { border: "hover:border-fuchsia-500/50", badge: "text-fuchsia-300 bg-fuchsia-500/10", btn: "bg-fuchsia-500 hover:bg-fuchsia-600 text-white" }
+                : { border: "hover:border-slate-600", badge: "text-slate-300 bg-slate-800", btn: "bg-slate-700 hover:bg-slate-600 text-white" };
+            const flexNote = item.fareNote
+                ? `<span class="text-[10px] text-amber-200/80 font-semibold">${escapeHtml(item.fareNote)}</span>`
+                : "";
+            return `
+                <div class="bg-slate-900/80 border border-slate-800 ${tone.border} px-3 py-2.5 rounded-xl transition">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2.5">
+                        <div class="sm:w-44 shrink-0">
+                            <span class="text-[11px] font-bold ${tone.badge} px-2.5 py-1 rounded-md">${escapeHtml(item.name)}</span>
+                            ${flexNote ? `<div class="mt-1">${flexNote}</div>` : ""}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            ${savingsChips(item.savings)}
+                        </div>
+                        <a href="${item.url}" target="_blank" rel="${item.affiliate ? "sponsored noopener noreferrer" : "noopener noreferrer"}" class="shrink-0 text-center ${tone.btn} font-bold px-3 py-2 rounded-xl text-[11px] transition whitespace-nowrap">
+                            <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> ${escapeHtml(item.cta || "Open " + item.name)}
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function bindCopyButtons(root) {
+            if (!root) return;
+            root.querySelectorAll("[data-copy-code]").forEach((btn) => {
+                btn.addEventListener("click", async () => {
+                    const code = btn.getAttribute("data-copy-code") || "";
+                    try {
+                        await navigator.clipboard.writeText(code);
+                        btn.textContent = "Copied";
+                        setTimeout(() => { btn.textContent = "Copy"; }, 1500);
+                    } catch (err) {
+                        btn.textContent = code;
+                    }
+                });
+            });
+        }
+
+        function providerCard(item, tone) {
+            const colors = {
+                sky: { border: "hover:border-sky-500/50", badge: "text-sky-400 bg-sky-500/10", btn: "bg-sky-500 hover:bg-sky-600 text-white" },
+                amber: { border: "hover:border-amber-500/50", badge: "text-amber-300 bg-amber-500/10", btn: "bg-amber-500 hover:bg-amber-600 text-slate-950" },
+                emerald: { border: "hover:border-emerald-500/50", badge: "text-emerald-400 bg-emerald-500/10", btn: "bg-emerald-500 hover:bg-emerald-600 text-white" },
+                fuchsia: { border: "hover:border-fuchsia-500/50", badge: "text-fuchsia-300 bg-fuchsia-500/10", btn: "bg-fuchsia-500 hover:bg-fuchsia-600 text-white" },
+                rose: { border: "hover:border-rose-500/50", badge: "text-rose-200 bg-rose-500/10", btn: "bg-rose-500 hover:bg-rose-600 text-white" }
+            }[tone];
+            return `
+                <div class="bg-slate-900 border border-slate-800 ${colors.border} p-4 rounded-2xl shadow-xl flex flex-col justify-between transition">
+                    <div>
+                        <span class="text-[11px] font-bold ${colors.badge} px-2.5 py-1 rounded-md">${escapeHtml(item.name)}</span>
+                        <p class="text-xs text-slate-400 mt-3 leading-5">${escapeHtml(item.blurb || "Opens this provider with the same dates.")}</p>
+                    </div>
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="mt-4 w-full block text-center ${colors.btn} font-bold py-2 rounded-xl text-xs transition">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> ${escapeHtml(item.cta || "Open " + item.name)}
+                    </a>
+                </div>
+            `;
+        }
+
+        function resetResultsUntilDates() {
+            const pathBox = document.getElementById('cheapPathResults');
+            const needDates = document.getElementById('needDatesHint');
+            const googleBar = document.getElementById('googleBookBar');
+            const nearbySection = document.getElementById('nearbyAirportSection');
+            const nearbyBox = document.getElementById('nearbyAirportResults');
+            if (pathBox) pathBox.innerHTML = "";
+            if (googleBar) {
+                googleBar.innerHTML = "";
+                googleBar.classList.add('hidden');
+            }
+            if (nearbyBox) nearbyBox.innerHTML = "";
+            if (nearbySection) nearbySection.classList.add('hidden');
+            if (needDates) needDates.classList.remove('hidden');
+            document.getElementById('hotelResults').innerHTML = "";
+            document.getElementById('hotelSectionWrapper').classList.add('hidden');
+            document.getElementById('verifiedAgencySection').classList.add('hidden');
+            document.getElementById('officialPackageResults').innerHTML = "";
+            document.getElementById('tripSummary').classList.add('hidden');
+            const btnText = document.getElementById('btnText');
+            if (btnText) btnText.innerText = "খুঁজুন";
+        }
+
+        function renderResults() {
+            const opts = currentSearchOpts();
+            resetResultsUntilDates();
+            if (!datesReady()) return;
+
+            const origCode = selectedOriginCode.toUpperCase();
+            const destCode = selectedDestCode.toUpperCase();
+            const stopCode = selectedStopoverCode.toUpperCase();
+            const dStr = formatDate(selectedDeptDate);
+            const rStr = formatDate(selectedRetDate);
+            let diffDays = 1;
+            if (selectedDeptDate && selectedRetDate) {
+                diffDays = Math.max(1, Math.round((selectedRetDate - selectedDeptDate) / 86400000));
+            }
+
+            const summary = document.getElementById('tripSummary');
+            summary.classList.remove('hidden');
+            if (currentTripType === 'oneway') {
+                document.getElementById('routeBanner').innerText = `${origCode} ➔ ${destCode}`;
+                document.getElementById('stayNights').innerText = "One-way flight";
+                document.getElementById('dateBanner').innerText = dStr;
+            } else if (currentTripType === 'multicity') {
+                document.getElementById('routeBanner').innerText = `${origCode} ➔ ${destCode} ➔ ${stopCode}`;
+                document.getElementById('stayNights').innerText = `${diffDays} days multi-city`;
+                document.getElementById('dateBanner').innerText = `${dStr} ➔ ${rStr}`;
+            } else {
+                document.getElementById('routeBanner').innerText = `${origCode} 🔁 ${destCode}`;
+                document.getElementById('stayNights').innerText = `${diffDays} nights`;
+                document.getElementById('dateBanner').innerText = `${dStr} ➔ ${rStr}`;
+            }
+
+            const needDates = document.getElementById('needDatesHint');
+            if (needDates) needDates.classList.add('hidden');
+            const pathBox = document.getElementById('cheapPathResults');
+            const googleBar = document.getElementById('googleBookBar');
+            const rows = BookingLinks.cheapBookPath(opts);
+            const primary = rows.filter((item) => item.id === "aviasales-affiliate");
+            const secondary = rows.filter((item) => item.id !== "google-flights" && item.id !== "aviasales-affiliate");
+            if (googleBar) {
+                googleBar.classList.remove('hidden');
+                googleBar.innerHTML = primary.map((item) => primaryGoogleCard(item)).join("");
+            }
+            renderNearbyAirports(opts);
+            const secondaryHeading = `
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2 mt-1">
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-300">সরাসরি এয়ারলাইন বা বাংলাদেশি ট্রাভেল সাইটে বুক করুন</h3>
+                    <span class="text-[10px] sm:text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-semibold">প্রতিটি সাইটের পাশে কার্ড ও প্রোমো অফার</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mb-2">এয়ারলাইনের সাইট অনেক সময় আগে বেশি দামের ভাড়া (যেমন “Flex”) দেখায়, তাই উপরের লাইভ দামের সাথে মোট দাম তুলনা করুন। সেই সাইটের প্রোমো কোড বা ব্যাংক কার্ড অফার থাকলে এই বোতামগুলো ব্যবহার করুন।</p>
+            `;
+            pathBox.innerHTML = secondaryHeading + secondary.map((item) => cheapPathCard(item)).join("");
+            bindCopyButtons(pathBox);
+
+            const dest = getAllAirports().find(i => i.code === selectedDestCode) || COUNTRY_AIRPORTS[0];
+            const city = BookingLinks.hotelCityForCode(selectedDestCode, dest.city);
+            const checkin = BookingLinks.toISODate(selectedDeptDate);
+            const checkout = currentTripType === "oneway"
+                ? BookingLinks.addDaysISO(checkin, 1)
+                : BookingLinks.toISODate(selectedRetDate);
+            const hotelNote = currentTripType === "oneway"
+                ? `Arrival-night search in ${city} (${checkin} → ${checkout}).`
+                : `Stay in ${city} from ${checkin} to ${checkout}.`;
+            document.getElementById('hotelResults').innerHTML = BookingLinks.hotelLinks({
+                city,
+                checkin,
+                checkout
+            }).map(item => providerCard({
+                name: item.name,
+                blurb: `${hotelNote} ${item.blurb}`,
+                url: item.url
+            }, "emerald")).join("");
+            document.getElementById('hotelSectionWrapper').classList.remove('hidden');
+
+            const packages = BookingLinks.officialPackagesForRoute({
+                dest: selectedDestCode,
+                destCountry: dest.country || ""
+            });
+            const pkgWrap = document.getElementById('verifiedAgencySection');
+            const pkgBox = document.getElementById('officialPackageResults');
+            if (!packages.length) {
+                pkgBox.innerHTML = "";
+                pkgWrap.classList.add('hidden');
+            } else {
+                pkgBox.innerHTML = packages.map((item) => `
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-4 hover:border-emerald-500/40 transition">
+                        <div class="text-[10px] uppercase font-black text-emerald-300">Official packages for this destination</div>
+                        <h3 class="text-sm font-black text-white mt-1">${escapeHtml(item.name)}</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-5">${escapeHtml(item.blurb || "")}</p>
+                        <div class="text-[10px] text-sky-300 font-bold mt-3">${escapeHtml(item.cta || "Open official packages")} ↗</div>
+                    </a>
+                `).join("");
+                pkgWrap.classList.remove('hidden');
+            }
+
+            const btnText = document.getElementById('btnText');
+            if (btnText) btnText.innerText = "খুঁজুন";
+            openWhiteLabelResults();
+        }
+
+        function ddmm(date) {
+            return String(date.getDate()).padStart(2, "0") + String(date.getMonth() + 1).padStart(2, "0");
+        }
+
+        function openWhiteLabelResults() {
+            const origin = selectedOriginCode.toUpperCase();
+            const dest = selectedDestCode.toUpperCase();
+            const depart = ddmm(selectedDeptDate);
+            const paxTail = BookingLinks.aviasalesPaxSuffix(paxState);
+            let flightSearch = origin + depart + dest + paxTail;
+            let airportIdx = "0";
+            if (currentTripType === "multicity") {
+                const stop = selectedStopoverCode.toUpperCase();
+                flightSearch = origin + depart + stop + ddmm(selectedRetDate) + dest + paxTail;
+                airportIdx = "0,1";
+            } else if (currentTripType !== "oneway") {
+                flightSearch = origin + depart + dest + ddmm(selectedRetDate) + paxTail;
+                airportIdx = "0,1";
+            }
+            const params = new URLSearchParams(window.location.search);
+            ["origin", "origin_iata", "destination", "destination_iata", "depart_date", "return_date", "adults", "children", "infants", "trip_class", "ticketId"].forEach((key) => params.delete(key));
+            params.set("flightSearch", flightSearch);
+            params.set("origin_airports", airportIdx);
+            params.set("destination_airports", airportIdx);
+            window.history.replaceState(null, "", window.location.pathname + "?" + params.toString() + "#wl-flight-results");
+            window.dispatchEvent(new Event("urlchange"));
+            const box = document.getElementById("wl-flight-results");
+            if (box && box.scrollIntoView) box.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function triggerFullScan() {
+            if (!validateRoute()) return;
+            if (!datesReady()) {
+                const warn = document.getElementById('routeWarning');
+                const needReturn = currentTripType !== 'oneway' && selectedDeptDate && !selectedRetDate;
+                if (warn) {
+                    warn.textContent = needReturn
+                        ? 'ফেরার তারিখ বাছুন (অথবা ওয়ান ওয়ে বাছুন)।'
+                        : 'যাওয়ার তারিখ বাছুন।';
+                    warn.classList.remove('hidden');
+                }
+                setTimeout(() => {
+                    if (needReturn) focusReturnPick();
+                    else focusDepartPick();
+                    renderCalendars();
+                }, 0);
+                resetResultsUntilDates();
+                return;
+            }
+            const icon = document.getElementById('searchIcon');
+            const toast = document.getElementById('scanningToast');
+            const btnText = document.getElementById('btnText');
+            icon.className = "fa-solid fa-arrows-rotate fa-spin";
+            btnText.innerText = "খুঁজুন";
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                renderCalendars();
+                renderResults();
+                icon.className = "fa-solid fa-magnifying-glass";
+                btnText.innerText = "খুঁজুন";
+                setTimeout(() => toast.classList.add('hidden'), 250);
+            }, 180);
+        }
+
+        var paxState = { adults: 1, children: 0, infants: 0, cabin: 'economy' };
+        function paintPax() {
+            paxState = BookingLinks.pax(paxState);
+            document.getElementById('paxAdults').textContent = paxState.adults;
+            document.getElementById('paxChildren').textContent = paxState.children;
+            document.getElementById('paxInfants').textContent = paxState.infants;
+            document.getElementById('paxCabin').value = paxState.cabin;
+            var total = paxState.adults + paxState.children + paxState.infants;
+            document.getElementById('paxSummary').textContent = total + (total === 1 ? ' জন যাত্রী' : ' জন যাত্রী') + ' · ' + BookingLinks.CABIN_LABEL[paxState.cabin];
+            if (total === 1) document.getElementById('paxSummary').textContent = '১ জন প্রাপ্তবয়স্ক · ' + BookingLinks.CABIN_LABEL[paxState.cabin];
+        }
+        function stepPax(key, delta) {
+            paxState[key] = (paxState[key] || 0) + delta;
+            paintPax();
+            if (datesReady()) renderResults();
+        }
+        function setCabin(v) { paxState.cabin = v; paintPax(); if (datesReady()) renderResults(); }
+        function togglePax(force) {
+            var panel = document.getElementById('paxPanel');
+            var open = typeof force === 'boolean' ? force : panel.hidden;
+            panel.hidden = !open;
+            document.getElementById('paxToggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+        document.addEventListener('click', function (e) {
+            var seg = document.querySelector('.pax-seg');
+            if (seg && !seg.contains(e.target)) togglePax(false);
+        });
+        // T-110: hide non-airline "carriers" (e.g. Deutsche Bahn AG) in Travelpayouts results.
+        // The widget renders late inside an open shadow root on #tpwl-tickets (no iframe), so observe every
+        // open shadow root under it and re-check cards on each change.
+        (function filterBogusCarriers() {
+            var root = document.getElementById('tpwl-tickets');
+            if (!root || !window.MutationObserver) return;
+            var CARD = '[data-role="flight-card"], [class*="DirectFlightsItem-module__root"]';
+            var NAME = '[class*="AirCompany"], [class*="airline"], [class*="Airline"]';
+            var queued = false, watched = [];
+            function scopes() {
+                var out = [root], i = 0;
+                while (i < out.length) {
+                    out[i].querySelectorAll('*').forEach(function (el) { if (el.shadowRoot) out.push(el.shadowRoot); });
+                    if (out[i] === root && root.shadowRoot) out.push(root.shadowRoot);
+                    i++;
+                }
+                return out;
+            }
+            function carrierNames(card) {
+                var parts = [];
+                card.querySelectorAll(NAME).forEach(function (n) { parts.push(n.textContent); });
+                card.querySelectorAll('img[alt], [title]').forEach(function (n) { parts.push(n.getAttribute('alt') || n.getAttribute('title')); });
+                return parts.join(' | ');
+            }
+            function sweep() {
+                queued = false;
+                scopes().forEach(function (sc) {
+                    watch(sc);
+                    sc.querySelectorAll(CARD).forEach(function (card) {
+                        var bogus = BookingLinks.isBogusCarrier(carrierNames(card));
+                        if (bogus && card.getAttribute('data-ctf-hidden') !== 'non-airline') {
+                            card.setAttribute('data-ctf-hidden', 'non-airline');
+                            card.style.setProperty('display', 'none', 'important');
+                        } else if (!bogus && card.hasAttribute('data-ctf-hidden')) {
+                            card.removeAttribute('data-ctf-hidden');
+                            card.style.removeProperty('display');
+                        }
+                    });
+                });
+            }
+            var mo = new MutationObserver(function () {
+                if (!queued) { queued = true; requestAnimationFrame(sweep); }
+            });
+            function watch(node) {
+                if (watched.indexOf(node) !== -1) return;
+                watched.push(node);
+                mo.observe(node, { childList: true, subtree: true, characterData: true });
+            }
+            watch(root);
+            // The shadow root is attached without a DOM mutation we can see, so check for it briefly.
+            var tries = 0, timer = setInterval(function () {
+                sweep();
+                if (++tries > 180) clearInterval(timer);
+            }, 1000);
+        })();
+
+        function showHomeTab(name) {
+            document.querySelectorAll('.home-panel').forEach(function (panel) {
+                panel.hidden = panel.getAttribute('data-tab') !== name;
+            });
+            document.querySelectorAll('.trip-tabs button').forEach(function (btn) {
+                var on = btn.getAttribute('data-tab') === name;
+                btn.classList.toggle('is-active', on);
+                btn.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+        }
+        var hashTabs = {
+            '#air-ticket': 'air',
+            '#airlines': 'airlines',
+            '#hotel-booking': 'hotel',
+            '#tour-package': 'tour',
+            '#travel-sim': 'sim',
+            '#airport-transport': 'transfer',
+            '#bd-transport': 'bd'
+        };
+        (function renderBdTransport() {
+            var box = document.getElementById('bdTransportLinks');
+            if (!box) return;
+            box.innerHTML = BookingLinks.bdSurfaceTransportLinks().map(function (item) {
+                return '<a class="bd-card" href="' + item.url + '" target="_blank" rel="noopener noreferrer"><b>' + escapeHtml(item.mode) + ' · ' + escapeHtml(item.name) + '</b><span>' + escapeHtml(item.blurb) + '</span></a>';
+            }).join('');
+        })();
+
+        (function t112Cards() {
+            document.querySelectorAll('.lux-card[data-open-tab]').forEach(function (card) {
+                card.addEventListener('click', function () {
+                    showHomeTab(card.getAttribute('data-open-tab'));
+                    var t = document.querySelector('.trip-tabs');
+                    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        })();
+        (function t112Domestic() {
+            var f = document.getElementById('domFrom'), t = document.getElementById('domTo'), d = document.getElementById('domDate'), bus = document.getElementById('domBus');
+            if (!f || !t || !d || !bus) return;
+            var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+            var today = new Date();
+            d.min = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
+            function upd() {
+                var p = (d.value || '').split('-');
+                if (p.length !== 3 || f.value === t.value) { bus.href = 'https://www.shohoz.com/bus-tickets'; return; }
+                var doj = p[2] + '-' + M[parseInt(p[1], 10) - 1] + '-' + p[0];
+                bus.href = 'https://www.shohoz.com/bus-tickets/booking/bus/search?fromcity=' + encodeURIComponent(f.value) + '&tocity=' + encodeURIComponent(t.value) + '&doj=' + doj;
+            }
+            [f, t, d].forEach(function (el) { el.addEventListener('change', upd); el.addEventListener('input', upd); });
+            upd();
+        })();
+        if (hashTabs[location.hash]) showHomeTab(hashTabs[location.hash]);
+
+        function reinforceBlankSearchFields() {
+            if (!selectedOriginCode) setPlaceholder('originDisplay', 'শহর বা এয়ারপোর্ট');
+            if (!selectedDestCode) setPlaceholder('destDisplay', 'শহর বা এয়ারপোর্ট');
+            if (!selectedDeptDate) setPlaceholder('selectedTripLabel', 'তারিখ বাছুন');
+            if (!selectedRetDate && currentTripType !== 'oneway') {
+                const btn = document.getElementById('returnDateField');
+                if (btn) {
+                    btn.textContent = 'তারিখ বাছুন';
+                    btn.classList.add('is-placeholder');
+                }
+            }
+        }
+
+        renderCalendars();
+        resetResultsUntilDates();
+        reinforceBlankSearchFields();
+        ensureWorldwideAirportsLoaded();
+        const siteHeader = document.querySelector('.site-header');
+        if (siteHeader) siteHeader.addEventListener('click', closeDatePopover);
+        window.addEventListener('load', reinforceBlankSearchFields);
+    </script>
+<script>
+(function(){var header=document.querySelector(".site-header");if(!header)return;function paint(){header.classList.toggle("is-scrolled",window.scrollY>2);}paint();window.addEventListener("scroll",paint,{passive:true});})();
+</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>#tpwl-modals:not([data-ctf-open]){pointer-events:none !important}</style>
+<script>
+// Hotfix: #tpwl-modals renders its modal in an open shadow root, so it is always :empty in the light DOM.
+// Let clicks pass through the host only while a modal is visible inside it (CSS rule above keys off data-ctf-open).
+(function tpwlModalClicks(){
+  function sync(){
+    var host=document.getElementById('tpwl-modals'); if(!host) return;
+    var sr=host.shadowRoot, o=false;
+    if(sr){var els=sr.querySelectorAll('*'); for(var i=0;i<els.length&&!o;i++){var r=els[i].getBoundingClientRect(); if(r.width>50&&r.height>50) o=true;}}
+    else o=host.children.length>0;
+    if(o!==host.hasAttribute('data-ctf-open')){ if(o) host.setAttribute('data-ctf-open',''); else host.removeAttribute('data-ctf-open'); }
+  }
+  setInterval(sync,250); document.addEventListener('click',function(){setTimeout(sync,0)},true); sync();
+})();
+</script>
+<script>(function(){var M={"Also compare on Aviasales": "Aviasales-এও তুলনা করুন", "Live fare is on Aviasales — we do not invent a fare.": "লাইভ দাম Aviasales-এ — আমরা দাম বানাই না।", "may show Flex first": "আগে Flex দেখাতে পারে", "Copy": "কপি", "Open Google Hotels": "Google Hotels খুলুন", "Open Booking.com": "Booking.com খুলুন", "Open GoZayaan with your dates": "আপনার তারিখে GoZayaan খুলুন", "Open ShareTrip home, then enter the EBL code": "ShareTrip খুলুন, তারপর EBL কোড দিন", "Open official packages": "অফিসিয়াল প্যাকেজ খুলুন"};
+var R=[["^Open (.+) official site$", "$1-এর অফিসিয়াল সাইট খুলুন"], ["^Open (.+) official booking$", "$1-এর অফিসিয়াল বুকিং খুলুন"], ["^Open (.+) booking$", "$1 বুকিং খুলুন"], ["^(.+): official up to (\\d+)% on this OTA$", "$1: এই সাইটে অফিসিয়াল ছাড় সর্বোচ্চ $2%"], ["^(.+): official up to (\\d+)% at (.+) checkout$", "$1: $3 চেকআউটে অফিসিয়াল ছাড় সর্বোচ্চ $2%"], ["^(.+): official up to (\\d+)% at airline checkout$", "$1: এয়ারলাইন চেকআউটে অফিসিয়াল ছাড় সর্বোচ্চ $2%"], ["^(.+): (\\d+)% at airline checkout$", "$1: এয়ারলাইন চেকআউটে $2% ছাড়"], ["^Stay in (.+) from (\\S+) to (\\S+)\\. (.*)$", "$1-এ থাকা: $2 থেকে $3। $4"]].map(function(r){return [new RegExp(r[0]),r[1]];});
+function tr(s){if(M[s])return M[s];for(var i=0;i<R.length;i++){if(R[i][0].test(s))return s.replace(R[i][0],R[i][1]);}return null;}
+function walk(n){if(n.nodeType===3){var s=n.nodeValue.trim();var v=s&&tr(s);if(v)n.nodeValue=n.nodeValue.replace(s,v);return;}
+if(n.nodeType===1&&!/^(SCRIPT|STYLE)$/.test(n.tagName))for(var c=n.firstChild;c;c=c.nextSibling)walk(c);}
+var ids=['googleBookBar','cheapPathResults','hotelSectionWrapper','nearbyAirportSection'];
+var mo=new MutationObserver(function(){ids.forEach(function(i){var e=document.getElementById(i);if(e)walk(e);});});
+document.addEventListener('DOMContentLoaded',function(){ids.forEach(function(i){var e=document.getElementById(i);if(e)mo.observe(e,{childList:true,subtree:true});});});})();</script>
 </body>
 </html>
