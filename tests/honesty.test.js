@@ -59,9 +59,9 @@ const required = [
     "final price is on the provider",
     "Cheap ticket path",
     "cheapPathResults",
-    "Official % beside the book row",
+    "Card &amp; promo offers shown beside each site",
     "Open Travelpayouts results",
-    "authentic airline-issued",
+    "compare the total with the live prices above",
     "City or airport",
     "Select date",
     "calendarPopover",
@@ -132,8 +132,8 @@ assert.ok(!html.includes("travel/flights?q="), "index.html must not link Google 
 assert.ok(links.includes("sortby=cheapest"), "Skyscanner must sort cheapest-first");
 assert.ok(links.includes("gozayaan.com/campaign/id/644"), "GoZayaan official campaign URL must be listed");
 assert.ok(links.includes("gozayaan.com/campaign/sc"), "SCB GoZayaan campaign must be listed");
-assert.ok(links.includes("AIRASTRA15"), "AIR ASTRA official promo code must be listed");
-assert.ok(links.includes("STLRPIQ326"), "EBL official Stellar international code must be listed");
+assert.ok(links.includes("AIRASTRA10"), "AIR ASTRA official promo code must be listed");
+assert.ok(links.includes("STLRPIQ426"), "EBL official Stellar international code must be listed");
 assert.ok(links.includes("bkash.com/en/campaign"), "bKash official campaign hub must be listed");
 assert.ok(!links.includes("USBA15"), "Do not invent USBA15 without the airline official promo page");
 assert.ok(html.includes("cheapPathCard") && html.includes("savingsChips"), "cheap-path rows must attach official savings beside each book control");
@@ -152,8 +152,10 @@ assert.ok(html.includes("flightSearch") && html.includes("not copied into these 
 assert.ok(html.includes('id="tpwl-search"') && html.includes('id="tpwl-tickets"'), "White Label search and tickets stay on the same page");
 assert.ok(html.indexOf('id="btnRoundTrip"') < html.indexOf('id="tpwl-search"'), "White Label search sits below the Round Trip control");
 assert.ok(html.includes("tpwl-search-slot"), "White Label search stays out of the Round Trip row");
-assert.ok(!/[\u0980-\u09FF]/.test(html), "homepage must not contain Bengali characters");
-assert.ok(html.includes("Airline site (often Flex / higher fare family)"), "airline engines must be labeled secondary Flex");
+// Bengali is allowed only inside elements explicitly marked lang="bn" (the Bangla switch and Bangla guide links).
+const htmlNoBn = html.replace(/<(nav|p|a|h2|h3|span|div)\b[^>]*\blang="bn"[^>]*>[\s\S]*?<\/\1>/g, "");
+assert.ok(!/[\u0980-\u09FF]/.test(htmlNoBn), "English homepage must not contain Bengali outside lang=\"bn\" elements");
+assert.ok(html.includes("pricier fare type first"), "airline engines must warn they may show a pricier (Flex) fare first");
 assert.ok(links.includes("Open Google Flights"), "Google Flights CTA is Open Google Flights");
 assert.ok(links.includes("authentic airline-issued"), "Google Flights blurb must say the airline ticket there is authentic");
 assert.ok(links.includes("SCB card: official up to 10% on this OTA"), "GoZayaan SCB headline must stay mapped to that OTA");
@@ -184,8 +186,11 @@ function walkSite(dir, acc) {
     return acc;
 }
 walkSite(path.join(__dirname, ".."), []).forEach((file) => {
-    const text = fs.readFileSync(file, "utf8");
-    assert.ok(!/[\u0980-\u09FF]/.test(text), `${path.relative(path.join(__dirname, ".."), file)} must not contain Bengali characters`);
+    const rel = path.relative(path.join(__dirname, ".."), file).split(path.sep).join("/");
+    // Bangla pages live under bn/ (and the bilingual /medical/ guide); generators hold Bangla source text.
+    if (/^(bn|medical|scripts)\//.test(rel)) return;
+    const text = fs.readFileSync(file, "utf8").replace(/<(nav|p|a|h2|h3|span|div)\b[^>]*\blang="bn"[^>]*>[\s\S]*?<\/\1>/g, "");
+    assert.ok(!/[\u0980-\u09FF]/.test(text), `${rel} must not contain Bengali outside lang="bn" elements`);
 });
 
 console.log("honesty.test.js passed");

@@ -338,12 +338,12 @@ assert.ok(brac.claim.toLowerCase().includes("no available offer"));
 
 const promos = BookingLinks.publishedPromoCodes(dacCan);
 const promoCodes = promos.map((item) => item.code);
-assert.ok(promoCodes.includes("AIRASTRA15"));
-assert.ok(promoCodes.includes("STLRPIQ326"));
-assert.ok(promoCodes.includes("STLRPDQ326"));
+assert.ok(promoCodes.includes("AIRASTRA10"));
+assert.ok(promoCodes.includes("STLRPIQ426"));
+assert.ok(promoCodes.includes("STLRPDQ426"));
 assert.ok(!promoCodes.includes("USBA15"), "do not invent USBA15 without the airline official page");
 assert.ok(!promoCodes.includes("FLYGLOBAL15"));
-const astra15 = promos.find((item) => item.code === "AIRASTRA15");
+const astra15 = promos.find((item) => item.code === "AIRASTRA10");
 assert.ok(astra15.checkoutUrl.includes("fo-airastra.ttinteractive.com/Zenith/FrontOffice/Airastra"));
 assert.ok(astra15.checkoutUrl.includes("OriginAirportCode=DAC"));
 assert.ok(astra15.checkoutUrl.includes("OutboundDate=2026-09-03"));
@@ -358,7 +358,7 @@ const qatarCard = BookingLinks.airlinesForRoute({ ...dacCan, dest: "DOH" }).find
 assert.ok(qatarCard);
 assert.strictEqual(qatarCard.promo.code, "F1FANS");
 assert.ok(qatarCard.promo.summary.toLowerCase().includes("f1"));
-const eblIntl = promos.find((item) => item.code === "STLRPIQ326");
+const eblIntl = promos.find((item) => item.code === "STLRPIQ426");
 assert.strictEqual(eblIntl.checkoutUrl, "https://sharetrip.net/");
 assert.ok(!eblIntl.checkoutUrl.includes("/flight/search"));
 
@@ -443,9 +443,9 @@ assert.ok(!gzDomSav.some((s) => s.percent === 18));
 
 const astraSav = BookingLinks.savingsForProvider("airastra", dacCan);
 assert.strictEqual(astraSav.length, 1);
-assert.strictEqual(astraSav[0].code, "AIRASTRA15");
-assert.strictEqual(astraSav[0].percent, 15);
-assert.strictEqual(astraSav[0].headline, "AIRASTRA15: 15% at airline checkout");
+assert.strictEqual(astraSav[0].code, "AIRASTRA10");
+assert.strictEqual(astraSav[0].percent, 10);
+assert.strictEqual(astraSav[0].headline, "AIRASTRA10: 10% at airline checkout");
 assert.ok(astraSav[0].sourceUrl.includes("airastra.com"));
 
 assert.deepStrictEqual(BookingLinks.savingsForProvider("google-flights", dacCan), []);
@@ -453,11 +453,11 @@ assert.deepStrictEqual(BookingLinks.savingsForProvider("biman", dacCan), []);
 
 const shareIntl = BookingLinks.savingsForProvider("sharetrip", dacCan);
 assert.strictEqual(shareIntl.length, 1);
-assert.strictEqual(shareIntl[0].code, "STLRPIQ326");
+assert.strictEqual(shareIntl[0].code, "STLRPIQ426");
 assert.strictEqual(shareIntl[0].percent, 15);
 assert.strictEqual(shareIntl[0].capBdt, 3000);
 const shareDom = BookingLinks.savingsForProvider("sharetrip", dacCxb);
-assert.strictEqual(shareDom[0].code, "STLRPDQ326");
+assert.strictEqual(shareDom[0].code, "STLRPDQ426");
 assert.strictEqual(shareDom[0].capBdt, 1000);
 
 const qatarDohSav = BookingLinks.savingsForProvider("qatar", { ...dacCan, dest: "DOH" });
@@ -499,7 +499,7 @@ const usbPath = path.find((row) => row.id === "usbangla");
 assert.ok(usbPath);
 assert.deepStrictEqual(usbPath.savings, [], "US-Bangla has no published website promo — show none beside that row");
 assert.strictEqual(usbPath.tier, "secondary");
-assert.strictEqual(usbPath.fareNote, "often Flex");
+assert.strictEqual(usbPath.fareNote, "may show Flex first");
 assert.ok(/flex/i.test(usbPath.blurb || BookingLinks.AIRLINE_DIRECTORY.find((a) => a.id === "usbangla").blurb));
 assert.deepStrictEqual(BookingLinks.savingsForProvider("usbangla", dacCan), []);
 assert.ok(!JSON.stringify(path[1].savings).toLowerCase().includes("brac"), "BRAC is not mapped to GoZayaan checkout");
@@ -606,11 +606,11 @@ assert.deepStrictEqual(BookingLinks.cheaperNearbyAirports("DAC", nearbyFixture),
 
 const astraRoute = BookingLinks.airlinesForRoute(dacCxb).find((a) => a.id === "airastra");
 assert.ok(astraRoute);
-assert.ok(astraRoute.savings.some((s) => s.code === "AIRASTRA15"));
+assert.ok(astraRoute.savings.some((s) => s.code === "AIRASTRA10"));
 assert.ok(astraRoute.url.includes("fo-airastra.ttinteractive.com/Zenith/FrontOffice/Airastra"));
 const astraDomPath = BookingLinks.cheapBookPath(dacCxb).find((row) => row.id === "airastra");
 assert.ok(astraDomPath);
-assert.ok(astraDomPath.savings.some((s) => s.code === "AIRASTRA15" && s.percent === 15));
+assert.ok(astraDomPath.savings.some((s) => s.code === "AIRASTRA10" && s.percent === 10));
 const bimanRoute = BookingLinks.airlinesForRoute(dacCan).find((a) => a.id === "biman");
 assert.deepStrictEqual(bimanRoute.savings, []);
 

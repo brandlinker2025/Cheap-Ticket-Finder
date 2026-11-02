@@ -553,11 +553,11 @@
                 <a class="lux-card" href="/cruise/" aria-label="Cruise"><img src="/assets/cards/cruise.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Cruise</b><small>Asian sailings</small></span></a>
                 <a class="lux-card" href="#domestic" aria-label="Domestic"><img src="/assets/cards/domestic.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>Domestic</b><small>Plan a trip in Bangladesh</small></span></a>
             </div>
-            <p class="text-sm mt-3"><a class="underline font-semibold" href="/medical/" style="color:#0c4a6e">কম খরচে বিদেশে চিকিৎসা / Low-cost medical treatment abroad &rarr;</a></p>
+            <p class="text-sm mt-3"><a class="underline font-semibold" href="/medical/" style="color:#0c4a6e" lang="bn">কম খরচে বিদেশে চিকিৎসা / Low-cost medical treatment abroad &rarr;</a></p>
             <p class="text-[10px] text-slate-500 mt-2">Photos: Wikimedia Commons, see <a class="underline" href="/credits/">credits</a>.</p>
         </section>
         <div id="wl-flight-results" class="mb-6">
-            <p class="text-[11px] text-slate-500 mb-2 leading-5">On-site flight search (Travelpayouts). Search flights and compare prices from partner sites. The final total is confirmed on the booking site.</p>
+            <p class="text-[11px] text-slate-500 mb-2 leading-5">Live flight prices from our partner Aviasales (Travelpayouts). The final total is confirmed on the booking site.</p>
             <div class="tpwl-search-slot" aria-hidden="true"><div id="tpwl-search"></div></div>
             <div id="tpwl-tickets" style="width:100%;min-width:0"></div>
             <p id="staleDateNote" hidden role="status" class="text-sm text-amber-300 border border-amber-400/40 rounded-lg p-3 mb-2"></p>
@@ -711,7 +711,7 @@
                 <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/dhaka-to-doha-cheap-ticket/">Dhaka to Doha cheap ticket</a>
                 <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/dhaka-to-london-cheap-ticket/">Dhaka to London cheap ticket</a>
             </nav>
-            <p class="text-[11px] text-slate-500 mt-3 mb-2">বাংলায় রুট গাইড:</p>
+            <p class="text-[11px] text-slate-500 mt-3 mb-2" lang="bn">বাংলায় রুট গাইড:</p>
             <nav class="flex flex-wrap gap-2 text-[11px]" lang="bn">
                 <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-bangkok-cheap-ticket/">ঢাকা–ব্যাংকক</a>
                 <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-kolkata-cheap-ticket/">ঢাকা–কলকাতা</a>
@@ -1854,7 +1854,7 @@
                         <span class="text-[10px] font-black text-amber-200">${escapeHtml(item.headline)}</span>
                         ${codeHtml}
                         ${estimateHtml}
-                        <a href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-semibold text-sky-300 hover:underline">source</a>
+                        <a href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-semibold text-sky-300 hover:underline">official source</a>
                     </span>
                 `;
             }).join("")}</div>`;
@@ -1897,14 +1897,14 @@
         function primaryGoogleCard(item) {
             return `
                 <div class="rounded-2xl border-2 border-sky-400/60 bg-sky-950/40 p-4 sm:p-5 shadow-xl shadow-sky-900/20">
-                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-sky-300 mb-2">On-site flight search</div>
-                    <h3 class="text-lg sm:text-xl font-black text-white">Travelpayouts results</h3>
+                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-sky-300 mb-2">Flight search</div>
+                    <h3 class="text-lg sm:text-xl font-black text-white">Live flight prices</h3>
                     <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-5">${escapeHtml(item.blurb || "Compare prices from partner sites on Aviasales. We do not invent a fare.")}</p>
                     ${item.nearbyLabel ? `<div class="mt-2 text-[11px] font-black text-sky-200">${escapeHtml(item.nearbyLabel)}</div>` : ""}
                     <a href="${item.url}" target="_blank" rel="sponsored noopener noreferrer" class="mt-4 w-full block text-center bg-sky-500 hover:bg-sky-400 text-white font-black py-3.5 rounded-xl text-sm sm:text-base transition shadow-lg shadow-sky-500/30">
                         <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i> ${escapeHtml(item.cta || "Open Travelpayouts results")}
                     </a>
-                    <p class="text-[11px] text-slate-500 mt-2">Compare prices from partner sites on Aviasales via Travelpayouts. We do not invent a fare. The final total is confirmed on the booking site.</p>
+                    <p class="text-[11px] text-slate-500 mt-2">Prices come live from our partner Aviasales. We never make up a fare. The final total is confirmed on the booking site.</p>
                 </div>
             `;
         }
@@ -2039,10 +2039,10 @@
             renderNearbyAirports(opts);
             const secondaryHeading = `
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-2 mt-1">
-                    <h3 class="text-xs sm:text-sm font-bold text-slate-300">Airline site (often Flex / higher fare family)</h3>
-                    <span class="text-[10px] sm:text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-semibold">Official % beside the book row</span>
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-300">Book directly with an airline or a Bangladeshi travel site</h3>
+                    <span class="text-[10px] sm:text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-semibold">Card &amp; promo offers shown beside each site</span>
                 </div>
-                <p class="text-[11px] text-slate-500 mb-2">Secondary. Official engines often show Flex. Use these for a published checkout code or a card that only works on that OTA. Cheap authentic airline-issued fares stay in the Travelpayouts results above.</p>
+                <p class="text-[11px] text-slate-500 mb-2">Airline websites sometimes show a pricier fare type first (for example “Flex”), so compare the total with the live prices above. Use these buttons if you have a promo code or a bank card offer for that site.</p>
             `;
             pathBox.innerHTML = secondaryHeading + secondary.map((item) => cheapPathCard(item)).join("");
             bindCopyButtons(pathBox);

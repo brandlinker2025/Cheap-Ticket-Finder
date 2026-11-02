@@ -617,7 +617,7 @@
             match: /us-?bangla|usbair/i,
             relevant: (o, d) => BD_AIRPORTS.has(o) || BD_AIRPORTS.has(d),
             blurb: "Official US-Bangla engine. It often opens a higher fare family such as Flex. The cheap authentic US-Bangla ticket is the airline-issued fare on Google Flights — we do not invent a fare.",
-            cta: "Open US-Bangla official engine",
+            cta: "Open US-Bangla official site",
             url(opts) {
                 return ttiZenithFrontOfficeUrl(USBA_FRONTOFFICE, opts);
             }
@@ -999,7 +999,7 @@
                 capBdt: null,
                 code: "F1FANS",
                 detail: "Official Qatar Airways Bangladesh F1 page: up to 12% off base fare to listed Formula 1® race cities only. Not a general fare code.",
-                validity: "See the official F1 offer page for race-by-race travel windows",
+                validity: "2026 F1 season races only (last race 6 Dec 2026); arrive up to 7 days before race day — see the official page",
                 sourceUrl: "https://www.qatarairways.com/en-bd/offers/f1-fans-flight-deals.html"
             });
         }
@@ -1009,12 +1009,12 @@
                 savings.push({
                     id: "ebl-dom-code",
                     kind: "code",
-                    label: "STLRPDQ326",
-                    headline: "EBL Stellar STLRPDQ326: official up to 15% at ShareTrip checkout",
+                    label: "STLRPDQ426",
+                    headline: "EBL Stellar STLRPDQ426: official up to 15% at ShareTrip checkout",
                     percent: 15,
                     how: "up to",
                     capBdt: 1000,
-                    code: "STLRPDQ326",
+                    code: "STLRPDQ426",
                     detail: "Published on EBL’s official Stellar card page for domestic flights: up to 15% on base fare, max BDT 1,000. Enter at ShareTrip checkout. Dated ShareTrip flight-search URLs 404 — use ShareTrip home.",
                     validity: "Quarterly code as printed on the EBL page — confirm there",
                     sourceUrl: "https://www.ebl.com.bd/retail/eblcard/ebl-stellar-platinum-credit-card"
@@ -1023,13 +1023,13 @@
                 savings.push({
                     id: "ebl-intl-code",
                     kind: "code",
-                    label: "STLRPIQ326",
-                    headline: "EBL Stellar STLRPIQ326: official up to 15% at ShareTrip checkout",
+                    label: "STLRPIQ426",
+                    headline: "EBL Stellar STLRPIQ426: official up to 15% at ShareTrip checkout",
                     percent: 15,
                     how: "up to",
                     capBdt: 3000,
-                    code: "STLRPIQ326",
-                    detail: "Published on EBL’s official Stellar card page for international flights: up to 15% on base fare, max BDT 3,000. Enter at ShareTrip checkout. Dated ShareTrip flight-search URLs 404 — use ShareTrip home.",
+                    code: "STLRPIQ426",
+                    detail: "Published on EBL’s official Stellar card page for international flights: up to 15% on base fare (the EBL page lists the cap as BDT 3,000 in one place and BDT 4,000 next to this code — confirm there). Enter at ShareTrip checkout. Dated ShareTrip flight-search URLs 404 — use ShareTrip home.",
                     validity: "Quarterly code as printed on the EBL page — confirm there",
                     sourceUrl: "https://www.ebl.com.bd/retail/eblcard/ebl-stellar-platinum-credit-card"
                 });
@@ -1107,7 +1107,7 @@
                 url: airline.url,
                 cta: airline.cta,
                 tier: "secondary",
-                fareNote: "often Flex",
+                fareNote: "may show Flex first",
                 blurb: airline.blurb,
                 savings: airline.savings || savingsForProvider(airline.id, opts)
             });
@@ -1254,7 +1254,7 @@
                 id: "ebl-stellar",
                 bank: "Eastern Bank (EBL)",
                 name: "EBL Stellar Platinum card",
-                claim: "Official EBL Stellar page currently claims up to 15% off selected-airline base fares, and publishes checkout codes STLRPIQ326 (international) and STLRPDQ326 (domestic) for ShareTrip. Caps and quarterly limits are on that page.",
+                claim: "Official EBL Stellar page currently claims up to 15% off selected-airline base fares, and publishes checkout codes STLRPIQ426 (international) and STLRPDQ426 (domestic) for ShareTrip. Caps and quarterly limits are on that page.",
                 validity: "Quarter codes as printed on the EBL page (Q3 2026 naming) — confirm there",
                 url: "https://www.ebl.com.bd/retail/eblcard/ebl-stellar-platinum-credit-card"
             },
@@ -1318,8 +1318,8 @@
             {
                 id: "ebl-intl-code",
                 airline: "EBL Stellar → ShareTrip checkout",
-                code: "STLRPIQ326",
-                appliesTo: "Published on EBL’s official Stellar card page for international flights: up to 15% on base fare, max BDT 3,000, max 4 times per quarter per card. Enter at ShareTrip checkout (use sharetrip.net home — not /flight/search, which 404s).",
+                code: "STLRPIQ426",
+                appliesTo: "Published on EBL’s official Stellar card page for international flights: up to 15% on base fare, max 4 times per quarter per card (cap listed as BDT 3,000 and BDT 4,000 on the EBL page — confirm there). Enter at ShareTrip checkout (use sharetrip.net home — not /flight/search, which 404s).",
                 expiry: "Quarterly code as printed on the EBL page — confirm there",
                 sourceUrl: "https://www.ebl.com.bd/retail/eblcard/ebl-stellar-platinum-credit-card",
                 checkoutUrl: "https://sharetrip.net/",
@@ -1328,7 +1328,7 @@
             {
                 id: "ebl-dom-code",
                 airline: "EBL Stellar → ShareTrip checkout",
-                code: "STLRPDQ326",
+                code: "STLRPDQ426",
                 appliesTo: "Published on EBL’s official Stellar card page for domestic flights: up to 15% on base fare, max BDT 1,000, max 20 times per quarter per card. Enter at ShareTrip checkout.",
                 expiry: "Quarterly code as printed on the EBL page — confirm there",
                 sourceUrl: "https://www.ebl.com.bd/retail/eblcard/ebl-stellar-platinum-credit-card",
