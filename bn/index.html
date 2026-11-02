@@ -1987,10 +1987,39 @@
             if (btnText) btnText.innerText = "খুঁজুন";
         }
 
+        // Search mode: once a search runs, show results right under the search box.
+        // "Where to next?" and "Airline offers" move below the results (nothing is removed).
+        function ctfSearchMode(scroll) {
+            const anchor = document.getElementById('domestic');
+            ['explore', 'airlineOffers'].forEach(function (id) {
+                const el = document.getElementById(id);
+                if (el && anchor && el.compareDocumentPosition(anchor) & Node.DOCUMENT_POSITION_FOLLOWING) {
+                    anchor.parentNode.insertBefore(el, anchor);
+                }
+            });
+            document.body.classList.add('ctf-search-mode');
+            if (scroll) {
+                const res = document.getElementById('wl-flight-results');
+                if (res) res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        if (/[?&]flightSearch=/.test(location.search) || location.hash === '#wl-flight-results') {
+            document.addEventListener('DOMContentLoaded', function () { ctfSearchMode(false); });
+        }
+        window.addEventListener('hashchange', function () { if (location.hash === '#wl-flight-results') ctfSearchMode(false); });
+        document.addEventListener('DOMContentLoaded', function () {
+            const btn = document.getElementById('searchBtn');
+            // After the visitor presses Search with a complete form, bring the results into view.
+            if (btn) btn.addEventListener('click', function () {
+                setTimeout(function () { if (datesReady() && validateRoute()) ctfSearchMode(true); }, 350);
+            });
+        });
+
         function renderResults() {
             const opts = currentSearchOpts();
             resetResultsUntilDates();
             if (!datesReady()) return;
+            ctfSearchMode(false);
 
             const origCode = selectedOriginCode.toUpperCase();
             const destCode = selectedDestCode.toUpperCase();
