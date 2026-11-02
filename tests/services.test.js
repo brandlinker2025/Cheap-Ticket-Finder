@@ -28,7 +28,7 @@ for (const [name, html, campaign, partner] of [
 assert.ok(hotels.includes("not a pure hotel-only site"), "hotels must honestly describe Klook");
 assert.ok(home.includes("campaign_id=137") && home.includes("marker=791994"), "homepage must contain hotels affiliate link");
 assert.ok(home.includes("campaign_id=633"), "homepage must contain packages affiliate link");
-assert.ok(packages.includes("pid=P00326733") && packages.includes("https://www.viator.com/?pid=P00326733&uid=U00880752&mcid=58086&currency=USD"), "packages must contain verified Viator link");
+assert.ok(packages.includes("pid=P00326733") && packages.includes("https://www.viator.com/?pid=P00326733&amp;uid=U00880752&amp;mcid=58086&amp;currency=USD"), "packages must contain verified Viator link");
 assert.ok(packages.includes("Viator") && packages.includes("KKday (Asia tours)") && packages.includes("worldwide tours"), "packages must label KKday Asia / Viator worldwide");
 assert.ok(home.includes("pid=P00326733"), "homepage must contain Viator secondary link");
 assert.ok((packages.match(/pid=P00326733/g)||[]).length>=1 && packages.includes('rel="sponsored noopener noreferrer"'), "Viator CTA must use sponsored rel");

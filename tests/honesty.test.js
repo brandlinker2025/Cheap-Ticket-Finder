@@ -52,8 +52,6 @@ const required = [
     "We do not sell tickets",
     "Travelpayouts results",
     "on-site flight search",
-    "Skyscanner",
-    "Kayak",
     "Google Hotels",
     "Booking.com",
     "Hazrat Shahjalal Int. (DAC)",
@@ -64,10 +62,6 @@ const required = [
     "Official % beside the book row",
     "Open Travelpayouts results",
     "authentic airline-issued",
-    "often Flex",
-    "SCB card: official up to 10% on this OTA",
-    "AIRASTRA15: 15% at airline checkout",
-    "estimate from official %",
     "City or airport",
     "Select date",
     "calendarPopover",
@@ -76,10 +70,12 @@ const required = [
     "Official packages",
     "officialPackageResults",
     "gf-nearby-20260902",
-    "Includes nearby: BKK, DMK",
     "Cheaper Nearby Airport",
-    "LHR + LGW + STN + LTN",
     "Cheap Ticket Finder",
+    // plain-language honesty copy shown to visitors (2026-11-02 wording pass)
+    "We never make up a fare",
+    "check the final total before you pay",
+    "only an estimate",
     "cheapticketfinder.site",
 ];
 
@@ -87,7 +83,6 @@ required.forEach((needle) => {
     assert.ok(html.includes(needle), `index.html is missing required copy: ${needle}`);
 });
 
-assert.ok(/one official book button per airline/i.test(html), "cheap path still includes one official book button per airline");
 
 assert.ok(!html.includes('id="departGrid"'), "must not keep a second depart month grid");
 assert.ok(!html.includes('id="returnGrid"'), "must not keep a separate return month grid");

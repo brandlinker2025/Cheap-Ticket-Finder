@@ -443,7 +443,7 @@
 
             <div id="multiCityRow" class="hidden bg-slate-950/70 p-3.5 rounded-xl border border-sky-500/30 mb-4">
                 <div class="flex items-center gap-2 mb-2 text-xs font-bold text-sky-400">
-                    <i class="fa-solid fa-route"></i> Multi-city third airport
+                    <i class="fa-solid fa-route"></i> Multi-city: add one more airport
                 </div>
                 <div onclick="openLocationModal('stopover')" class="w-full bg-slate-950 border border-slate-700 hover:border-amber-400 rounded-xl p-2.5 text-white cursor-pointer flex justify-between items-center text-xs sm:text-sm transition">
                     <span id="stopoverDisplay" class="font-semibold text-slate-300">Phuket Int. Airport (HKT)</span>
@@ -506,7 +506,7 @@
             <div class="home-panel" id="tour-package" data-tab="tour" role="tabpanel" hidden>
                 <div class="home-links">
                     <a class="cta-affiliate" href="https://tp.media/r?campaign_id=633&marker=791994&p=9074&sub_id=cheapticketfinder-packages&trs=587447&u=https%3A%2F%2Fkkday.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Explore Asia packages on KKday</a>
-                    <a href="https://www.viator.com/?pid=P00326733&uid=U00880752&mcid=58086&currency=USD" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Or worldwide tours on Viator</a>
+                    <a href="https://www.viator.com/?pid=P00326733&amp;uid=U00880752&amp;mcid=58086&amp;currency=USD" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Or worldwide tours on Viator</a>
                     <a href="https://www.trip.com/things-to-do/?Allianceid=11059812&SID=333836392&trip_sub1=tours&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Trip.com tours</a>
                     <a href="https://tp.media/r?campaign_id=137&marker=791994&p=4110&sub_id=cheapticketfinder-tours&trs=587447&u=https%3A%2F%2Fklook.com" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Klook activities</a>
                     <a href="https://www.getyourguide.com/" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline">GetYourGuide</a>
@@ -579,12 +579,12 @@
 
         <div id="scanningToast" class="hidden bg-sky-950/90 border border-sky-500/40 rounded-2xl p-4 mb-6 flex items-center justify-center gap-3 text-sky-300 text-xs sm:text-sm font-bold shadow-2xl radar-scanning">
             <i class="fa-solid fa-satellite-dish fa-spin text-sky-400 text-lg"></i>
-            <span>Preparing dated provider links…</span>
+            <span>Preparing your search…</span>
         </div>
 
         <div class="mb-4 rounded-xl border border-sky-500/20 bg-sky-950/40 px-3.5 py-3 text-[11px] leading-5 text-slate-300">
             <i class="fa-solid fa-circle-info text-sky-400 mr-1"></i>
-            Use the on-site flight search and Travelpayouts results for the authentic airline-issued ticket. Official sites often show Flex. One official book button per airline stays below. Skyscanner is not a search button on this page. Kayak is not a booking button.
+            Tip: compare prices in the flight search first. Airline websites sometimes show a more expensive fare type first (for example “Flex”), so always check the final total before you pay.
         </div>
 
         <div id="tripSummary" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-3.5 mb-6 flex flex-wrap justify-between items-center text-xs sm:text-sm gap-2">
@@ -604,14 +604,14 @@
                 <h2 class="text-sm sm:text-lg font-bold text-sky-400 flex items-center gap-2">
                     <i class="fa-solid fa-bolt"></i> Cheap ticket path
                 </h2>
-                <span class="text-[10px] sm:text-xs bg-sky-500/20 text-sky-300 px-2.5 py-0.5 rounded-full font-semibold">Primary: Travelpayouts results</span>
+                <span class="text-[10px] sm:text-xs bg-sky-500/20 text-sky-300 px-2.5 py-0.5 rounded-full font-semibold">Start with the flight search</span>
             </div>
-            <p class="text-[11px] text-slate-500 mb-3">Search the on-site flight results. Metros include LHR + LGW + STN + LTN (example: Includes nearby: BKK, DMK). Nearby airports stay within 50 km. Checkout notes only: AIRASTRA10: 10% at airline checkout, “SCB card: official up to 10% on this OTA”, labeled estimate from official % when a fare is known.</p>
-            <div id="needDatesHint" class="rounded-xl border border-slate-800 bg-slate-950/60 px-3.5 py-3 text-xs text-slate-400">Pick dates, then open the on-site flight search. Airline sites are secondary (often Flex).</div>
+            <p class="text-[11px] text-slate-500 mb-3">Results include every airport of a big city (for example London: Heathrow, Gatwick, Stansted, Luton; Bangkok: BKK and DMK). Promo codes and card offers shown next to an airline are applied at that site’s checkout; any “after discount” figure is only an estimate.</p>
+            <div id="needDatesHint" class="rounded-xl border border-slate-800 bg-slate-950/60 px-3.5 py-3 text-xs text-slate-400">Pick your travel dates above to see where to compare and book.</div>
             <div id="googleBookBar" class="hidden mb-4"></div>
             <div id="nearbyAirportSection" class="hidden mb-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-3.5">
                 <h3 class="text-xs sm:text-sm font-black text-sky-200 uppercase tracking-wider">Potentially Cheaper Nearby Airports — within 50 km</h3>
-                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-5">Other IATA airports within 50 km of the destination (haversine on this page’s airport coords). Small/regional airports with a valid IATA code and usable coordinates are included. Select one to search that airport in the on-site flight search, same origin and dates. We do not invent a fare.</p>
+                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-5">Other airports within 50 km of your destination. Tap one to search it with the same dates — sometimes it is cheaper. We never make up a fare.</p>
                 <div id="nearbyAirportResults" class="space-y-1.5"></div>
             </div>
             <div id="cheapPathResults" class="space-y-2"></div>
@@ -763,7 +763,7 @@
                 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
                 <input type="text" id="modalSearchInput" placeholder="Type country, city, airport or IATA — e.g. India, CMB, DEL..." oninput="filterModalAirports()" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-sky-500">
             </div>
-            <div id="airportDataStatus" class="mb-2 text-[10px] text-slate-500">Major worldwide airports are built in. Extended airport database loads automatically when available.</div>
+            <div id="airportDataStatus" class="mb-2 text-[10px] text-slate-500">Type a city, airport or country name.</div>
             <div id="modalAirportList" class="max-h-72 overflow-y-auto custom-scroll space-y-1.5 pr-1"></div>
         </div>
     </div>
@@ -1332,7 +1332,7 @@
                     worldwideAirports.push(a);
                 });
                 worldwideAirportsLoaded = true;
-                setAirportStatus(`Worldwide database ready: ${worldwideAirports.length.toLocaleString()} additional IATA airports.`, 'ok');
+                setAirportStatus('Type a city, airport or country name.', 'ok');
                 filterModalAirports(false);
                 if (datesReady()) renderResults();
             } catch (error) {
@@ -1540,6 +1540,7 @@
                 showChosen('stopoverDisplay', airport.name, airport.code);
             }
             closeLocationModal();
+            if (selectedOriginCode && selectedDestCode) validateRoute();
             if (datesReady()) triggerFullScan();
             else resetResultsUntilDates();
         }
@@ -1726,6 +1727,15 @@
             const viewEnd = new Date(calMonth.getFullYear(), calMonth.getMonth() + (twoUp ? 2 : 1), 1);
             if (clicked < calMonth || clicked >= viewEnd) calMonth = new Date(clicked.getFullYear(), clicked.getMonth(), 1);
             renderCalendars();
+            if (currentTripType !== 'oneway' && selectedDeptDate && !selectedRetDate) {
+                // Round trip: stay open so the visitor can pick the return date right away.
+                datePopoverTarget = 'return';
+                if (typeof updateSelectionHeader === 'function') updateSelectionHeader();
+                const w = typeof document !== 'undefined' ? document.getElementById('routeWarning') : null;
+                if (w && !w.classList.contains('hidden')) w.textContent = 'Now pick a return date (or choose One Way).';
+                resetResultsUntilDates();
+                return;
+            }
             closeDatePopover();
             if (datesReady()) triggerFullScan();
             else resetResultsUntilDates();
@@ -2116,9 +2126,19 @@
         function triggerFullScan() {
             if (!validateRoute()) return;
             if (!datesReady()) {
-                if (currentTripType !== 'oneway' && selectedDeptDate && !selectedRetDate) focusReturnPick();
-                else focusDepartPick();
-                renderCalendars();
+                const warn = document.getElementById('routeWarning');
+                const needReturn = currentTripType !== 'oneway' && selectedDeptDate && !selectedRetDate;
+                if (warn) {
+                    warn.textContent = needReturn
+                        ? 'Pick a return date (or choose One Way).'
+                        : 'Pick a departure date.';
+                    warn.classList.remove('hidden');
+                }
+                setTimeout(() => {
+                    if (needReturn) focusReturnPick();
+                    else focusDepartPick();
+                    renderCalendars();
+                }, 0);
                 resetResultsUntilDates();
                 return;
             }
