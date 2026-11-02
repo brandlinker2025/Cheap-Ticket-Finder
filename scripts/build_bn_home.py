@@ -251,6 +251,7 @@ function walk(n){if(n.nodeType===3){var s=n.nodeValue.trim();var v=s&&tr(s);if(v
 if(n.nodeType===1&&!/^(SCRIPT|STYLE)$/.test(n.tagName))for(var c=n.firstChild;c;c=c.nextSibling)walk(c);}
 var ids=['googleBookBar','cheapPathResults','hotelSectionWrapper','nearbyAirportSection'];
 var mo=new MutationObserver(function(){ids.forEach(function(i){var e=document.getElementById(i);if(e)walk(e);});});
+var H=document.documentElement;new MutationObserver(function(){if(H.lang!=='bn')H.lang='bn';}).observe(H,{attributes:true,attributeFilter:['lang']});
 document.addEventListener('DOMContentLoaded',function(){ids.forEach(function(i){var e=document.getElementById(i);if(e)mo.observe(e,{childList:true,subtree:true});});});})();</script>
 </body>"""
     body = body.replace("</body>", dyn, 1)
