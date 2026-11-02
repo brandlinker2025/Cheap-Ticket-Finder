@@ -127,6 +127,16 @@ ROUTES = {
     "Dhaka to Jeddah cheap ticket": ("ঢাকা–জেদ্দা সস্তা টিকিট", "dhaka-to-jeddah-cheap-ticket"),
     "Dhaka to Doha cheap ticket": ("ঢাকা–দোহা সস্তা টিকিট", "dhaka-to-doha-cheap-ticket"),
     "Dhaka to London cheap ticket": ("ঢাকা–লন্ডন সস্তা টিকিট", "dhaka-to-london-cheap-ticket"),
+    "Dhaka to Riyadh air ticket": ("ঢাকা–রিয়াদ বিমান টিকিট", "dhaka-to-riyadh-cheap-ticket"),
+    "Dhaka to Muscat air ticket": ("ঢাকা–মাসকাট বিমান টিকিট", "dhaka-to-muscat-cheap-ticket"),
+    "Dhaka to Kuwait air ticket": ("ঢাকা–কুয়েত বিমান টিকিট", "dhaka-to-kuwait-cheap-ticket"),
+    "Dhaka to Maldives air ticket": ("ঢাকা–মালদ্বীপ বিমান টিকিট", "dhaka-to-maldives-cheap-ticket"),
+    "Dhaka to Istanbul air ticket": ("ঢাকা–ইস্তানবুল বিমান টিকিট", "dhaka-to-istanbul-cheap-ticket"),
+    "Dhaka to Sylhet air ticket price": ("ঢাকা–সিলেট বিমান ভাড়া", "dhaka-to-sylhet-air-ticket-price"),
+    "Dhaka to Saidpur air ticket price": ("ঢাকা–সৈয়দপুর বিমান ভাড়া", "dhaka-to-saidpur-air-ticket-price"),
+    "Dhaka to Jashore air ticket price": ("ঢাকা–যশোর বিমান ভাড়া", "dhaka-to-jashore-air-ticket-price"),
+    "Dhaka to Rajshahi air ticket price": ("ঢাকা–রাজশাহী বিমান ভাড়া", "dhaka-to-rajshahi-air-ticket-price"),
+    "Dhaka to Barishal air ticket price": ("ঢাকা–বরিশাল বিমান ভাড়া", "dhaka-to-barishal-air-ticket-price"),
 }
 ATTR = {
     "Cheap Ticket Finder home": "Cheap Ticket Finder হোম", "Travel categories": "ভ্রমণের বিভাগ",
