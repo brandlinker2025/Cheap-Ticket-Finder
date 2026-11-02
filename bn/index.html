@@ -1459,6 +1459,57 @@
             return (str || "").toLowerCase().replace(/['\s\-_]/g, "");
         }
 
+        // Busiest airports first when a visitor types a country (ordered by passenger traffic).
+        const POPULAR_AIRPORTS = {
+            bangladesh: ['dac', 'cgp', 'zyl', 'cxb', 'jsr', 'spd', 'rjh', 'bzl'],
+            thailand: ['bkk', 'dmk', 'hkt', 'cnx', 'kbv', 'usm', 'hdy', 'cei'],
+            malaysia: ['kul', 'bki', 'pen', 'kch', 'lgk', 'jhb'],
+            india: ['del', 'bom', 'blr', 'maa', 'ccu', 'hyd', 'amd', 'cok', 'goi', 'gox', 'pnq', 'jai', 'lko', 'gau'],
+            'united arab emirates': ['dxb', 'auh', 'shj', 'dwc', 'rkt'],
+            'saudi arabia': ['jed', 'ruh', 'med', 'dmm'],
+            qatar: ['doh'], oman: ['mct', 'sll'], kuwait: ['kwi'], bahrain: ['bah'],
+            singapore: ['sin'], nepal: ['ktm', 'pkr', 'bwa', 'bir', 'kep'],
+            'sri lanka': ['cmb', 'hri', 'rml', 'jaf'], maldives: ['mle', 'gan'],
+            indonesia: ['cgk', 'dps', 'sub', 'upg', 'kno'], vietnam: ['sgn', 'han', 'dad', 'cxr', 'pqc'],
+            philippines: ['mnl', 'ceb', 'crk'], china: ['pek', 'pvg', 'can', 'pkx', 'szx', 'ctu', 'kmg'],
+            japan: ['hnd', 'nrt', 'kix', 'fuk', 'cts'], 'south korea': ['icn', 'gmp', 'pus', 'cju'],
+            'hong kong': ['hkg'], 'türkiye': ['ist', 'saw', 'ayt', 'esb'], turkey: ['ist', 'saw', 'ayt', 'esb'],
+            'united kingdom': ['lhr', 'lgw', 'man', 'stn', 'ltn', 'edi', 'bhx'],
+            'united states': ['atl', 'dfw', 'den', 'ord', 'lax', 'jfk', 'ewr', 'sfo', 'iad'],
+            canada: ['yyz', 'yvr', 'yul', 'yyc'], australia: ['syd', 'mel', 'bne', 'per'],
+            germany: ['fra', 'muc', 'ber'], france: ['cdg', 'ory', 'nce'], italy: ['fco', 'mxp'],
+            spain: ['mad', 'bcn'], netherlands: ['ams'], pakistan: ['khi', 'lhe', 'isb'],
+            myanmar: ['rgn'], bhutan: ['pbh'], cambodia: ['kti', 'rep'], egypt: ['cai']
+        };
+        const COUNTRY_ALIASES = {
+            bangladesh: ['bd', 'bgd', 'bangla'], thailand: ['th', 'thai'], malaysia: ['my', 'mys'],
+            india: ['in', 'ind', 'bharat'], 'united arab emirates': ['uae', 'ae', 'emirates'],
+            'saudi arabia': ['ksa', 'sa', 'saudi'], 'united kingdom': ['uk', 'gb', 'england', 'britain'],
+            'united states': ['usa', 'us', 'america'], 'south korea': ['korea', 'kr'], 'türkiye': ['turkey', 'tr'],
+            turkey: ['turkiye', 'tr'], singapore: ['sg'], nepal: ['np'], 'sri lanka': ['lk', 'srilanka'],
+            maldives: ['mv'], indonesia: ['id'], vietnam: ['vn', 'viet nam'], china: ['cn'], japan: ['jp'],
+            qatar: ['qa'], oman: ['om'], kuwait: ['kw'], australia: ['au'], canada: ['ca'], pakistan: ['pk']
+        };
+        function countryKey(item) {
+            return String(item.country || '').replace(/[^\p{L}\s]/gu, '').trim().toLowerCase();
+        }
+        function countryMatches(item, raw) {
+            if (!raw) return false;
+            const key = countryKey(item);
+            if (!key) return false;
+            if (key === raw || (raw.length >= 3 && key.startsWith(raw))) return true;
+            return (COUNTRY_ALIASES[key] || []).includes(raw);
+        }
+        function popularityBonus(item) {
+            const list = POPULAR_AIRPORTS[countryKey(item)] || [];
+            const idx = list.indexOf(String(item.code || '').toLowerCase());
+            if (idx >= 0) return 60 - idx * 4;
+            const type = String(item.type || item.size || '').toLowerCase();
+            if (type.includes('large')) return 8;
+            if (type.includes('medium')) return 4;
+            return 0;
+        }
+
         function filterModalAirports(loadIfNeeded = true) {
             const rawOriginal = document.getElementById('modalSearchInput').value.trim();
             const raw = rawOriginal.toLowerCase();
@@ -1471,7 +1522,7 @@
             let filtered = airports.filter(item => {
                 const fullText = `${item.country} ${item.city} ${item.name} ${item.code} ${item.keywords || ''}`.toLowerCase();
                 const cleanFull = cleanString(fullText);
-                return !raw || fullText.includes(raw) || cleanFull.includes(clean) || (clean.startsWith('co') && cleanFull.includes('cox'));
+                return !raw || countryMatches(item, raw) || fullText.includes(raw) || cleanFull.includes(clean) || (clean.startsWith('co') && cleanFull.includes('cox'));
             });
             filtered = filtered
                 .map(item => {
@@ -1487,6 +1538,9 @@
                     if (raw && city.startsWith(raw)) score += 40;
                     if (raw && name.startsWith(raw)) score += 30;
                     if (item.source !== 'global') score += 5;
+                    // Country search ("BD", "Thailand", "India"): busiest airports first.
+                    if (countryMatches(item, raw)) score = (code === raw ? 400 : 200) + popularityBonus(item);
+                    else if (raw && score > 0) score += Math.min(popularityBonus(item), 8);
                     return { item, score };
                 })
                 .sort((a, b) => b.score - a.score || a.item.country.localeCompare(b.item.country) || a.item.name.localeCompare(b.item.name))
