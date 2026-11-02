@@ -42,6 +42,23 @@
 
     // Aviasales / Travelpayouts White Label search string suffix:
     // optional trip-class letter (w = comfort/premium, c = business, f = first), then adults, children, infants digits.
+    // Same tp.media tracking link (marker, campaign, project), with u= pointing at the dated Aviasales search.
+    function aviasalesDatedLink(base, opts) {
+        const toDate = (v) => (v instanceof Date ? v : (v ? new Date(String(v).length === 10 ? v + "T00:00:00" : v) : null));
+        const dd = (d) => String(d.getDate()).padStart(2, "0") + String(d.getMonth() + 1).padStart(2, "0");
+        const o = String(opts.origin || "").toUpperCase();
+        const d = String(opts.dest || "").toUpperCase();
+        const dep = toDate(opts.depart);
+        if (!/^[A-Z0-9]{3}$/.test(o) || !/^[A-Z0-9]{3}$/.test(d) || !dep || isNaN(dep)) return base;
+        if (opts.tripType === "multicity") return base;
+        const ret = opts.tripType === "oneway" ? null : toDate(opts.returnDate);
+        const code = o + dd(dep) + d + (ret && !isNaN(ret) ? dd(ret) : "") + aviasalesPaxSuffix(opts);
+        const target = "https://www.aviasales.com/search/" + code;
+        return /[?&]u=/.test(base)
+            ? base.replace(/([?&]u=)[^&]*/, "$1" + encodeURIComponent(target))
+            : base + "&u=" + encodeURIComponent(target);
+    }
+
     function aviasalesPaxSuffix(opts) {
         const p = pax(opts);
         const cls = { economy: "", premium: "w", business: "c", first: "f" }[p.cabin];
@@ -242,9 +259,19 @@
         return 2 * 6371 * Math.asin(Math.min(1, Math.sqrt(h)));
     }
 
+    const SCHEDULED_SMALLER_AIRPORTS = new Set(["lcy", "sen", "hpn", "isp", "szb", "xsp", "ibr", "rml", "dwc", "bth", "jhb", "dmk", "saw", "ory", "bva", "cia", "lin", "bgy"]);
+    // Only passenger airports: no military bases, private airfields, heliports or tiny strips.
+    const NON_PASSENGER_NAME = /\b(RAF|Air ?Base|Air Force|AFB|Naval|Navy|Army|Military|Heliport|Aerodrome|Airfield|Air Station|Airstrip|Glider|Flying Club)\b/i;
     function isUsableNearbyAirport(item) {
         const type = String(item && item.type || "airport").toLowerCase();
         if (type && type !== "airport") return false;
+        if (NON_PASSENGER_NAME.test(String(item && item.name || ""))) return false;
+        // Worldwide-database entries: large airports, plus smaller airports known to have scheduled
+        // passenger flights. Business-jet fields (e.g. Farnborough, Biggin Hill) are left out.
+        if (item && item.source === "global") {
+            const size = String(item.size || "").toLowerCase();
+            if (size !== "large" && !SCHEDULED_SMALLER_AIRPORTS.has(lower(item.code))) return false;
+        }
         return true;
     }
 
@@ -598,13 +625,22 @@
         return withQuery(frontOfficeBase, params);
     }
 
+    // Bangladeshi airlines' networks as listed for Dhaka (checked 2026-11-02). A Bangladeshi airline is only
+    // offered when both ends of the search are on its network, so visitors are not sent to an airline that
+    // does not fly there.
+    const BIMAN_NETWORK = new Set(["dac", "auh", "bkk", "bzl", "maa", "cgp", "cxb", "dmm", "del", "doh", "dxb", "can", "jed", "jsr", "khi", "ktm", "ccu", "kul", "kwi", "lhr", "man", "med", "mct", "rjh", "ruh", "fco", "spd", "shj", "sin", "zyl", "yyz", "rgn"]);
+    const USBANGLA_NETWORK = new Set(["dac", "auh", "bkk", "bzl", "maa", "cgp", "cxb", "doh", "dxb", "can", "jed", "jsr", "ccu", "kul", "mle", "mct", "rjh", "ruh", "spd", "shj", "sin", "zyl"]);
+    const AIRASTRA_NETWORK = new Set(["dac", "cgp", "cxb", "zyl"]);
+    const NOVOAIR_NETWORK = new Set(["dac", "cgp", "cxb", "jsr", "rjh", "spd", "zyl"]);
+    const onNetwork = (set) => (o, d) => set.has(o) && set.has(d);
+
     const AIRLINE_DIRECTORY = [
         {
             id: "biman",
             name: "Biman Bangladesh Airlines",
             home: "https://www.biman-airlines.com/",
             match: /biman/i,
-            relevant: (o, d) => BD_AIRPORTS.has(o) || BD_AIRPORTS.has(d),
+            relevant: onNetwork(BIMAN_NETWORK),
             url(opts) {
                 // T-107: no verified public deep-link params; open the official homepage.
                 return this.home;
@@ -615,8 +651,8 @@
             name: "US-Bangla Airlines",
             home: "https://usbair.com",
             match: /us-?bangla|usbair/i,
-            relevant: (o, d) => BD_AIRPORTS.has(o) || BD_AIRPORTS.has(d),
-            blurb: "Official US-Bangla engine. It often opens a higher fare family such as Flex. The cheap authentic US-Bangla ticket is the airline-issued fare on Google Flights — we do not invent a fare.",
+            relevant: onNetwork(USBANGLA_NETWORK),
+            blurb: "Official US-Bangla engine. It often opens a higher fare family such as Flex. The same airline-issued US-Bangla fare can also appear in the live flight prices above — we do not invent a fare.",
             cta: "Open US-Bangla official site",
             url(opts) {
                 return ttiZenithFrontOfficeUrl(USBA_FRONTOFFICE, opts);
@@ -627,7 +663,7 @@
             name: "AIR ASTRA",
             home: "https://airastra.com",
             match: /astra/i,
-            relevant: (o, d) => BD_AIRPORTS.has(o) && BD_AIRPORTS.has(d),
+            relevant: onNetwork(AIRASTRA_NETWORK),
             blurb: "Official AIR ASTRA booking engine (TTI FrontOffice). Stable public URL with origin, destination and date in the query — not a session GUID.",
             cta: "Open AIR ASTRA official booking",
             url(opts) {
@@ -639,21 +675,32 @@
             name: "Novoair",
             home: "https://www.flynovoair.com",
             match: /novoair/i,
-            relevant: (o, d) => BD_AIRPORTS.has(o) && BD_AIRPORTS.has(d),
-            blurb: "Official Novoair booking page (secure.flynovoair.com). Origin, destination and date are in the link. Fill From/To on their form if empty — they do not publish a stable dated-results GET.",
+            relevant: onNetwork(NOVOAIR_NETWORK),
+            blurb: "Official Novoair booking page (secure.flynovoair.com). From, To, dates and adults are filled in; press Search there.",
             cta: "Open Novoair official booking",
             url(opts) {
-                return withQuery("https://secure.flynovoair.com/bookings/flight_selection.aspx", {
-                    origin: upper(opts.origin),
-                    destination: upper(opts.dest),
-                    departureDate: toISODate(opts.depart),
-                    returnDate: opts.tripType === "oneway" ? "" : toISODate(opts.returnDate),
-                    TT: opts.tripType === "oneway" ? "OW" : "RT"
+                // Verified 2026-11-02 in a browser: this form fills DAC/CXB, both dates and adults.
+                const dep = toISODate(opts.depart);
+                const ret = opts.tripType === "oneway" ? "" : toISODate(opts.returnDate);
+                const p = pax(opts);
+                return withQuery("https://secure.flynovoair.com/bookings/Vues/flight_selection.aspx", {
+                    TT: opts.tripType === "oneway" ? "OW" : "RT",
+                    DC: upper(opts.origin),
+                    AC: upper(opts.dest),
+                    AM: dep.slice(0, 7),
+                    AD: dep.slice(8, 10),
+                    RM: ret.slice(0, 7),
+                    RD: ret.slice(8, 10),
+                    PA: p.adults,
+                    PC: p.children,
+                    PI: p.infants,
+                    FL: "on"
                 });
             }
         },
         {
             id: "emirates",
+            routeNotPrefilled: true, // checked 2026-11-02: only "From" is filled on emirates.com
             name: "Emirates",
             home: "https://www.emirates.com/bd/english/",
             match: /emirates/i,
@@ -677,6 +724,7 @@
         },
         {
             id: "qatar",
+            routeNotPrefilled: true, // checked 2026-11-02: lands on qatarairways.com home after a security check
             name: "Qatar Airways",
             home: "https://www.qatarairways.com/en-bd/homepage.html",
             match: /qatar/i,
@@ -723,6 +771,7 @@
         },
         {
             id: "scoot",
+            skipIf: (o, d) => BD_AIRPORTS.has(o) || BD_AIRPORTS.has(d),
             name: "Scoot",
             home: "https://www.flyscoot.com/",
             match: /scoot/i,
@@ -779,7 +828,7 @@
                 if (opts.tripType !== "oneway" && opts.returnDate) {
                     params.returnDate = toDmySlash(opts.returnDate);
                 }
-                return withQuery("https://www.airasia.com/flights/search", params);
+                return withQuery("https://www.airasia.com/flights/search/", params);
             }
         },
         {
@@ -844,6 +893,13 @@
         return AIRLINE_DIRECTORY.find((airline) => airline.match.test(blob));
     }
 
+    function urlCarriesRoute(url, opts) {
+        const u = decodeURIComponent(String(url || "")).toUpperCase();
+        const o = String(opts.origin || "").toUpperCase();
+        const d = String(opts.dest || "").toUpperCase();
+        return Boolean(o && d && u.includes(o) && u.includes(d));
+    }
+
     function airlinesForRoute(opts) {
         const o = lower(opts.origin);
         const d = lower(opts.dest);
@@ -853,14 +909,21 @@
 
         function add(airline) {
             if (!airline || seen.has(airline.id)) return;
+            if (airline.skipIf && airline.skipIf(o, d)) return;
             seen.add(airline.id);
+            const url = airline.url(opts);
+            // Honest labels: only say the route is in the link when it really is.
+            const prefilled = !airline.routeNotPrefilled && urlCarriesRoute(url, opts);
             picked.push({
                 id: airline.id,
                 name: airline.name,
                 home: airline.home,
-                url: airline.url(opts),
-                blurb: airline.blurb || "Official airline booking page for this route. Origin, destination and dates are in the link. Live fare is on the airline site — we do not invent a fare.",
-                cta: airline.cta || `Open ${airline.name} booking`,
+                url: url,
+                prefilled: prefilled,
+                blurb: airline.blurb || (prefilled
+                    ? "Official airline booking page for this route. Origin, destination and dates are in the link. Live fare is on the airline site — we do not invent a fare."
+                    : "Official airline website. Enter your route and dates there — this link does not fill them in. Live fare is on the airline site."),
+                cta: airline.cta || (prefilled ? `Open ${airline.name} booking` : `Open ${airline.name} website`),
                 promo: airlineCheckoutPromo(airline.id),
                 savings: savingsForProvider(airline.id, opts)
             });
@@ -1087,7 +1150,8 @@
         // dashboard-generated link are configured in js/travelpayouts.js.
         // Google Flights remains primary above; do not break airline rows below.
         const tp = (typeof root !== "undefined" && root.TravelpayoutsAffiliate) || (typeof TravelpayoutsAffiliate !== "undefined" ? TravelpayoutsAffiliate : null);
-        const tpUrl = tp && typeof tp.aviasalesAffiliateUrl === "function" ? tp.aviasalesAffiliateUrl(opts) : null;
+        const tpBase = tp && typeof tp.aviasalesAffiliateUrl === "function" ? tp.aviasalesAffiliateUrl(opts) : null;
+        const tpUrl = tpBase ? aviasalesDatedLink(tpBase, opts) : null;
         if (tpUrl) {
             rows.push({
                 id: "aviasales-affiliate",

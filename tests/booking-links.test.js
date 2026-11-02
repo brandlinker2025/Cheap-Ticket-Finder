@@ -267,10 +267,10 @@ assert.ok(astraOne.includes("OutboundDate=2026-09-07"));
 assert.ok(!astraOne.includes("(S("));
 
 const novoOne = BookingLinks.AIRLINE_DIRECTORY.find((a) => a.id === "novoair").url(oneway);
-assert.ok(novoOne.startsWith("https://secure.flynovoair.com/bookings/flight_selection.aspx"));
-assert.ok(novoOne.includes("origin=DAC"));
-assert.ok(novoOne.includes("destination=CAN"));
-assert.ok(novoOne.includes("departureDate=2026-09-07"));
+assert.ok(novoOne.startsWith("https://secure.flynovoair.com/bookings/Vues/flight_selection.aspx"));
+assert.ok(novoOne.includes("DC=DAC"));
+assert.ok(novoOne.includes("AC=CAN"));
+assert.ok(novoOne.includes("AM=2026-09") && novoOne.includes("AD=07"));
 assert.ok(novoOne.includes("TT=OW"));
 
 const scootOne = BookingLinks.AIRLINE_DIRECTORY.find((a) => a.id === "scoot").url({

@@ -122,7 +122,7 @@ assert.ok(links.includes("fo-usba.ttinteractive.com/Zenith/FrontOffice/usbangla"
 assert.ok(!links.includes("FrontOffice/(S("), "US-Bangla must not hard-code a session GUID FrontOffice path");
 assert.ok(!links.includes("usbair.com/search"), "stale usbair.com/search schema.org URL 404s");
 assert.ok(links.includes("OriginAirportCode"), "TTI booking links must include OriginAirportCode");
-assert.ok(links.includes("secure.flynovoair.com/bookings/flight_selection.aspx"), "Novoair must use the official booking page");
+assert.ok(links.includes("secure.flynovoair.com/bookings/Vues/flight_selection.aspx"), "Novoair must use the official booking page");
 assert.ok(links.includes("fo-airastra.ttinteractive.com/Zenith/FrontOffice/Airastra"), "AIR ASTRA must use the stable TTI FrontOffice booking engine");
 assert.ok(links.includes("booking.flyscoot.com/Book/Flight"), "Scoot must use the official dated Book/Flight URL");
 assert.ok(links.includes("sort=price_a"), "Kayak must sort by price");
