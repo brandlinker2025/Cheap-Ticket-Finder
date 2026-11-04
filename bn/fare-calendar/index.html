@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="bn">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Find Cheapest Dates | Cheap Ticket Finder</title>
+<style>
+*{box-sizing:border-box}body{margin:auto;max-width:960px;padding:24px;font:16px/1.65 system-ui,sans-serif;background:#f1f7fb;color:#102a43}header,section{margin:0 0 20px;background:#fff;border:1px solid #d2e5ef;border-radius:16px;padding:20px}h1,h2{line-height:1.25;margin-top:0}form,.grid{display:flex;flex-wrap:wrap;gap:12px;align-items:end}label{display:grid;gap:4px}input,select,button{font:inherit;padding:8px;border:1px solid #94b8cf;border-radius:8px;max-width:100%}button{background:#075985;color:white;cursor:pointer}a{color:#075985}li{margin:.7em 0}.muted{color:#486581}
+</style>
+<header><a href="/">Cheap Ticket Finder</a><h1>Find Cheapest Dates</h1><p>ঢাকা → দিল্লি → শ্রীনগর → দিল্লি → ঢাকা</p></header>
+<section>
+<h2>একই ট্রিপের বিকল্প তারিখ</h2>
+<form id="dates">
+<label>পছন্দের যাত্রা<input type="date" id="departure" required></label>
+<label>তারিখের পরিসর<select id="range"><option value="3">±৩ দিন</option><option value="month">পুরো মাস</option><option value="0">শুধু পছন্দের তারিখ</option></select></label>
+<label>দিল্লিতে প্রথম বিরতি (রাত)<input id="out" type="number" min="0" max="14" value="1" required></label>
+<label>শ্রীনগরে থাকা (রাত)<input id="stay" type="number" min="1" max="30" value="4" required></label>
+<label>ফেরার পথে দিল্লিতে বিরতি (রাত)<input id="back" type="number" min="0" max="14" value="1" required></label>
+<button>তারিখ দেখুন</button>
+</form>
+<p id="status" role="status" class="muted"></p><ol id="results"></ol>
+</section>
+<section>
+<h2>বুকিংয়ের দেশ অনুযায়ী মোট খরচ তুলনা</h2>
+<p>একই ফ্লাইট, যাত্রী ও ব্যাগেজ ধরে বিক্রেতার চেকআউটের পরিশোধযোগ্য মোট টাকা লিখুন। কার্ডের রূপান্তর খরচসহ BDT ব্যবহার করুন।</p>
+<form id="markets">
+<label>বাংলাদেশ (৳)<input name="বাংলাদেশ" type="number" min="1" step="0.01"></label>
+<label>ভারত (৳)<input name="ভারত" type="number" min="1" step="0.01"></label>
+<label>UAE (৳)<input name="UAE" type="number" min="1" step="0.01"></label>
+<button>তুলনা করুন</button>
+</form>
+<p id="comparison" role="status"></p>
+</section>
+<script src="calendar.js" defer></script>
+</html>
