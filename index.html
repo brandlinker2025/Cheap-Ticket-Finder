@@ -1,1 +1,98 @@
-$(cat /tmp/index.html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheap Ticket Finder — Cheap Flight Tickets from Bangladesh</title>
+    <meta name="description" content="Compare cheap flight tickets from Bangladesh. Pick your route and flexible dates, see live prices from partner sites, then book. No made-up fares.">
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; background: #e7f6fd; color: #111; margin: 0; }
+        header { background: #fff; padding: 1rem; border-bottom: 1px solid #d7eef8; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+        h1 { margin: 0; font-size: 1.4rem; }
+        .search-box { background: #fff; padding: 1.5rem; border-radius: 16px; margin: 1.5rem 0; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+        label { display: block; font-weight: 600; margin-bottom: .3rem; font-size: .9rem; }
+        input, select, button { width: 100%; padding: .7rem; border: 1px solid #9fd4f2; border-radius: 8px; font-size: 1rem; margin-bottom: .8rem; }
+        button { background: #0284c7; color: #fff; border: 0; font-weight: 700; cursor: pointer; }
+        button:hover { background: #0369a1; }
+        #results { margin-top: 1.5rem; }
+        .card { background: #fff; padding: 1rem; border-radius: 12px; margin-bottom: .8rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Cheap Ticket Finder</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-box">
+            <h2>Find Cheap Flights</h2>
+            <label>From</label>
+            <input id="origin" placeholder="DAC" value="DAC">
+            <label>To</label>
+            <input id="destination" placeholder="BKK" value="BKK">
+            <label>Date</label>
+            <input id="date" type="date">
+            <label>Currency</label>
+            <select id="currency">
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+                <option value="BDT">BDT</option>
+                <option value="VND">VND</option>
+            </select>
+            <button onclick="searchFlights()">Search Flights</button>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        document.getElementById('date').value = new Date().toISOString().split('T')[0];
+
+        async function searchFlights() {
+            const origin = document.getElementById('origin').value || 'DAC';
+            const destination = document.getElementById('destination').value || 'BKK';
+            const date = document.getElementById('date').value;
+            const currency = document.getElementById('currency').value;
+            const resultsDiv = document.getElementById('results');
+
+            resultsDiv.innerHTML = '<p>Searching...</p>';
+
+            try {
+                const url = `/api/geo-flight?origin=${origin}&destination=${destination}&date=${date}&currency=${currency}`;
+                const res = await fetch(url);
+                const data = await res.json();
+
+                if (!data.success) {
+                    resultsDiv.innerHTML = `<p style="color:red">Error: ${data.error || 'Unknown error'}</p>`;
+                    return;
+                }
+
+                if (!data.data || !data.data.length) {
+                    resultsDiv.innerHTML = '<p>No flights found.</p>';
+                    return;
+                }
+
+                resultsDiv.innerHTML = data.data.map(offer => {
+                    const price = offer.price?.total || 'N/A';
+                    const itinerary = offer.itineraries?.[0];
+                    const segments = itinerary?.segments || [];
+                    const airline = segments[0]?.carrierCode || '';
+                    return `
+                        <div class="card">
+                            <strong>${origin} → ${destination}</strong><br>
+                            Price: ${price} ${currency}<br>
+                            Airline: ${airline}<br>
+                            Stops: ${segments.length - 1}
+                        </div>
+                    `;
+                }).join('');
+            } catch (err) {
+                resultsDiv.innerHTML = `<p style="color:red">Request failed: ${err.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
