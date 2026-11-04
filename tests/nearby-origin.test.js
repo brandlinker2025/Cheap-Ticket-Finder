@@ -1,0 +1,10 @@
+const assert = require("assert");
+const B = require("../js/booking-links.js");
+const base = "https://tp.media/r?campaign_id=100&marker=791994&p=4114&sub_id=cheapticketfinder-site&trs=587447&u=x";
+const r = B.nearbyCountryDepartureLinks({ origin: "DAC", dest: "LHR", depart: "2026-12-10", tripType: "oneway", adults: 1 }, base);
+assert.deepStrictEqual(r.map((x) => x.id), ["nearby-origin-ccu", "nearby-origin-del", "nearby-origin-ktm", "nearby-origin-cmb"]);
+assert.ok(decodeURIComponent(r[0].url).includes("aviasales.com/search/CCU1012LHR1"));
+assert.ok(r[0].url.includes("marker=791994"));
+assert.strictEqual(B.nearbyCountryDepartureLinks({ origin: "LHR", dest: "DAC", depart: "2026-12-10" }, base).length, 0);
+assert.strictEqual(B.nearbyCountryDepartureLinks({ origin: "DAC", dest: "LHR", depart: "2026-12-10" }, null).length, 0);
+console.log("nearby-origin ok");

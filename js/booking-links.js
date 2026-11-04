@@ -88,6 +88,33 @@
         }));
     }
 
+    // Departing from a nearby country is where the real savings are. Google Flights check,
+    // one-way 10 Dec 2026, cheapest USD: KUL DAC 293 / CCU 191; LHR DAC 489 / CCU 393;
+    // JED DAC 455 / CCU 347; RUH DAC 427 / CCU 249; SIN DAC 282 / CCU 165.
+    // Changing only the website's country made no difference on the same DAC flights.
+    const NEARBY_COUNTRY_ORIGINS = [
+        { code: "CCU", city: "Kolkata", country: "India", note: "closest — bus/train or a short flight from Dhaka; Indian visa needed" },
+        { code: "DEL", city: "Delhi", country: "India", note: "Indian visa needed; add the trip to Delhi" },
+        { code: "KTM", city: "Kathmandu", country: "Nepal", note: "Nepal visa on arrival for Bangladeshis; add the trip to Kathmandu" },
+        { code: "CMB", city: "Colombo", country: "Sri Lanka", note: "Sri Lanka ETA needed; add the trip to Colombo" }
+    ];
+    function nearbyCountryDepartureLinks(opts, tpBase) {
+        if (!tpBase || opts.tripType === "multicity") return [];
+        if (!BD_AIRPORTS.has(lower(opts.origin))) return [];
+        const d = String(opts.dest || "").toUpperCase();
+        return NEARBY_COUNTRY_ORIGINS.filter((n) => n.code !== d).map((n) => ({
+            id: "nearby-origin-" + n.code.toLowerCase(),
+            name: "From " + n.city + " (" + n.code + ")",
+            url: aviasalesDatedLink(tpBase, Object.assign({}, opts, { origin: n.code })),
+            cta: "Check same trip from " + n.city + ", " + n.country + " (" + n.code + ")",
+            tier: "secondary",
+            affiliate: true,
+            fareNote: "departs from another country",
+            blurb: "Live fares on Aviasales for the same destination and dates, but starting in " + n.city + ". Often cheaper than Dhaka — " + n.note + ". Book the Dhaka–" + n.city + " leg separately and leave a buffer.",
+            savings: []
+        }));
+    }
+
     function aviasalesPaxSuffix(opts) {
         const p = pax(opts);
         const cls = { economy: "", premium: "w", business: "c", first: "f" }[p.cabin];
@@ -1209,6 +1236,7 @@
         // India US$395, Malaysia US$402, International US$408 — differences are small but real on some routes.
         if (!isDomesticRoute(opts)) {
             tripComMarketLinks(opts).forEach((m) => rows.push(m));
+            nearbyCountryDepartureLinks(opts, tpBase).forEach((m) => rows.push(m));
         }
         const shareSavings = savingsForProvider("sharetrip", opts);
         if (shareSavings.length) {
@@ -1564,6 +1592,7 @@
         estimateAfterOfficialPercent,
         cheapBookPath,
         isDomesticRoute,
+        nearbyCountryDepartureLinks,
         comparatorLinks,
         bangladeshSearchLinks,
         officialDiscountLinks,

@@ -189,9 +189,11 @@ DYNAMIC = {
     "Open ShareTrip home, then enter the EBL code": "ShareTrip খুলুন, তারপর EBL কোড দিন",
     "Open official packages": "অফিসিয়াল প্যাকেজ খুলুন",
     "same flight, other country site": "একই ফ্লাইট, অন্য দেশের সাইট",
+    "departs from another country": "অন্য দেশ থেকে ছাড়ে",
 }
 # Pattern rules for generated labels (percent figures are copied through unchanged)
 DYN_RULES = [
+    [r"^Check same trip from (.+), (.+) \((\w+)\)$", "একই ট্রিপ $1, $2 ($3) থেকে দেখুন"],
     [r"^Compare on Trip\.com (.+) \((\w+)\)$", "Trip.com $1 সাইটে দাম দেখুন ($2)"],
     [r"^Open (.+) official site$", "$1-এর অফিসিয়াল সাইট খুলুন"],
     [r"^Open (.+) official booking$", "$1-এর অফিসিয়াল বুকিং খুলুন"],
