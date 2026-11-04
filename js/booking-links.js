@@ -916,7 +916,7 @@
         },
         {
             id: "airasia",
-            serves: ["se-asia"],
+            serves: ["se-asia", "east-asia"],
             name: "AirAsia",
             home: "https://www.airasia.com",
             match: /airasia|air asia/i,
@@ -976,7 +976,7 @@
         },
         {
             id: "malaysia",
-            serves: ["se-asia","oceania"],
+            serves: ["se-asia","oceania","east-asia"],
             name: "Malaysia Airlines",
             home: "https://www.malaysiaairlines.com/",
             match: /malaysia airlines/i,
@@ -1006,8 +1006,9 @@
         { id: "kuwaitairways", name: "Kuwait Airways", home: "https://www.kuwaitairways.com/", match: /kuwait airways/i, hubs: ["kwi"], serves: ["middle-east"], url() { return this.home; } },
         { id: "flynas", name: "flynas", home: "https://www.flynas.com/", match: /flynas/i, hubs: ["ruh", "jed", "dmm"], serves: ["middle-east"], url() { return this.home; } },
         { id: "cathay", name: "Cathay Pacific", home: "https://www.cathaypacific.com/", match: /cathay/i, hubs: ["hkg"], serves: ["east-asia", "oceania", "north-america"], url() { return this.home; } },
-        { id: "chinasouthern", name: "China Southern Airlines", home: "https://www.csair.com/en/", match: /china southern/i, hubs: ["can"], serves: ["east-asia", "oceania"], url() { return this.home; } },
+        { id: "chinasouthern", name: "China Southern Airlines", home: "https://www.csair.com/en/", match: /china southern/i, hubs: ["can", "pkx"], serves: ["east-asia", "oceania"], url() { return this.home; } },
         { id: "chinaeastern", name: "China Eastern Airlines", home: "https://us.ceair.com/", match: /china eastern/i, hubs: ["kmg", "pvg"], serves: ["east-asia"], url() { return this.home; } },
+        { id: "airchina", name: "Air China", home: "https://www.airchina.com.cn/", match: /air china/i, hubs: ["pek"], serves: ["east-asia"], url() { return this.home; } },
         { id: "srilankan", name: "SriLankan Airlines", home: "https://www.srilankan.com/", match: /srilankan/i, hubs: ["cmb"], serves: ["south-asia", "middle-east"], url() { return this.home; } }
     ];
 
@@ -1038,6 +1039,7 @@
             // Honest labels: only say the route is in the link when it really is.
             const prefilled = !airline.routeNotPrefilled && urlCarriesRoute(url, opts);
             picked.push({
+                connecting: Boolean(connecting),
                 id: airline.id,
                 name: airline.name,
                 home: airline.home,
@@ -1062,16 +1064,18 @@
 
         AIRLINE_DIRECTORY.forEach((airline) => {
             if (airline.relevant && airline.relevant(o, d)) add(airline);
+            if (Array.isArray(airline.hubs) && (airline.hubs.includes(o) || airline.hubs.includes(d))) {
+                add(airline);
+            }
             // Connecting airlines: offer carriers that fly from South Asia to the destination's region via their hub.
             const region = destRegion(opts);
             if (region && SOUTH_ASIA_ORIGINS.has(o) && Array.isArray(airline.serves) && airline.serves.includes(region)) {
                 add(airline, true);
             }
-            if (Array.isArray(airline.hubs) && (airline.hubs.includes(o) || airline.hubs.includes(d))) {
-                add(airline);
-            }
         });
 
+        // Airlines that fly the route non-stop / from their hub come first; connecting carriers after.
+        picked.sort((a, b) => Number(a.connecting) - Number(b.connecting));
         return picked.slice(0, 14);
     }
 
