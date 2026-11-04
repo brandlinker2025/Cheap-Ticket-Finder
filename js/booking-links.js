@@ -115,6 +115,30 @@
         }));
     }
 
+    // Backup for Kolkata: some routes (e.g. to Riyadh) show "No results" on Aviasales but list fares on Trip.com.
+    function kolkataTripComLink(opts) {
+        if (!BD_AIRPORTS.has(lower(opts.origin)) || opts.tripType === "multicity") return [];
+        const d = lower(opts.dest), dep = toISODate(opts.depart);
+        if (!/^[a-z0-9]{3}$/.test(d) || d === "ccu" || !dep) return [];
+        const ret = opts.tripType === "oneway" ? "" : toISODate(opts.returnDate);
+        return [{
+            id: "nearby-origin-ccu-trip",
+            name: "From Kolkata on Trip.com",
+            url: withQuery("https://www.trip.com/flights/showfarefirst", {
+                dcity: "ccu", acity: d, ddate: dep, rdate: ret,
+                triptype: ret ? "rt" : "ow", class: "y", quantity: pax(opts).adults,
+                locale: "en-XX", curr: "USD",
+                Allianceid: "11059812", SID: "333836392", trip_sub1: "nearby-ccu", trip_sub3: "D20343143"
+            }),
+            cta: "Check same trip from Kolkata on Trip.com (CCU)",
+            tier: "secondary",
+            affiliate: true,
+            fareNote: "departs from another country",
+            blurb: "Backup if Aviasales shows no results for Kolkata. Same destination and dates on Trip.com. Indian visa needed.",
+            savings: []
+        }];
+    }
+
     function aviasalesPaxSuffix(opts) {
         const p = pax(opts);
         const cls = { economy: "", premium: "w", business: "c", first: "f" }[p.cabin];
@@ -1237,6 +1261,7 @@
         if (!isDomesticRoute(opts)) {
             tripComMarketLinks(opts).forEach((m) => rows.push(m));
             nearbyCountryDepartureLinks(opts, tpBase).forEach((m) => rows.push(m));
+            kolkataTripComLink(opts).forEach((m) => rows.push(m));
         }
         const shareSavings = savingsForProvider("sharetrip", opts);
         if (shareSavings.length) {
@@ -1593,6 +1618,7 @@
         cheapBookPath,
         isDomesticRoute,
         nearbyCountryDepartureLinks,
+        kolkataTripComLink,
         comparatorLinks,
         bangladeshSearchLinks,
         officialDiscountLinks,

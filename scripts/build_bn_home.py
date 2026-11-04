@@ -193,6 +193,7 @@ DYNAMIC = {
 }
 # Pattern rules for generated labels (percent figures are copied through unchanged)
 DYN_RULES = [
+    [r"^Check same trip from Kolkata on Trip\.com \((\w+)\)$", "একই ট্রিপ কলকাতা ($1) থেকে Trip.com-এ দেখুন"],
     [r"^Check same trip from (.+), (.+) \((\w+)\)$", "একই ট্রিপ $1, $2 ($3) থেকে দেখুন"],
     [r"^Compare on Trip\.com (.+) \((\w+)\)$", "Trip.com $1 সাইটে দাম দেখুন ($2)"],
     [r"^Open (.+) official site$", "$1-এর অফিসিয়াল সাইট খুলুন"],

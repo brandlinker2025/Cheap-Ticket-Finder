@@ -8,3 +8,8 @@ assert.ok(r[0].url.includes("marker=791994"));
 assert.strictEqual(B.nearbyCountryDepartureLinks({ origin: "LHR", dest: "DAC", depart: "2026-12-10" }, base).length, 0);
 assert.strictEqual(B.nearbyCountryDepartureLinks({ origin: "DAC", dest: "LHR", depart: "2026-12-10" }, null).length, 0);
 console.log("nearby-origin ok");
+const k = B.kolkataTripComLink({ origin: "DAC", dest: "RUH", depart: "2026-12-10", tripType: "oneway", adults: 1 });
+assert.strictEqual(k.length, 1);
+assert.ok(k[0].url.includes("dcity=ccu") && k[0].url.includes("acity=ruh") && k[0].url.includes("Allianceid=11059812"));
+assert.strictEqual(B.kolkataTripComLink({ origin: "DAC", dest: "CCU", depart: "2026-12-10" }).length, 0);
+console.log("kolkata trip ok");
