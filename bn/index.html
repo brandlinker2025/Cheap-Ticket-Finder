@@ -201,6 +201,13 @@
         .trip-seg{flex:1 1 0;min-width:0;min-height:72px;padding:8px 12px;border:1px solid #c5e4f4;border-radius:8px;background:#ffffff;display:flex;flex-direction:column;justify-content:center}
         .trip-seg label{display:block;margin:0 0 2px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#111111 !important}
         .seg-value{font-size:14px;font-weight:800;color:#111111;line-height:1.3}
+        .search-panel.is-multicity .trip-fields > .trip-seg:not(.pax-seg){display:none}
+        .multi-leg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}
+        .multi-leg-heading{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}
+        .multi-leg label{min-width:0;font-size:13px}
+        .multi-leg label :is(input,button){display:block;width:100%;min-height:42px;text-align:left;background:white;color:#111;border:1px solid #a5d8f5;border-radius:8px;padding:6px}
+        .multi-leg label button{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        @media(max-width:560px){.multi-leg{grid-template-columns:repeat(2,minmax(0,1fr))}.multi-leg label:last-child{grid-column:1/-1}}
         .trip-fields > #searchBtn{flex:0 0 156px;width:156px;min-height:72px;margin:0;border-radius:8px !important;align-self:stretch;font-size:16px}
         .luxury-search-card.glass-card{background:transparent !important;border:0 !important;box-shadow:none !important;color:#111111 !important;padding:0 !important}
         .luxury-search-card::before{display:none !important}
@@ -396,6 +403,10 @@
                 <button type="button" onclick="setTripType('multicity')" id="btnMultiCity">মাল্টি-সিটি</button>
             </div>
 
+            <div id="multiCityRow" class="hidden rounded-xl border border-sky-500/30 p-3 mb-4">
+                <div id="multiLegs"></div>
+                <button type="button" id="addMultiLeg" class="home-btn" onclick="addMultiLeg()">+ আরও একটি ফ্লাইট যোগ করুন</button>
+            </div>
             <div class="trip-fields">
                 <div class="trip-seg">
                     <label>কোথা থেকে</label>
@@ -440,16 +451,6 @@
                 </button>
             </div>
             <p class="home-intro">রুট আর তারিখ দিন, পার্টনার সাইটগুলোর ফ্লাইটের দাম এখানেই তুলনা করুন। আমরা টিকিট বিক্রি করি না।</p>
-
-            <div id="multiCityRow" class="hidden bg-slate-950/70 p-3.5 rounded-xl border border-sky-500/30 mb-4">
-                <div class="flex items-center gap-2 mb-2 text-xs font-bold text-sky-400">
-                    <i class="fa-solid fa-route"></i> মাল্টি-সিটি: আরেকটি এয়ারপোর্ট যোগ করুন
-                </div>
-                <div onclick="openLocationModal('stopover')" class="w-full bg-slate-950 border border-slate-700 hover:border-amber-400 rounded-xl p-2.5 text-white cursor-pointer flex justify-between items-center text-xs sm:text-sm transition">
-                    <span id="stopoverDisplay" class="font-semibold text-slate-300">Phuket Int. Airport (HKT)</span>
-                    <i class="fa-solid fa-map-pin text-amber-400"></i>
-                </div>
-            </div>
 
             <div id="datePopoverBackdrop" class="date-popover-backdrop" hidden onclick="closeDatePopover()"></div>
             <div id="calendarPopover" class="date-popover" hidden>
@@ -558,6 +559,7 @@
         </section>
         <div id="wl-flight-results" class="mb-6">
             <p class="text-[11px] text-slate-500 mb-2 leading-5">আমাদের পার্টনার Aviasales (Travelpayouts) থেকে লাইভ ফ্লাইটের দাম। চূড়ান্ত মোট দাম বুকিং সাইটে নিশ্চিত হয়।</p>
+            <a id="multiPartnerLink" class="home-btn hidden" target="_blank" rel="sponsored noopener noreferrer">এই যাত্রাপথ Aviasales-এ দেখুন</a>
             <div class="tpwl-search-slot" aria-hidden="true"><div id="tpwl-search"></div></div>
             <div id="tpwl-tickets" style="width:100%;min-width:0"></div>
             <p id="staleDateNote" hidden role="status" class="text-sm text-amber-300 border border-amber-400/40 rounded-lg p-3 mb-2"></p>
@@ -1204,6 +1206,13 @@
                 attractions: []
             },
 
+            {
+                country: "India 🇮🇳", city: "Srinagar", name: "Srinagar Airport (SXR)", code: "sxr",
+                keywords: "srinagar kashmir sheikh ul alam sxr india",
+                domesticAirlines: [],
+                attractions: []
+            },
+
             // UAE & Singapore 🇦🇪 🇸🇬
             { 
                 country: "United Arab Emirates 🇦🇪", city: "Dubai", name: "Dubai Int. Airport (DXB)", code: "dxb", 
@@ -1348,7 +1357,82 @@
         // Travelpayouts White Label results widget and is not copied into these fields.
         let selectedOriginCode = "";
         let selectedDestCode = "";
-        let selectedStopoverCode = "hkt";
+        const multiLegs = [blankMultiLeg(), blankMultiLeg()];
+        let multiAirportTarget = null;
+
+        function blankMultiLeg(origin = "") {
+            return { origin, dest: "", date: "" };
+        }
+
+        function renderMultiLegs() {
+            const labels = { flight: "ফ্লাইট", remove: "সরান", origin: "কোথা থেকে", dest: "কোথায়", date: "যাওয়ার তারিখ", airport: "শহর বা এয়ারপোর্ট" };
+            document.getElementById("multiLegs").innerHTML = multiLegs.map((leg, index) => `
+                <div class="multi-leg">
+                    <div class="multi-leg-heading"><strong>${labels.flight} ${index + 1}</strong>
+                        ${multiLegs.length > 2 ? `<button type="button" class="home-btn" onclick="removeMultiLeg(${index})" aria-label="${labels.remove} ${labels.flight} ${index + 1}">${labels.remove}</button>` : ""}
+                    </div>
+                    ${["origin", "dest"].map((field) => `<label for="multi-${index}-${field}">${labels[field]}
+                        <button type="button" id="multi-${index}-${field}" onclick="pickMultiAirport(${index}, '${field}')">${escapeHtml(leg[field].toUpperCase() || labels.airport)}</button>
+                    </label>`).join("")}
+                    <label>${labels.date}
+                        <input type="date" min="${BookingLinks.toISODate(new Date())}" value="${leg.date}" onchange="multiLegs[${index}].date = this.value">
+                    </label>
+                </div>`).join("");
+            document.getElementById("addMultiLeg").disabled = multiLegs.length >= 6;
+        }
+
+        function addMultiLeg() {
+            if (multiLegs.length >= 6) return;
+            multiLegs.push(blankMultiLeg(multiLegs[multiLegs.length - 1].dest));
+            renderMultiLegs();
+            document.getElementById(`multi-${multiLegs.length - 1}-origin`).focus();
+        }
+
+        function removeMultiLeg(index) {
+            if (multiLegs.length <= 2) return;
+            multiLegs.splice(index, 1);
+            renderMultiLegs();
+        }
+
+        function pickMultiAirport(index, field) {
+            multiAirportTarget = { index, field };
+            openLocationModal(field);
+        }
+
+        function searchMultiCity() {
+            const today = BookingLinks.toISODate(new Date());
+            const invalid = multiLegs.findIndex((leg, index) =>
+                !leg.origin || !leg.dest || leg.origin === leg.dest || !leg.date ||
+                leg.date < today || (index > 0 && leg.date < multiLegs[index - 1].date));
+            const warning = document.getElementById("routeWarning");
+            warning.classList.toggle("hidden", invalid < 0);
+            if (invalid >= 0) {
+                warning.textContent = `ফ্লাইট ${invalid + 1}-এর জন্য দুটি ভিন্ন এয়ারপোর্ট ও সঠিক ক্রমে যাত্রার তারিখ দিন।`;
+                return;
+            }
+            const code = multiLegs.map((leg, index) => {
+                const previous = multiLegs[index - 1];
+                const origin = previous?.dest === leg.origin ? "" : (previous ? "-" : "") + leg.origin;
+                const destination = index === multiLegs.length - 1 && leg.dest === multiLegs[0].origin ? "" : leg.dest;
+                return origin.toUpperCase() + leg.date.slice(8, 10) + leg.date.slice(5, 7) + destination.toUpperCase();
+            }).join("");
+            const airportIdx = multiLegs.map((_, index) => index).join(",");
+            resetResultsUntilDates();
+            document.getElementById("needDatesHint").classList.add("hidden");
+            const flightSearch = code + BookingLinks.aviasalesPaxSuffix(paxState);
+            const partnerLink = document.getElementById("multiPartnerLink");
+            const partnerSearch = "https://www.aviasales.com/search/" + flightSearch;
+            const affiliateBase = TravelpayoutsAffiliate.aviasalesAffiliateUrl();
+            if (affiliateBase) {
+                const affiliate = new URL(affiliateBase);
+                affiliate.searchParams.set("u", partnerSearch);
+                partnerLink.href = affiliate.href;
+            } else {
+                partnerLink.href = partnerSearch;
+            }
+            partnerLink.classList.remove("hidden");
+            showWhiteLabelResults(flightSearch, airportIdx);
+        }
 
         const today = new Date();
         let selectedDeptDate = null;
@@ -1382,7 +1466,7 @@
         const dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
         function datesReady() {
-            if (!selectedDeptDate) return false;
+            if (currentTripType === 'multicity' || !selectedDeptDate) return false;
             if (currentTripType === 'oneway') return true;
             return Boolean(selectedRetDate);
         }
@@ -1390,6 +1474,8 @@
         function setTripType(type) {
             closeDatePopover();
             currentTripType = type;
+            document.getElementById('air-ticket').classList.toggle('is-multicity', type === 'multicity');
+            document.getElementById('routeWarning').classList.add('hidden');
             const btnRound = document.getElementById('btnRoundTrip');
             const btnOne = document.getElementById('btnOneWay');
             const btnMulti = document.getElementById('btnMultiCity');
@@ -1413,6 +1499,7 @@
             } else {
                 btnMulti.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-lg transition bg-amber-500 text-white shadow";
                 multiRow.classList.remove('hidden');
+                renderMultiLegs();
                 calendarPhase = selectedDeptDate && !selectedRetDate ? 'return' : (selectedRetDate ? 'return' : 'depart');
                 document.getElementById('tripTypeBadge').innerText = "MULTI-CITY";
                 document.getElementById('tripTypeBadge').className = "bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full font-extrabold text-[10px] tracking-wider";
@@ -1430,7 +1517,6 @@
             const input = document.getElementById('modalSearchInput');
             if (type === 'origin') title.innerText = "Select Departure Airport";
             else if (type === 'dest') title.innerText = "Select Destination Airport";
-            else title.innerText = "Select 3rd Stopover Airport";
             modal.classList.remove('hidden');
             input.value = '';
             filterModalAirports(false);
@@ -1439,6 +1525,7 @@
         }
 
         function closeLocationModal() {
+            multiAirportTarget = null;
             document.getElementById('locationModal').classList.add('hidden');
         }
 
@@ -1576,15 +1663,23 @@
         function selectAirportFromModal(code) {
             const airport = getAllAirports().find(item => item.code === code);
             if (!airport) return;
+            if (multiAirportTarget) {
+                const { index, field } = multiAirportTarget;
+                multiLegs[index][field] = airport.code;
+                if (field === "dest" && multiLegs[index + 1] && !multiLegs[index + 1].origin) {
+                    multiLegs[index + 1].origin = airport.code;
+                }
+                closeLocationModal();
+                renderMultiLegs();
+                document.getElementById(`multi-${index}-${field}`).focus();
+                return;
+            }
             if (activeModalType === 'origin') {
                 selectedOriginCode = airport.code;
                 showChosen('originDisplay', airport.name, airport.code);
             } else if (activeModalType === 'dest') {
                 selectedDestCode = airport.code;
                 showChosen('destDisplay', airport.name, airport.code);
-            } else if (activeModalType === 'stopover') {
-                selectedStopoverCode = airport.code;
-                showChosen('stopoverDisplay', airport.name, airport.code);
             }
             closeLocationModal();
             if (selectedOriginCode && selectedDestCode) validateRoute();
@@ -1853,9 +1948,6 @@
                 message = 'কোথা থেকে আর কোথায় — দুটো এয়ারপোর্টই বাছুন।';
             } else if (selectedOriginCode === selectedDestCode) {
                 message = 'যাওয়া আর গন্তব্যের এয়ারপোর্ট আলাদা হতে হবে।';
-            } else if (currentTripType === 'multicity' &&
-                       (selectedStopoverCode === selectedOriginCode || selectedStopoverCode === selectedDestCode)) {
-                message = 'মাল্টি-সিটিতে তৃতীয় এয়ারপোর্ট প্রথম দুটি থেকে আলাদা হতে হবে।';
             }
             warning.textContent = message;
             warning.classList.toggle('hidden', !message);
@@ -1867,7 +1959,6 @@
             return {
                 origin: selectedOriginCode,
                 dest: selectedDestCode,
-                stop: selectedStopoverCode,
                 depart: selectedDeptDate,
                 returnDate: selectedRetDate,
                 tripType: currentTripType,
@@ -2077,7 +2168,6 @@
 
             const origCode = selectedOriginCode.toUpperCase();
             const destCode = selectedDestCode.toUpperCase();
-            const stopCode = selectedStopoverCode.toUpperCase();
             const dStr = formatDate(selectedDeptDate);
             const rStr = formatDate(selectedRetDate);
             let diffDays = 1;
@@ -2091,10 +2181,6 @@
                 document.getElementById('routeBanner').innerText = `${origCode} ➔ ${destCode}`;
                 document.getElementById('stayNights').innerText = "One-way flight";
                 document.getElementById('dateBanner').innerText = dStr;
-            } else if (currentTripType === 'multicity') {
-                document.getElementById('routeBanner').innerText = `${origCode} ➔ ${destCode} ➔ ${stopCode}`;
-                document.getElementById('stayNights').innerText = `${diffDays} days multi-city`;
-                document.getElementById('dateBanner').innerText = `${dStr} ➔ ${rStr}`;
             } else {
                 document.getElementById('routeBanner').innerText = `${origCode} 🔁 ${destCode}`;
                 document.getElementById('stayNights').innerText = `${diffDays} nights`;
@@ -2174,20 +2260,22 @@
         }
 
         function openWhiteLabelResults() {
+            document.getElementById("multiPartnerLink").classList.add("hidden");
             const origin = selectedOriginCode.toUpperCase();
             const dest = selectedDestCode.toUpperCase();
             const depart = ddmm(selectedDeptDate);
             const paxTail = BookingLinks.aviasalesPaxSuffix(paxState);
             let flightSearch = origin + depart + dest + paxTail;
             let airportIdx = "0";
-            if (currentTripType === "multicity") {
-                const stop = selectedStopoverCode.toUpperCase();
-                flightSearch = origin + depart + stop + ddmm(selectedRetDate) + dest + paxTail;
-                airportIdx = "0,1";
-            } else if (currentTripType !== "oneway") {
+            if (currentTripType !== "oneway") {
                 flightSearch = origin + depart + dest + ddmm(selectedRetDate) + paxTail;
                 airportIdx = "0,1";
             }
+            showWhiteLabelResults(flightSearch, airportIdx);
+        }
+
+        function showWhiteLabelResults(flightSearch, airportIdx) {
+            ctfSearchMode(false);
             const params = new URLSearchParams(window.location.search);
             ["origin", "origin_iata", "destination", "destination_iata", "depart_date", "return_date", "adults", "children", "infants", "trip_class", "ticketId"].forEach((key) => params.delete(key));
             params.set("flightSearch", flightSearch);
@@ -2200,6 +2288,7 @@
         }
 
         function triggerFullScan() {
+            if (currentTripType === 'multicity') return searchMultiCity();
             if (!validateRoute()) return;
             if (!datesReady()) {
                 const warn = document.getElementById('routeWarning');

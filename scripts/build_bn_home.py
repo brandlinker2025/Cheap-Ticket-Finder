@@ -24,7 +24,8 @@ TEXT = {
     "Business": "বিজনেস", "First": "ফার্স্ট", "Done": "ঠিক আছে", "Search": "খুঁজুন",
     "Pick your route and dates. Search flights and compare prices from partner sites in the on-site flight search and Travelpayouts results. We do not sell tickets.":
         "রুট আর তারিখ দিন, পার্টনার সাইটগুলোর ফ্লাইটের দাম এখানেই তুলনা করুন। আমরা টিকিট বিক্রি করি না।",
-    "Multi-city: add one more airport": "মাল্টি-সিটি: আরেকটি এয়ারপোর্ট যোগ করুন",
+    "Open this itinerary on Aviasales": "এই যাত্রাপথ Aviasales-এ দেখুন",
+    "+ Add another flight": "+ আরও একটি ফ্লাইট যোগ করুন",
     "Pick a departure date.": "যাওয়ার তারিখ বাছুন।",
     "Depart": "যাওয়া", "Return": "ফেরা", "Today": "আজ",
     "Open on-site flight search": "ফ্লাইট সার্চ খুলুন",
@@ -148,6 +149,10 @@ ATTR = {
 }
 # User-facing strings inside the page's own script (string literals only)
 JS = [
+    ('{ flight: "Flight", remove: "Remove", origin: "From", dest: "To", date: "Departure date", airport: "City or airport" }',
+     '{ flight: "ফ্লাইট", remove: "সরান", origin: "কোথা থেকে", dest: "কোথায়", date: "যাওয়ার তারিখ", airport: "শহর বা এয়ারপোর্ট" }'),
+    ('Flight ${invalid + 1}: choose two different airports and a departure date in travel order.',
+     'ফ্লাইট ${invalid + 1}-এর জন্য দুটি ভিন্ন এয়ারপোর্ট ও সঠিক ক্রমে যাত্রার তারিখ দিন।'),
     ("'Choose a From airport and a To airport.'", "'কোথা থেকে আর কোথায় — দুটো এয়ারপোর্টই বাছুন।'"),
     ("'Departure and destination airports must be different.'", "'যাওয়া আর গন্তব্যের এয়ারপোর্ট আলাদা হতে হবে।'"),
     ("'For Multi-City, the third airport must be different from the first two airports.'", "'মাল্টি-সিটিতে তৃতীয় এয়ারপোর্ট প্রথম দুটি থেকে আলাদা হতে হবে।'"),
