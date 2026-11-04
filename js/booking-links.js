@@ -59,6 +59,35 @@
             : base + "&u=" + encodeURIComponent(target);
     }
 
+    const TRIP_MARKETS = [
+        { id: "in", label: "India", locale: "en-IN", curr: "INR" },
+        { id: "my", label: "Malaysia", locale: "en-MY", curr: "MYR" },
+        { id: "xx", label: "International", locale: "en-XX", curr: "USD" }
+    ];
+    function tripComMarketLinks(opts) {
+        const o = lower(opts.origin), d = lower(opts.dest);
+        const dep = toISODate(opts.depart);
+        if (!/^[a-z0-9]{3}$/.test(o) || !/^[a-z0-9]{3}$/.test(d) || !dep || opts.tripType === "multicity") return [];
+        const ret = opts.tripType === "oneway" ? "" : toISODate(opts.returnDate);
+        const p = pax(opts);
+        return TRIP_MARKETS.map((m) => ({
+            id: "trip-market-" + m.id,
+            name: "Trip.com " + m.label,
+            url: withQuery("https://www.trip.com/flights/showfarefirst", {
+                dcity: o, acity: d, ddate: dep, rdate: ret,
+                triptype: ret ? "rt" : "ow", class: "y", quantity: p.adults,
+                locale: m.locale, curr: m.curr,
+                Allianceid: "11059812", SID: "333836392", trip_sub1: "market-" + m.id, trip_sub3: "D20343143"
+            }),
+            cta: "Compare on Trip.com " + m.label + " (" + m.curr + ")",
+            tier: "secondary",
+            affiliate: true,
+            fareNote: "same flight, other country site",
+            blurb: "Same route and dates on Trip.com's " + m.label + " site. Prices can differ a little by country; payment card and currency rules apply.",
+            savings: []
+        }));
+    }
+
     function aviasalesPaxSuffix(opts) {
         const p = pax(opts);
         const cls = { economy: "", premium: "w", business: "c", first: "f" }[p.cabin];
@@ -1176,6 +1205,11 @@
                 savings: airline.savings || savingsForProvider(airline.id, opts)
             });
         });
+        // Same route and dates on Trip.com's other country sites. Checked 2026-11-04 (DAC-KUL):
+        // India US$395, Malaysia US$402, International US$408 — differences are small but real on some routes.
+        if (!isDomesticRoute(opts)) {
+            tripComMarketLinks(opts).forEach((m) => rows.push(m));
+        }
         const shareSavings = savingsForProvider("sharetrip", opts);
         if (shareSavings.length) {
             rows.push({
