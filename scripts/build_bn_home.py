@@ -190,12 +190,14 @@ DYNAMIC = {
     "Open official packages": "অফিসিয়াল প্যাকেজ খুলুন",
     "same flight, other country site": "একই ফ্লাইট, অন্য দেশের সাইট",
     "departs from another country": "অন্য দেশ থেকে ছাড়ে",
+    "Official airline website. This airline flies to this region with a stop at its hub — enter your route and dates there to see if it flies your exact route and its fare.": "এয়ারলাইনের অফিসিয়াল ওয়েবসাইট। এই এয়ারলাইন তাদের হাব হয়ে এই অঞ্চলে যায় — আপনার রুট ও তারিখ দিয়ে দেখুন আপনার রুটে ফ্লাইট আছে কিনা এবং দাম কত।",
 }
 # Pattern rules for generated labels (percent figures are copied through unchanged)
 DYN_RULES = [
     [r"^Check same trip from Kolkata on Trip\.com \((\w+)\)$", "একই ট্রিপ কলকাতা ($1) থেকে Trip.com-এ দেখুন"],
     [r"^Check same trip from (.+), (.+) \((\w+)\)$", "একই ট্রিপ $1, $2 ($3) থেকে দেখুন"],
     [r"^Compare on Trip\.com (.+) \((\w+)\)$", "Trip.com $1 সাইটে দাম দেখুন ($2)"],
+    [r"^Open (.+) website$", "$1-এর ওয়েবসাইট খুলুন"],
     [r"^Open (.+) official site$", "$1-এর অফিসিয়াল সাইট খুলুন"],
     [r"^Open (.+) official booking$", "$1-এর অফিসিয়াল বুকিং খুলুন"],
     [r"^Open (.+) booking$", "$1 বুকিং খুলুন"],

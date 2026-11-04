@@ -714,6 +714,27 @@
     const NOVOAIR_NETWORK = new Set(["dac", "cgp", "cxb", "jsr", "rjh", "spd", "zyl"]);
     const onNetwork = (set) => (o, d) => set.has(o) && set.has(d);
 
+    // Which world region a destination country is in, so connecting airlines can be offered on any route.
+    const COUNTRY_REGION = (function () {
+        const m = {};
+        const put = (region, list) => list.forEach((c) => { m[c] = region; });
+        put("middle-east", ["united arab emirates", "saudi arabia", "qatar", "oman", "kuwait", "bahrain", "jordan", "lebanon", "iraq", "iran", "israel", "yemen", "egypt"]);
+        put("europe", ["united kingdom", "ireland", "france", "germany", "italy", "spain", "portugal", "netherlands", "belgium", "switzerland", "austria", "sweden", "norway", "denmark", "finland", "poland", "czech republic", "czechia", "greece", "türkiye", "turkey", "romania", "hungary", "russia", "ukraine", "bulgaria", "serbia", "croatia", "cyprus", "malta", "iceland", "luxembourg", "slovakia", "slovenia", "lithuania", "latvia", "estonia", "georgia", "azerbaijan", "armenia"]);
+        put("north-america", ["united states", "canada", "mexico"]);
+        put("south-america", ["brazil", "argentina", "chile", "peru", "colombia"]);
+        put("africa", ["south africa", "kenya", "nigeria", "ethiopia", "tanzania", "morocco", "ghana", "uganda", "mauritius", "algeria", "tunisia", "sudan", "libya", "senegal"]);
+        put("se-asia", ["thailand", "malaysia", "singapore", "indonesia", "vietnam", "viet nam", "philippines", "cambodia", "myanmar", "burma", "laos", "brunei"]);
+        put("east-asia", ["china", "hong kong", "japan", "south korea", "korea", "taiwan", "macau", "mongolia"]);
+        put("south-asia", ["india", "nepal", "sri lanka", "maldives", "bhutan", "pakistan"]);
+        put("central-asia", ["uzbekistan", "kazakhstan", "kyrgyzstan", "tajikistan", "turkmenistan", "afghanistan"]);
+        put("oceania", ["australia", "new zealand", "fiji"]);
+        return m;
+    })();
+    const SOUTH_ASIA_ORIGINS = new Set(["dac", "cgp", "zyl", "ccu", "del", "ktm", "cmb", "bom", "maa", "blr", "hyd"]);
+    function destRegion(opts) {
+        return COUNTRY_REGION[String(opts.destCountry || "").replace(/[^\p{L}\s]/gu, "").trim().toLowerCase()] || "";
+    }
+
     const AIRLINE_DIRECTORY = [
         {
             id: "biman",
@@ -780,6 +801,7 @@
         },
         {
             id: "emirates",
+            serves: ["middle-east","europe","north-america","south-america","africa","oceania","east-asia"],
             routeNotPrefilled: true, // checked 2026-11-02: only "From" is filled on emirates.com
             name: "Emirates",
             home: "https://www.emirates.com/bd/english/",
@@ -804,6 +826,7 @@
         },
         {
             id: "qatar",
+            serves: ["middle-east","europe","north-america","south-america","africa","oceania","east-asia"],
             routeNotPrefilled: true, // checked 2026-11-02: lands on qatarairways.com home after a security check
             name: "Qatar Airways",
             home: "https://www.qatarairways.com/en-bd/homepage.html",
@@ -829,6 +852,7 @@
         },
         {
             id: "flydubai",
+            serves: ["middle-east","africa","europe","central-asia"],
             name: "flydubai",
             home: "https://www.flydubai.com/en/",
             match: /flydubai/i,
@@ -840,6 +864,7 @@
         },
         {
             id: "singapore",
+            serves: ["se-asia","oceania","east-asia"],
             name: "Singapore Airlines",
             home: "https://www.singaporeair.com/",
             match: /singapore/i,
@@ -879,6 +904,7 @@
         },
         {
             id: "thai",
+            serves: ["se-asia","east-asia"],
             name: "Thai Airways",
             home: "https://www.thaiairways.com",
             match: /thai airways/i,
@@ -890,6 +916,7 @@
         },
         {
             id: "airasia",
+            serves: ["se-asia"],
             name: "AirAsia",
             home: "https://www.airasia.com",
             match: /airasia|air asia/i,
@@ -913,6 +940,7 @@
         },
         {
             id: "indigo",
+            serves: ["south-asia","middle-east","se-asia"],
             name: "IndiGo",
             home: "https://www.goindigo.in",
             match: /indigo/i,
@@ -924,6 +952,7 @@
         },
         {
             id: "airindia",
+            serves: ["south-asia","europe","north-america"],
             name: "Air India",
             home: "https://www.airindia.com",
             match: /air india/i,
@@ -935,6 +964,7 @@
         },
         {
             id: "turkish",
+            serves: ["europe","north-america","africa","middle-east","central-asia"],
             name: "Turkish Airlines",
             home: "https://www.turkishairlines.com/",
             match: /turkish/i,
@@ -946,6 +976,7 @@
         },
         {
             id: "malaysia",
+            serves: ["se-asia","oceania"],
             name: "Malaysia Airlines",
             home: "https://www.malaysiaairlines.com/",
             match: /malaysia airlines/i,
@@ -957,6 +988,7 @@
         },
         {
             id: "saudia",
+            serves: ["middle-east"],
             name: "Saudia",
             home: "https://www.saudia.com/",
             match: /saudia|saudi/i,
@@ -966,6 +998,17 @@
                 return this.home;
             }
         }
+        ,
+        { id: "etihad", name: "Etihad Airways", home: "https://www.etihad.com/", match: /etihad/i, hubs: ["auh"], serves: ["middle-east", "europe", "north-america", "africa", "east-asia"], url() { return this.home; } },
+        { id: "airarabia", name: "Air Arabia", home: "https://www.airarabia.com/", match: /air arabia/i, hubs: ["shj"], serves: ["middle-east", "africa", "central-asia"], url() { return this.home; } },
+        { id: "gulfair", name: "Gulf Air", home: "https://www.gulfair.com/", match: /gulf air/i, hubs: ["bah"], serves: ["middle-east", "europe"], url() { return this.home; } },
+        { id: "omanair", name: "Oman Air", home: "https://www.omanair.com/", match: /oman air/i, hubs: ["mct"], serves: ["middle-east", "europe"], url() { return this.home; } },
+        { id: "kuwaitairways", name: "Kuwait Airways", home: "https://www.kuwaitairways.com/", match: /kuwait airways/i, hubs: ["kwi"], serves: ["middle-east"], url() { return this.home; } },
+        { id: "flynas", name: "flynas", home: "https://www.flynas.com/", match: /flynas/i, hubs: ["ruh", "jed", "dmm"], serves: ["middle-east"], url() { return this.home; } },
+        { id: "cathay", name: "Cathay Pacific", home: "https://www.cathaypacific.com/", match: /cathay/i, hubs: ["hkg"], serves: ["east-asia", "oceania", "north-america"], url() { return this.home; } },
+        { id: "chinasouthern", name: "China Southern Airlines", home: "https://www.csair.com/en/", match: /china southern/i, hubs: ["can"], serves: ["east-asia", "oceania"], url() { return this.home; } },
+        { id: "chinaeastern", name: "China Eastern Airlines", home: "https://us.ceair.com/", match: /china eastern/i, hubs: ["kmg", "pvg"], serves: ["east-asia"], url() { return this.home; } },
+        { id: "srilankan", name: "SriLankan Airlines", home: "https://www.srilankan.com/", match: /srilankan/i, hubs: ["cmb"], serves: ["south-asia", "middle-east"], url() { return this.home; } }
     ];
 
     function findAirlineByName(name, website) {
@@ -987,7 +1030,7 @@
         const picked = [];
         const seen = new Set();
 
-        function add(airline) {
+        function add(airline, connecting) {
             if (!airline || seen.has(airline.id)) return;
             if (airline.skipIf && airline.skipIf(o, d)) return;
             seen.add(airline.id);
@@ -1000,7 +1043,7 @@
                 home: airline.home,
                 url: url,
                 prefilled: prefilled,
-                blurb: airline.blurb || (prefilled
+                blurb: (connecting && !prefilled) ? "Official airline website. This airline flies to this region with a stop at its hub — enter your route and dates there to see if it flies your exact route and its fare." : airline.blurb || (prefilled
                     ? "Official airline booking page for this route. Origin, destination and dates are in the link. Live fare is on the airline site — we do not invent a fare."
                     : "Official airline website. Enter your route and dates there — this link does not fill them in. Live fare is on the airline site."),
                 cta: airline.cta || (prefilled ? `Open ${airline.name} booking` : `Open ${airline.name} website`),
@@ -1019,12 +1062,17 @@
 
         AIRLINE_DIRECTORY.forEach((airline) => {
             if (airline.relevant && airline.relevant(o, d)) add(airline);
+            // Connecting airlines: offer carriers that fly from South Asia to the destination's region via their hub.
+            const region = destRegion(opts);
+            if (region && SOUTH_ASIA_ORIGINS.has(o) && Array.isArray(airline.serves) && airline.serves.includes(region)) {
+                add(airline, true);
+            }
             if (Array.isArray(airline.hubs) && (airline.hubs.includes(o) || airline.hubs.includes(d))) {
                 add(airline);
             }
         });
 
-        return picked.slice(0, 8);
+        return picked.slice(0, 14);
     }
 
     // Official airline-site checkout codes only. Never invent unpublished airline codes.
@@ -1617,6 +1665,7 @@
         estimateAfterOfficialPercent,
         cheapBookPath,
         isDomesticRoute,
+        destRegion,
         nearbyCountryDepartureLinks,
         kolkataTripComLink,
         comparatorLinks,

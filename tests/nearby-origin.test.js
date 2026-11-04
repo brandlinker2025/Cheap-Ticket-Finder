@@ -13,3 +13,8 @@ assert.strictEqual(k.length, 1);
 assert.ok(k[0].url.includes("dcity=ccu") && k[0].url.includes("acity=ruh") && k[0].url.includes("Allianceid=11059812"));
 assert.strictEqual(B.kolkataTripComLink({ origin: "DAC", dest: "CCU", depart: "2026-12-10" }).length, 0);
 console.log("kolkata trip ok");
+const lhr = B.airlinesForRoute({ origin: "DAC", dest: "LHR", destCountry: "United Kingdom", depart: "2026-12-10", tripType: "oneway", adults: 1 }).map((x) => x.id);
+["emirates", "qatar", "turkish", "etihad"].forEach((id) => assert.ok(lhr.includes(id), "LHR should offer " + id));
+const cxb = B.airlinesForRoute({ origin: "DAC", dest: "CXB", destCountry: "Bangladesh", depart: "2026-12-10", tripType: "oneway" }).map((x) => x.id);
+assert.ok(!cxb.includes("emirates") && !cxb.includes("indigo"), "domestic must not show foreign airlines");
+console.log("connecting airlines ok");
