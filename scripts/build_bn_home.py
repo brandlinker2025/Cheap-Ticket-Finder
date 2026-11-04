@@ -132,6 +132,7 @@ ROUTES = {
     "Dhaka to Muscat air ticket": ("ঢাকা–মাসকাট বিমান টিকিট", "dhaka-to-muscat-cheap-ticket"),
     "Dhaka to Kuwait air ticket": ("ঢাকা–কুয়েত বিমান টিকিট", "dhaka-to-kuwait-cheap-ticket"),
     "Dhaka to Maldives air ticket": ("ঢাকা–মালদ্বীপ বিমান টিকিট", "dhaka-to-maldives-cheap-ticket"),
+    "Air ticket price from Bangladesh": ("বিমান টিকিটের দাম", "air-ticket-price-bangladesh"),
     "Dhaka to Istanbul air ticket": ("ঢাকা–ইস্তানবুল বিমান টিকিট", "dhaka-to-istanbul-cheap-ticket"),
     "Dhaka to Guangzhou air ticket": ("ঢাকা–গুয়াংজু বিমান টিকিট", "dhaka-to-guangzhou-cheap-ticket"),
     "Dhaka to Kunming air ticket": ("ঢাকা–কুনমিং বিমান টিকিট", "dhaka-to-kunming-cheap-ticket"),
