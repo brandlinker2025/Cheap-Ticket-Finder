@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 module.exports = async (req, res) => {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -11,9 +9,15 @@ module.exports = async (req, res) => {
     const date = req.query.date || new Date().toISOString().split('T')[0];
     const currency = req.query.currency || 'EUR';
 
-    const response = await axios.post(
-      'https://api.duffel.com/air/offer_requests',
-      {
+    const response = await fetch('https://api.duffel.com/air/offer_requests', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Duffel-Version': 'v2',
+        'Authorization': `Bearer ${process.env.DUFFEL_ACCESS_TOKEN}`
+      },
+      body: JSON.stringify({
         data: {
           slices: [
             {
@@ -25,18 +29,19 @@ module.exports = async (req, res) => {
           passengers: [{ type: 'adult' }],
           currency
         }
-      },
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Duffel-Version': 'v2',
-          'Authorization': `Bearer ${process.env.DUFFEL_ACCESS_TOKEN}`
-        }
-      }
-    );
+      })
+    });
 
-    const offers = response.data?.data?.offers || [];
+    const json = await response.json();
+
+    if (!response.ok) {
+      return res.status(response.status).json({
+        success: false,
+        error: json.errors?.[0]?.message || 'Duffel API error'
+      });
+    }
+
+    const offers = json.data?.offers || [];
 
     res.status(200).json({
       success: true,
@@ -45,10 +50,10 @@ module.exports = async (req, res) => {
       data: offers.slice(0, 5)
     });
   } catch (error) {
-    console.error(error.response?.data || error.message);
+    console.error(error);
     res.status(500).json({
       success: false,
-      error: error.response?.data?.errors?.[0]?.message || error.message
+      error: error.message
     });
   }
 };
