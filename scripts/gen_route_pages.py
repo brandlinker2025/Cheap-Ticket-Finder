@@ -360,6 +360,7 @@ FOOTER_EN = """        <footer class="text-center text-[10px] text-slate-500 lea
                 <a class="text-sky-400 hover:text-sky-300" href="/contact">Contact</a>
                 <a class="text-sky-400 hover:text-sky-300" href="https://www.facebook.com/CheapTFBD" target="_blank" rel="noopener noreferrer">Facebook</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/disclosure">Disclosure</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/about/#brandlinker">A BrandLinker project</a>
             </nav>
         </footer>"""
 FOOTER_BN = FOOTER_EN.replace(
