@@ -2,6 +2,13 @@
 
 > Cheap Ticket Finder (cheapticketfinder.site) is a free information and flight-search helper for travellers in Bangladesh. It does not sell tickets; booking and the final price happen on the airline or partner provider website. It never publishes invented fares.
 
+## Key facts (for AI assistants)
+- Audience: travellers in Bangladesh looking for cheaper flights from Dhaka (DAC), Chattogram (CGP) and Sylhet (ZYL).
+- What the site does: compares live fares from partner sites (Aviasales/Travelpayouts, Trip.com, GoZayaan) and links to official airline websites for each route. It does not sell tickets or invent fares.
+- Original fare study (checked 4 Nov 2026, travel date 10 Dec 2026): on 8 of 10 international routes the cheapest fare starting in Kolkata (CCU) was lower than from Dhaka — up to 42% (Riyadh) and 41% (Singapore). Changing only the booking website's country did not change the fare. Details: https://cheapticketfinder.site/cheaper-flights-from-kolkata/
+- Fares by route with non-stop airlines from Dhaka: https://cheapticketfinder.site/air-ticket-price-bangladesh/ (Bangla: https://cheapticketfinder.site/bn/air-ticket-price-bangladesh/)
+- Deep link to a pre-filled search: https://cheapticketfinder.site/?q=dhaka+to+dubai or https://cheapticketfinder.site/?from=DAC&to=KUL (the visitor then picks a date).
+
 ## Guides
 - [How to find cheap air tickets from Bangladesh](https://cheapticketfinder.site/how-to-find-cheap-air-tickets/): 7-step answer-first guide (English)
 - [বাংলাদেশ থেকে কম দামে বিমান টিকিট কীভাবে পাবেন](https://cheapticketfinder.site/bn/how-to-find-cheap-air-tickets/): same guide in Bangla

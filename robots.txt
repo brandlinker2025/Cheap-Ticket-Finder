@@ -7,6 +7,12 @@ User-agent: GPTBot
 User-agent: PerplexityBot
 User-agent: ClaudeBot
 User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: Perplexity-User
+User-agent: DuckAssistBot
+User-agent: DuckDuckBot
+User-agent: YandexBot
+User-agent: MistralAI-User
 User-agent: Applebot
 User-agent: Applebot-Extended
 Allow: /

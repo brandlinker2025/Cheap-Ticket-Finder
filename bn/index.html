@@ -44,6 +44,7 @@
     <meta name="deploy" content="gf-nearby-20260902">
     <meta name='impact-site-verification' value='4af29459-fcb3-4f17-a171-999b80bb91e2'>
     <link rel="canonical" href="https://cheapticketfinder.site/bn/">
+    <link rel="search" type="application/opensearchdescription+xml" title="Cheap Ticket Finder" href="/opensearch.xml">
     <meta property="og:site_name" content="Cheap Ticket Finder">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cheapticketfinder.site/bn/">
@@ -61,7 +62,7 @@
     <link rel="alternate" hreflang="en" href="https://cheapticketfinder.site/">
     <link rel="alternate" hreflang="bn" href="https://cheapticketfinder.site/bn/">
     <link rel="alternate" hreflang="x-default" href="https://cheapticketfinder.site/">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://cheapticketfinder.site/#organization", "name": "Cheap Ticket Finder", "alternateName": "Cheap Ticket Finder", "url": "https://cheapticketfinder.site/", "logo": "https://cheapticketfinder.site/icon-v2-512.png", "sameAs": ["https://www.facebook.com/CheapTFBD"]}, {"@type": "WebSite", "@id": "https://cheapticketfinder.site/#website", "name": "Cheap Ticket Finder", "alternateName": "Cheap Ticket Finder", "url": "https://cheapticketfinder.site/", "inLanguage": "bn", "publisher": {"@id": "https://cheapticketfinder.site/#organization"}, "description": "Flexible-date cheap flight ticket search helper for Bangladesh-based travellers. This site does not sell tickets; the final price is shown by the provider."}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://cheapticketfinder.site/#organization", "name": "Cheap Ticket Finder", "alternateName": "Cheap Ticket Finder", "url": "https://cheapticketfinder.site/", "logo": "https://cheapticketfinder.site/icon-v2-512.png", "sameAs": ["https://www.facebook.com/CheapTFBD"]}, {"@type": "WebSite", "@id": "https://cheapticketfinder.site/#website", "name": "Cheap Ticket Finder", "alternateName": "Cheap Ticket Finder", "url": "https://cheapticketfinder.site/", "inLanguage": "bn", "publisher": {"@id": "https://cheapticketfinder.site/#organization"}, "description": "Flexible-date cheap flight ticket search helper for Bangladesh-based travellers. This site does not sell tickets; the final price is shown by the provider.", "potentialAction": {"@type": "SearchAction", "target": {"@type": "EntryPoint", "urlTemplate": "https://cheapticketfinder.site/?q={search_term_string}"}, "query-input": "required name=search_term_string"}}]}</script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/luxury.css?v=compact-20261019">
@@ -2221,6 +2222,43 @@
             if (btn) btn.addEventListener('click', function () {
                 setTimeout(function () { if (datesReady() && validateRoute()) ctfSearchMode(true); }, 350);
             });
+        });
+
+        // Browser search box / AI links: /?q=dubai or /?q=dhaka+to+london or /?from=DAC&to=KUL
+        // pre-fills From/To from our airport list, then asks for a date. Unknown words are ignored.
+        document.addEventListener('DOMContentLoaded', function () {
+            const qs = new URLSearchParams(location.search);
+            if (qs.get('flightSearch')) return;
+            const raw = (qs.get('q') || '').trim().toLowerCase();
+            let fromTxt = (qs.get('from') || '').trim().toLowerCase();
+            let toTxt = (qs.get('to') || '').trim().toLowerCase();
+            if (!raw && !toTxt) return;
+            if (raw) {
+                const cleaned = raw.replace(/\b(cheap|cheapest|air|flight|flights|ticket|tickets|price|prices|fare|fares|from)\b/g, ' ').replace(/\s+/g, ' ').trim();
+                const parts = cleaned.split(/\s+to\s+/);
+                if (parts.length >= 2) { fromTxt = fromTxt || parts[0].trim(); toTxt = toTxt || parts[1].trim(); }
+                else { toTxt = toTxt || cleaned; }
+            }
+            const list = getAllAirports();
+            function find(txt) {
+                if (!txt) return null;
+                const t = txt.replace(/[^a-z0-9\s']/g, '').trim();
+                if (!t) return null;
+                return list.find(a => a.code === t)
+                    || list.find(a => String(a.city || '').toLowerCase() === t)
+                    || list.find(a => (' ' + String(a.keywords || '').toLowerCase() + ' ').includes(' ' + t + ' '))
+                    || list.find(a => String(a.city || '').toLowerCase().startsWith(t) && t.length >= 3)
+                    || null;
+            }
+            const from = find(fromTxt) || list.find(a => a.code === 'dac');
+            const to = find(toTxt);
+            if (!to || !from || to.code === from.code) return;
+            selectedOriginCode = from.code; showChosen('originDisplay', from.name, from.code);
+            selectedDestCode = to.code; showChosen('destDisplay', to.name, to.code);
+            validateRoute();
+            const panel = document.getElementById('air-ticket');
+            if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(function () { try { triggerFullScan(); } catch (e) {} }, 400);
         });
 
         function renderResults() {
