@@ -1624,7 +1624,106 @@
                 name: "Booking.com",
                 blurb: "Open dated hotel search on Booking.com.",
                 url: bookingUrl(opts)
+            },
+            {
+                id: "agoda",
+                name: "Agoda",
+                blurb: "Open the same city and dates on Agoda.",
+                url: agodaHotelUrl(opts)
+            },
+            {
+                id: "tripcom-hotels",
+                name: "Trip.com Hotels",
+                blurb: "Open the same city and dates on Trip.com (total price incl. taxes).",
+                url: tripHotelUrl(opts)
             }
+        ];
+    }
+
+
+    // T-120: hotel compare. City IDs looked up on Agoda and Trip.com (6 Nov 2026) so links open the real city list with dates.
+    const HOTEL_CITIES = [
+        ["Dhaka","Bangladesh",1390,733,"dac"],["Chattogram","Bangladesh",512855,1357,"cgp chittagong"],["Cox's Bazar","Bangladesh",671817,5148,"cxb coxs bazar"],
+        ["Sylhet","Bangladesh",513022,6570,"zyl"],["Sreemangal","Bangladesh",718153,90680,"srimangal"],["Bandarban","Bangladesh",713201,271624,""],
+        ["Rangamati","Bangladesh",732505,269375,""],["Kuakata","Bangladesh",732503,0,""],["Rajshahi","Bangladesh",671813,5762,"rjh"],
+        ["Jashore","Bangladesh",725175,7105,"jsr jessore"],["Saidpur","Bangladesh",725060,5925,"spd"],["Barishal","Bangladesh",671819,5001,"bzl barisal"],
+        ["Bangkok","Thailand",9395,359,"bkk dmk"],["Phuket","Thailand",16056,725,"hkt"],["Pattaya","Thailand",8584,622,""],["Chiang Mai","Thailand",7401,623,"cnx"],
+        ["Krabi","Thailand",14865,1405,"kbv"],["Koh Samui","Thailand",17198,1229,"usm"],
+        ["Kuala Lumpur","Malaysia",14524,315,"kul szb"],["Penang","Malaysia",16087,35926,"pen george town"],["Langkawi","Malaysia",16928,1225,"lgk"],
+        ["Kota Kinabalu","Malaysia",5070,1393,"bki"],["Singapore","Singapore",4064,73,"sin"],
+        ["Kolkata","India",6241,756,"ccu calcutta"],["New Delhi","India",14552,495,"del delhi"],["Mumbai","India",16850,724,"bom"],["Chennai","India",17269,1235,"maa"],
+        ["Bengaluru","India",4923,1355,"blr bangalore"],["Hyderabad","India",8801,1364,"hyd"],["Guwahati","India",23053,6781,"gau"],["Darjeeling","India",10863,9538,""],
+        ["Kathmandu","Nepal",2487,304,"ktm"],["Pokhara","Nepal",5733,3332,"pkr"],["Thimphu","Bhutan",101036,59715,""],["Paro","Bhutan",701397,5550,"pbh"],
+        ["Colombo","Sri Lanka",7835,810,"cmb"],["Male","Maldives",176160,1207,"mle maldives"],
+        ["Dubai","United Arab Emirates",2994,220,"dxb dwc"],["Abu Dhabi","United Arab Emirates",10182,766,"auh"],["Sharjah","United Arab Emirates",8105,742,"shj"],
+        ["Doha","Qatar",4472,1401,"doh"],["Makkah","Saudi Arabia",78591,3744,"mecca"],["Madinah","Saudi Arabia",23028,19744,"med medina"],
+        ["Jeddah","Saudi Arabia",9777,801,"jed"],["Riyadh","Saudi Arabia",5349,789,"ruh"],["Muscat","Oman",6445,853,"mct"],["Kuwait City","Kuwait",16918,336,"kwi kuwait"],
+        ["Manama","Bahrain",16630,19695,"bah bahrain"],["Istanbul","Türkiye",14932,532,"ist saw"],["London","United Kingdom",233,338,"lhr lgw stn ltn"],
+        ["Paris","France",15470,192,"cdg ory"],["Rome","Italy",16594,343,"fco"],["New York","United States",318,633,"jfk ewr"],["Toronto","Canada",4495,461,"yyz"],
+        ["Tokyo","Japan",5085,228,"nrt hnd"],["Osaka","Japan",9590,219,"kix"],["Seoul","South Korea",14690,274,"icn gmp"],["Hong Kong","Hong Kong",16808,58,"hkg"],
+        ["Guangzhou","China",10112,32,"can"],["Shanghai","China",3987,2,"pvg"],["Beijing","China",1569,1,"pek"],["Kunming","China",5445,34,"kmg"],
+        ["Hanoi","Vietnam",2758,286,"han"],["Ho Chi Minh City","Vietnam",13170,301,"sgn saigon"],["Da Nang","Vietnam",16440,1356,"dad"],
+        ["Bali","Indonesia",17193,723,"dps denpasar"],["Jakarta","Indonesia",8691,524,"cgk"],["Manila","Philippines",1622,364,"mnl"],
+        ["Sydney","Australia",14370,501,"syd"],["Melbourne","Australia",10372,358,"mel"]
+    ].map(([name, country, agoda, trip, alias]) => ({ name, country, agoda, trip, keys: [name.toLowerCase()].concat(String(alias).split(" ").filter(Boolean)) }));
+
+    function normCity(s) {
+        return String(s || "").replace(/\([^)]*\)/g, "").replace(/,.*$/, "").replace(/[’']/g, "").trim().toLowerCase();
+    }
+
+    function hotelCityInfo(input) {
+        const q = normCity(input);
+        if (!q) return null;
+        return HOTEL_CITIES.find(c => c.keys.some(k => k.replace(/'/g, "") === q)) || null;
+    }
+
+    function hotelGuests(opts) {
+        const adults = Math.min(30, Math.max(1, parseInt(opts.adults, 10) || 2));
+        const rooms = Math.min(adults, Math.max(1, parseInt(opts.rooms, 10) || 1));
+        return { adults, rooms };
+    }
+
+    function nightsBetween(checkin, checkout) {
+        const a = fromISO(checkin), b = fromISO(checkout);
+        return Math.round((Date.UTC(b.y, b.m - 1, b.day) - Date.UTC(a.y, a.m - 1, a.day)) / 86400000);
+    }
+
+    function agodaHotelUrl(opts) {
+        const info = hotelCityInfo(opts.city);
+        if (!info || !info.agoda) return "https://www.agoda.com/";
+        const g = hotelGuests(opts);
+        return `https://www.agoda.com/search?city=${info.agoda}&checkIn=${toISODate(opts.checkin)}&checkOut=${toISODate(opts.checkout)}&rooms=${g.rooms}&adults=${g.adults}&children=0`;
+    }
+
+    function tripHotelUrl(opts) {
+        const info = hotelCityInfo(opts.city);
+        const aff = "Allianceid=11059812&SID=333836392&trip_sub1=hotels-search&trip_sub3=D20343143";
+        if (!info || !info.trip) return `https://www.trip.com/hotels?${aff}`;
+        const g = hotelGuests(opts);
+        return `https://www.trip.com/hotels/list?city=${info.trip}&checkin=${toISODate(opts.checkin)}&checkout=${toISODate(opts.checkout)}&adult=${g.adults}&crn=${g.rooms}&children=0&curr=USD&${aff}`;
+    }
+
+    function bookingHotelUrl(opts) {
+        const info = hotelCityInfo(opts.city);
+        const city = info ? `${info.name}, ${info.country}` : String(opts.city || "").trim();
+        const g = hotelGuests(opts);
+        return `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city)}&checkin=${toISODate(opts.checkin)}&checkout=${toISODate(opts.checkout)}&group_adults=${g.adults}&no_rooms=${g.rooms}&group_children=0`;
+    }
+
+    function hotelCompareLinks(opts) {
+        const info = hotelCityInfo(opts.city);
+        const city = info ? info.name : String(opts.city || "").trim();
+        const o = Object.assign({}, opts, { city });
+        const exact = !!info;
+        return [
+            { id: "agoda", name: "Agoda", affiliate: false, exact: exact && !!info.agoda,
+              blurb: "Strong in Asia (Thailand, Malaysia, Bangladesh). Often has app-only and member prices.", url: agodaHotelUrl(o) },
+            { id: "tripcom", name: "Trip.com", affiliate: true, exact: exact && !!info.trip,
+              blurb: "Shows the total price for all nights incl. taxes. Pay in USD with a dual-currency card.", url: tripHotelUrl(o) },
+            { id: "booking", name: "Booking.com", affiliate: false, exact: true,
+              blurb: "Many rooms with free cancellation and pay-at-property options.", url: bookingHotelUrl(o) },
+            { id: "google-hotels", name: "Google Hotels", affiliate: false, exact: true,
+              blurb: "Shows prices from many booking sites side by side for the same hotel.", url: googleHotelsUrl(o) }
         ];
     }
 
@@ -1679,6 +1778,13 @@
         publishedPromoCodes,
         officialPackagesForRoute,
         hotelLinks,
+        HOTEL_CITIES,
+        hotelCityInfo,
+        hotelCompareLinks,
+        agodaHotelUrl,
+        tripHotelUrl,
+        bookingHotelUrl,
+        nightsBetween,
         addDaysISO,
         pax,
         CABIN_LABEL,

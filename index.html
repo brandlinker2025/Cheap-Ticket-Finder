@@ -361,6 +361,31 @@
         .partner-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 22px;background:#fff;border:1px solid #e2eef5;border-radius:16px;padding:14px}
         .partner-row img{height:26px;width:auto;max-width:110px;object-fit:contain}
         .note-plain{display:block;width:100%;font-size:11px;color:#475569;margin-top:4px}
+        /* T-120 hotel compare */
+        .hs-form{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:.6rem;background:#fff;border:1px solid #d6e9f5;border-radius:16px;padding:.9rem;margin-bottom:.8rem}
+        .hs-field{grid-column:span 6;display:flex;flex-direction:column;gap:.25rem}
+        .hs-field.hs-city{grid-column:span 12}
+        .hs-field.hs-small{grid-column:span 6}
+        .hs-field label{font-size:11px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.03em}
+        .hs-field input,.hs-field select{width:100%;min-height:44px;border:1px solid #cbd5e1;border-radius:12px;padding:.55rem .7rem;font-size:15px;color:#0f172a;background:#f8fbfe}
+        .hs-field input:focus,.hs-field select:focus{outline:2px solid #0ea5e9;outline-offset:1px;border-color:#0ea5e9}
+        .hs-submit{grid-column:span 12;min-height:48px;border:0;border-radius:14px;background:#0f172a;color:#fff;font-weight:800;font-size:15px;cursor:pointer}
+        .hs-submit:hover{background:#1e293b}
+        .hs-error{grid-column:span 12;margin:0;font-size:13px;color:#b91c1c;font-weight:600}
+        .hs-results{background:#fff;border:1px solid #d6e9f5;border-radius:16px;padding:.9rem;margin-bottom:.8rem}
+        .hs-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.4rem;align-items:baseline;margin-bottom:.6rem}
+        .hs-head h3{margin:0;font-size:16px;font-weight:800;color:#0f172a}
+        .hs-head span{font-size:12px;color:#475569}
+        .hs-grid{display:grid;grid-template-columns:1fr;gap:.6rem}
+        .hs-card{display:flex;flex-direction:column;gap:.45rem;border:1px solid #e2e8f0;border-radius:14px;padding:.8rem;background:#f8fbfe}
+        .hs-card b{font-size:15px;color:#0f172a}
+        .hs-card p{margin:0;font-size:12.5px;line-height:1.45;color:#475569}
+        .hs-card .hs-tag{font-size:10.5px;font-weight:700;color:#0369a1;background:#e0f2fe;border-radius:999px;padding:.1rem .5rem;margin-left:.35rem}
+        .hs-card a{margin-top:auto;display:block;text-align:center;min-height:42px;line-height:42px;border-radius:12px;background:#0ea5e9;color:#fff !important;font-weight:800;font-size:14px;text-decoration:none}
+        .hs-card a:hover{background:#0284c7}
+        .hs-tips{margin:.7rem 0 0;padding-left:1.1rem;font-size:12px;color:#475569;line-height:1.55}
+        @media (min-width:640px){.hs-field{grid-column:span 3}.hs-field.hs-city{grid-column:span 12}.hs-field.hs-small{grid-column:span 3}.hs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+        @media (min-width:1024px){.hs-field.hs-city{grid-column:span 4}.hs-field{grid-column:span 2}.hs-field.hs-small{grid-column:span 2}.hs-submit{grid-column:span 12}.hs-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
     </style>
     <link rel="stylesheet" href="/assets/tailwind.css?v=t107">
     <link rel="icon" href="/favicon-v2.ico?v=2" sizes="any">
@@ -495,6 +520,32 @@
                 <a class="home-btn" href="/airlines/">Airlines guide</a>
             </div>
             <div class="home-panel" id="hotel-booking" data-tab="hotel" role="tabpanel" hidden>
+                <form id="hotelSearchForm" class="hs-form" novalidate autocomplete="off">
+                    <div class="hs-field hs-city">
+                        <label for="hsCity">City or area</label>
+                        <input id="hsCity" name="city" list="hsCityList" placeholder="e.g. Bangkok, Cox's Bazar, Dubai" required>
+                        <datalist id="hsCityList"></datalist>
+                    </div>
+                    <div class="hs-field">
+                        <label for="hsIn">Check-in</label>
+                        <input id="hsIn" name="checkin" type="date" required>
+                    </div>
+                    <div class="hs-field">
+                        <label for="hsOut">Check-out</label>
+                        <input id="hsOut" name="checkout" type="date" required>
+                    </div>
+                    <div class="hs-field hs-small">
+                        <label for="hsAdults">Adults</label>
+                        <select id="hsAdults" name="adults"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select>
+                    </div>
+                    <div class="hs-field hs-small">
+                        <label for="hsRooms">Rooms</label>
+                        <select id="hsRooms" name="rooms"><option selected>1</option><option>2</option><option>3</option><option>4</option></select>
+                    </div>
+                    <button type="submit" class="hs-submit"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Compare hotel prices</button>
+                    <p id="hsError" class="hs-error" role="alert" hidden></p>
+                </form>
+                <div id="hotelCompare" class="hs-results" hidden aria-live="polite"></div>
                 <div class="home-links">
                     <a class="cta-affiliate" href="https://tp.media/r?campaign_id=137&marker=791994&p=4110&sub_id=cheapticketfinder-hotels&trs=587447&u=https%3A%2F%2Fklook.com" target="_blank" rel="sponsored noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">Book hotels on Klook</a>
                     <a href="https://www.trip.com/hotels?Allianceid=11059812&SID=333836392&trip_sub1=hotels&trip_sub3=D20343143" target="_blank" rel="sponsored noopener noreferrer" class="text-sky-400 underline">Trip.com hotels</a>
@@ -2508,6 +2559,56 @@
             }, 1000);
         })();
 
+
+        // T-120: hotel compare. Opens each site already filtered to the same city, dates and guests. We never show a made-up price.
+        (function hotelCompare() {
+            var form = document.getElementById('hotelSearchForm');
+            if (!form || !window.BookingLinks) return;
+            var B = window.BookingLinks;
+            var list = document.getElementById('hsCityList');
+            list.innerHTML = B.HOTEL_CITIES.map(function (c) { return '<option value="' + escapeHtml(c.name) + '">' + escapeHtml(c.country) + '</option>'; }).join('');
+            var inEl = document.getElementById('hsIn'), outEl = document.getElementById('hsOut');
+            var today = B.toISODate(new Date());
+            inEl.min = today; outEl.min = B.addDaysISO(today, 1);
+            inEl.addEventListener('change', function () {
+                if (!inEl.value) return;
+                outEl.min = B.addDaysISO(inEl.value, 1);
+                if (!outEl.value || outEl.value <= inEl.value) outEl.value = B.addDaysISO(inEl.value, 2);
+            });
+            var roomsEl = document.getElementById('hsRooms'), adultsEl = document.getElementById('hsAdults');
+            function fixRooms() { if (+roomsEl.value > +adultsEl.value) roomsEl.value = adultsEl.value; }
+            adultsEl.addEventListener('change', fixRooms); roomsEl.addEventListener('change', fixRooms);
+            function fmt(iso) { var d = new Date(iso + 'T00:00:00'); return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); }
+            form.addEventListener('submit', function (ev) {
+                ev.preventDefault();
+                var err = document.getElementById('hsError');
+                var city = document.getElementById('hsCity').value.trim();
+                var ci = inEl.value, co = outEl.value;
+                var msg = '';
+                if (!city) msg = 'Type a city or area.';
+                else if (!ci || !co) msg = 'Pick check-in and check-out dates.';
+                else if (ci < today) msg = 'Check-in cannot be in the past.';
+                else if (co <= ci) msg = 'Check-out must be after check-in.';
+                else if (B.nightsBetween(ci, co) > 30) msg = 'Please search 30 nights or fewer.';
+                err.hidden = !msg; err.textContent = msg;
+                if (msg) return;
+                var opts = { city: city, checkin: ci, checkout: co, adults: adultsEl.value, rooms: roomsEl.value };
+                var info = B.hotelCityInfo(city);
+                var nights = B.nightsBetween(ci, co);
+                var label = info ? info.name + ', ' + info.country : city;
+                var cards = B.hotelCompareLinks(opts).map(function (p) {
+                    var note = p.exact ? '' : '<p><i>This site opens its own search page. Type ' + escapeHtml(city) + ' there.</i></p>';
+                    return '<div class="hs-card"><div><b>' + escapeHtml(p.name) + '</b>' + (p.affiliate ? '<span class="hs-tag">Partner</span>' : '') + '</div><p>' + escapeHtml(p.blurb) + '</p>' + note +
+                        '<a href="' + p.url + '" target="_blank" rel="' + (p.affiliate ? 'sponsored ' : '') + 'noopener noreferrer">See prices on ' + escapeHtml(p.name) + '</a></div>';
+                }).join('');
+                var box = document.getElementById('hotelCompare');
+                box.innerHTML = '<div class="hs-head"><h3>Hotels in ' + escapeHtml(label) + '</h3><span>' + fmt(ci) + ' → ' + fmt(co) + ' · ' + nights + ' night' + (nights > 1 ? 's' : '') + ' · ' + opts.adults + ' adult' + (+opts.adults > 1 ? 's' : '') + ' · ' + opts.rooms + ' room' + (+opts.rooms > 1 ? 's' : '') + '</span></div>' +
+                    '<div class="hs-grid">' + cards + '</div>' +
+                    '<ul class="hs-tips"><li>Each button opens that site already filtered to your city, dates and guests. Open two or three and compare the <b>total</b> for all nights.</li><li>Check if taxes, breakfast and free cancellation are included before you pay.</li><li>We do not sell rooms and we never show a made-up price. The live price is on each site.</li></ul>';
+                box.hidden = false;
+                box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        })();
         function showHomeTab(name) {
             document.querySelectorAll('.home-panel').forEach(function (panel) {
                 panel.hidden = panel.getAttribute('data-tab') !== name;
