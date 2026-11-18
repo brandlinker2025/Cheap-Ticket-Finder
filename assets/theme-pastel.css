@@ -104,3 +104,31 @@ html body .box,html body .tw,html body .nav a{background:var(--glass-bg) !import
 html body .box.warn{border-left:5px solid var(--ctf-peach) !important}
 html body .box.ok{border-left:5px solid var(--ctf-slate) !important}
 html body .nav a{color:var(--ctf-slate) !important}
+
+/* ===== v3: "Secondary" liquid-glass buttons everywhere (owner's choice, 18 Nov 2026) =====
+   Dark plum glass pill, magenta core, orange-pink glow underneath, white text. Replaces the peach buttons. */
+:root{
+  --lg-btn-bg:
+    linear-gradient(180deg,rgba(255,255,255,.38) 0%,rgba(255,255,255,.08) 42%,rgba(255,255,255,0) 50%),
+    radial-gradient(120% 150% at 50% 125%,rgba(255,146,64,.95) 0%,rgba(236,72,153,.85) 32%,rgba(147,51,234,.35) 58%,rgba(147,51,234,0) 75%),
+    linear-gradient(180deg,#52204f 0%,#2b0f30 55%,#1a0a1e 100%);
+  --lg-btn-shadow:
+    inset 0 1px 0 rgba(255,255,255,.75),inset 0 0 0 1px rgba(255,255,255,.10),inset 0 -10px 18px rgba(255,120,80,.35),
+    0 10px 22px rgba(236,72,153,.35),0 18px 34px rgba(255,140,60,.22);
+}
+html body #searchBtn,html body .cta-affiliate,html body .home-btn,html body .deal-chip,html body .nav a,
+html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700,
+html body button.bg-sky-500,html body button.bg-amber-500,html body button.bg-emerald-500,html body .step-btn-gold{
+  background:var(--lg-btn-bg) !important;background-color:#2b0f30 !important;
+  border:1px solid rgba(255,255,255,.38) !important;border-radius:999px !important;
+  box-shadow:var(--lg-btn-shadow) !important;
+  color:#fff !important;-webkit-text-fill-color:#fff !important;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+html body #searchBtn *,html body .cta-affiliate *,html body .home-btn *,html body .deal-chip *,html body .nav a *{color:#fff !important;-webkit-text-fill-color:#fff !important}
+html body #searchBtn{border-radius:20px !important}
+html body #searchBtn:hover,html body .cta-affiliate:hover,html body .home-btn:hover,html body .deal-chip:hover,html body .nav a:hover,html body a.bg-sky-500:hover{
+  transform:translateY(-1px);filter:brightness(1.12) saturate(1.1);
+  box-shadow:inset 0 1px 0 #fff,inset 0 -10px 18px rgba(255,120,80,.45),0 14px 30px rgba(236,72,153,.5),0 22px 40px rgba(255,140,60,.3) !important}
+html body #searchBtn:active,html body .cta-affiliate:active,html body .home-btn:active,html body .deal-chip:active{transform:translateY(1px);filter:brightness(.98)}
+/* underlined links inside chips stay readable */
+html body .deal-chip a{color:#fff !important;-webkit-text-fill-color:#fff !important}
