@@ -425,7 +425,7 @@ def head(lang, title, desc, url, en_url, bn_url, faqs):
     <script type="application/ld+json">{ld(faqs)}</script>
     <script type="application/ld+json">{crumbs(url, title)}</script>
 {HEAD_STYLE}
-    <link rel="stylesheet" href="/assets/theme-pastel.css?v=5">
+    <link rel="stylesheet" href="/assets/theme-pastel.css?v=6">
 </head>"""
 
 def body(h1, sub, sections, lang):

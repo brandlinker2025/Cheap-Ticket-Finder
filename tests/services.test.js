@@ -39,7 +39,7 @@ assert.ok(home.includes('href="/esim/"') && home.includes('href="/airport-transf
 assert.ok(!home.includes("12go") && !esim.includes("12go") && !transfer.includes("12go"), "12Go is under review and must not be added");
 assert.ok((home.match(/rel="sponsored noopener noreferrer"/g) || []).length >= 3, "homepage affiliate CTAs must use sponsored rel");
 assert.ok(home.includes('href="/hotels/"') && home.includes('href="/packages/"'), "homepage must link /hotels/ and /packages/");
-assert.ok(home.includes('id="servicesSection"'), "homepage must have services section");
+assert.ok(!home.includes('id="servicesSection"'), "travel insurance block was removed from the homepage by the owner (18 Nov 2026)");
 assert.ok(sitemap.includes("https://cheapticketfinder.site/hotels/"), "sitemap must include hotels");
 assert.ok(sitemap.includes("https://cheapticketfinder.site/packages/"), "sitemap must include packages");
 assert.ok(sitemap.includes("https://cheapticketfinder.site/esim/"), "sitemap must include esim");
@@ -50,7 +50,7 @@ assert.ok(insurance.includes("EKTA") && insurance.includes("policy terms"), "tra
 assert.ok(packages.includes("https://tiqets.tpo.lv/zc9OgjmX") && packages.includes("Tiqets"), "packages must contain Tiqets link");
 assert.ok(esim.includes("https://yesim.tpo.lv/ZAsUxhwZ") && esim.includes("Yesim"), "esim must contain Yesim link as second option");
 assert.ok(!(home + insurance).includes("ektatraveling.tpo.lv/ArgAETEF"), "broken EKTA tpo.lv link (marker not subscribed) must stay removed");
-assert.ok(home.includes("https://ektatraveling.com/") && home.includes('href="/travel-insurance/"'), "homepage services card must contain EKTA link and travel-insurance guide");
+// Homepage insurance card removed by the owner (18 Nov 2026); the /travel-insurance/ page itself stays.
 for (const [name, url] of [["Tiqets", "https://tiqets.tpo.lv/zc9OgjmX"], ["Yesim", "https://yesim.tpo.lv/ZAsUxhwZ"]]) {
   const all = home + packages + esim + insurance;
   assert.ok(all.includes(`href="${url}" target="_blank" rel="sponsored noopener noreferrer"`), `${name} CTA must use exact sponsored rel`);

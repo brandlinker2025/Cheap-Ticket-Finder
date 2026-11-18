@@ -179,3 +179,11 @@ html body a.bg-sky-500::before,html body a.bg-emerald-500::before,html body a.bg
   left:7%;right:7%;top:2px;height:40%;opacity:1;mix-blend-mode:screen;
   background:linear-gradient(180deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.18) 45%,rgba(255,255,255,0) 100%);
   -webkit-mask:radial-gradient(120% 160% at 50% 0%,#000 55%,transparent 72%);mask:radial-gradient(120% 160% at 50% 0%,#000 55%,transparent 72%)}
+/* Cruise / Medical shortcuts in the top tab bar (links that look like the tabs) */
+html body .trip-tabs a.tab-link{display:flex;flex-direction:row;align-items:center;gap:6px;flex:0 0 auto;white-space:nowrap;min-height:32px;padding:.25rem .55rem;font-size:11.5px;font-weight:700;line-height:1.15;color:#111 !important;-webkit-text-fill-color:#111 !important;text-decoration:none;border-bottom:2px solid transparent}
+html body .trip-tabs a.tab-link i{font-size:13px;color:var(--ctf-lavender) !important;-webkit-text-fill-color:var(--ctf-lavender) !important}
+html body .trip-tabs a.tab-link:hover{border-bottom-color:var(--ctf-lavender)}
+/* Bus / train / launch form now lives inside its tab */
+html body #bd-transport .dom-form{margin-top:.8rem}
+html body .dom-actions a{background:var(--lg-btn-bg) !important;border:1px solid rgba(255,255,255,.38) !important;border-radius:999px !important;box-shadow:var(--lg-btn-shadow) !important;color:#fff !important;-webkit-text-fill-color:#fff !important}
+html body .dom-actions a *{color:#fff !important;-webkit-text-fill-color:#fff !important}

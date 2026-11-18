@@ -369,7 +369,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v2.png?v=2">
     <link rel="manifest" href="/site.webmanifest?v=2">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9359045812269912" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/assets/theme-pastel.css?v=5">
+    <link rel="stylesheet" href="/assets/theme-pastel.css?v=6">
 </head>
 <body class="bg-amber-50 text-slate-800 min-h-screen pb-16 antialiased selection:bg-sky-500 selection:text-white hero-glow">
 
@@ -377,9 +377,7 @@
         <div class="site-header-inner">
             <h1><a href="/" aria-label="Cheap Ticket Finder হোম"><img class="brand-logo" src="/assets/brand/ctf-logo-header.webp" srcset="/assets/brand/ctf-logo-header.webp 321w, /assets/brand/ctf-logo-header-2x.webp 642w, /assets/brand/ctf-logo-header-3x.webp 963w" sizes="(max-width:860px) 184px, 241px" alt="Cheap Ticket Finder" width="321" height="112"></a></h1>
             <nav class="top-bar" aria-label="Contact">
-                <a href="/medical/">চিকিৎসা ভ্রমণ</a>
                 <a href="/" hreflang="en" lang="en" title="English version">English</a>
-                <a href="/offers/">অফার</a>
                 <a href="/contact">যোগাযোগ</a>
                 <a href="https://www.facebook.com/CheapTFBD" target="_blank" rel="noopener noreferrer">ফেসবুক</a>
             </nav>
@@ -392,6 +390,8 @@
             <button type="button" role="tab" aria-selected="false" data-tab="sim" onclick="showHomeTab('sim')"><i class="fa-solid fa-sim-card" aria-hidden="true"></i>ট্রাভেল সিম</button>
             <button type="button" role="tab" aria-selected="false" data-tab="transfer" onclick="showHomeTab('transfer')"><i class="fa-solid fa-taxi" aria-hidden="true"></i>এয়ারপোর্ট ট্রান্সফার</button>
             <button type="button" role="tab" aria-selected="false" data-tab="bd" onclick="showHomeTab('bd')"><i class="fa-solid fa-bus" aria-hidden="true"></i>বাস / ট্রেন / লঞ্চ</button>
+            <a class="tab-link" href="/cruise/"><i class="fa-solid fa-ship" aria-hidden="true"></i>ক্রুজ</a>
+            <a class="tab-link" href="/medical/"><i class="fa-solid fa-hospital" aria-hidden="true"></i>চিকিৎসা</a>
         </nav>
     </header>
 
@@ -536,6 +536,17 @@
             <div class="home-panel" id="bd-transport" data-tab="bd" role="tabpanel" hidden>
                 <p class="home-intro" style="margin:0 0 .6rem">দেশের ভেতরে বাস, ট্রেন ও লঞ্চের টিকিট। এগুলো অফিসিয়াল বা অপারেটরের বুকিং সাইটে খোলে; ভাড়া ও সিট সেখানেই দেখা যায়। আমরা টিকিট বিক্রি করি না।</p>
                 <div class="home-links" id="bdTransportLinks"></div>
+                <form class="dom-form" id="domForm" onsubmit="return false">
+                <label>কোথা থেকে<select id="domFrom"><option selected>ঢাকা</option><option>চট্টগ্রাম</option><option>কক্সবাজার</option><option>সিলেট</option><option>রাজশাহী</option><option>খুলনা</option><option>বরিশাল</option><option>রংপুর</option><option>বগুড়া</option><option>যশোর</option><option>কুমিল্লা</option><option>ময়মনসিংহ</option><option>দিনাজপুর</option><option>কুয়াকাটা</option><option>বান্দরবান</option><option>রাঙামাটি</option><option>খাগড়াছড়ি</option><option>শ্রীমঙ্গল</option><option>টেকনাফ</option><option>সৈয়দপুর</option></select></label>
+                <label>কোথায়<select id="domTo"><option>ঢাকা</option><option selected>চট্টগ্রাম</option><option>কক্সবাজার</option><option>সিলেট</option><option>রাজশাহী</option><option>খুলনা</option><option>বরিশাল</option><option>রংপুর</option><option>বগুড়া</option><option>যশোর</option><option>কুমিল্লা</option><option>ময়মনসিংহ</option><option>দিনাজপুর</option><option>কুয়াকাটা</option><option>বান্দরবান</option><option>রাঙামাটি</option><option>খাগড়াছড়ি</option><option>শ্রীমঙ্গল</option><option>টেকনাফ</option><option>সৈয়দপুর</option></select></label>
+                <label>তারিখ<input type="date" id="domDate"></label>
+                <div class="dom-actions">
+                    <a id="domBus" href="https://www.shohoz.com/bus-tickets" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-bus" aria-hidden="true"></i> Shohoz-এ বাস</a>
+                    <a id="domTrain" href="https://eticket.railway.gov.bd/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-train" aria-hidden="true"></i> বাংলাদেশ রেলওয়েতে ট্রেন</a>
+                    <a id="domLaunch" href="https://www.shohoz.com/launch-tickets" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-ship" aria-hidden="true"></i> Shohoz-এ লঞ্চ</a>
+                </div>
+                <p class="dom-note">বাস: আপনার রুট ও তারিখে Shohoz-এর সার্চ খোলে। ট্রেন: বাংলাদেশ রেলওয়ের অফিসিয়াল ই-টিকিট সাইট খোলে; সেখানে লগইন করে রুট খুঁজুন। লঞ্চ: Shohoz-এর লঞ্চ টিকিট খোলে; সেখানে রুট বাছুন। আমরা টিকিট বিক্রি করি না।</p>
+            </form>
             </div>
         </section>
         </div>
@@ -556,11 +567,8 @@
                 <button type="button" class="lux-card" data-open-tab="transfer" aria-label="Open Airport Transfer"><img src="/assets/cards/transfer.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>এয়ারপোর্ট ট্রান্সফার</b><small>আরামে পৌঁছান</small></span></button>
                 <button type="button" class="lux-card" data-open-tab="bd" aria-label="Open Bus / Train / Launch"><img src="/assets/cards/bd.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>বাস / ট্রেন / লঞ্চ</b><small>দেশের ভেতরের রুট</small></span></button>
                 <a class="lux-card" href="/cruise/" aria-label="Cruise"><img src="/assets/cards/cruise.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>ক্রুজ</b><small>এশিয়ার সমুদ্রযাত্রা</small></span></a>
-                <a class="lux-card" href="#domestic" aria-label="Domestic"><img src="/assets/cards/domestic.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>দেশের ভেতরে</b><small>বাংলাদেশে ভ্রমণ পরিকল্পনা</small></span></a>
-                <a class="lux-card lux-card-medical" href="/medical/" aria-label="চিকিৎসা"><i class="fa-solid fa-hospital med-icon" aria-hidden="true"></i><span class="lc-text"><b>চিকিৎসা</b><small>কম খরচে বিদেশে চিকিৎসা</small></span></a>
+                <a class="lux-card" href="/medical/" aria-label="চিকিৎসা"><img src="/assets/cards/medical.webp" alt="" loading="lazy" decoding="async" width="720" height="540"><span class="lc-text"><b>চিকিৎসা</b><small>কম খরচে বিদেশে চিকিৎসা</small></span></a>
             </div>
-            <p class="text-sm mt-3"><a class="underline font-semibold" href="/medical/" style="color:#0c4a6e" lang="bn">কম খরচে বিদেশে চিকিৎসা / Low-cost medical treatment abroad &rarr;</a></p>
-            <p class="text-[10px] text-slate-500 mt-2">ছবি: Wikimedia Commons, দেখুন <a class="underline" href="/credits/">ক্রেডিট</a>.</p>
         </section>
         <div id="wl-flight-results" class="mb-6">
             <p class="text-[11px] text-slate-500 mb-2 leading-5">আমাদের পার্টনার Aviasales (Travelpayouts) থেকে লাইভ ফ্লাইটের দাম। চূড়ান্ত মোট দাম বুকিং সাইটে নিশ্চিত হয়।</p>
@@ -601,18 +609,6 @@
             </ol>
         </section>
 
-        <section class="mb-8" id="airlineOffers" aria-label="Airline offers">
-            <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">এয়ারলাইন অফার</h2>
-            <p class="text-[11px] text-slate-500 mb-2 leading-5">দেশের ভেতরের ও আন্তর্জাতিক অফার প্রতিটি এয়ারলাইনের অফিসিয়াল সাইটে যাচাই করা। যাচাই: ২০ অক্টোবর ২০২৬। অফার বদলায়; চূড়ান্ত দাম এয়ারলাইন বা বুকিং সাইটে।</p>
-            <p class="text-[11px] text-slate-500 mb-3 leading-5">VietJet থাইল্যান্ড–ভিয়েতনাম ও আশেপাশের রুটের অফার হিসেবে দেওয়া। VietJet ঢাকায় আসা-যাওয়া করে না।</p>
-            <a class="home-btn" href="/offers/">এয়ারলাইন অফার দেখুন</a>
-            <a class="home-btn" href="/vietjet/">VietJet রুট</a>
-            <a class="home-btn" href="/indigo/">IndiGo রুট</a>
-            <a class="home-btn" href="/thai-lion-air/">Thai Lion Air রুট</a>
-            <a class="home-btn" href="/scoot/">Scoot রুট</a>
-            <a class="home-btn" href="/spicejet/">SpiceJet রুট</a>
-            <a class="home-btn" href="/air-india-express/">Air India Express রুট</a>
-        </section>
 
         <div id="scanningToast" class="hidden bg-sky-950/90 border border-sky-500/40 rounded-2xl p-4 mb-6 flex items-center justify-center gap-3 text-sky-300 text-xs sm:text-sm font-bold shadow-2xl radar-scanning">
             <i class="fa-solid fa-satellite-dish fa-spin text-sky-400 text-lg"></i>
@@ -678,22 +674,7 @@
 
 
 
-        <section class="mb-8" id="domestic" aria-label="Domestic bus, train and launch">
-            <h2 class="lux-h2">দেশের ভেতরে: বাস, ট্রেন ও লঞ্চ</h2>
-            <p class="lux-sub">রুট ও তারিখ বাছুন, তারপর অপারেটরের সাইটে গিয়ে আসল সিট ও ভাড়া দেখুন।</p>
-            <form class="dom-form" id="domForm" onsubmit="return false">
-                <label>কোথা থেকে<select id="domFrom"><option selected>ঢাকা</option><option>চট্টগ্রাম</option><option>কক্সবাজার</option><option>সিলেট</option><option>রাজশাহী</option><option>খুলনা</option><option>বরিশাল</option><option>রংপুর</option><option>বগুড়া</option><option>যশোর</option><option>কুমিল্লা</option><option>ময়মনসিংহ</option><option>দিনাজপুর</option><option>কুয়াকাটা</option><option>বান্দরবান</option><option>রাঙামাটি</option><option>খাগড়াছড়ি</option><option>শ্রীমঙ্গল</option><option>টেকনাফ</option><option>সৈয়দপুর</option></select></label>
-                <label>কোথায়<select id="domTo"><option>ঢাকা</option><option selected>চট্টগ্রাম</option><option>কক্সবাজার</option><option>সিলেট</option><option>রাজশাহী</option><option>খুলনা</option><option>বরিশাল</option><option>রংপুর</option><option>বগুড়া</option><option>যশোর</option><option>কুমিল্লা</option><option>ময়মনসিংহ</option><option>দিনাজপুর</option><option>কুয়াকাটা</option><option>বান্দরবান</option><option>রাঙামাটি</option><option>খাগড়াছড়ি</option><option>শ্রীমঙ্গল</option><option>টেকনাফ</option><option>সৈয়দপুর</option></select></label>
-                <label>তারিখ<input type="date" id="domDate"></label>
-                <div class="dom-actions">
-                    <a id="domBus" href="https://www.shohoz.com/bus-tickets" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-bus" aria-hidden="true"></i> Shohoz-এ বাস</a>
-                    <a id="domTrain" href="https://eticket.railway.gov.bd/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-train" aria-hidden="true"></i> বাংলাদেশ রেলওয়েতে ট্রেন</a>
-                    <a id="domLaunch" href="https://www.shohoz.com/launch-tickets" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-ship" aria-hidden="true"></i> Shohoz-এ লঞ্চ</a>
-                </div>
-                <p class="dom-note">বাস: আপনার রুট ও তারিখে Shohoz-এর সার্চ খোলে। ট্রেন: বাংলাদেশ রেলওয়ের অফিসিয়াল ই-টিকিট সাইট খোলে; সেখানে লগইন করে রুট খুঁজুন। লঞ্চ: Shohoz-এর লঞ্চ টিকিট খোলে; সেখানে রুট বাছুন। আমরা টিকিট বিক্রি করি না।</p>
-            </form>
-        </section>
-        <section class="mb-8" aria-label="Partners">
+        <section class="mb-8" id="partners" aria-label="Partners">
             <h2 class="lux-h2" style="font-size:18px">যে অফিসিয়াল সাইটে আমরা লিংক দিই</h2>
             <div class="partner-row">
                 <img src="/assets/logos/biman.svg" alt="Biman Bangladesh Airlines" loading="lazy">
@@ -711,62 +692,6 @@
             </div>
             <p class="text-[10px] text-slate-500 mt-2 text-center">লোগোগুলো তাদের মালিকের ট্রেডমার্ক; কোন সাইটে লিংক দিচ্ছি বোঝাতে অপরিবর্তিত দেখানো হয়েছে। সূত্র: <a class="underline" href="/credits/">ক্রেডিট</a>.</p>
         </section>
-        <section class="mb-8" id="servicesSection" aria-label="Travel insurance">
-            <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">ট্রাভেল ইন্স্যুরেন্স</h2>
-            <div class="home-links">
-                <a class="cta-affiliate" href="https://ektatraveling.com/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:.5rem;background:#d4eefc;color:#111111;font-weight:800;padding:.65rem 1rem;border-radius:14px">EKTA-তে ইন্স্যুরেন্স দেখুন</a>
-                <a href="/travel-insurance/" class="text-sky-400 underline">ট্রাভেল ইন্স্যুরেন্স গাইড</a>
-            </div>
-            <p class="text-[11px] text-slate-500 mt-2">সরাসরি EKTA-র অফিসিয়াল সাইট খোলে (অ্যাফিলিয়েট লিংক নয়)।</p>
-        </section>
-        <section class="mb-8" aria-label="Local cheap flight guides in Asia">
-            <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">এশিয়ার ভেতরের সস্তা ফ্লাইট</h2>
-            <p class="text-[11px] text-slate-500 mb-3 leading-5">মালয়েশিয়া, থাইল্যান্ড ও ভিয়েতনামের ভেতরের ফ্লাইট স্থানীয় এয়ারলাইনের দামে: ফ্লাইট সার্চে তুলনা করে অফিসিয়াল এয়ারলাইন সাইটে MYR/THB/VND-তে কিনুন।</p>
-            <nav class="flex flex-wrap gap-2 text-[11px]">
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/kuala-lumpur-to-langkawi-cheap-flight/">কুয়ালালামপুর–লংকাউই সস্তা ফ্লাইট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/kuala-lumpur-to-penang-cheap-flight/">কুয়ালালামপুর–পেনাং সস্তা ফ্লাইট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bangkok-to-phuket-cheap-flight/">ব্যাংকক–ফুকেট সস্তা ফ্লাইট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bangkok-to-chiang-mai-cheap-flight/">ব্যাংকক–চিয়াং মাই সস্তা ফ্লাইট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/ho-chi-minh-to-hanoi-cheap-flight/">হো চি মিন সিটি–হ্যানয় সস্তা ফ্লাইট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/ho-chi-minh-to-da-nang-cheap-flight/">হো চি মিন সিটি–দা নাং সস্তা ফ্লাইট</a>
-            </nav>
-        </section>
-        <section class="mb-8" aria-label="Popular route guides">
-            <h2 class="text-sm sm:text-lg font-bold text-sky-400 mb-2">জনপ্রিয় রুট গাইড</h2>
-            <p class="text-[11px] text-slate-500 mb-3 leading-5">প্রতিটি রুটে সবচেয়ে সস্তা তারিখ কীভাবে খুঁজবেন, সাথে ব্যাগেজ ও মোট খরচের হিসাব। আমরা বানানো দাম দেখাই না — উপরের টুলে আপনার তারিখ দেখুন। <a class="text-sky-400 underline" href="/">টিকিট সার্চ টুল খুলুন</a></p>
-            <nav class="flex flex-wrap gap-2 text-[11px]">
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-bangkok-cheap-ticket/">ঢাকা–ব্যাংকক সস্তা টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-coxs-bazar-ticket-price/">ঢাকা–কক্সবাজার টিকিটের দাম</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-kuala-lumpur-cheap-ticket/">ঢাকা–কুয়ালালামপুর সস্তা টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-kolkata-cheap-ticket/">ঢাকা–কলকাতা সস্তা টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-dubai-cheap-ticket/">ঢাকা–দুবাই সস্তা টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-chattogram-ticket-price/">ঢাকা–চট্টগ্রাম টিকিটের দাম</a>
-                            <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-singapore-cheap-ticket/">ঢাকা–সিঙ্গাপুর সস্তা টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-delhi-cheap-ticket/">ঢাকা–দিল্লি সস্তা টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-kathmandu-cheap-ticket/">ঢাকা–কাঠমান্ডু সস্তা টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-jeddah-cheap-ticket/">ঢাকা–জেদ্দা সস্তা টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-doha-cheap-ticket/">ঢাকা–দোহা সস্তা টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-london-cheap-ticket/">ঢাকা–লন্ডন সস্তা টিকিট</a>
-                            <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-riyadh-cheap-ticket/">ঢাকা–রিয়াদ বিমান টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-muscat-cheap-ticket/">ঢাকা–মাসকাট বিমান টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-kuwait-cheap-ticket/">ঢাকা–কুয়েত বিমান টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-maldives-cheap-ticket/">ঢাকা–মালদ্বীপ বিমান টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/air-ticket-price-bangladesh/">বিমান টিকিটের দাম</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-istanbul-cheap-ticket/">ঢাকা–ইস্তানবুল বিমান টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-guangzhou-cheap-ticket/">ঢাকা–গুয়াংজু বিমান টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-kunming-cheap-ticket/">ঢাকা–কুনমিং বিমান টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-beijing-cheap-ticket/">ঢাকা–বেইজিং বিমান টিকিট</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-sylhet-air-ticket-price/">ঢাকা–সিলেট বিমান ভাড়া</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-saidpur-air-ticket-price/">ঢাকা–সৈয়দপুর বিমান ভাড়া</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-jashore-air-ticket-price/">ঢাকা–যশোর বিমান ভাড়া</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-rajshahi-air-ticket-price/">ঢাকা–রাজশাহী বিমান ভাড়া</a>
-                <a class="deal-chip rounded-lg px-3 py-2 text-sky-200" href="/bn/dhaka-to-barishal-air-ticket-price/">ঢাকা–বরিশাল বিমান ভাড়া</a>
-            </nav>
-        </section>
-        <section class="glass-card p-4 sm:p-6 rounded-2xl mb-6 text-sm leading-6" aria-labelledby="cheap-guide-h">
-            <h2 id="cheap-guide-h" class="text-base font-bold text-sky-400" lang="bn">বাংলাদেশ থেকে কম দামে বিমান টিকিট কীভাবে পাবো?</h2>
-            <p lang="bn">ফ্লেক্সিবল তারিখে খুঁজুন, কয়েকটি সাইট ও এয়ারলাইনের নিজের ওয়েবসাইটে ব্যাগেজ ও ফি সহ মোট দাম তুলনা করুন, তারপর এয়ারলাইন বা বিশ্বস্ত প্রোভাইডার থেকে বুক করুন। কোনো সাইট বা দিন সবচেয়ে কম দামের নিশ্চয়তা দেয় না। <a class="text-sky-400 underline font-bold" href="/bn/how-to-find-cheap-air-tickets/">৭ ধাপের গাইড পড়ুন</a></p>
-        </section>
         <footer class="text-center text-[10px] text-slate-500 leading-5 pb-4">
             Cheap Ticket Finder টিকিট বিক্রি করে না। চূড়ান্ত দাম এয়ারলাইন বা বুকিং সাইটে। cheapticketfinder.site
             <nav class="mt-2 flex flex-wrap justify-center gap-x-3 gap-y-1 text-[11px]">
@@ -776,14 +701,15 @@
                 <a class="text-sky-400 hover:text-sky-300" href="/packages/">প্যাকেজ</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/esim/">ট্রাভেল eSIM</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/airport-transfer/">এয়ারপোর্ট ট্রান্সফার</a>
-                <a class="text-sky-400 hover:text-sky-300" href="/travel-insurance/">ট্রাভেল ইন্স্যুরেন্স</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/bn/air-ticket-price-bangladesh/">বিমান টিকিটের দাম</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/credits/">ছবির ক্রেডিট</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/about">আমাদের সম্পর্কে</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/terms">শর্তাবলি</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/privacy">প্রাইভেসি</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/contact">যোগাযোগ</a>
                 <a class="text-sky-400 hover:text-sky-300" href="https://www.facebook.com/CheapTFBD" target="_blank" rel="noopener noreferrer">ফেসবুক</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/disclosure">ডিসক্লোজার</a>
-                <a class="text-sky-400 hover:text-sky-300" href="/about/#brandlinker">A BrandLinker project</a>
+                <a class="text-sky-400 hover:text-sky-300" href="/about/#brandlinker">BrandLinker-এর একটি উদ্যোগ · প্রতিষ্ঠাতা: RS Lina</a>
                 <a class="text-sky-400 hover:text-sky-300" href="/medical/">Medical travel</a>
             </nav>
         </footer>
@@ -2259,8 +2185,8 @@
         // Search mode: once a search runs, show results right under the search box.
         // "Where to next?" and "Airline offers" move below the results (nothing is removed).
         function ctfSearchMode(scroll) {
-            const anchor = document.getElementById('domestic');
-            ['explore', 'airlineOffers'].forEach(function (id) {
+            const anchor = document.getElementById('partners');
+            ['explore'].forEach(function (id) {
                 const el = document.getElementById(id);
                 if (el && anchor && el.compareDocumentPosition(anchor) & Node.DOCUMENT_POSITION_FOLLOWING) {
                     anchor.parentNode.insertBefore(el, anchor);
