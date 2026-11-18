@@ -1,0 +1,40 @@
+/* Pastel theme — palette chosen by the site owner (Nov 2026).
+   gray-blue #B5C2D1 · slate blue #41677B · plum #473D5B · lavender #8C7392 · peach-rose #D98C8B
+   Loaded last on every page so it overrides older colours. Remove the <link> to undo. */
+:root{
+  --ctf-gray-blue:#B5C2D1; --ctf-slate:#41677B; --ctf-plum:#473D5B; --ctf-lavender:#8C7392; --ctf-peach:#D98C8B;
+  --ctf-bg-soft:#E8EDF3; --ctf-card:#F4F1F6; --ctf-peach-hover:#CF7C7B;
+}
+html body{background:linear-gradient(180deg,var(--ctf-bg-soft) 0%,var(--ctf-gray-blue) 100%) !important;background-attachment:fixed !important;color:var(--ctf-plum) !important}
+html body.hero-glow,html body .hero-glow{background:radial-gradient(circle at 15% 10%,rgba(140,115,146,.18),transparent 35%),radial-gradient(circle at 85% 5%,rgba(217,140,139,.18),transparent 32%),linear-gradient(180deg,var(--ctf-bg-soft),var(--ctf-gray-blue)) !important;background-attachment:fixed !important}
+
+/* Headings, brand and important text */
+html body h1,html body h2,html body h3,html body .lux-h2,
+html body .text-sky-400,html body .text-sky-300,html body .text-sky-200,html body .text-white,html body h1.text-white{color:var(--ctf-slate) !important;-webkit-text-fill-color:var(--ctf-slate) !important}
+html body .text-slate-300,html body .text-slate-400,html body .text-slate-500,html body .lux-sub{color:var(--ctf-plum) !important}
+html body a.underline,html body main a{color:var(--ctf-slate) !important}
+
+/* Cards and secondary containers */
+html body .glass-card,html body .lux-card,html body .search-panel{background:var(--ctf-card) !important;border:1px solid rgba(140,115,146,.45) !important;box-shadow:0 12px 30px rgba(71,61,91,.12) !important;color:var(--ctf-plum) !important}
+html body .lux-card .lc-text{background:linear-gradient(0deg,rgba(71,61,91,.82),rgba(71,61,91,0)) !important}
+html body .lux-card .lc-text b,html body .lux-card .lc-text small{color:#fff !important;-webkit-text-fill-color:#fff !important}
+html body .deal-chip{background:rgba(140,115,146,.14) !important;border:1px solid rgba(140,115,146,.45) !important;color:var(--ctf-plum) !important}
+html body .deal-chip,html body .deal-chip *{-webkit-text-fill-color:var(--ctf-plum) !important}
+
+/* Call-to-action / booking buttons: peach-rose with dark plum text (white on this peach is too faint to read) */
+html body #searchBtn,html body #searchBtn *,html body .cta-affiliate,html body .cta-affiliate *,html body .home-btn,
+html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700,
+html body button.bg-sky-500,html body button.bg-amber-500,html body button.bg-emerald-500,html body .step-btn-gold{
+  background:var(--ctf-peach) !important;color:var(--ctf-plum) !important;-webkit-text-fill-color:var(--ctf-plum) !important;border-color:var(--ctf-peach-hover) !important}
+html body #searchBtn{border-radius:14px !important;box-shadow:0 10px 24px rgba(217,140,139,.40) !important;font-weight:800 !important}
+html body #searchBtn:hover,html body .cta-affiliate:hover,html body .home-btn:hover,html body a.bg-sky-500:hover{background:var(--ctf-peach-hover) !important;filter:none}
+
+/* Calendar selection */
+html body .sk-day-selected-dept{background:var(--ctf-slate) !important}
+html body .sk-day-selected-ret{background:var(--ctf-lavender) !important}
+html body .sk-day-in-range{background:rgba(65,103,123,.15) !important}
+
+/* Footer: muted plum */
+html body footer{background:var(--ctf-plum) !important;color:#E9E4EE !important;border-radius:16px;padding:16px 12px !important;margin-top:8px}
+html body footer,html body footer *{color:#E9E4EE !important;-webkit-text-fill-color:#E9E4EE !important}
+html body footer a{color:#F2C4C3 !important;-webkit-text-fill-color:#F2C4C3 !important}
