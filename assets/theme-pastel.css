@@ -132,3 +132,50 @@ html body #searchBtn:hover,html body .cta-affiliate:hover,html body .home-btn:ho
 html body #searchBtn:active,html body .cta-affiliate:active,html body .home-btn:active,html body .deal-chip:active{transform:translateY(1px);filter:brightness(.98)}
 /* underlined links inside chips stay readable */
 html body .deal-chip a{color:#fff !important;-webkit-text-fill-color:#fff !important}
+
+/* ===== v4: crystal-clear glossy rim + specular highlight + coloured reflection ===== */
+html body #searchBtn,html body .cta-affiliate,html body .home-btn,html body .deal-chip,html body .nav a,
+html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700,
+html body button.bg-sky-500,html body button.bg-amber-500,html body button.bg-emerald-500,html body .step-btn-gold{
+  position:relative !important;isolation:isolate;overflow:visible !important;
+  /* clear glass rim: transparent outer ring + dark glossy core inside it */
+  border:2.5px solid transparent !important;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.06) 45%,rgba(255,255,255,0) 52%) padding-box,
+    radial-gradient(110% 140% at 50% 130%,rgba(255,150,60,.95) 0%,rgba(236,72,153,.88) 30%,rgba(168,60,220,.45) 55%,rgba(30,10,35,0) 75%) padding-box,
+    linear-gradient(180deg,#3d1740 0%,#200a24 60%,#14061a 100%) padding-box,
+    linear-gradient(160deg,rgba(255,255,255,.95),rgba(255,255,255,.25) 35%,rgba(255,190,240,.35) 65%,rgba(255,255,255,.85)) border-box !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.35),
+    inset 0 2px 1px rgba(255,255,255,.55),
+    inset 0 -6px 14px rgba(255,140,90,.45),
+    inset 0 0 18px rgba(236,72,153,.25),
+    0 12px 26px rgba(236,72,153,.38),0 20px 40px rgba(255,140,60,.28),0 2px 4px rgba(20,6,26,.35) !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.45)}
+/* specular highlight: bright curved shine across the top */
+html body #searchBtn::before,html body .cta-affiliate::before,html body .home-btn::before,html body .deal-chip::before,html body .nav a::before,
+html body a.bg-sky-500::before,html body a.bg-emerald-500::before,html body a.bg-amber-500::before,html body a.bg-fuchsia-500::before,html body a.bg-rose-500::before,html body a.bg-slate-700::before{
+  content:"";position:absolute;left:8%;right:8%;top:2px;height:46%;border-radius:999px;pointer-events:none;z-index:1;
+  background:linear-gradient(180deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.28) 55%,rgba(255,255,255,0) 100%);
+  filter:blur(.3px);opacity:.75}
+/* coloured light passing through the glass onto the surface below */
+html body #searchBtn::after,html body .cta-affiliate::after,html body .home-btn::after,html body .deal-chip::after,html body .nav a::after,
+html body a.bg-sky-500::after,html body a.bg-emerald-500::after,html body a.bg-amber-500::after,html body a.bg-fuchsia-500::after,html body a.bg-rose-500::after,html body a.bg-slate-700::after{
+  content:"";position:absolute;left:12%;right:12%;bottom:-10px;height:14px;border-radius:50%;pointer-events:none;z-index:-1;
+  background:radial-gradient(closest-side,rgba(255,120,200,.75),rgba(255,150,60,.45) 55%,transparent);filter:blur(6px)}
+html body #searchBtn > *,html body .cta-affiliate > *,html body .home-btn > *,html body .deal-chip > *{position:relative;z-index:2}
+html body #searchBtn{border-radius:22px !important}
+html body #searchBtn::before{border-radius:16px}
+/* v4.1 refine: crisper specular, clearer rim */
+html body #searchBtn,html body .cta-affiliate,html body .home-btn,html body .deal-chip,html body .nav a,
+html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700{
+  border-width:3px !important;
+  background:
+    radial-gradient(110% 140% at 50% 130%,rgba(255,150,60,.95) 0%,rgba(236,72,153,.88) 30%,rgba(168,60,220,.45) 55%,rgba(30,10,35,0) 75%) padding-box,
+    linear-gradient(180deg,#3d1740 0%,#200a24 60%,#14061a 100%) padding-box,
+    linear-gradient(160deg,rgba(255,255,255,.85),rgba(255,255,255,.12) 30%,rgba(255,180,235,.18) 60%,rgba(255,255,255,.7)) border-box !important}
+html body #searchBtn::before,html body .cta-affiliate::before,html body .home-btn::before,html body .deal-chip::before,html body .nav a::before,
+html body a.bg-sky-500::before,html body a.bg-emerald-500::before,html body a.bg-amber-500::before,html body a.bg-fuchsia-500::before,html body a.bg-rose-500::before,html body a.bg-slate-700::before{
+  left:7%;right:7%;top:2px;height:40%;opacity:1;mix-blend-mode:screen;
+  background:linear-gradient(180deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.18) 45%,rgba(255,255,255,0) 100%);
+  -webkit-mask:radial-gradient(120% 160% at 50% 0%,#000 55%,transparent 72%);mask:radial-gradient(120% 160% at 50% 0%,#000 55%,transparent 72%)}
