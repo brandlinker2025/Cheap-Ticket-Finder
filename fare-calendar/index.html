@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Low Fare Calendar: Cheapest Day to Fly | Cheap Ticket Finder</title>
+<meta name="description" content="See the lowest recently found direct fare for every day of the month, pick a date range, and jump to a live search. Prices are indicative; the final price is on the provider.">
+<link rel="canonical" href="https://cheapticketfinder.site/fare-calendar/">
+<style>
+*{box-sizing:border-box}
+body{margin:0 auto;max-width:980px;padding:20px 16px 48px;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;background:#f1f7fb;color:#102a43}
+a{color:#0b6fa4}
+header,section{margin:0 0 18px;background:#fff;border:1px solid #d2e5ef;border-radius:14px;padding:18px}
+h1{margin:6px 0 4px;font-size:1.6rem;line-height:1.25}h2{margin:0 0 10px;font-size:1.15rem}
+.muted{color:#486581;font-size:.92rem}
+form.row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end}
+label{display:block;font-size:.85rem;font-weight:600;color:#334e68}
+select,button{width:100%;padding:10px 12px;border:1px solid #9fb3c8;border-radius:10px;font:inherit;background:#fff;color:inherit}
+button{cursor:pointer;background:#0b6fa4;color:#fff;border-color:#0b6fa4;font-weight:600}
+button:disabled{opacity:.5;cursor:default}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:14px 0 8px}
+.bar button{width:auto;padding:8px 14px;background:#fff;color:#0b6fa4}
+.bar strong{font-size:1.1rem}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dow{text-align:center;font-size:.75rem;font-weight:700;color:#627d98;padding:4px 0}
+.cell{min-height:62px;padding:4px 2px;border-radius:8px;border:1px solid #e1ecf4;background:#f8fbfd;text-align:center;font:inherit;color:inherit;display:flex;flex-direction:column;justify-content:space-between;align-items:center;width:100%}
+.cell.empty{border:0;background:none}
+.cell .d{font-size:.72rem;color:#627d98}
+.cell .p{font-size:.88rem;font-weight:700}
+.cell.none .p{color:#9fb3c8;font-weight:400}
+.cell.low{background:#e3f7ec;border-color:#86d3a8}
+.cell.mid{background:#fff6e0;border-color:#f1d28a}
+.cell.high{background:#fdeaea;border-color:#f0b1b1}
+.cell.best{outline:3px solid #0b8a4a}
+.cell.sel{outline:3px solid #0b6fa4}
+.cell.inrange{box-shadow:inset 0 0 0 2px #0b6fa4}
+.cell:disabled{cursor:default}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 0;font-size:.82rem}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.skel .cell{animation:pulse 1.2s ease-in-out infinite;background:#eaf2f8}
+@keyframes pulse{50%{opacity:.5}}
+.notice{padding:12px 14px;border-radius:10px;background:#fff6e0;border:1px solid #f1d28a;margin:10px 0}
+.notice.err{background:#fdeaea;border-color:#f0b1b1}
+ol.top{margin:8px 0 0;padding-left:20px}ol.top li{margin:4px 0}
+.cta{display:inline-block;margin-top:10px;padding:10px 16px;border-radius:10px;background:#0b6fa4;color:#fff;text-decoration:none;font-weight:600}
+@media(max-width:560px){form.row{grid-template-columns:1fr}.cell{min-height:54px}.cell .p{font-size:.78rem}}
+</style>
+</head>
+<body>
+<header>
+<a href="/">Cheap Ticket Finder</a>
+<h1>Low Fare Calendar</h1>
+<p class="muted">The lowest recently found <strong>direct, one-way</strong> fare for each day. We do not sell tickets: prices come from Travelpayouts/Aviasales search data and the final price is on the provider.</p>
+</header>
+
+<section>
+<form class="row" id="route">
+<label>Route
+<select id="pair" aria-label="Route">
+<option value="DAC-DXB">Dhaka (DAC) → Dubai (DXB)</option>
+<option value="DAC-DEL">Dhaka (DAC) → Delhi (DEL)</option>
+<option value="DAC-CCU">Dhaka (DAC) → Kolkata (CCU)</option>
+<option value="DAC-BKK">Dhaka (DAC) → Bangkok (BKK)</option>
+<option value="DAC-KUL">Dhaka (DAC) → Kuala Lumpur (KUL)</option>
+<option value="DAC-SIN">Dhaka (DAC) → Singapore (SIN)</option>
+<option value="DAC-DOH">Dhaka (DAC) → Doha (DOH)</option>
+<option value="DAC-JED">Dhaka (DAC) → Jeddah (JED)</option>
+<option value="DAC-RUH">Dhaka (DAC) → Riyadh (RUH)</option>
+<option value="DAC-MCT">Dhaka (DAC) → Muscat (MCT)</option>
+<option value="DAC-KTM">Dhaka (DAC) → Kathmandu (KTM)</option>
+<option value="DAC-IST">Dhaka (DAC) → Istanbul (IST)</option>
+<option value="DAC-LHR">Dhaka (DAC) → London (LHR)</option>
+<option value="DAC-CGP">Dhaka (DAC) → Chattogram (CGP)</option>
+<option value="DAC-CXB">Dhaka (DAC) → Cox's Bazar (CXB)</option>
+<option value="DAC-ZYL">Dhaka (DAC) → Sylhet (ZYL)</option>
+</select>
+</label>
+<label>Reverse direction
+<select id="dir" aria-label="Direction"><option value="out">Outbound (Dhaka →)</option><option value="back">Return (→ Dhaka)</option></select>
+</label>
+<button type="submit" id="go">Show calendar</button>
+</form>
+<p class="muted" id="hint">Tip: tap one day, then a second day, to see the cheapest fare inside that range.</p>
+</section>
+
+<section aria-live="polite">
+<div class="bar">
+<button type="button" id="prev" aria-label="Previous month">‹ Prev</button>
+<strong id="monthLabel">&nbsp;</strong>
+<button type="button" id="next" aria-label="Next month">Next ›</button>
+</div>
+<div id="status" role="status" class="muted"></div>
+<div id="cal" class="grid" aria-label="Fare calendar"></div>
+<div class="legend" id="legend" hidden>
+<span><i style="background:#e3f7ec;border:1px solid #86d3a8"></i>Lower</span>
+<span><i style="background:#fff6e0;border:1px solid #f1d28a"></i>Middle</span>
+<span><i style="background:#fdeaea;border:1px solid #f0b1b1"></i>Higher</span>
+<span><i style="outline:2px solid #0b8a4a"></i>Cheapest day</span>
+</div>
+</section>
+
+<section id="summary" hidden>
+<h2 id="sumTitle">Cheapest days</h2>
+<ol class="top" id="top"></ol>
+<a class="cta" id="search" href="/#wl-flight-results" rel="nofollow">Search live fares for this day</a>
+<p class="muted">Indicative price in USD from recent searches. Taxes, baggage and fees can differ; check the total on the provider before booking.</p>
+</section>
+
+<script src="calendar.js" defer></script>
+</body>
+</html>
