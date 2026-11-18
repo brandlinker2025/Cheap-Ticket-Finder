@@ -38,3 +38,69 @@ html body .sk-day-in-range{background:rgba(65,103,123,.15) !important}
 html body footer{background:var(--ctf-plum) !important;color:#E9E4EE !important;border-radius:16px;padding:16px 12px !important;margin-top:8px}
 html body footer,html body footer *{color:#E9E4EE !important;-webkit-text-fill-color:#E9E4EE !important}
 html body footer a{color:#F2C4C3 !important;-webkit-text-fill-color:#F2C4C3 !important}
+
+/* ===== Crystal liquid glass (v2) =====
+   Frosted, see-through surfaces with a glossy top highlight and a soft coloured glow underneath. */
+:root{
+  --glass-bg:linear-gradient(135deg,rgba(255,255,255,.62),rgba(255,255,255,.22));
+  --glass-border:rgba(255,255,255,.75);
+  --glass-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(140,115,146,.10),0 18px 40px rgba(71,61,91,.16);
+  --gloss:linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.08) 48%,rgba(255,255,255,0) 52%);
+}
+/* Colour blobs behind the glass so the blur has something to show */
+html body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:radial-gradient(38vmax 38vmax at 8% 18%,rgba(140,115,146,.30),transparent 60%),
+             radial-gradient(34vmax 34vmax at 92% 12%,rgba(217,140,139,.28),transparent 60%),
+             radial-gradient(40vmax 40vmax at 70% 92%,rgba(65,103,123,.22),transparent 62%)}
+html body header::before{background:radial-gradient(closest-side,rgba(217,140,139,.35),rgba(140,115,146,.22) 55%,transparent 75%) !important}
+
+/* Glass surfaces */
+html body .glass-card,html body .search-panel,html body .trip-tabs,html body .deal-chip,html body .lux-card,
+html body .sk-calendar,html body #locationModal > div{
+  background:var(--glass-bg) !important;-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
+  border:1px solid var(--glass-border) !important;box-shadow:var(--glass-shadow) !important}
+html body .glass-card,html body .search-panel{border-radius:24px !important}
+html body .site-header{background:rgba(255,255,255,.55) !important;-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);border-bottom:1px solid rgba(255,255,255,.7) !important}
+html body .trip-tabs{border-radius:999px !important}
+html body .trip-tabs button i{color:var(--ctf-lavender) !important;-webkit-text-fill-color:var(--ctf-lavender) !important}
+html body .trip-tabs button.is-active{color:var(--ctf-slate) !important;-webkit-text-fill-color:var(--ctf-slate) !important}
+html body .trip-tabs button.is-active i{color:var(--ctf-peach) !important;-webkit-text-fill-color:var(--ctf-peach) !important}
+html body .deal-chip{border-radius:999px !important}
+html body .lux-card{overflow:hidden}
+
+/* Search fields: clear glass tiles */
+html body .trip-fields > *:not(#searchBtn){background:rgba(255,255,255,.55) !important;border:1px solid rgba(255,255,255,.85) !important;box-shadow:inset 0 1px 0 #fff,0 4px 14px rgba(71,61,91,.08) !important;border-radius:14px !important}
+
+/* Buttons: glossy pill — peach glass for booking/CTA */
+html body #searchBtn,html body .cta-affiliate,html body .home-btn,
+html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700,
+html body button.bg-sky-500,html body button.bg-amber-500,html body button.bg-emerald-500,html body .step-btn-gold{
+  background-image:var(--gloss),linear-gradient(180deg,#E7A4A3,var(--ctf-peach)) !important;background-color:var(--ctf-peach) !important;
+  border:1px solid rgba(255,255,255,.7) !important;border-radius:999px !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -6px 12px rgba(71,61,91,.12),0 10px 24px rgba(217,140,139,.45),0 2px 6px rgba(140,115,146,.25) !important;
+  transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}
+html body #searchBtn{border-radius:18px !important}
+html body #searchBtn:hover,html body .cta-affiliate:hover,html body .home-btn:hover,html body a.bg-sky-500:hover,html body .deal-chip:hover{
+  transform:translateY(-1px);filter:saturate(1.1) brightness(1.03);box-shadow:inset 0 1px 0 #fff,0 14px 30px rgba(217,140,139,.55) !important}
+html body #searchBtn:focus-visible,html body a:focus-visible,html body button:focus-visible{outline:3px solid rgba(65,103,123,.55);outline-offset:2px}
+
+/* Footer: dark plum glass */
+html body footer{background:linear-gradient(135deg,rgba(71,61,91,.92),rgba(71,61,91,.78)) !important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 16px 36px rgba(71,61,91,.25);border-radius:22px !important}
+
+/* Medical travel card on the homepage (icon tile, no photo) */
+html body .lux-card.lux-card-medical{display:flex;flex-direction:column;justify-content:flex-end;min-height:180px;
+  background:radial-gradient(circle at 30% 25%,rgba(217,140,139,.55),transparent 55%),radial-gradient(circle at 80% 70%,rgba(140,115,146,.55),transparent 60%),var(--glass-bg) !important}
+html body .lux-card-medical .med-icon{position:absolute;top:22%;left:50%;transform:translateX(-50%);font-size:56px;color:#fff;filter:drop-shadow(0 6px 14px rgba(71,61,91,.35))}
+
+@media (prefers-reduced-motion:reduce){html body *{transition:none !important}}
+html body .lux-card.lux-card-medical{position:relative}
+html body #searchBtn *,html body .cta-affiliate *,html body .home-btn *{background:none !important;background-image:none !important;box-shadow:none !important;border:0 !important}
+html body .lux-card-medical .med-icon{display:block !important;z-index:2 !important;color:#fff !important;-webkit-text-fill-color:#fff !important;opacity:1 !important;font-size:64px !important;top:28% !important}
+html body .lux-card-medical .lc-text{z-index:3}
+html body .lux-card-medical .med-icon{font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;font-style:normal !important;line-height:1 !important}
+/* Medical page boxes, tables and section pills in glass */
+html body .box,html body .tw,html body .nav a{background:var(--glass-bg) !important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--glass-border) !important;box-shadow:var(--glass-shadow) !important}
+html body .box.warn{border-left:5px solid var(--ctf-peach) !important}
+html body .box.ok{border-left:5px solid var(--ctf-slate) !important}
+html body .nav a{color:var(--ctf-slate) !important}
