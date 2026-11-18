@@ -1,0 +1,31 @@
+.wrap{background:#fff;border:1px solid #d2e5ef;border-radius:14px;padding:16px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.bar button,.primary{padding:9px 14px;border-radius:10px;border:1px solid #0b6fa4;background:#fff;color:#0b6fa4;font:inherit;font-weight:600;cursor:pointer}
+.primary{background:#0b6fa4;color:#fff}
+.wrap button:disabled{opacity:.5;cursor:default}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.check{display:flex;gap:8px;align-items:center;font-size:.95rem}
+.muted{color:#486581;font-size:.9rem;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dow{text-align:center;font-size:.75rem;font-weight:700;color:#627d98;padding:4px 0}
+.cell{min-height:60px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:4px 2px;border-radius:8px;border:1px solid #e1ecf4;background:#f8fbfd;font:inherit;color:inherit}
+.d{font-size:.72rem;color:#627d98}
+.p{font-size:.85rem;font-weight:700}
+.low{background:#e3f7ec;border-color:#86d3a8}
+.mid{background:#fff6e0;border-color:#f1d28a}
+.high{background:#fdeaea;border-color:#f0b1b1}
+.loading{background:#eaf2f8;animation:pulse 1.1s ease-in-out infinite}
+.err{background:#fdeaea;color:#b42318}
+.best{outline:3px solid #0b8a4a}
+.sel{outline:3px solid #0b6fa4}
+.between{box-shadow:inset 0 0 0 2px #0b6fa4}
+@keyframes pulse{50%{opacity:.5}}
+.summary{margin-top:16px;padding:14px;border-radius:12px;background:#f1f7fb;border:1px solid #d2e5ef}
+.summary h3{margin:0 0 8px;font-size:1.05rem}
+.best3{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.breakdown{margin:0}
+.breakdown div{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed #cbd9e4}
+.breakdown dt,.breakdown dd{margin:0}
+.totalRow{font-weight:800;font-size:1.15rem;border-bottom:0!important}
+.top{margin:10px 0 0;padding-left:20px;font-size:.92rem}
+@media(max-width:560px){.cell{min-height:52px}.p{font-size:.72rem}}
