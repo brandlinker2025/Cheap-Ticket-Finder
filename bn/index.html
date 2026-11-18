@@ -565,6 +565,7 @@
         <div id="wl-flight-results" class="mb-6">
             <p class="text-[11px] text-slate-500 mb-2 leading-5">আমাদের পার্টনার Aviasales (Travelpayouts) থেকে লাইভ ফ্লাইটের দাম। চূড়ান্ত মোট দাম বুকিং সাইটে নিশ্চিত হয়।</p>
             <a id="multiPartnerLink" class="home-btn hidden" target="_blank" rel="sponsored noopener noreferrer">এই যাত্রাপথ Aviasales-এ দেখুন</a>
+            <div id="multiLegHelp" class="hidden mt-3"></div>
             <div class="tpwl-search-slot" aria-hidden="true"><div id="tpwl-search"></div></div>
             <div id="tpwl-tickets" style="width:100%;min-width:0"></div>
             <p id="staleDateNote" hidden role="status" class="text-sm text-amber-300 border border-amber-400/40 rounded-lg p-3 mb-2"></p>
@@ -1469,6 +1470,58 @@
             openLocationModal(field);
         }
 
+
+        // Leg-by-leg help for multi-city: a search link for every flight, and when a flight
+        // starts or ends in Bangladesh at a city with no non-stop service, cheaper ways to
+        // connect via Bangkok, Kuala Lumpur or Singapore (two separate tickets — explained).
+        const BD_NONSTOP = new Set(["dac","cgp","zyl","cxb","jsr","spd","rjh","bzl","ccu","del","maa","ktm","bkk","kul","sin","dxb","auh","shj","doh","mct","kwi","bah","ruh","jed","dmm","med","ist","lhr","man","mle","can","pek","pkx","kmg","hkg","rgn","fco","yyz","khi","cmb"]);
+        const BD_AIRPORTS_SET = new Set(["dac","cgp","zyl","cxb","jsr","spd","rjh","bzl","ird"]);
+        const CONNECT_HUBS = [["bkk","Bangkok"],["kul","Kuala Lumpur"],["sin","Singapore"]];
+        function legSearchUrl(o, d, date) {
+            const target = "https://www.aviasales.com/search/" + o.toUpperCase() + date.slice(8,10) + date.slice(5,7) + d.toUpperCase() + BookingLinks.aviasalesPaxSuffix(paxState);
+            const base = TravelpayoutsAffiliate.aviasalesAffiliateUrl();
+            if (!base) return target;
+            const u = new URL(base); u.searchParams.set("u", target); return u.href;
+        }
+        function renderMultiLegHelp() {
+            const box = document.getElementById("multiLegHelp");
+            if (!box) return;
+            const bn = (document.documentElement.lang || "").startsWith("bn");
+            const T = bn ? {
+                title: "প্রতিটি ফ্লাইট আলাদা করে দেখুন", flight: "ফ্লাইট", open: "এই ফ্লাইটের দাম দেখুন",
+                nodirect: "এই রুটে বাংলাদেশের সাথে সরাসরি ফ্লাইট নেই বা খুব কম। কম খরচে যাওয়ার উপায়:",
+                via: "হয়ে", leg1: "১ম টিকিট", leg2: "২য় টিকিট",
+                note: "দুইটা আলাদা টিকিট কাটলে প্রথম ফ্লাইট দেরি হলে দ্বিতীয়টা এয়ারলাইন অপেক্ষা করে না — মাঝে কমপক্ষে ৪–৬ ঘণ্টা (সম্ভব হলে এক রাত) রাখুন। সবসময় উপরের পুরো যাত্রাপথের দামের সাথে তুলনা করুন।"
+            } : {
+                title: "Check each flight separately", flight: "Flight", open: "See fares for this flight",
+                nodirect: "No (or very few) direct flights between this city and Bangladesh. Cheaper ways to connect:",
+                via: "via", leg1: "Ticket 1", leg2: "Ticket 2",
+                note: "With two separate tickets the airline will not wait if your first flight is late — leave at least 4–6 hours (ideally a night) between them. Always compare with the full itinerary price above."
+            };
+            const name = (code) => { const a = getAllAirports().find(x => x.code === code); return a ? (a.city || code.toUpperCase()) : code.toUpperCase(); };
+            const esc = (s) => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+            let html = `<h3 class="font-bold text-sm mb-2">${T.title}</h3>`;
+            multiLegs.forEach((leg, i) => {
+                const o = leg.origin, d = leg.dest;
+                html += `<div class="glass-card" style="padding:12px 14px;margin-bottom:10px;border-radius:18px"><p class="text-sm font-semibold mb-2">${T.flight} ${i + 1}: ${esc(name(o))} (${o.toUpperCase()}) → ${esc(name(d))} (${d.toUpperCase()}) · ${esc(leg.date)}</p>`
+                    + `<a class="home-btn" target="_blank" rel="sponsored noopener noreferrer" href="${esc(legSearchUrl(o, d, leg.date))}">${T.open}</a>`;
+                const bdEnd = BD_AIRPORTS_SET.has(o) ? d : (BD_AIRPORTS_SET.has(d) ? o : null);
+                if (bdEnd && !BD_NONSTOP.has(bdEnd) && !BD_AIRPORTS_SET.has(bdEnd)) {
+                    html += `<p class="text-xs mt-2 mb-1">${T.nodirect}</p><div style="display:flex;flex-wrap:wrap;gap:8px">`;
+                    CONNECT_HUBS.forEach(([hub, hubName]) => {
+                        if (hub === o || hub === d) return;
+                        html += `<span class="deal-chip" style="display:inline-flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 12px;font-size:12px"><b>${hubName} ${T.via}:</b>`
+                            + `<a class="underline" target="_blank" rel="sponsored noopener noreferrer" href="${esc(legSearchUrl(o, hub, leg.date))}">${T.leg1} ${o.toUpperCase()}→${hub.toUpperCase()}</a>`
+                            + `<a class="underline" target="_blank" rel="sponsored noopener noreferrer" href="${esc(legSearchUrl(hub, d, leg.date))}">${T.leg2} ${hub.toUpperCase()}→${d.toUpperCase()}</a></span>`;
+                    });
+                    html += `</div><p class="text-[11px] mt-2">${T.note}</p>`;
+                }
+                html += `</div>`;
+            });
+            box.innerHTML = html;
+            box.classList.remove("hidden");
+        }
+
         function searchMultiCity() {
             const today = BookingLinks.toISODate(new Date());
             const invalid = multiLegs.findIndex((leg, index) =>
@@ -1483,7 +1536,7 @@
             const code = multiLegs.map((leg, index) => {
                 const previous = multiLegs[index - 1];
                 const origin = previous?.dest === leg.origin ? "" : (previous ? "-" : "") + leg.origin;
-                const destination = index === multiLegs.length - 1 && leg.dest === multiLegs[0].origin ? "" : leg.dest;
+                const destination = leg.dest; // always include — Aviasales drops the last flight without it
                 return origin.toUpperCase() + leg.date.slice(8, 10) + leg.date.slice(5, 7) + destination.toUpperCase();
             }).join("");
             const airportIdx = multiLegs.map((_, index) => index).join(",");
@@ -1501,6 +1554,7 @@
                 partnerLink.href = partnerSearch;
             }
             partnerLink.classList.remove("hidden");
+            renderMultiLegHelp();
             showWhiteLabelResults(flightSearch, airportIdx);
         }
 
@@ -2368,6 +2422,7 @@
 
         function openWhiteLabelResults() {
             document.getElementById("multiPartnerLink").classList.add("hidden");
+            { const h = document.getElementById("multiLegHelp"); if (h) h.classList.add("hidden"); }
             const origin = selectedOriginCode.toUpperCase();
             const dest = selectedDestCode.toUpperCase();
             const depart = ddmm(selectedDeptDate);
