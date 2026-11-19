@@ -44,5 +44,6 @@
 ## Site
 - [Flight search](https://cheapticketfinder.site/): flexible-date search with partner results
 - [Airline offers](https://cheapticketfinder.site/offers/): official airline promotions only
+- [Travel Essentials](https://cheapticketfinder.site/travel-essentials/): useful travel products on Amazon (luggage, neck pillow, power bank, adapter, packing cubes, TSA lock); contains Amazon affiliate links
 - [About](https://cheapticketfinder.site/about) · [Disclosure](https://cheapticketfinder.site/disclosure) · [Contact](https://cheapticketfinder.site/contact)
 - [বাংলা হোম (Bangla homepage)](https://cheapticketfinder.site/bn/)
