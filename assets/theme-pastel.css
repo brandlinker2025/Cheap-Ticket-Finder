@@ -18,16 +18,6 @@ html body a.underline,html body main a{color:var(--ctf-slate) !important}
 html body .glass-card,html body .lux-card,html body .search-panel{background:var(--ctf-card) !important;border:1px solid rgba(140,115,146,.45) !important;box-shadow:0 12px 30px rgba(71,61,91,.12) !important;color:var(--ctf-plum) !important}
 html body .lux-card .lc-text{background:linear-gradient(0deg,rgba(71,61,91,.82),rgba(71,61,91,0)) !important}
 html body .lux-card .lc-text b,html body .lux-card .lc-text small{color:#fff !important;-webkit-text-fill-color:#fff !important}
-html body .deal-chip{background:rgba(140,115,146,.14) !important;border:1px solid rgba(140,115,146,.45) !important;color:var(--ctf-plum) !important}
-html body .deal-chip,html body .deal-chip *{-webkit-text-fill-color:var(--ctf-plum) !important}
-
-/* Call-to-action / booking buttons: peach-rose with dark plum text (white on this peach is too faint to read) */
-html body #searchBtn,html body #searchBtn *,html body .cta-affiliate,html body .cta-affiliate *,html body .home-btn,
-html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700,
-html body button.bg-sky-500,html body button.bg-amber-500,html body button.bg-emerald-500,html body .step-btn-gold{
-  background:var(--ctf-peach) !important;color:var(--ctf-plum) !important;-webkit-text-fill-color:var(--ctf-plum) !important;border-color:var(--ctf-peach-hover) !important}
-html body #searchBtn{border-radius:14px !important;box-shadow:0 10px 24px rgba(217,140,139,.40) !important;font-weight:800 !important}
-html body #searchBtn:hover,html body .cta-affiliate:hover,html body .home-btn:hover,html body a.bg-sky-500:hover{background:var(--ctf-peach-hover) !important;filter:none}
 
 /* Calendar selection */
 html body .sk-day-selected-dept{background:var(--ctf-slate) !important}
@@ -45,7 +35,6 @@ html body footer a{color:#F2C4C3 !important;-webkit-text-fill-color:#F2C4C3 !imp
   --glass-bg:linear-gradient(135deg,rgba(255,255,255,.62),rgba(255,255,255,.22));
   --glass-border:rgba(255,255,255,.75);
   --glass-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(140,115,146,.10),0 18px 40px rgba(71,61,91,.16);
-  --gloss:linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.08) 48%,rgba(255,255,255,0) 52%);
 }
 /* Colour blobs behind the glass so the blur has something to show */
 html body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
@@ -55,7 +44,7 @@ html body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:non
 html body header::before{background:radial-gradient(closest-side,rgba(217,140,139,.35),rgba(140,115,146,.22) 55%,transparent 75%) !important}
 
 /* Glass surfaces */
-html body .glass-card,html body .search-panel,html body .trip-tabs,html body .deal-chip,html body .lux-card,
+html body .glass-card,html body .search-panel,html body .trip-tabs,html body .lux-card,
 html body .sk-calendar,html body #locationModal > div{
   background:var(--glass-bg) !important;-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
   border:1px solid var(--glass-border) !important;box-shadow:var(--glass-shadow) !important}
@@ -65,23 +54,11 @@ html body .trip-tabs{border-radius:999px !important}
 html body .trip-tabs button i{color:var(--ctf-lavender) !important;-webkit-text-fill-color:var(--ctf-lavender) !important}
 html body .trip-tabs button.is-active{color:var(--ctf-slate) !important;-webkit-text-fill-color:var(--ctf-slate) !important}
 html body .trip-tabs button.is-active i{color:var(--ctf-peach) !important;-webkit-text-fill-color:var(--ctf-peach) !important}
-html body .deal-chip{border-radius:999px !important}
 html body .lux-card{overflow:hidden}
 
 /* Search fields: clear glass tiles */
 html body .trip-fields > *:not(#searchBtn){background:rgba(255,255,255,.55) !important;border:1px solid rgba(255,255,255,.85) !important;box-shadow:inset 0 1px 0 #fff,0 4px 14px rgba(71,61,91,.08) !important;border-radius:14px !important}
 
-/* Buttons: glossy pill — peach glass for booking/CTA */
-html body #searchBtn,html body .cta-affiliate,html body .home-btn,
-html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700,
-html body button.bg-sky-500,html body button.bg-amber-500,html body button.bg-emerald-500,html body .step-btn-gold{
-  background-image:var(--gloss),linear-gradient(180deg,#E7A4A3,var(--ctf-peach)) !important;background-color:var(--ctf-peach) !important;
-  border:1px solid rgba(255,255,255,.7) !important;border-radius:999px !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -6px 12px rgba(71,61,91,.12),0 10px 24px rgba(217,140,139,.45),0 2px 6px rgba(140,115,146,.25) !important;
-  transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}
-html body #searchBtn{border-radius:18px !important}
-html body #searchBtn:hover,html body .cta-affiliate:hover,html body .home-btn:hover,html body a.bg-sky-500:hover,html body .deal-chip:hover{
-  transform:translateY(-1px);filter:saturate(1.1) brightness(1.03);box-shadow:inset 0 1px 0 #fff,0 14px 30px rgba(217,140,139,.55) !important}
 html body #searchBtn:focus-visible,html body a:focus-visible,html body button:focus-visible{outline:3px solid rgba(65,103,123,.55);outline-offset:2px}
 
 /* Footer: dark plum glass */
@@ -89,101 +66,62 @@ html body footer{background:linear-gradient(135deg,rgba(71,61,91,.92),rgba(71,61
   border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 16px 36px rgba(71,61,91,.25);border-radius:22px !important}
 
 /* Medical travel card on the homepage (icon tile, no photo) */
-html body .lux-card.lux-card-medical{display:flex;flex-direction:column;justify-content:flex-end;min-height:180px;
+html body .lux-card.lux-card-medical{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:180px;
   background:radial-gradient(circle at 30% 25%,rgba(217,140,139,.55),transparent 55%),radial-gradient(circle at 80% 70%,rgba(140,115,146,.55),transparent 60%),var(--glass-bg) !important}
-html body .lux-card-medical .med-icon{position:absolute;top:22%;left:50%;transform:translateX(-50%);font-size:56px;color:#fff;filter:drop-shadow(0 6px 14px rgba(71,61,91,.35))}
+html body .lux-card-medical .med-icon{position:absolute;left:50%;transform:translateX(-50%);filter:drop-shadow(0 6px 14px rgba(71,61,91,.35));display:block !important;z-index:2 !important;color:#fff !important;-webkit-text-fill-color:#fff !important;opacity:1 !important;font-size:64px !important;top:28% !important;font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;font-style:normal !important;line-height:1 !important}
+html body .lux-card-medical .lc-text{z-index:3}
 
 @media (prefers-reduced-motion:reduce){html body *{transition:none !important}}
-html body .lux-card.lux-card-medical{position:relative}
-html body #searchBtn *,html body .cta-affiliate *,html body .home-btn *{background:none !important;background-image:none !important;box-shadow:none !important;border:0 !important}
-html body .lux-card-medical .med-icon{display:block !important;z-index:2 !important;color:#fff !important;-webkit-text-fill-color:#fff !important;opacity:1 !important;font-size:64px !important;top:28% !important}
-html body .lux-card-medical .lc-text{z-index:3}
-html body .lux-card-medical .med-icon{font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;font-style:normal !important;line-height:1 !important}
+
 /* Medical page boxes, tables and section pills in glass */
-html body .box,html body .tw,html body .nav a{background:var(--glass-bg) !important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--glass-border) !important;box-shadow:var(--glass-shadow) !important}
+html body .box,html body .tw{background:var(--glass-bg) !important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--glass-border) !important;box-shadow:var(--glass-shadow) !important}
 html body .box.warn{border-left:5px solid var(--ctf-peach) !important}
 html body .box.ok{border-left:5px solid var(--ctf-slate) !important}
-html body .nav a{color:var(--ctf-slate) !important}
 
-/* ===== v3: "Secondary" liquid-glass buttons everywhere (owner's choice, 18 Nov 2026) =====
-   Dark plum glass pill, magenta core, orange-pink glow underneath, white text. Replaces the peach buttons. */
-:root{
-  --lg-btn-bg:
-    linear-gradient(180deg,rgba(255,255,255,.38) 0%,rgba(255,255,255,.08) 42%,rgba(255,255,255,0) 50%),
-    radial-gradient(120% 150% at 50% 125%,rgba(255,146,64,.95) 0%,rgba(236,72,153,.85) 32%,rgba(147,51,234,.35) 58%,rgba(147,51,234,0) 75%),
-    linear-gradient(180deg,#52204f 0%,#2b0f30 55%,#1a0a1e 100%);
-  --lg-btn-shadow:
-    inset 0 1px 0 rgba(255,255,255,.75),inset 0 0 0 1px rgba(255,255,255,.10),inset 0 -10px 18px rgba(255,120,80,.35),
-    0 10px 22px rgba(236,72,153,.35),0 18px 34px rgba(255,140,60,.22);
-}
-html body #searchBtn,html body .cta-affiliate,html body .home-btn,html body .deal-chip,html body .nav a,
-html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700,
-html body button.bg-sky-500,html body button.bg-amber-500,html body button.bg-emerald-500,html body .step-btn-gold{
-  background:var(--lg-btn-bg) !important;background-color:#2b0f30 !important;
-  border:1px solid rgba(255,255,255,.38) !important;border-radius:999px !important;
-  box-shadow:var(--lg-btn-shadow) !important;
-  color:#fff !important;-webkit-text-fill-color:#fff !important;
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-html body #searchBtn *,html body .cta-affiliate *,html body .home-btn *,html body .deal-chip *,html body .nav a *{color:#fff !important;-webkit-text-fill-color:#fff !important}
-html body #searchBtn{border-radius:20px !important}
-html body #searchBtn:hover,html body .cta-affiliate:hover,html body .home-btn:hover,html body .deal-chip:hover,html body .nav a:hover,html body a.bg-sky-500:hover{
-  transform:translateY(-1px);filter:brightness(1.12) saturate(1.1);
-  box-shadow:inset 0 1px 0 #fff,inset 0 -10px 18px rgba(255,120,80,.45),0 14px 30px rgba(236,72,153,.5),0 22px 40px rgba(255,140,60,.3) !important}
-html body #searchBtn:active,html body .cta-affiliate:active,html body .home-btn:active,html body .deal-chip:active{transform:translateY(1px);filter:brightness(.98)}
-/* underlined links inside chips stay readable */
-html body .deal-chip a{color:#fff !important;-webkit-text-fill-color:#fff !important}
-
-/* ===== v4: crystal-clear glossy rim + specular highlight + coloured reflection ===== */
-html body #searchBtn,html body .cta-affiliate,html body .home-btn,html body .deal-chip,html body .nav a,
-html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700,
-html body button.bg-sky-500,html body button.bg-amber-500,html body button.bg-emerald-500,html body .step-btn-gold{
-  position:relative !important;isolation:isolate;overflow:visible !important;
-  /* clear glass rim: transparent outer ring + dark glossy core inside it */
-  border:2.5px solid transparent !important;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.06) 45%,rgba(255,255,255,0) 52%) padding-box,
-    radial-gradient(110% 140% at 50% 130%,rgba(255,150,60,.95) 0%,rgba(236,72,153,.88) 30%,rgba(168,60,220,.45) 55%,rgba(30,10,35,0) 75%) padding-box,
-    linear-gradient(180deg,#3d1740 0%,#200a24 60%,#14061a 100%) padding-box,
-    linear-gradient(160deg,rgba(255,255,255,.95),rgba(255,255,255,.25) 35%,rgba(255,190,240,.35) 65%,rgba(255,255,255,.85)) border-box !important;
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.35),
-    inset 0 2px 1px rgba(255,255,255,.55),
-    inset 0 -6px 14px rgba(255,140,90,.45),
-    inset 0 0 18px rgba(236,72,153,.25),
-    0 12px 26px rgba(236,72,153,.38),0 20px 40px rgba(255,140,60,.28),0 2px 4px rgba(20,6,26,.35) !important;
-  text-shadow:0 1px 2px rgba(0,0,0,.45)}
-/* specular highlight: bright curved shine across the top */
-html body #searchBtn::before,html body .cta-affiliate::before,html body .home-btn::before,html body .deal-chip::before,html body .nav a::before,
-html body a.bg-sky-500::before,html body a.bg-emerald-500::before,html body a.bg-amber-500::before,html body a.bg-fuchsia-500::before,html body a.bg-rose-500::before,html body a.bg-slate-700::before{
-  content:"";position:absolute;left:8%;right:8%;top:2px;height:46%;border-radius:999px;pointer-events:none;z-index:1;
-  background:linear-gradient(180deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.28) 55%,rgba(255,255,255,0) 100%);
-  filter:blur(.3px);opacity:.75}
-/* coloured light passing through the glass onto the surface below */
-html body #searchBtn::after,html body .cta-affiliate::after,html body .home-btn::after,html body .deal-chip::after,html body .nav a::after,
-html body a.bg-sky-500::after,html body a.bg-emerald-500::after,html body a.bg-amber-500::after,html body a.bg-fuchsia-500::after,html body a.bg-rose-500::after,html body a.bg-slate-700::after{
-  content:"";position:absolute;left:12%;right:12%;bottom:-10px;height:14px;border-radius:50%;pointer-events:none;z-index:-1;
-  background:radial-gradient(closest-side,rgba(255,120,200,.75),rgba(255,150,60,.45) 55%,transparent);filter:blur(6px)}
-html body #searchBtn > *,html body .cta-affiliate > *,html body .home-btn > *,html body .deal-chip > *{position:relative;z-index:2}
-html body #searchBtn{border-radius:22px !important}
-html body #searchBtn::before{border-radius:16px}
-/* v4.1 refine: crisper specular, clearer rim */
-html body #searchBtn,html body .cta-affiliate,html body .home-btn,html body .deal-chip,html body .nav a,
-html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700{
-  border-width:3px !important;
-  background:
-    radial-gradient(110% 140% at 50% 130%,rgba(255,150,60,.95) 0%,rgba(236,72,153,.88) 30%,rgba(168,60,220,.45) 55%,rgba(30,10,35,0) 75%) padding-box,
-    linear-gradient(180deg,#3d1740 0%,#200a24 60%,#14061a 100%) padding-box,
-    linear-gradient(160deg,rgba(255,255,255,.85),rgba(255,255,255,.12) 30%,rgba(255,180,235,.18) 60%,rgba(255,255,255,.7)) border-box !important}
-html body #searchBtn::before,html body .cta-affiliate::before,html body .home-btn::before,html body .deal-chip::before,html body .nav a::before,
-html body a.bg-sky-500::before,html body a.bg-emerald-500::before,html body a.bg-amber-500::before,html body a.bg-fuchsia-500::before,html body a.bg-rose-500::before,html body a.bg-slate-700::before{
-  left:7%;right:7%;top:2px;height:40%;opacity:1;mix-blend-mode:screen;
-  background:linear-gradient(180deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.18) 45%,rgba(255,255,255,0) 100%);
-  -webkit-mask:radial-gradient(120% 160% at 50% 0%,#000 55%,transparent 72%);mask:radial-gradient(120% 160% at 50% 0%,#000 55%,transparent 72%)}
 /* Cruise / Medical shortcuts in the top tab bar (links that look like the tabs) */
 html body .trip-tabs a.tab-link{display:flex;flex-direction:row;align-items:center;gap:6px;flex:0 0 auto;white-space:nowrap;min-height:32px;padding:.25rem .55rem;font-size:11.5px;font-weight:700;line-height:1.15;color:#111 !important;-webkit-text-fill-color:#111 !important;text-decoration:none;border-bottom:2px solid transparent}
 html body .trip-tabs a.tab-link i{font-size:13px;color:var(--ctf-lavender) !important;-webkit-text-fill-color:var(--ctf-lavender) !important}
 html body .trip-tabs a.tab-link:hover{border-bottom-color:var(--ctf-lavender)}
+
 /* Bus / train / launch form now lives inside its tab */
 html body #bd-transport .dom-form{margin-top:.8rem}
-html body .dom-actions a{background:var(--lg-btn-bg) !important;border:1px solid rgba(255,255,255,.38) !important;border-radius:999px !important;box-shadow:var(--lg-btn-shadow) !important;color:#fff !important;-webkit-text-fill-color:#fff !important}
-html body .dom-actions a *{color:#fff !important;-webkit-text-fill-color:#fff !important}
+
+/* ===== Luxury Travel Palette Buttons (Deep Navy #0B1E36, Deep Teal #175F6A, Soft Lemon #F9E14B, Seafoam #93BDB6) ===== */
+/* Secondary / Partner & Action pill buttons */
+html body .home-btn,html body .cta-affiliate,html body .deal-chip,html body .nav a,html body .dom-actions a,
+html body a.bg-sky-500,html body a.bg-emerald-500,html body a.bg-amber-500,html body a.bg-fuchsia-500,html body a.bg-rose-500,html body a.bg-slate-700,
+html body button.bg-sky-500,html body button.bg-amber-500,html body button.bg-emerald-500{
+  background:radial-gradient(circle at 82% 18%,rgba(249,225,75,.20) 0%,transparent 58%),linear-gradient(135deg,rgba(11,30,54,.88) 0%,rgba(23,95,106,.84) 100%) !important;
+  background-color:#0B1E36 !important;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  color:#F4F7F6 !important;-webkit-text-fill-color:#F4F7F6 !important;
+  border:1px solid rgba(147,189,182,.55) !important;border-radius:999px !important;
+  box-shadow:0 6px 18px -4px rgba(11,30,54,.32),inset 0 1px 0 rgba(249,225,75,.28) !important;
+  text-shadow:none !important;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,filter .18s ease !important}
+html body .home-btn *,html body .cta-affiliate *,html body .deal-chip *,html body .deal-chip a,html body .nav a *,html body .dom-actions a *{
+  color:#F4F7F6 !important;-webkit-text-fill-color:#F4F7F6 !important;
+  background:none !important;background-image:none !important;box-shadow:none !important;border:0 !important}
+
+/* Primary flight search buttons */
+html body #searchBtn,html body a.home-btn[href="#wl-flight-results"],html body .step-btn-gold{
+  background:radial-gradient(circle at 18% 18%,rgba(249,225,75,.28) 0%,transparent 55%),linear-gradient(135deg,#0B1E36 0%,#175F6A 65%,#237A86 100%) !important;
+  background-color:#0B1E36 !important;
+  color:#FAF8F2 !important;-webkit-text-fill-color:#FAF8F2 !important;
+  border:1px solid rgba(249,225,75,.48) !important;border-radius:999px !important;
+  box-shadow:0 8px 22px -4px rgba(11,30,54,.42),0 0 16px rgba(249,225,75,.18),inset 0 1px 0 rgba(249,225,75,.35) !important;
+  text-shadow:none !important;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,filter .18s ease !important}
+html body #searchBtn *,html body a.home-btn[href="#wl-flight-results"] *,html body .step-btn-gold *{
+  color:#FAF8F2 !important;-webkit-text-fill-color:#FAF8F2 !important;
+  background:none !important;background-image:none !important;box-shadow:none !important;border:0 !important}
+
+/* Hover & active states */
+html body #searchBtn:hover,html body .home-btn:hover,html body .cta-affiliate:hover,html body .deal-chip:hover,
+html body .nav a:hover,html body .dom-actions a:hover,html body a.bg-sky-500:hover,html body .step-btn-gold:hover{
+  transform:translateY(-1.5px);
+  border-color:rgba(249,225,75,.78) !important;
+  box-shadow:0 12px 26px -4px rgba(11,30,54,.48),0 0 20px rgba(249,225,75,.28),inset 0 1px 0 rgba(249,225,75,.55) !important;
+  filter:none}
+html body #searchBtn:active,html body .home-btn:active,html body .cta-affiliate:active,html body .deal-chip:active,
+html body .nav a:active,html body .dom-actions a:active{transform:translateY(0)}
