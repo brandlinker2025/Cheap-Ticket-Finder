@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
+    <meta charset="UTF-8">
     <script>
     /* Stale deep link guard: Travelpayouts rejects a past departure date (search/start returns 400)
        and its widget then spins on "Searching at providers" forever. Runs before the widget loader. */
@@ -29,13 +30,13 @@
           script.async = 1;
           script.setAttribute("data-cmp-ab","2");
           script.src = 'https://tp-em.com/NTg3NDQ3.js?t=587447';
-          document.head.appendChild(script);
+          if (document.readyState === "complete") document.head.appendChild(script);
+          else window.addEventListener("load", function () { document.head.appendChild(script); });
       })();
     </script>
     <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1">
-(function(){var script=document.createElement("script");script.async=1;script.type="module";script.src="https://tpwdg.com/wl_web/main.js?wl_id=23606";document.head.appendChild(script);})();
+(function(){var script=document.createElement("script");script.async=1;script.type="module";script.src="https://tpwdg.com/wl_web/main.js?wl_id=23606";var go=function(){document.head.appendChild(script);};if(/[?&]flightSearch=/.test(location.search)||location.hash==="#wl-flight-results"||document.readyState==="complete")go();else window.addEventListener("load",go);})();
 </script>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preload" as="image" href="/assets/hero-sea-800.webp" media="(max-width:800px)" fetchpriority="high">
     <link rel="preload" as="image" href="/assets/hero-sea.webp" media="(min-width:801px)" fetchpriority="high">
@@ -371,7 +372,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-v2-16.png?v=2">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v2.png?v=2">
     <link rel="manifest" href="/site.webmanifest?v=2">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9359045812269912" crossorigin="anonymous"></script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.async=true;s.crossOrigin="anonymous";s.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9359045812269912";document.head.appendChild(s);},1500);});</script>
     <link rel="stylesheet" href="/assets/theme-pastel.css?v=7">
 </head>
 <body class="bg-amber-50 text-slate-800 min-h-screen pb-16 antialiased selection:bg-sky-500 selection:text-white hero-glow">
