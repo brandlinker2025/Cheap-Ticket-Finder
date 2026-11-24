@@ -41,3 +41,8 @@
   from = "/transfers/"
   to = "/airport-transfer/"
   status = 301
+
+[[headers]]
+  for = "/assets/*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"

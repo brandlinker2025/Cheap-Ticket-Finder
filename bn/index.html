@@ -37,6 +37,9 @@
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" as="image" href="/assets/hero-sea-800.webp" media="(max-width:800px)" fetchpriority="high">
+    <link rel="preload" as="image" href="/assets/hero-sea.webp" media="(min-width:801px)" fetchpriority="high">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <title>সস্তা বিমান টিকিট — বাংলাদেশ থেকে দাম তুলনা করুন | Cheap Ticket Finder</title>
     <meta name="description" content="বাংলাদেশ থেকে সস্তা বিমান টিকিট খুঁজুন: রুট ও তারিখ দিয়ে পার্টনার সাইটের লাইভ দাম তুলনা করুন। আমরা টিকিট বিক্রি করি না, বানানো দামও দেখাই না।">
     <meta name="robots" content="index, follow">
@@ -64,7 +67,7 @@
     <link rel="alternate" hreflang="x-default" href="https://cheapticketfinder.site/">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://cheapticketfinder.site/#organization", "parentOrganization": {"@type": "Organization", "name": "BrandLinker", "slogan": "Brands Connect Opportunities", "logo": "https://cheapticketfinder.site/assets/brand/brandlinker-logo-512.png", "url": "https://cheapticketfinder.site/about/#brandlinker", "address": {"@type": "PostalAddress", "addressLocality": "Dhaka", "addressCountry": "BD"}}, "name": "Cheap Ticket Finder", "alternateName": "Cheap Ticket Finder", "url": "https://cheapticketfinder.site/", "logo": "https://cheapticketfinder.site/icon-v2-512.png", "sameAs": ["https://www.facebook.com/CheapTFBD"]}, {"@type": "WebSite", "@id": "https://cheapticketfinder.site/#website", "name": "Cheap Ticket Finder", "alternateName": "Cheap Ticket Finder", "url": "https://cheapticketfinder.site/", "inLanguage": "bn", "publisher": {"@id": "https://cheapticketfinder.site/#organization"}, "description": "Flexible-date cheap flight ticket search helper for Bangladesh-based travellers. This site does not sell tickets; the final price is shown by the provider.", "potentialAction": {"@type": "SearchAction", "target": {"@type": "EntryPoint", "urlTemplate": "https://cheapticketfinder.site/?q={search_term_string}"}, "query-input": "required name=search_term_string"}}]}</script>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link rel="stylesheet" href="/assets/luxury.css?v=compact-20261019">
     <style>
         .custom-scroll::-webkit-scrollbar { width: 5px; }
@@ -182,7 +185,7 @@
         .top-bar{display:flex;align-items:center;gap:.7rem;margin:0}
         .top-bar a{display:inline-flex;align-items:center;color:#111111 !important;-webkit-text-fill-color:#111111 !important;background:transparent !important;border:0 !important;border-radius:0;font-weight:800;font-size:13px;line-height:1.2;padding:.35rem 0;text-decoration:none;min-height:32px}
         .home-intro{margin:.65rem 0 0;color:#111111 !important;font-size:13px;line-height:1.45}
-        .hero-photo{background:#7ec8ea url("/assets/hero-sea.jpg") center 68%/cover no-repeat;padding:.15rem 0 2.5rem}
+        .hero-photo{background:#7ec8ea url("/assets/hero-sea-800.webp") center 68%/cover no-repeat;padding:.15rem 0 2.5rem}@media (min-width:801px){.hero-photo{background-image:url("/assets/hero-sea.webp")}}
         .search-stage{position:relative;max-width:1040px;margin:0 auto}
         .trip-tabs{position:absolute;left:50%;top:100%;transform:translate(-50%,-42%);z-index:45;display:flex;justify-content:center;gap:.1rem;margin:0;background:#ffffff;border-radius:18px;box-shadow:0 10px 28px rgba(15,23,42,.14);padding:.35rem .5rem .15rem;max-width:calc(100% - 16px);overflow:visible;border:0;scrollbar-width:none}
         .trip-tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:0 0 auto;min-width:78px;background:transparent !important;color:#111111 !important;-webkit-text-fill-color:#111111 !important;font-weight:700;font-size:11px;line-height:1.15;padding:.28rem .4rem .32rem;border:0 !important;border-bottom:2px solid transparent !important;border-radius:0 !important;box-shadow:none !important;white-space:nowrap;cursor:pointer;min-height:48px}
@@ -395,7 +398,7 @@
         </nav>
     </header>
 
-    <!-- Hero photo: Unsplash photo-1518509562904-e7ef99cdcc86, bright tropical sea and sky. Unsplash Licence https://unsplash.com/license — saved at /assets/hero-sea.jpg, not hotlinked. -->
+    <!-- Hero photo: Unsplash photo-1518509562904-e7ef99cdcc86, bright tropical sea and sky. Unsplash Licence https://unsplash.com/license — saved at /assets/hero-sea.jpg (served as hero-sea.webp / hero-sea-800.webp), not hotlinked. -->
     <div class="hero-photo">
     <div class="max-w-6xl mx-auto px-3 sm:px-6">
         <div class="search-stage">
