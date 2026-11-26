@@ -67,6 +67,8 @@
             const body = await res.json().catch(() => ({}));
             if (!res.ok) throw new Error(body.error || "Fare data is unavailable right now.");
             state.fares = new Map();
+            state.source = typeof body.source === "string" ? body.source : "";
+            state.fetchedAt = typeof body.fetched_at === "string" ? body.fetched_at : "";
             (body.fares || []).forEach(f => {
                 // Keep only the cheapest fare per day.
                 const old = state.fares.get(f.date);
@@ -102,7 +104,10 @@
             $("legend").hidden = true;
             return;
         }
-        showStatus("Showing the lowest recently found direct fare per day, in USD. Gaps mean no recent fare was found, not that no flight exists.");
+        const when = state.fetchedAt && !isNaN(Date.parse(state.fetchedAt))
+            ? new Date(state.fetchedAt).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dhaka" }) + " (Dhaka time)"
+            : "unknown time";
+        showStatus("Showing the lowest recently found direct fare per day, in USD. Source: " + (state.source || "Travelpayouts Data API") + ", retrieved " + when + "; cached results may be up to a few days old. Gaps mean no recent fare was found, not that no flight exists. Confirm the live price on the provider.");
         const tier = tiers(entries.map(f => f.price));
         const best = entries.reduce((a, b) => (b.price < a.price ? b : a));
         for (let i = 0; i < firstDow(state.month); i++) grid.insertAdjacentHTML("beforeend", '<div class="cell empty"></div>');

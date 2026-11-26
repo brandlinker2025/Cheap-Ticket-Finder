@@ -4,7 +4,10 @@
   "scripts": {
     "build:css": "tailwindcss -c tailwind.config.js -i assets/src/tailwind.css -o assets/tailwind.css --minify",
     "check-links": "node scripts/check-links.js",
-    "test": "for t in tests/*.test.js; do node $t || exit 1; done"
+    "test": "for t in tests/*.test.js; do node $t || exit 1; done",
+    "test:mobile": "node tests/mobile-390.playwright.js"
   },
-  "devDependencies": { "tailwindcss": "3.4.17" }
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
 }

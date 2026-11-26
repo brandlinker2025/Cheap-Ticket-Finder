@@ -1743,7 +1743,102 @@
         return toISODate(dt);
     }
 
+    // ---- Outbound link allow-list (open-redirect protection) -------------------------------
+    // Every outbound link this site renders must point at one of these registrable domains
+    // (exact host or a subdomain of it), over https. Affiliate redirectors (tp.media) are only
+    // allowed when their nested target (u=) is itself on the list. Google is limited to the
+    // travel product paths so google.com/url?q= style redirects can never be produced.
+    const OUTBOUND_DOMAINS = [
+        // Search / OTA / affiliate partners
+        "google.com", "aviasales.com", "tp.media", "tpo.lv", "trip.com", "skyscanner.net", "kayak.com",
+        "booking.com", "agoda.com", "gozayaan.com", "sharetrip.net", "viator.com", "getyourguide.com",
+        "kkday.com", "klook.com", "kiwitaxi.com", "airalo.com", "amazon.com", "shohoz.com", "directflightsfrom.com", "airportoverview.com",
+        // Airlines and their booking engines
+        "usbair.com", "biman-airlines.com", "airastra.com", "flynovoair.com", "ttinteractive.com",
+        "airasia.com", "airarabia.com", "airchina.com.cn", "airindia.com", "airindiaexpress.com", "airvistara.com",
+        "bambooairways.com", "bangkokair.com", "batikair.com.my", "cathaypacific.com", "ceair.com", "csair.com",
+        "emirates.com", "etihad.com", "flydubai.com", "flynas.com", "flyscoot.com", "goindigo.in", "gulfair.com",
+        "kuwaitairways.com", "lionairthai.com", "malaysiaairlines.com", "malaysiaaviationgroup.com.my",
+        "nokair.com", "omanair.com", "qatarairways.com", "qatarairwaysholidays.com", "saudia.com",
+        "singaporeair.com", "spicejet.com", "srilankan.com", "thaiairways.com", "thaivietair.com",
+        "turkishairlines.com", "vietjetair.com", "vietjetthai.com", "vietnamairlines.com",
+        // Cruises, ferries, tourism, transport
+        "ambassadorcruise.com", "cordeliacruises.com", "royalcaribbean.com", "stardreamcruises.com",
+        "langkawiferryline.com", "naturallylangkawi.my", "tourismthailand.org", "itsbetterinthailand.com",
+        "thailandstarterkit.com", "outthailand.com", "vietnamtourism.com", "unesco.org", "railway.gov.bd",
+        // Banks / cards (published offers)
+        "bkash.com", "bracbank.com", "ebl.com.bd", "sc.com", "priceless.com", "bb.org.bd",
+        // Government / visa / medical references
+        "epassport.gov.bd", "ivacbd.com", "vfsglobal.com", "thaievisa.go.th", "dnp.go.th", "imi.gov.my",
+        "kln.gov.my", "um.dk", "bangkokhospital.com", "bumrungrad.com", "samitivejchinatown.com",
+        "phyathai.com", "chiangmairam.com", "siphhospital.com", "mahidol.ac.th", "kku.ac.th", "cmcvellore.ac.in",
+        "aravind.org", "lvpei.org", "sankaranethralaya.org", "sssihms.org", "srisathyasaisanjeevani.org",
+        "rkmsevapratishthan.org", "bangladeshmonitor.com.bd", "ektatraveling.com", "sherides.online",
+        // Own network, credits, social
+        "cheapticketfinder.site", "brandlinkerbd.com", "brandlinkerdubai.com", "brandlinkerspark.com",
+        "brandlinkerstudio.com", "rslina.com", "facebook.com", "wikimedia.org", "unsplash.com", "cloudflare.com"
+    ];
+    const REDIRECTOR_TARGET_PARAM = { "tp.media": "u" };
+
+    function registrableMatch(host) {
+        const h = String(host || "").toLowerCase().replace(/\.$/, "");
+        return OUTBOUND_DOMAINS.find((d) => h === d || h.endsWith("." + d)) || null;
+    }
+
+    function isAllowedOutbound(url, depth) {
+        let u;
+        try { u = new URL(String(url)); } catch (e) { return false; }
+        if (u.protocol !== "https:") return false;
+        if (u.username || u.password) return false;           // https://google.com@evil.example
+        if (u.port && u.port !== "443") return false;
+        const domain = registrableMatch(u.hostname);
+        if (!domain) return false;
+        if (domain === "google.com" && !/^\/travel\//.test(u.pathname)) return false;
+        const param = REDIRECTOR_TARGET_PARAM[domain];
+        if (param && u.searchParams.has(param)) {
+            if ((depth || 0) > 1) return false;
+            let target = u.searchParams.get(param);
+            if (/^aviasales\.com/i.test(target)) target = "https://" + target;
+            return isAllowedOutbound(target, (depth || 0) + 1);
+        }
+        return true;
+    }
+
+    // Returns the URL unchanged (affiliate params preserved) when allowed, else the fallback.
+    function safeOutboundUrl(url, fallback) {
+        return isAllowedOutbound(url) ? String(url) : (fallback === undefined ? null : fallback);
+    }
+
+    // ---- Multi-city: one dated Aviasales search per leg (through the affiliate redirector) ----
+    function aviasalesLegUrl(origin, dest, dateISO, paxOpts, affiliateBase) {
+        const o = upper(origin), d = upper(dest);
+        const iso = toISODate(dateISO);
+        if (!/^[A-Z0-9]{3}$/.test(o) || !/^[A-Z0-9]{3}$/.test(d) || o === d || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return null;
+        const chk = new Date(iso + "T00:00:00Z");
+        if (isNaN(chk) || chk.toISOString().slice(0, 10) !== iso) return null;
+        const target = "https://www.aviasales.com/search/" + o + iso.slice(8, 10) + iso.slice(5, 7) + d + aviasalesPaxSuffix(paxOpts || {});
+        if (!affiliateBase) return target;
+        const u = new URL(affiliateBase);
+        u.searchParams.set("u", target);
+        return u.href;
+    }
+
+    function multiCityLegLinks(legs, paxOpts, affiliateBase) {
+        const list = Array.isArray(legs) ? legs : [];
+        if (list.length < 2 || list.length > 6) return [];
+        return list.map((leg, i) => {
+            const aviasales = aviasalesLegUrl(leg.origin, leg.dest, leg.date, paxOpts, affiliateBase);
+            const google = aviasales ? googleFlightsUrl(Object.assign({}, paxOpts || {}, { origin: leg.origin, dest: leg.dest, depart: leg.date, tripType: "oneway" })) : null;
+            return { leg: i + 1, origin: upper(leg.origin), dest: upper(leg.dest), date: toISODate(leg.date) || "", aviasales, google };
+        });
+    }
+
     return {
+        OUTBOUND_DOMAINS,
+        isAllowedOutbound,
+        safeOutboundUrl,
+        aviasalesLegUrl,
+        multiCityLegLinks,
         BD_AIRPORTS,
         AIRLINE_DIRECTORY,
         toISODate,

@@ -40,6 +40,7 @@ byId("dates").addEventListener("submit", async event => {
     byId("results").replaceChildren();
     byId("status").textContent = "তারিখ ও ভাড়ার তথ্য খোঁজা হচ্ছে…";
     const requests = new Map();
+    const fetchedAt = [];
     const key = (index, day) => index + ":" + day.slice(0, 7);
     for (const days of dates) {
         days.forEach((day, index) => {
@@ -51,7 +52,9 @@ byId("dates").addEventListener("submit", async event => {
             requests.set(id, fetch("/api/fare-calendar?" + params, { signal: AbortSignal.timeout(12000) })
                 .then(async response => {
                     if (!response.ok) return null;
-                    return (await response.json()).fares;
+                    const body = await response.json();
+                    if (typeof body.fetched_at === "string") fetchedAt.push(body.fetched_at);
+                    return body.fares;
                 }).catch(() => null));
         });
     }
@@ -68,6 +71,10 @@ byId("dates").addEventListener("submit", async event => {
         : covered
             ? options.length + " তারিখের মধ্যে " + covered + " তারিখে চার অংশের ক্যাশড ভাড়া মিলেছে। মোট USD আনুমানিক, একজন যাত্রীর আলাদা টিকিট। ব্যাগেজ ও কানেকশন চেক করুন।"
             : "চার অংশের তুলনাযোগ্য ক্যাশড ভাড়া পাওয়া যায়নি। নিচের লিংক দিয়ে তারিখ ধরে লাইভ দাম চেক করুন।";
+    if (covered && fetchedAt.length) {
+        const t = new Date(fetchedAt.sort()[0]);
+        if (!isNaN(t)) byId("status").textContent += " সূত্র: Travelpayouts Data API (ক্যাশড Aviasales সার্চ), আনা হয়েছে " + t.toLocaleString("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dhaka" }) + " (ঢাকা সময়)। চূড়ান্ত দাম বিক্রেতার সাইটে।";
+    }
     for (const { days, fares, total } of options) {
         const row = document.createElement("li");
         const airlines = fares.map(fare => fare?.airline || "—").join(" / ");
